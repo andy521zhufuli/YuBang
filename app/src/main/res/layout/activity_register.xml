@@ -1,0 +1,267 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/android_layout_bg"
+    tools:context=".BoxActivity" >
+
+    <RelativeLayout
+        android:id="@+id/layout_sign_up_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="注册"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/layout_sign_up_topbar"
+        android:layout_marginTop="@dimen/item_margin_top"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" >
+
+            <TextView
+                android:id="@+id/register_phone_num_uid_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
+                android:text="本人手机："
+                android:textColor="@color/black"
+                android:textSize="@dimen/medium_text_size" />
+
+            <EditText
+                android:id="@+id/register_phone_num_uid_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="@dimen/item_margin_large"
+                android:layout_toRightOf="@+id/register_phone_num_uid_tv"
+                android:background="@null"
+                android:hint="11位手机号码"
+                android:singleLine="true"
+                android:maxLength="32"
+                android:textSize="@dimen/small_middle_text_size" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="64dp"
+            android:background="#ffcccccc" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" >
+
+            <TextView
+                android:id="@+id/register_pwd_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
+                android:text="登录密码："
+                android:textColor="@color/black"
+                android:textSize="@dimen/medium_text_size" />
+
+            <EditText
+                android:id="@+id/register_pwd_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="@dimen/item_margin_large"
+                android:layout_toRightOf="@+id/register_pwd_tv"
+                android:background="@null"
+                android:maxLength="16"
+                android:hint="6位密码"
+                android:inputType="textPassword"
+                android:textSize="@dimen/small_middle_text_size" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="64dp"
+            android:background="#ffcccccc" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" >
+
+            <TextView
+                android:id="@+id/register_driver_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
+                android:text="司机姓名："
+                android:textColor="@color/black"
+                android:textSize="@dimen/medium_text_size" />
+
+            <EditText
+                android:id="@+id/register_driver_name_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="@dimen/item_margin_large"
+                android:layout_toRightOf="@+id/register_driver_name_tv"
+                android:background="@null"
+                android:maxLength="16"
+                android:hint="两个汉字以上"
+                android:inputType="textPassword"
+                android:textSize="@dimen/small_middle_text_size" />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="64dp"
+            android:background="#ffcccccc" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" >
+
+            <TextView
+                android:id="@+id/register_recommend_ren_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
+                android:text="推  荐  人："
+                android:textColor="@color/black"
+                android:textSize="@dimen/medium_text_size" />
+
+            <EditText
+                android:id="@+id/register_recommend_ren_name_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="@dimen/item_margin_large"
+                android:layout_toRightOf="@+id/register_recommend_ren_name_tv"
+                android:background="@null"
+                android:maxLength="16"
+                android:hint="推荐人用户名"
+                android:inputType="textPassword"
+                android:textSize="@dimen/small_middle_text_size" />
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/register_verify_code_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        android:layout_below="@+id/layout_detail"
+        android:layout_marginTop="15dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" >
+
+            <EditText
+                android:id="@+id/register_verify_code_edittext"
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:hint="验证码"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:inputType="textPassword"
+                android:textSize="@dimen/small_middle_text_size" />
+
+            <Button
+                android:id="@+id/register_btn_send_verify_code"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/btn_ok"
+                android:text="发送验证码"
+                android:textColor="@color/btn_login_text"
+                android:padding="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:enabled="false" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/register_btn_check"
+        android:layout_width="wrap_content"
+        android:layout_height="27dp"
+        android:layout_below="@+id/register_verify_code_layout"
+        android:button="@drawable/btn_check"
+        android:layout_marginTop="@dimen/item_margin_top"
+        android:layout_marginLeft="@dimen/item_margin_large"
+        android:checked="true"
+        android:textSize="@dimen/small_medium_text_size"
+        android:textColor="@color/dark"
+        android:text="我同意" />
+
+    <Button
+        android:id="@+id/register_btn_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_margin="@dimen/item_margin_large"
+        android:layout_below="@+id/register_btn_check"
+        android:background="@drawable/btn_ok"
+        android:text="下 一 步"
+        android:textColor="@color/btn_login_text"
+        android:enabled="false" />
+
+
+    <!-- 驭帮车主服务协议-->
+    <TextView
+        android:id="@+id/register_driver_service_protocol"
+        android:layout_width="wrap_content"
+        android:layout_height="27dp"
+        android:layout_alignTop="@+id/register_btn_check"
+        android:layout_marginLeft="11dp"
+        android:layout_toRightOf="@+id/register_btn_check"
+        android:gravity="center"
+        android:textSize="@dimen/small_medium_text_size"
+        android:textColor="@color/pd_red_d"
+        android:text="《驭帮车主服务协议》" />
+
+</RelativeLayout>

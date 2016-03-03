@@ -1,0 +1,222 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/android_layout_bg"
+    tools:context=".MyOrdersActivity"
+    >
+
+    <RelativeLayout
+        android:id="@+id/layout_category_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:layout_margin="6dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="我推荐的合伙人"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_below="@+id/layout_category_topbar"
+        android:background="@drawable/bg_item_bottom"
+        >
+
+        <!-- 已审核-->
+        <RelativeLayout
+            android:id="@+id/my_recommended_partner_layout_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:layout_weight="1"
+            android:background="@drawable/bg_item_top"
+            >
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="已审核"
+                android:textSize="@dimen/small_middle_text_size"
+                android:textColor="@color/red" />
+
+            <View
+                android:id="@+id/indicator1"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="@dimen/divider_height"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/hintColor" />
+
+        <!-- 待审核-->
+        <RelativeLayout
+            android:id="@+id/my_recommended_partner_layout_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:background="@drawable/bg_item_top"
+            >
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/dark"
+                android:textSize="@dimen/small_middle_text_size"
+                android:text="待审核" />
+
+            <View
+                android:id="@+id/indicator2"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red"
+                android:visibility="invisible" />
+        </RelativeLayout>
+        <View
+            android:layout_width="@dimen/divider_height"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/hintColor" />
+        <!-- 以入伙-->
+        <RelativeLayout
+            android:id="@+id/my_recommended_partner_layout_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:background="@drawable/bg_item_top"
+            >
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/dark"
+                android:textSize="@dimen/small_middle_text_size"
+                android:text="以入伙" />
+
+            <View
+                android:id="@+id/indicator3"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- 没有推荐的合伙人-->
+    <RelativeLayout
+        android:id="@+id/layout_null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/jshop_favo_empty_img" />
+
+        <TextView
+            android:id="@+id/btn_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_disc"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/item_margin_large"
+            android:paddingBottom="8dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="8dp"
+            android:text="去首页逛逛"
+            android:textSize="@dimen/small_medium_text_size" />
+
+        <TextView
+            android:id="@+id/tv_disc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:text="您还没有关注过任何商品！何不去逛逛~"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+    </RelativeLayout>
+
+    <!-- 这个在京东里面 有滑动删除的东西  以后可以借鉴-->
+    <ListView
+        android:id="@+id/my_recommended_partner_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:cacheColorHint="@color/transparent"
+        android:fadingEdge="none"
+        android:divider="@null"
+        android:listSelector="@color/transparent"
+        android:visibility="gone"
+        >
+    </ListView>
+
+    <FrameLayout
+        android:id="@+id/my_recommended_partner_framlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        ></FrameLayout>
+
+
+
+
+
+    <ProgressBar
+        android:id="@+id/my_recommended_partner_progressbar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:indeterminateDrawable="@drawable/progressbar_circle_1" />
+
+</RelativeLayout>

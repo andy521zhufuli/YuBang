@@ -1,0 +1,402 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/android_layout_bg"
+    android:orientation="vertical"
+    tools:context="com.android.andy.yubang.ui.MyPersonalInfoActivity">
+
+    <!-- 头部显示-->
+    <RelativeLayout
+        android:id="@+id/layout_login_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="6dp"
+            android:paddingRight="10dp"
+            android:layout_margin="6dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="个人信息"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_text_size"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!-- 头像-->
+            <RelativeLayout
+                android:id="@+id/my_personal_item_head_layout"
+                style="@style/MineItemStyleRelativeLayout"
+                android:background="@drawable/bg_item_top"
+                android:layout_height="60dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="头像"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size" />
+                <TextView
+                    android:id="@+id/my_personal_item_head_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="头像"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/my_personal_item_arrow1"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size"/>
+
+                <ImageView
+                    android:id="@+id/my_personal_item_arrow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/personel_arrow_right"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+            <!-- 昵称-->
+            <RelativeLayout
+                android:id="@+id/my_personal_item_nickname_layout"
+                style="@style/MineItemStyleRelativeLayout"
+                android:background="@drawable/bg_item_top"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="昵称"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size" />
+                <TextView
+                    android:id="@+id/my_personal_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="张三"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/my_personal_item_arrow2"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size"/>
+
+                <ImageView
+                    android:id="@+id/my_personal_item_arrow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/personel_arrow_right"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+            <!-- 性别-->
+            <RelativeLayout
+                android:id="@+id/my_personal_item_sex_layout"
+                style="@style/MineItemStyleRelativeLayout"
+                android:background="@drawable/bg_item_top"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="性别"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size" />
+                <TextView
+                    android:id="@+id/my_personal_item_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="男"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/my_personal_item_arrow3"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size"/>
+
+                <ImageView
+                    android:id="@+id/my_personal_item_arrow3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/personel_arrow_right"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+            <!-- 年龄-->
+            <RelativeLayout
+                android:id="@+id/my_personal_item_age_layout"
+                style="@style/MineItemStyleRelativeLayout"
+                android:background="@drawable/bg_item_top"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="年龄"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size" />
+                <TextView
+                    android:id="@+id/my_personal_item_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="请填写"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/my_personal_item_arrow4"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size"/>
+
+                <ImageView
+                    android:id="@+id/my_personal_item_arrow4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/personel_arrow_right"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+            <!-- 手机号-->
+            <RelativeLayout
+                android:id="@+id/my_personal_item_phonenum_layout"
+                style="@style/MineItemStyleRelativeLayout"
+                android:background="@drawable/bg_item_top"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="手机号"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size" />
+                <TextView
+                    android:id="@+id/my_personal_item_phone_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="请填写"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/my_personal_item_arrow5"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size"/>
+
+                <ImageView
+                    android:id="@+id/my_personal_item_arrow5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/personel_arrow_right"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+            <!-- 等级-->
+            <RelativeLayout
+                android:id="@+id/my_personal_item_level_layout"
+                style="@style/MineItemStyleRelativeLayout"
+                android:background="@drawable/bg_item_top"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="等级"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size" />
+                <TextView
+                    android:id="@+id/my_personal_item_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="VIP"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/my_personal_item_arrow6"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size"/>
+
+                <ImageView
+                    android:id="@+id/my_personal_item_arrow6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/personel_arrow_right"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+            <!-- 行业-->
+            <RelativeLayout
+                android:id="@+id/my_personal_item_industry_layout"
+                style="@style/MineItemStyleRelativeLayout"
+                android:background="@drawable/bg_item_top"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="行业"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size" />
+                <TextView
+                    android:id="@+id/my_personal_item_industry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="请选择"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/my_personal_item_arrow7"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size"/>
+
+                <ImageView
+                    android:id="@+id/my_personal_item_arrow7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/personel_arrow_right"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+            <!-- 职业-->
+            <RelativeLayout
+                android:id="@+id/my_personal_item_occupation_layout"
+                style="@style/MineItemStyleRelativeLayout"
+                android:background="@drawable/bg_item_top"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="职业"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size" />
+                <TextView
+                    android:id="@+id/my_personal_item_occupation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="请填写"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/my_personal_item_arrow8"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size"/>
+
+                <ImageView
+                    android:id="@+id/my_personal_item_arrow8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/personel_arrow_right"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+            <!-- 实名认证-->
+            <RelativeLayout
+                android:id="@+id/my_personal_item_real_name_certification_layout"
+                style="@style/MineItemStyleRelativeLayout"
+                android:background="@drawable/bg_item_top"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="实名认证"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size" />
+                <TextView
+                    android:id="@+id/my_personal_item_real_name_certification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:singleLine="true"
+                    android:text="已认证"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/my_personal_item_arrow9"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/small_medium_text_size"/>
+
+                <ImageView
+                    android:id="@+id/my_personal_item_arrow9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/personel_arrow_right"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</LinearLayout>

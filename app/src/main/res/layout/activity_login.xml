@@ -1,0 +1,221 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.android.andy.yubang.ui.LoginActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/layout_login_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="登录"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_text_size"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_login_topbar"
+        android:orientation="vertical" >
+
+        <!-- LOGO-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@mipmap/login_top_bg" >
+
+            <ImageView
+                android:id="@+id/user_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="14dp"
+                android:background="@mipmap/login_user_icon_bg_new"
+                android:padding="3dp"
+                android:src="@mipmap/login_dog" />
+        </RelativeLayout>
+
+        <!-- 登陆注册-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#ffffff" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp" >
+
+                <TextView
+                    android:id="@+id/tv_uid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="18dp"
+                    android:text="账号："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/medium_text_size" />
+
+                <EditText
+                    android:id="@+id/edit_uid"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_uid"
+                    android:layout_margin="3dp"
+                    android:background="@null"
+                    android:hint="手机号"
+                    android:singleLine="true"
+                    android:textSize="@dimen/small_middle_text_size" >
+
+                    <requestFocus />
+                </EditText>
+                <!-- 删除数据-->
+                <ImageView
+                    android:id="@+id/img_login_clear_uid"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/edit_uid"
+                    android:src="@mipmap/login_delete_data_icon"
+                    android:visibility="invisible"/>
+
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="64dp"
+                android:background="#ffcccccc"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp" >
+
+                <ImageView
+                    android:id="@+id/img_login_clear_psw"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/edit_psw"
+                    android:src="@mipmap/login_delete_data_icon"
+                    android:visibility="invisible"/>
+
+                <ToggleButton
+                    android:id="@+id/tgbtn_show_psw"
+                    android:layout_width="54dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/switch_in"
+                    android:visibility="invisible"/>
+
+                <TextView
+                    android:id="@+id/tv_psw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="18dp"
+                    android:text="密码："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/medium_text_size" />
+
+                <EditText
+                    android:id="@+id/edit_psw"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_psw"
+                    android:layout_margin="3dp"
+                    android:background="@null"
+                    android:hint="密码(6位以上)"
+                    android:inputType="textPassword"
+                    android:textSize="@dimen/small_middle_text_size" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <CheckBox
+                android:id="@+id/login_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginLeft="18dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_remember_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/login_checkbox"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="下次自动登陆" />
+
+            <TextView
+                android:id="@+id/tv_forget_psw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="6dp"
+                android:padding="10dp"
+                android:text="忘记密码 ?" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_margin="18dp"
+            android:background="@drawable/btn_ok"
+            android:text="登 录"
+            android:textColor="@color/btn_login_text"
+            android:enabled="false" />
+
+        <!-- 立即注册-->
+        <TextView
+            android:id="@+id/tv_quick_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/login_checkbox"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/pd_red_d"
+            android:text="立即注册" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

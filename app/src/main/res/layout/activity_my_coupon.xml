@@ -1,0 +1,207 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/android_layout_bg"
+    tools:context="com.android.andy.yubang.ui.MyCouponActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/layout_category_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:layout_margin="6dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="我的优惠券"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+    </RelativeLayout>
+
+    <!-- 上面三个tab-->
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height_middle"
+        android:layout_below="@+id/layout_category_topbar"
+        android:background="@drawable/bg_item_bottom"
+        >
+        <!-- 全部优惠券-->
+        <RelativeLayout
+            android:id="@+id/layout_order1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="全部"
+                android:textColor="@color/red" />
+
+            <View
+                android:id="@+id/indicator1"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="@dimen/divider_height"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/hintColor" />
+        <!-- 店铺优惠-->
+        <RelativeLayout
+            android:id="@+id/layout_order2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="店铺优惠"
+                android:textColor="@color/dark" />
+
+            <View
+                android:id="@+id/indicator2"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red"
+                android:visibility="invisible" />
+        </RelativeLayout>
+        <View
+            android:layout_width="@dimen/divider_height"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/hintColor" />
+
+        <!-- 店铺红包-->
+        <RelativeLayout
+            android:id="@+id/layout_order3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="店铺红包"
+                android:textColor="@color/dark" />
+
+            <View
+                android:id="@+id/indicator3"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_image_coupon"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/my_coupon_1"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/my_coupon_1"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/my_coupon_1"
+            />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout1"
+        android:background="@color/lightBg"
+        android:visibility="gone"
+        >
+        <!-- 全部优惠-->
+        <ListView
+            android:id="@+id/my_coupon_all"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:listSelector="@color/transparent" >
+        </ListView>
+        <!-- 店铺优惠-->
+        <ListView
+            android:id="@+id/my_coupon_store_coupon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:listSelector="@color/transparent"
+            android:visibility="gone"
+            >
+        </ListView>
+        <!-- 店铺红包-->
+        <ListView
+            android:id="@+id/my_coupon_store_lucky_money"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:listSelector="@color/transparent"
+            android:visibility="gone"
+            >
+        </ListView>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

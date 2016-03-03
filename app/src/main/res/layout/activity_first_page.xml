@@ -1,0 +1,222 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.android.andy.yubang.ui.FirstPageActivity">
+
+    <TextView
+        android:id="@+id/first_page_search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:singleLine="true"
+        android:hint="搜索"
+        android:drawableRight="@mipmap/first_page_search"
+        />
+
+    <LinearLayout
+        android:id="@+id/first_page_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height_middle"
+        android:layout_below="@+id/first_page_search"
+        android:background="@drawable/bg_item_bottom"
+        >
+        <!-- 全部优惠券-->
+        <RelativeLayout
+            android:id="@+id/layout_order1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="整车"
+                android:textColor="@color/red" />
+
+            <View
+                android:id="@+id/indicator1"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="@dimen/divider_height"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/hintColor" />
+        <!-- 店铺优惠-->
+        <RelativeLayout
+            android:id="@+id/layout_order2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="保养"
+                android:textColor="@color/dark" />
+
+            <View
+                android:id="@+id/indicator2"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red"
+                android:visibility="invisible" />
+        </RelativeLayout>
+        <View
+            android:layout_width="@dimen/divider_height"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/hintColor" />
+
+        <!-- 店铺红包-->
+        <RelativeLayout
+            android:id="@+id/layout_order3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="电路"
+                android:textColor="@color/dark" />
+
+            <View
+                android:id="@+id/indicator3"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red"
+                android:visibility="invisible" />
+        </RelativeLayout>
+        <View
+            android:layout_width="@dimen/divider_height"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/hintColor" />
+
+        <!-- 店铺红包-->
+        <RelativeLayout
+            android:id="@+id/layout_order4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:id="@+id/TextView04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="配件"
+                android:textColor="@color/dark" />
+
+            <View
+                android:id="@+id/indicator4"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red"
+                android:visibility="invisible" />
+        </RelativeLayout>
+        <View
+            android:layout_width="@dimen/divider_height"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/hintColor" />
+
+        <!-- 店铺红包-->
+        <RelativeLayout
+            android:id="@+id/layout_order5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:id="@+id/TextView05"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="油路"
+                android:textColor="@color/dark" />
+
+            <View
+                android:id="@+id/indicator5"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </LinearLayout>
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/first_page_mapview"
+        android:layout_below="@+id/first_page_tabs"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+    </com.baidu.mapapi.map.MapView>
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/item_first_page_shop1"
+            />
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/item_first_page_shop2"
+            />
+        <ImageView
+            android:id="@+id/image3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/item_first_page_shop2"
+            />
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

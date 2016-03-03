@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/android_layout_bg"
+    tools:context="com.android.andy.yubang.ui.DiscoverRecommendPartnerActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_category_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:layout_margin="6dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="推荐合伙人"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+        <TextView
+            android:id="@+id/discover_add_partner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="新增"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="@dimen/medium_text_size"
+            android:textColor="@color/pd_red"
+            />
+
+    </RelativeLayout>
+
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/recommend_partner_baidumap"
+        android:layout_below="@+id/layout_category_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.baidu.mapapi.map.MapView>
+
+
+</RelativeLayout>

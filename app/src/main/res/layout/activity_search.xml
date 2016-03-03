@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffe4e7e9"
+    tools:context=".SearchActivity" >
+
+    <RelativeLayout
+        android:id="@+id/layout_search_topbar"
+        style="@style/TopbarStyle" >
+
+
+        <RelativeLayout
+            android:id="@+id/layout_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_search"
+            android:layout_toRightOf="@+id/img_back"
+            >
+
+            <EditText
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@+id/img_search"
+                android:layout_toLeftOf="@+id/topbar_search_voice"
+                android:background="@null"
+                android:hint="搜索京东商品/店铺"
+                android:textColorHint="#a0a0a0"
+                android:textSize="@dimen/small_text_size" >
+                <requestFocus />
+
+            </EditText>
+
+            <ImageView
+                android:id="@+id/img_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:src="@mipmap/lib_story_img_search_bt" />
+
+            <ImageView
+                android:id="@+id/topbar_search_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="6dp"
+                android:src="@mipmap/app_icon_voice"
+                android:visibility="gone"
+                />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dp"
+            android:src="@mipmap/flight_title_back_normal" />
+
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="8dp"
+            android:padding="3dp"
+            android:text="搜索" />
+    </RelativeLayout>
+
+    <!-- 热门搜索 -->
+    <RelativeLayout
+        android:id="@+id/hot_search"
+        android:layout_below="@+id/layout_search_topbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TopbarStyle"
+        android:paddingBottom="10dp"
+        >
+        <TextView
+            android:id="@+id/search_hot_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="热门搜索"
+            android:textSize="20sp"
+            android:textColor="#FF7A7A7A"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:layout_marginBottom="10dp"
+            />
+
+        <com.android.andy.yubang.view.ForbiddenScrollGridView
+            android:id="@+id/search_recommand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:stretchMode="columnWidth"
+            android:horizontalSpacing="2dp"
+            android:verticalSpacing="2dp"
+            android:layout_below="@+id/search_hot_search"
+            />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/history_search"
+        android:layout_below="@+id/hot_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TopbarStyle"
+        >
+
+        <TextView
+            android:id="@+id/search_history_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="历史搜索"
+            android:textSize="20sp"
+            android:textColor="#FF7A7A7A"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:layout_marginBottom="10dp"
+            />
+        <View
+            android:id="@+id/search_line"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/search_history_search"
+            android:layout_height="1dp"
+            android:background="#f0f0f0"
+            />
+        <ListView
+            android:id="@+id/history_search_listview"
+            android:layout_below="@+id/search_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+    </RelativeLayout>
+
+
+</RelativeLayout>

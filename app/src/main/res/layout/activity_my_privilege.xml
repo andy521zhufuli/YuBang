@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/android_layout_bg"
+    tools:context="com.android.andy.yubang.ui.MyPrivilegeActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_category_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:layout_margin="6dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="我的特权"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/layout_category_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/my_privilege_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/login_dog"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

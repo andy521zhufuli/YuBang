@@ -1,0 +1,181 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/android_layout_bg"
+    tools:context="com.android.andy.yubang.ui.FirstPageShopShowActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_category_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:layout_margin="6dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="门店"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/photo_show"
+        android:layout_below="@+id/layout_category_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:clickable="true"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/first_page_shop_show"
+            />
+
+    </LinearLayout>
+
+    <!-- 我的钱包 我的订单-->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/item_margin_top"
+        android:layout_below="@+id/photo_show"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/first_page_shop_show_wheel_service"
+            style="@style/MineItemStyle"
+            android:background="@drawable/bg_item_bottom" >
+
+            <ImageView
+                android:layout_width="26.0dip"
+                android:layout_height="26.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="15.0dip"
+                android:scaleType="fitXY"
+                android:src="@mipmap/android_personel_quickly_order"
+                />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="轮胎服务"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_medium_text_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/personel_arrow_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/first_page_shop_show_baoyang_service"
+            style="@style/MineItemStyle"
+            android:background="@drawable/bg_item_top" >
+
+            <ImageView
+                android:layout_width="26.0dip"
+                android:layout_height="26.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="15.0dip"
+                android:scaleType="fitXY"
+                android:src="@mipmap/android_personel_quickly_order"
+                />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="保养服务"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_medium_text_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/personel_arrow_right" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/first_page_shop_show_sales_activity"
+            style="@style/MineItemStyle"
+            android:background="@drawable/bg_item_top" >
+
+            <ImageView
+                android:layout_width="26.0dip"
+                android:layout_height="26.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="15.0dip"
+                android:scaleType="fitXY"
+                android:src="@mipmap/android_personel_quickly_order"
+                />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="优惠活动"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_medium_text_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/personel_arrow_right" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/first_page_shop_show_customers_comments"
+            style="@style/MineItemStyle"
+            android:background="@drawable/bg_item_top" >
+
+            <ImageView
+                android:layout_width="26.0dip"
+                android:layout_height="26.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="15.0dip"
+                android:scaleType="fitXY"
+                android:src="@mipmap/android_personel_quickly_order"
+                />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="客户评价"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_medium_text_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/personel_arrow_right" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

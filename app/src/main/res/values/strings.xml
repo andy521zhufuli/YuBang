@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">YuBang</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_first_page">FirstPageActivity</string>
+    <string name="title_activity_shopping_mall">ShoppingMallActivity</string>
+    <string name="title_activity_discover">DiscoverActivity</string>
+    <string name="title_activity_my">MyActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_forget_and_reset_pwd">ForgetAndResetPwdActivity</string>
+    <string name="title_activity_register_details">RegisterDetailsActivity</string>
+    <string name="title_activity_register_detail_choose_car_info">
+        RegisterDetailChooseCarInfoActivity
+    </string>
+    <string name="title_activity_register_detail_upload_idcard">RegisterDetailUploadIDCardActivity
+    </string>
+    <string name="title_activity_register_detail_upload_driver_photo">
+        RegisterDetailUploadDriverPhotoActivity
+    </string>
+    <string name="title_activity_register_detail_upload_car_photo">
+        RegisterDetailUploadCarPhotoActivity
+    </string>
+    <string name="title_activity_register_detail_upload_driver_license">
+        RegisterDetailUploadDriverLicenseActivity
+    </string>
+    <string name="title_activity_register_detail_upload_driving_license">
+        RegisterDetailUploadDrivingLicenseActivity
+    </string>
+    <string name="title_activity_register_detail_upload_taxi_license">
+        RegisterDetailUploadTaxiLicenseActivity
+    </string>
+    <string name="title_activity_my_personal_info">MyPersonalInfoActivity</string>
+    <string name="title_activity_my_wwallet">MyWwalletActivity</string>
+    <string name="title_activity_my_coupon">MyCoupon</string>
+    <string name="title_activity_my_privilege">MyPrivilegeActivity</string>
+    <string name="title_activity_my_qrcode">MyQRCodeActivity</string>
+    <string name="title_activity_my_orders">MyOrdersActivity</string>
+    <string name="title_activity_my_recommended_partner">MyRecommendedPartner</string>
+    <string name="title_activity_my_recommended_partner_first_fragment">
+        MyRecommendedPartnerFirstFragmentActivity
+    </string>
+    <string name="title_activity_my_recommended_partner_second_fragment">
+        MyRecommendedPartnerSecondFragmentActivity
+    </string>
+    <string name="title_activity_my_recommended_partner_third_fragment">
+        MyRecommendedPartnerThirdFragmentActivity
+    </string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_shopping_mall_goods">ShoppingMallGoodsActivity</string>
+    <string name="title_activity_shopping_mall_conform_order">ShoppingMallConformOrderActivity
+    </string>
+    <string name="title_activity_shopping_mall_choose_payment">ShoppingMallChoosePaymentActivity
+    </string>
+    <string name="title_activity_shopping_mall_payment_add_bank_card">
+        ShoppingMallPaymentAddBankCardActivity
+    </string>
+    <string name="title_activity_first_page_shop_show">FirstPageShopShowActivity</string>
+    <string name="title_activity_first_page_shop_big_photo_show">FirstPageShopBigPhotoShowActivity
+    </string>
+    <string name="title_activity_discover_nearby">DiscoverNearbyActivity</string>
+    <string name="title_activity_my_commission_detail">MyCommissionDetailActivity</string>
+    <string name="title_activity_discover_recommend_partner">DiscoverRecommend_partnerActivity
+    </string>
+    <string name="title_activity_discover_recommend_add_partner">
+        DiscoverRecommendAddPartnerActivity
+    </string>
+    <string name="title_activity_discover_recommend_partner_comment">
+        DiscoverRecommendPartnerCommentActivity
+    </string>
+</resources>

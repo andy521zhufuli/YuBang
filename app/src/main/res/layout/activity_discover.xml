@@ -1,0 +1,275 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#ffe4e7e9"
+    android:layout_height="match_parent"
+    tools:context="com.android.andy.yubang.ui.DiscoverActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="49.5dip">
+        <ImageView
+            android:id="@+id/titleBg"
+            android:background="@drawable/common_title_background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/title_back"
+            android:paddingLeft="15.0dip"
+            android:paddingRight="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/common_title_back_selector"
+            android:visibility="gone"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/share_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10.0dip"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:ellipsize="end"
+            android:gravity="center"
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:maxWidth="180.0dip"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            style="@style/common_layout_title"
+            android:textSize="20sp"
+            android:text="驭帮"
+            />
+    </RelativeLayout>
+
+
+    <!-- 推荐合伙人  附近的 -->
+    <RelativeLayout
+        android:id="@+id/discover_activity_recommend_partners_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/common_title"
+        >
+        <!-- 推荐合伙人-->
+        <RelativeLayout
+            android:id="@+id/discover_activity_recommend_partners_wallet_layout"
+            android:background="@drawable/iwant_get_cash_account_item_bg_selector"
+            android:paddingLeft="23.0dip"
+            android:clickable="true"
+            android:layout_width="fill_parent"
+            android:layout_height="43.0dip">
+            <TextView
+                android:id="@+id/discover_activity_recommend_partners_wallet"
+                android:background="@mipmap/android_my_jd_phone_appoint"
+                android:padding="5.0dip" android:layout_width="25.0dip"
+                android:layout_height="25.0dip"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true" />
+            <TextView
+                android:textSize="20.0sp"
+                android:textColor="@color/pd_red"
+                android:id="@+id/discover_activity_recommend_partners_text"
+                android:paddingLeft="15.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推荐合伙人"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/discover_activity_recommend_partners_wallet"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:textSize="15.0sp"
+                android:textColor="@color/black"
+                android:id="@+id/discover_activity_recommend_partners_account_text1"
+                android:paddingLeft="15.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="领百元推荐费"
+                android:layout_toLeftOf="@+id/discover_activity_recommend_partners_arrow"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:id="@+id/discover_activity_recommend_partners_arrow"
+                android:paddingRight="20.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/android_list_idex"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+
+        <!-- 附近的-->
+        <RelativeLayout
+            android:id="@+id/discover_activity_nearby_layout"
+            android:background="@drawable/iwant_get_cash_account_item_bg_selector"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="23.0dip"
+            android:layout_below="@+id/discover_activity_recommend_partners_wallet_layout"
+            android:clickable="true"
+            android:layout_width="fill_parent"
+            android:layout_height="43.0dip">
+            <TextView
+                android:id="@+id/iwant_get_cash_account_weixin_account"
+                android:background="@mipmap/android_my_jd_service_manager"
+                android:padding="5.0dip" android:layout_width="25.0dip"
+                android:layout_height="25.0dip"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true" />
+            <TextView
+                android:textSize="15.0sp"
+                android:textColor="@color/black"
+                android:id="@+id/iwant_get_cash_account_weixin_account_text"
+                android:paddingLeft="15.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="附近的"
+                android:layout_toRightOf="@+id/iwant_get_cash_account_weixin_account"
+                android:layout_centerVertical="true" />
+            <ImageView
+                android:id="@+id/iwant_get_cash_account_weixin_account_arrow"
+                android:paddingRight="20.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/android_list_idex"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <!-- 物流 保险 油卡-->
+    <RelativeLayout
+        android:id="@+id/iwant_get_cash_account_alipay_layout"
+        android:layout_marginTop="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/discover_activity_recommend_partners_layout"
+        >
+        <!-- 物流-->
+        <RelativeLayout
+            android:id="@+id/iwant_get_cash_account_alipay_wallet_layout"
+            android:background="@drawable/iwant_get_cash_account_item_bg_selector"
+            android:paddingLeft="23.0dip"
+            android:clickable="true"
+            android:layout_width="fill_parent"
+            android:layout_height="43.0dip">
+            <TextView
+                android:id="@+id/iwant_get_cash_account_alipay_wallet"
+                android:background="@mipmap/android_my_jd_phone_appoint"
+                android:padding="5.0dip" android:layout_width="25.0dip"
+                android:layout_height="25.0dip"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true" />
+            <TextView
+                android:textSize="15.0sp"
+                android:textColor="@color/black"
+                android:id="@+id/iwant_get_cash_account_alipay_text"
+                android:paddingLeft="15.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="物流"
+                android:layout_toRightOf="@+id/iwant_get_cash_account_alipay_wallet"
+                android:layout_centerVertical="true" />
+            <ImageView
+                android:id="@+id/iwant_get_cash_account_alipay_arrow"
+                android:paddingRight="20.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/android_list_idex"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+        <!-- 保险 -->
+        <RelativeLayout
+            android:id="@+id/iwant_get_cash_account_alipay_account_layout"
+            android:background="@drawable/iwant_get_cash_account_item_bg_selector"
+            android:paddingLeft="23.0dip"
+            android:layout_below="@+id/iwant_get_cash_account_alipay_wallet_layout"
+            android:clickable="true"
+            android:layout_width="fill_parent"
+            android:layout_height="43.0dip">
+            <TextView
+                android:id="@+id/iwant_get_cash_account_alipay_account"
+                android:background="@mipmap/android_my_jd_service_manager"
+                android:padding="5.0dip" android:layout_width="25.0dip"
+                android:layout_height="25.0dip"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true" />
+            <TextView
+                android:textSize="15.0sp"
+                android:textColor="@color/black"
+                android:id="@+id/iwant_get_cash_account_alipay_account_text"
+                android:paddingLeft="15.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保险"
+                android:layout_toRightOf="@+id/iwant_get_cash_account_alipay_account"
+                android:layout_centerVertical="true" />
+            <ImageView
+                android:id="@+id/iwant_get_cash_account_alipay_account_arrow"
+                android:paddingRight="20.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/android_list_idex"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+        <!-- 油卡-->
+        <RelativeLayout
+            android:id="@+id/iwant_get_cash_account_alipay_account_layout1"
+            android:background="@drawable/iwant_get_cash_account_item_bg_selector"
+            android:paddingLeft="23.0dip"
+            android:layout_below="@+id/iwant_get_cash_account_alipay_account_layout"
+            android:clickable="true"
+            android:layout_width="fill_parent"
+            android:layout_height="43.0dip">
+            <TextView
+                android:id="@+id/iwant_get_cash_account_alipay_account1"
+                android:background="@mipmap/android_my_jd_service_manager"
+                android:padding="5.0dip" android:layout_width="25.0dip"
+                android:layout_height="25.0dip"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true" />
+            <TextView
+                android:textSize="15.0sp"
+                android:textColor="@color/black"
+                android:id="@+id/iwant_get_cash_account_alipay_account_text1"
+                android:paddingLeft="15.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="油卡"
+                android:layout_toRightOf="@+id/iwant_get_cash_account_alipay_account1"
+                android:layout_centerVertical="true" />
+            <ImageView
+                android:id="@+id/iwant_get_cash_account_alipay_account_arrow1"
+                android:paddingRight="20.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/android_list_idex"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+</RelativeLayout>

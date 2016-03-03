@@ -1,0 +1,268 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffe4e7e9"
+    tools:context="com.android.andy.yubang.ui.RegisterDetailsActivity">
+
+    <!-- 头部显示-->
+    <RelativeLayout
+        android:id="@+id/layout_login_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="6dp"
+            android:paddingRight="10dp"
+            android:layout_margin="6dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="注册详情"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_text_size"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </RelativeLayout>
+
+
+    <!-- 填写车辆信息-->
+    <RelativeLayout
+        android:id="@+id/register_detail_car_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_login_topbar"
+        android:background="@drawable/register_detail_layout_car_info"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+
+        <!-- 车辆信息-->
+        <RelativeLayout
+            android:id="@+id/car_info"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:background="@drawable/bg_register_detail_car_info_item_bottom"
+            >
+
+            <ImageView
+                android:id="@+id/tv_uid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
+                android:src="@mipmap/android_personel_quickly_order"
+                />
+
+            <TextView
+                android:id="@+id/register_detail_select_car_info"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_uid"
+                android:hint="请选择您的车辆信息"
+                android:singleLine="true"
+                android:layout_marginLeft="20dp"
+                android:textSize="@dimen/small_middle_text_size" >
+
+            </TextView>
+
+
+        </RelativeLayout>
+        <!-- 分割线-->
+        <View
+            android:id="@+id/car_info_line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="64dp"
+            android:layout_below="@+id/car_info"
+            android:background="#ffcccccc"/>
+
+        <!-- 车牌号-->
+        <RelativeLayout
+            android:id="@+id/car_info_num"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/car_info_line"
+            android:background="@drawable/bg_register_detail_car_info_item_bottom"
+            android:layout_height="50dp"
+            android:clickable="true"
+            >
+
+            <ImageView
+                android:id="@+id/car_info_num_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
+                android:src="@mipmap/android_personel_quickly_order"
+                />
+
+            <EditText
+                android:id="@+id/register_detail_select_car_num"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/car_info_num_image"
+                android:background="@null"
+                android:hint="请输入您的车牌号"
+                android:singleLine="true"
+                android:layout_marginLeft="20dp"
+                android:textSize="@dimen/small_middle_text_size" >
+
+            </EditText>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <!-- 上传照片-->
+    <LinearLayout
+        android:id="@+id/register_detail_upload_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_detail_car_info"
+        android:background="@drawable/register_detail_layout_car_info"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <View
+                android:id="@+id/upload_car_info_line1"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tv_upload_pic"
+                android:background="#ffcccccc"/>
+
+            <TextView
+                android:id="@+id/tv_upload_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="上传照片"/>
+
+            <View
+                android:id="@+id/upload_car_info_line2"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_upload_pic"
+                android:background="#ffcccccc"/>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp">
+            //TODO
+            <!-- 这里的图片需要做切图  并且横竖线要加上-->
+            <!-- 身份证-->
+            <ImageView
+                android:id="@+id/image_id_card"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@mipmap/item_upload_pic_background"
+                />
+            <!-- 司机照片-->
+            <ImageView
+                android:id="@+id/image_driver_photo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@mipmap/item_upload_pic_background"
+                />
+            <!-- 车辆照片-->
+            <ImageView
+                android:id="@+id/image_car_photo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@mipmap/item_upload_pic_background"
+                />
+
+        </LinearLayout>
+        <View
+            android:id="@+id/car_info_line3"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_below="@+id/car_info"
+            android:background="#ffcccccc"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            >
+            <!-- 驾驶证-->
+            <ImageView
+                android:id="@+id/image_driver_license"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@mipmap/item_upload_pic_background"
+                />
+            <!-- 行驶证-->
+            <ImageView
+                android:id="@+id/image_driving_license"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@mipmap/item_upload_pic_background"
+                />
+            <!-- 营运证-->
+            <ImageView
+                android:id="@+id/image_taxi_license"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@mipmap/item_upload_pic_background"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:id="@+id/iwant_get_cash_nextstep_layout"
+        android:padding="20.0dip"
+        android:visibility="visible"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_detail_upload_images"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:textSize="17.0sp"
+            android:id="@+id/btn_commit"
+            android:background="@drawable/btn_commit_selector"
+            android:paddingTop="10.0dip"
+            android:paddingBottom="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:text="提交" />
+    </LinearLayout>
+
+
+
+
+
+
+</RelativeLayout>

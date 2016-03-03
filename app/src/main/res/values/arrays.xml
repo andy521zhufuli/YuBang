@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="countries">
+
+
+
+        <item>宝马</item>
+        <item>宝骏</item>
+        <item>宝马</item>
+        <item>宝骏</item>
+        <item>宝马</item>
+        <item>宝骏</item>
+        <item>宝马</item>
+        <item>宝骏</item>
+
+
+        <item>奔驰</item>
+        <item>奔驰</item>
+        <item>奔驰</item>
+        <item>奔驰</item>
+        <item>奔驰</item>
+
+        <item>长安</item>
+        <item>长安</item>
+        <item>长安</item>
+        <item>长安</item>
+
+        <item>大运</item>
+        <item>大运</item>
+        <item>大运</item>
+        <item>大运</item>
+        <item>大运</item>
+        <item>大运</item>
+        <item>大运</item>
+
+
+    </string-array>
+</resources>
