@@ -66,6 +66,7 @@ public class UploadFileSelectPicActivity extends BaseActivity implements View.On
         mContext = this;
 
         findViews();
+
     }
 
     /**
