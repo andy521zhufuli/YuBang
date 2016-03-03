@@ -34,6 +34,7 @@ public class BaseActivity extends Activity {
         allowFullScreen = true;
         // 添加Activity到堆栈
         AppManager.getAppManager().addActivity(this);
+
     }
 
     @Override
@@ -74,6 +75,7 @@ public class BaseActivity extends Activity {
                 return false;
             }
         }
+
         return super.onKeyDown(keyCode, event);
     }
 }

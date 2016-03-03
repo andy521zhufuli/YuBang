@@ -59,6 +59,8 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_my_recommended_partner);
 
+
+
         mContext =this;
 
         findViews();
