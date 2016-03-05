@@ -15,5 +15,6 @@ public class YuBangApplication extends Application
         super.onCreate();
         toastMgr.builder.init(getApplicationContext());
         SDKInitializer.initialize(getApplicationContext());
+
     }
 }
