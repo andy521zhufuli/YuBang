@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.android.andy.yubang.utils.BDMapData;
 import com.android.andy.yubang.utils.L;
+import com.android.andy.yubang.utils.ViewGroupToBitmap;
 import com.android.andy.yubang.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.baidu.location.BDLocation;
@@ -28,6 +30,7 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
+import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -58,6 +61,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     private TextView first_page_search;//搜索
 
     private List<BDMapData> bdMapClientList;
+    //当前定位结果的经纬度
     private double latitude;
     private double longitude;
     /**
@@ -69,7 +73,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
     //定位
     public LocationClient mLocationClient = null;
-    public BDLocationListener myListener = new MyLocationListener();
+    public BDLocationListener myListener = new MyLocationListenner();
 
 
     // 点击地图上标注物之后  弹出下面的东西
@@ -100,26 +104,50 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     private View            indicator5;
 
 
+    private Button          first_page_location_btn;//定位按钮
+
+
     private int isLocationedSuccess;
     private static final int GPS_LOC_SUCCESS = 61;//GPS定位结果，GPS定位成功。
     private static final int NET_LOC_SUCCESS = 61;//网络定位结果，网络定位定位成功
+
+    boolean isFirstLoc = true; // 是否首次定位
+    private MyLocationConfiguration.LocationMode mCurrentMode;
+    private Marker mMarkerA;
+    private Marker mMarkerB;
+    private Marker mMarkerC;
+    private Marker mMarkerD;
+
+
+
+    // 初始化全局 bitmap 信息，不用时及时 recycle
+    BitmapDescriptor bdA;
+
+    BitmapDescriptor bdB;
+    BitmapDescriptor bdC;
+    BitmapDescriptor bdD;
+    BitmapDescriptor bd;
+    BitmapDescriptor bdGround;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_first_page);
 
         mContext = this;
 
         findViews();
+
+        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
+
         mBaiduMap = mMapView.getMap();
+        //初始化定位
         mBaiduMap.setMyLocationEnabled(true);//使能百度地图的定位功能
         mMapView.showZoomControls(false);
         mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
-
+        //初始化定位参数
         initLocation();
         /**
          * 覆盖物点击
@@ -127,46 +155,105 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                final String info = (String) marker.getExtraInfo().get("info");
-                InfoWindow infoWindow;
-                //动态生成一个Button对象，用户在地图中显示InfoWindow
-                final Button textInfo = new Button(getApplicationContext());
-                textInfo.setBackgroundResource(R.mipmap.alipay_payment);
-                textInfo.setPadding(10, 10, 10, 10);
-                textInfo.setTextColor(Color.BLACK);
-                textInfo.setTextSize(12);
-                textInfo.setText(info);
-                //得到点击的覆盖物的经纬度
-                LatLng ll = marker.getPosition();
-                textInfo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(mContext, "你点击了" + info, Toast.LENGTH_SHORT).show();
 
-                        if (bottom.getVisibility() == View.VISIBLE)
-                        {
-                            bottom.setVisibility(View.INVISIBLE);
-                        }
-                        else
-                            bottom.setVisibility(View.VISIBLE);
-                    }
-                });
-                //将marker所在的经纬度的信息转化成屏幕上的坐标
-                Point p = mBaiduMap.getProjection().toScreenLocation(ll);
-                p.y -= 90;
-                LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
-                //初始化infoWindow，最后那个参数表示显示的位置相对于覆盖物的竖直偏移量，这里也可以传入一个监听器
-                infoWindow = new InfoWindow(textInfo, llInfo, 0);
-                mBaiduMap.showInfoWindow(infoWindow);//显示此infoWindow
-                //让地图以备点击的覆盖物为中心
-                MapStatusUpdate status = MapStatusUpdateFactory.newLatLng(ll);
-                mBaiduMap.setMapStatus(status);
+
+                toastMgr.builder.display("修车店", 0);
+                if (bottom.getVisibility() == View.VISIBLE) {
+                    bottom.setVisibility(View.INVISIBLE);
+                } else
+                    bottom.setVisibility(View.VISIBLE);
+//                final String info = (String) marker.getExtraInfo().get("info");
+//                InfoWindow infoWindow;
+//                //动态生成一个Button对象，用户在地图中显示InfoWindow
+//                final Button textInfo = new Button(getApplicationContext());
+//                textInfo.setBackgroundResource(R.mipmap.alipay_payment);
+//                textInfo.setPadding(10, 10, 10, 10);
+//                textInfo.setTextColor(Color.BLACK);
+//                textInfo.setTextSize(12);
+//                textInfo.setText(info);
+//                //得到点击的覆盖物的经纬度
+//                LatLng ll = marker.getPosition();
+//                textInfo.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                    }
+//                });
+//                //将marker所在的经纬度的信息转化成屏幕上的坐标
+//                Point p = mBaiduMap.getProjection().toScreenLocation(ll);
+//                p.y -= 90;
+//                LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
+//                //初始化infoWindow，最后那个参数表示显示的位置相对于覆盖物的竖直偏移量，这里也可以传入一个监听器
+//                infoWindow = new InfoWindow(textInfo, llInfo, 0);
+//                mBaiduMap.showInfoWindow(infoWindow);//显示此infoWindow
+//                //让地图以备点击的覆盖物为中心
+//                MapStatusUpdate status = MapStatusUpdateFactory.newLatLng(ll);
+//                mBaiduMap.setMapStatus(status);
                 return true;
             }
         });
 
         mLocationClient.start();
 
+    }
+
+    /**
+     * 初始化定位配置参数
+     */
+    private void initLocation(){
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
+        int span=5000;
+        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
+        option.setOpenGps(true);//可选，默认false,设置是否使用gps
+        option.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+        option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+        option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+        option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+        option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
+        option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
+        mLocationClient.setLocOption(option);
+    }
+
+
+    /**
+     * 定位SDK监听函数
+     */
+    public class MyLocationListenner implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            // map view 销毁后不在处理新接收的位置
+            if (location == null || mMapView == null) {
+                toastMgr.builder.display("定位失败", 0);
+                return;
+            }
+            MyLocationData locData = new MyLocationData.Builder()
+                    .accuracy(location.getRadius())
+                            // 此处设置开发者获取到的方向信息，顺时针0-360
+                    .direction(100).latitude(location.getLatitude())
+                    .longitude(location.getLongitude()).build();
+            mBaiduMap.setMyLocationData(locData);
+            if (isFirstLoc) {
+                isFirstLoc = false;
+                LatLng ll = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+                MapStatus.Builder builder = new MapStatus.Builder();
+                builder.target(ll).zoom(14.0f);
+                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+            }
+            longitude = location.getLongitude();
+            latitude  = location.getLatitude();
+
+
+            initOverlay();
+            mLocationClient.stop();
+        }
+
+        public void onReceivePoi(BDLocation poiLocation) {
+        }
     }
 
 
@@ -206,6 +293,63 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
 
     /**
+     * 初始化覆盖物
+     */
+    public void initOverlay() {
+        //这里是根据网上拿到的数据,去看要添加什么覆盖物
+        //这里可以抽象出一个类  然后后面就会方便
+        // add marker overlay
+        LatLng llA = new LatLng(latitude + 0.024, longitude + 0.024);
+        LatLng llB = new LatLng(latitude - 0.0024, longitude + 0.024);
+        LatLng llC = new LatLng(latitude + 0.024, longitude - 0.024);
+        LatLng llD = new LatLng(latitude - 0.024, longitude - 0.024);
+
+        ViewGroupToBitmap vb = new ViewGroupToBitmap();
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.view_to_marker, null);
+        TextView textView = (TextView) view.findViewById(R.id.marker_info);
+        textView.setText("高德汇001");
+        bdA = BitmapDescriptorFactory.fromBitmap(vb.getViewBitmap(view));
+
+        //第一个覆盖物
+        MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdA)
+                .zIndex(9).draggable(true);
+        // 掉下动画
+        ooA.animateType(MarkerOptions.MarkerAnimateType.drop);
+        mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
+
+        //第二个覆盖物
+        MarkerOptions ooB = new MarkerOptions().position(llB).icon(bdA)
+                .zIndex(5);
+        // 掉下动画
+        ooB.animateType(MarkerOptions.MarkerAnimateType.drop);
+        mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
+
+        //第三个覆盖物
+        MarkerOptions ooC = new MarkerOptions().position(llC).icon(bdA)
+                .perspective(false).zIndex(7);
+        // 生长动画
+        ooC.animateType(MarkerOptions.MarkerAnimateType.drop);
+        mMarkerC = (Marker) (mBaiduMap.addOverlay(ooC));
+
+        //第四个覆盖物
+        MarkerOptions ooD = new MarkerOptions().position(llD).icon(bdA)
+                .zIndex(0);
+        // 生长动画
+        ooD.animateType(MarkerOptions.MarkerAnimateType.drop);
+        mMarkerD = (Marker) (mBaiduMap.addOverlay(ooD));
+
+        LatLng loc = new LatLng(latitude, longitude);
+        MapStatusUpdate u = MapStatusUpdateFactory
+                .newLatLng(loc);
+        mBaiduMap.setMapStatus(u);
+
+
+    }
+
+
+    /**
      * 添加覆盖物的方法
      */
     private void addOverlay() {
@@ -227,10 +371,23 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         mBaiduMap.setMapStatus(status);
 
     }
+    /**
+     * 清除所有Overlay
+     *
+     * @param view
+     */
+    public void clearOverlay(View view) {
+        mBaiduMap.clear();
+        mMarkerA = null;
+        mMarkerB = null;
+        mMarkerC = null;
+        mMarkerD = null;
+    }
+
 
 
     /**
-     *
+     * 关联
      */
     private void findViews() {
         //地图
@@ -264,6 +421,8 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         //搜索
         first_page_search = (TextView) findViewById(R.id.first_page_search);
 
+        //定位
+        first_page_location_btn = (Button) findViewById(R.id.first_page_location_btn);
 
         /**
          * 设置监听器
@@ -278,6 +437,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         image2.setOnClickListener(this);
         image3.setOnClickListener(this);
         first_page_search.setOnClickListener(this);
+        first_page_location_btn.setOnClickListener(this);
     }
 
     @Override
@@ -365,16 +525,38 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 startActivity(intent2);
                 toastMgr.builder.display("Big shop Photo",  0);
                 break;
+            //搜素
             case R.id.first_page_search:
                 Intent intent3 = new Intent();
                 intent3.setClass(FirstPageActivity.this, SearchActivity.class);
                 startActivity(intent3);
 
                 break;
+            //定位
+            case R.id.first_page_location_btn:
+                locationClick();
+                break;
         }
 
     }
 
+    /**
+     * 点击定位
+     */
+    private void locationClick() {
+
+        toastMgr.builder.display("location click", 0);
+        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
+        mBaiduMap
+                .setMyLocationConfigeration(new MyLocationConfiguration(
+                        mCurrentMode, true, null));
+        //当前位置显示在地图中心左右
+        MapStatusUpdate status = MapStatusUpdateFactory.newLatLng(new LatLng(latitude, longitude));
+        mBaiduMap.setMapStatus(status);
+        clearOverlay(null);
+        mLocationClient.start();
+
+    }
 
 
     @Override
@@ -382,6 +564,8 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
+        //回收bitmap资源
+
     }
     @Override
     protected void onResume() {
@@ -397,24 +581,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     }
 
 
-    private void initLocation(){
-        LocationClientOption option = new LocationClientOption();
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        int span=5000;
-        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
-        option.setOpenGps(true);//可选，默认false,设置是否使用gps
-        option.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
-        option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-        option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
-        option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-        option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
-        option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
-        mLocationClient.setLocOption(option);
-    }
-
-
 
 
     /**
@@ -425,7 +591,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
      * @version 1.0
      * @created 2016-03-01
      */
-    public class MyLocationListener implements BDLocationListener {
+    public class MyLocationListener1 implements BDLocationListener {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
