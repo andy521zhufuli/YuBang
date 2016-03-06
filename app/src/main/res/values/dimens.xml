@@ -4,7 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
 
-
     <dimen name="goods_detail_shoppingcar_textsize">8sp</dimen>
     <dimen name="product_detail_shoppingcar_padding">5.0dip</dimen>
     <dimen name="product_detail_shoppingcar_textsize">8.0sp</dimen>
@@ -61,5 +60,6 @@
     <dimen name="fill_order_name_size">17.0sp</dimen>
     <dimen name="fill_order_padding_submit">11.5dip</dimen>
     <dimen name="fill_order_arrow_left_margin">10.0dip</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>
