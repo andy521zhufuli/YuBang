@@ -78,11 +78,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     public BDLocationListener myListener = new MyLocationListenner();
 
 
-    // 点击地图上标注物之后  弹出下面的东西
-    private LinearLayout bottom;
-    private ImageView   image1;
-    private ImageView   image2;
-    private ImageView   image3;
 
     //顶部5个tab
     private RelativeLayout  layout_order1;
@@ -126,6 +121,13 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     BitmapDescriptor bd;
     BitmapDescriptor bdGround;
 
+    // 点击地图上标注物之后  弹出下面的东西
+    private LinearLayout bottom;
+    private ImageView   image1;
+    private ImageView   image2;
+    private ImageView   image3;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,11 +156,16 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
             public boolean onMarkerClick(Marker marker) {
 
 
+                Intent intent = new Intent();
+                intent.setClass(FirstPageActivity.this, FirstPageMarkerClickedActivity.class);
+                //这里需要把要显示的店铺信息放到FirstPageMarkerClickedActivity里面去  让它解析  然后显示
+                startActivity(intent);
+
                 toastMgr.builder.display("修车店", 0);
-                if (bottom.getVisibility() == View.VISIBLE) {
-                    bottom.setVisibility(View.INVISIBLE);
-                } else
-                    bottom.setVisibility(View.VISIBLE);
+//                if (bottom.getVisibility() == View.VISIBLE) {
+//                    bottom.setVisibility(View.INVISIBLE);
+//                } else
+//                    bottom.setVisibility(View.VISIBLE);
 //                final String info = (String) marker.getExtraInfo().get("info");
 //                InfoWindow infoWindow;
 //                //动态生成一个Button对象，用户在地图中显示InfoWindow
@@ -406,9 +413,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         TextView05 = (TextView) findViewById(R.id.TextView05);
         //这里需要改成listview
         bottom = (LinearLayout) findViewById(R.id.bottom);
-        image1 = (ImageView) findViewById(R.id.image1);
-        image2 = (ImageView) findViewById(R.id.image2);
-        image3 = (ImageView) findViewById(R.id.image3);
 
         //搜索
         first_page_search = (RelativeLayout) findViewById(R.id.search_layout);
@@ -425,9 +429,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         layout_order4.setOnClickListener(this);
         layout_order5.setOnClickListener(this);
 
-        image1.setOnClickListener(this);
-        image2.setOnClickListener(this);
-        image3.setOnClickListener(this);
         first_page_search.setOnClickListener(this);
         first_page_location_btn.setOnClickListener(this);
     }

@@ -249,13 +249,20 @@
         <activity
             android:name="com.android.andy.yubang.ui.DiscoverRecommendAddPartnerActivity"
             android:label="@string/title_activity_discover_recommend_add_partner"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
 
         <!-- 发现==>合伙人评论 -->
         <activity
             android:name="com.android.andy.yubang.ui.DiscoverRecommendPartnerCommentActivity"
-            android:label="@string/title_activity_discover_recommend_partner_comment" />
-        <activity android:name="com.android.andy.yubang.ui.ExpandableListTestActivity" />
+            android:label="@string/title_activity_discover_recommend_partner_comment"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="com.android.andy.yubang.ui.ExpandableListTestActivity"
+            android:screenOrientation="portrait"
+            />
 
         <!-- 百度定位的service -->
         <service
@@ -263,6 +270,13 @@
             android:enabled="true"
             android:process=":remote" />
 
+        <activity
+            android:name="com.android.andy.yubang.ui.FirstPageMarkerClickedActivity"
+            android:theme="@style/popupDialog"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
     </application>
 
 </manifest>
