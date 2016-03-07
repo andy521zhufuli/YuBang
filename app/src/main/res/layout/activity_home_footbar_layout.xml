@@ -76,7 +76,7 @@
                 android:id="@+id/image_discover_foot"
                 android:layout_width="wrap_content"
                 android:layout_height="38.0dip"
-                android:src="@mipmap/tabhost_all_dark_normal"
+                android:src="@mipmap/tabhost_discover_normal"
                 android:scaleType="fitCenter"
                 android:layout_centerInParent="true"
                 />

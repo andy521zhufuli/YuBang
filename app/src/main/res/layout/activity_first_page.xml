@@ -4,23 +4,53 @@
     android:layout_height="match_parent"
     tools:context="com.android.andy.yubang.ui.FirstPageActivity">
 
-    <TextView
-        android:id="@+id/first_page_search"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:singleLine="true"
-        android:hint="搜索"
-        android:drawableRight="@mipmap/first_page_search"
-        />
+
+    <RelativeLayout
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/search_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/first_page_search_bg"
+            android:layout_marginTop="1dp"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:id="@+id/search_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/first_page_search"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="搜索电或地址"
+                android:layout_toRightOf="@+id/search_image"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    
+
+
+
+
+
 
     <LinearLayout
         android:id="@+id/first_page_tabs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height_middle"
-        android:layout_below="@+id/first_page_search"
+        android:layout_below="@+id/bg"
         android:background="@drawable/bg_item_bottom"
         >
         <!-- 全部优惠券-->
@@ -38,13 +68,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="整车"
-                android:textColor="@color/red" />
+                android:background="@mipmap/all_car_selected"
+                />
 
             <View
                 android:id="@+id/indicator1"
                 android:layout_width="100dp"
                 android:layout_height="2dp"
+                android:visibility="gone"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:background="@color/red" />
@@ -70,8 +101,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="保养"
-                android:textColor="@color/dark" />
+                android:background="@mipmap/baoyang"
+                />
 
             <View
                 android:id="@+id/indicator2"
@@ -103,8 +134,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="电路"
-                android:textColor="@color/dark" />
+                android:background="@mipmap/dianlu"
+                />
 
             <View
                 android:id="@+id/indicator3"
@@ -136,8 +167,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="配件"
-                android:textColor="@color/dark" />
+                android:background="@mipmap/peijian"
+                />
 
             <View
                 android:id="@+id/indicator4"
@@ -169,8 +200,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="油路"
-                android:textColor="@color/dark" />
+                android:background="@mipmap/youlu"
+                />
 
             <View
                 android:id="@+id/indicator5"
@@ -218,12 +249,12 @@
 
     <Button
         android:id="@+id/first_page_location_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="定位"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@mipmap/first_page_location"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
         />
 

@@ -1,9 +1,11 @@
 package com.android.andy.yubang.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +60,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     private final static String TAG = "FirstPageActivity";
     private BMapManager mBMapManager;
 
-    private TextView first_page_search;//搜索
+    private RelativeLayout first_page_search;//搜索
 
     private List<BDMapData> bdMapClientList;
     //当前定位结果的经纬度
@@ -85,23 +87,18 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     //顶部5个tab
     private RelativeLayout  layout_order1;
     private TextView        TextView01;
-    private View            indicator1;
 
     private RelativeLayout  layout_order2;
     private TextView        TextView02;
-    private View            indicator2;
 
     private RelativeLayout  layout_order3;
     private TextView        TextView03;
-    private View            indicator3;
 
     private RelativeLayout  layout_order4;
     private TextView        TextView04;
-    private View            indicator4;
 
     private RelativeLayout  layout_order5;
     private TextView        TextView05;
-    private View            indicator5;
 
 
     private Button          first_page_location_btn;//定位按钮
@@ -395,31 +392,26 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
         layout_order1    = (RelativeLayout) findViewById(R.id.layout_order1);
         TextView01      = (TextView) findViewById(R.id.TextView01);
-        indicator1      = findViewById(R.id.indicator1);
 
         layout_order2   = (RelativeLayout) findViewById(R.id.layout_order2);
         TextView02      = (TextView) findViewById(R.id.TextView02);
-        indicator2      = findViewById(R.id.indicator2);
 
         layout_order3   = (RelativeLayout) findViewById(R.id.layout_order3);
         TextView03      = (TextView) findViewById(R.id.TextView03);
-        indicator3       = findViewById(R.id.indicator3);
 
         layout_order4    = (RelativeLayout) findViewById(R.id.layout_order4);
         TextView04       = (TextView) findViewById(R.id.TextView04);
-        indicator4      = findViewById(R.id.indicator4);
 
         layout_order5 = (RelativeLayout) findViewById(R.id.layout_order5);
         TextView05 = (TextView) findViewById(R.id.TextView05);
-        indicator5 = findViewById(R.id.indicator5);
-
+        //这里需要改成listview
         bottom = (LinearLayout) findViewById(R.id.bottom);
         image1 = (ImageView) findViewById(R.id.image1);
         image2 = (ImageView) findViewById(R.id.image2);
         image3 = (ImageView) findViewById(R.id.image3);
 
         //搜索
-        first_page_search = (TextView) findViewById(R.id.first_page_search);
+        first_page_search = (RelativeLayout) findViewById(R.id.search_layout);
 
         //定位
         first_page_location_btn = (Button) findViewById(R.id.first_page_location_btn);
@@ -440,69 +432,48 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         first_page_location_btn.setOnClickListener(this);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View view) {
         switch (view.getId())
         {
             case R.id.layout_order1:
-                indicator1.setVisibility(View.VISIBLE);
-                indicator2.setVisibility(View.INVISIBLE);
-                indicator3.setVisibility(View.INVISIBLE);
-                indicator4.setVisibility(View.INVISIBLE);
-                indicator5.setVisibility(View.INVISIBLE);
-                TextView01.setTextColor(Color.parseColor("#ff0000"));
-                TextView02.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView03.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView04.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView05.setTextColor(Color.parseColor("#4f4f4f"));
+
+                TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car_selected));
+                TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
+                TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
+                TextView04.setBackground(getResources().getDrawable(R.mipmap.peijian));
+                TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu));
                 break;
             case R.id.layout_order2:
-                indicator1.setVisibility(View.INVISIBLE);
-                indicator2.setVisibility(View.VISIBLE);
-                indicator3.setVisibility(View.INVISIBLE);
-                indicator4.setVisibility(View.INVISIBLE);
-                indicator5.setVisibility(View.INVISIBLE);
-                TextView01.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView02.setTextColor(Color.parseColor("#ff0000"));
-                TextView03.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView04.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView05.setTextColor(Color.parseColor("#4f4f4f"));
+                TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
+                TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));//需要美工再给我一张图
+                TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
+                TextView04.setBackground(getResources().getDrawable(R.mipmap.peijian));
+                TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu));
                 break;
             case R.id.layout_order3:
-                indicator1.setVisibility(View.INVISIBLE);
-                indicator2.setVisibility(View.INVISIBLE);
-                indicator3.setVisibility(View.VISIBLE);
-                indicator4.setVisibility(View.INVISIBLE);
-                indicator5.setVisibility(View.INVISIBLE);
-                TextView01.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView02.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView03.setTextColor(Color.parseColor("#ff0000"));
-                TextView04.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView05.setTextColor(Color.parseColor("#4f4f4f"));
+                TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
+                TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
+                TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu_selected));
+                TextView04.setBackground(getResources().getDrawable(R.mipmap.peijian));
+                TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu));
+
                 break;
             case R.id.layout_order4:
-                indicator1.setVisibility(View.INVISIBLE);
-                indicator2.setVisibility(View.INVISIBLE);
-                indicator3.setVisibility(View.INVISIBLE);
-                indicator4.setVisibility(View.VISIBLE);
-                indicator5.setVisibility(View.INVISIBLE);
-                TextView01.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView02.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView03.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView04.setTextColor(Color.parseColor("#ff0000"));
-                TextView05.setTextColor(Color.parseColor("#4f4f4f"));
+                TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
+                TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
+                TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
+                TextView04.setBackground(getResources().getDrawable(R.mipmap.peijain_selected));
+                TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu));
                 break;
             case R.id.layout_order5:
-                indicator1.setVisibility(View.INVISIBLE);
-                indicator2.setVisibility(View.INVISIBLE);
-                indicator3.setVisibility(View.INVISIBLE);
-                indicator4.setVisibility(View.INVISIBLE);
-                indicator5.setVisibility(View.VISIBLE);
-                TextView01.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView02.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView03.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView04.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView05.setTextColor(Color.parseColor("#ff0000"));
+                TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
+                TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
+                TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
+                TextView04.setBackground(getResources().getDrawable(R.mipmap.peijian));
+                TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu_selected));
+
                 break;
             case R.id.image1:
                 //点击店铺 跳转
@@ -526,7 +497,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 toastMgr.builder.display("Big shop Photo",  0);
                 break;
             //搜素
-            case R.id.first_page_search:
+            case R.id.search_layout:
                 Intent intent3 = new Intent();
                 intent3.setClass(FirstPageActivity.this, SearchActivity.class);
                 startActivity(intent3);
@@ -545,7 +516,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
      */
     private void locationClick() {
 
-        toastMgr.builder.display("location click", 0);
+        toastMgr.builder.display("location click1", 0);
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
         mBaiduMap
                 .setMyLocationConfigeration(new MyLocationConfiguration(

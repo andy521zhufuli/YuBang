@@ -126,7 +126,7 @@ public class MainActivity extends TabActivity {
             main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
                     R.mipmap.tabhost_shoppingcar_bnormal));
             image_discover.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_all_dark_normal));
+                    R.mipmap.tabhost_discover_normal));
             image_me.setImageDrawable(getResources().getDrawable(
                     R.mipmap.tabhost_my_normal));
         }
@@ -150,7 +150,7 @@ public class MainActivity extends TabActivity {
             main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
                     R.mipmap.tabhost_shoppingcar_perss));
             image_discover.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_all_dark_normal));
+                    R.mipmap.tabhost_discover_normal));
             image_me.setImageDrawable(getResources().getDrawable(
                     R.mipmap.tabhost_my_normal));
         }
@@ -172,7 +172,7 @@ public class MainActivity extends TabActivity {
             main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
                     R.mipmap.tabhost_shoppingcar_bnormal));
             image_discover.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_all_dark_press));
+                    R.mipmap.tabhost_discover_press));
             image_me.setImageDrawable(getResources().getDrawable(
                     R.mipmap.tabhost_my_normal));
         }
@@ -194,7 +194,7 @@ public class MainActivity extends TabActivity {
             main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
                     R.mipmap.tabhost_shoppingcar_bnormal));
             image_discover.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_all_dark_normal));
+                    R.mipmap.tabhost_discover_normal));
             image_me.setImageDrawable(getResources().getDrawable(
                     R.mipmap.tabhost_my_press));
         }
