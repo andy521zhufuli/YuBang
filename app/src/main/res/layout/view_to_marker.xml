@@ -2,13 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@mipmap/first_page_marker_location_car"
+    >
 
-    <ImageView android:layout_width="35dp"
+    <TextView
+        android:id="@+id/marker_shop_num"
+        android:layout_width="35dp"
         android:layout_height="35dp"
         android:scaleType="centerCrop"
         android:padding="5dip"
-        android:src="@mipmap/left"/>
+        android:text=" 1"
+        android:textSize="@dimen/large_text_size"
+        android:gravity="center_vertical"
+        android:background="@mipmap/first_page_location_shop_num"
+        />
 
     <TextView
         android:id="@+id/marker_info"
@@ -20,10 +28,5 @@
         android:padding="3dp"
         />
 
-    <ImageView android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:scaleType="centerCrop"
-        android:padding="5dip"
-        android:src="@mipmap/right"/>
 
 </LinearLayout>

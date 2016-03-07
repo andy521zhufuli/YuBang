@@ -504,7 +504,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
                 break;
             //定位
-            case R.id.first_page_location_btn:
+            case R.id.first_page_location_btn://这里按钮还要适配  还缺一种状态
                 locationClick();
                 break;
         }
