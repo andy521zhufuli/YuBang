@@ -24,7 +24,8 @@
                 android:id="@+id/shop_like"
                 android:layout_width="50dp"
                 android:layout_height="60dp"
-                android:src="@mipmap/like"
+                android:src="@mipmap/liked"
+                android:layout_marginLeft="6dp"
                 android:layout_centerVertical="true"
                 />
             <View
@@ -55,7 +56,8 @@
                 android:id="@+id/clicked_shop_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/alipay_payment"
+                android:background="@mipmap/mendian"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/clicked_shop_num"
                 android:layout_marginLeft="5dp"
                 />
@@ -112,11 +114,16 @@
 
             <ImageView
                 android:id="@+id/clicked_shop_close"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/login_delete_data_icon"
+                android:background="@drawable/first_page_shop_clicked_close_selector"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
                 />
 
 

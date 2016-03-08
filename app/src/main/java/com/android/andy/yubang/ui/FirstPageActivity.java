@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -127,6 +128,19 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     private ImageView   image2;
     private ImageView   image3;
 
+    //进度条
+    private ProgressBar first_page_progressbar;
+
+
+    //当前界面
+    private int currentPage;
+    private static final int ALL_CAR_PAGE = 1;
+    private static final int BAO_YANG_PAGE = 2;
+    private static final int DIAN_LU_PAGE = 3;
+    private static final int PEI_JIAN_PAGE = 4;
+    private static final int YOU_LU_PAGE = 5;
+
+
 
 
     @Override
@@ -137,6 +151,8 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         mContext = this;
 
         findViews();
+
+        currentPage = ALL_CAR_PAGE;
 
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
 
@@ -247,12 +263,15 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 MapStatus.Builder builder = new MapStatus.Builder();
                 builder.target(ll).zoom(14.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+                longitude = location.getLongitude();
+                latitude  = location.getLatitude();
+                initOverlay();
             }
             longitude = location.getLongitude();
             latitude  = location.getLatitude();
 
 
-            initOverlay();
+
             mLocationClient.stop();
         }
 
@@ -349,6 +368,8 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 .newLatLng(loc);
         mBaiduMap.setMapStatus(u);
 
+        first_page_progressbar.setVisibility(View.GONE);
+
 
     }
 
@@ -419,6 +440,8 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
         //定位
         first_page_location_btn = (Button) findViewById(R.id.first_page_location_btn);
+        //进度条
+        first_page_progressbar = (ProgressBar) findViewById(R.id.first_page_progressbar);
 
         /**
          * 设置监听器
@@ -439,42 +462,87 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         switch (view.getId())
         {
             case R.id.layout_order1:
+                //显示进度条
 
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car_selected));
                 TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
                 TextView04.setBackground(getResources().getDrawable(R.mipmap.peijian));
                 TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu));
+
+                if (currentPage != ALL_CAR_PAGE)
+                {
+                    first_page_progressbar.setVisibility(View.VISIBLE);
+                    locationClick();
+                    initOverlay();
+                }
+                currentPage = ALL_CAR_PAGE;
+
                 break;
             case R.id.layout_order2:
+                //显示进度条
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
                 TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));//需要美工再给我一张图
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
                 TextView04.setBackground(getResources().getDrawable(R.mipmap.peijian));
                 TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu));
+
+                if (currentPage != BAO_YANG_PAGE)
+                {
+                    first_page_progressbar.setVisibility(View.VISIBLE);
+                    locationClick();
+                    initOverlay();
+                }
+                currentPage = BAO_YANG_PAGE;
+
                 break;
             case R.id.layout_order3:
+
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
                 TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu_selected));
                 TextView04.setBackground(getResources().getDrawable(R.mipmap.peijian));
                 TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu));
 
+                if (currentPage != DIAN_LU_PAGE)
+                {
+                    first_page_progressbar.setVisibility(View.VISIBLE);
+                    locationClick();
+                    initOverlay();
+                }
+                currentPage = DIAN_LU_PAGE;
                 break;
             case R.id.layout_order4:
+
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
                 TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
                 TextView04.setBackground(getResources().getDrawable(R.mipmap.peijain_selected));
                 TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu));
+
+                if (currentPage != PEI_JIAN_PAGE)
+                {
+                    first_page_progressbar.setVisibility(View.VISIBLE);
+                    locationClick();
+                    initOverlay();
+                }
+                currentPage = PEI_JIAN_PAGE;
                 break;
             case R.id.layout_order5:
+
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
                 TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
                 TextView04.setBackground(getResources().getDrawable(R.mipmap.peijian));
                 TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu_selected));
 
+                if (currentPage != YOU_LU_PAGE)
+                {
+                    first_page_progressbar.setVisibility(View.VISIBLE);
+                    locationClick();
+                    initOverlay();
+                }
+                currentPage = YOU_LU_PAGE;
                 break;
             case R.id.image1:
                 //点击店铺 跳转
@@ -527,6 +595,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         mBaiduMap.setMapStatus(status);
         clearOverlay(null);
         mLocationClient.start();
+        initOverlay();
 
     }
 

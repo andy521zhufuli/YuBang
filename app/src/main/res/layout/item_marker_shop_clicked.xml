@@ -41,7 +41,7 @@
                     android:id="@+id/item_clicked_shop_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:background="@mipmap/alipay_payment"
+                    android:src="@mipmap/mendian"
 
                     />
 
