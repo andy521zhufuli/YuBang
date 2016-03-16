@@ -7,15 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.andy.yubang.banner.FlashView;
 import com.android.andy.yubang.banner.constants.EffectConstants;
+import com.android.andy.yubang.utils.L;
 import com.android.andy.yubang.utils.toastMgr;
 import com.android.andy.yubang.view.ForbiddenScrollGridView;
 import com.andy.android.yubang.R;
@@ -29,25 +32,94 @@ import java.util.ArrayList;
  * @version 1.0
  * @created 2016-02-22
  */
-public class ShoppingMallActivity extends BaseActivity {
+public class ShoppingMallActivity extends BaseActivity implements View.OnClickListener{
 
     private Context mContext;
-    private final static String TAG = "FirstPageActivity";
+    private final static String TAG = "ShoppingMallActivity";
 
     private FlashView shoppingmall_flashview_banner;
     private ArrayList<String> imageUrls;
 
     private ImageView shoppingmall_search_imageview;//搜索按钮
 
+    private ScrollView scrollView;//
 
-    private ForbiddenScrollGridView shoppingmall_species_gridview;//商品种类的标签
+    //种类
+    private ImageView speciese_01;
+    private ImageView speciese_02;
+    private ImageView speciese_03;
+    private ImageView speciese_04;
+    private ImageView speciese_05;
+    private ImageView speciese_06;
+    //保养维护
+    private ImageView shoppingmall_more_01;//更多
+    private TextView  main_product1_01;//主打产品
+    private TextView  main_product1_02;
+    private TextView  main_product1_03;
+    private TextView  main_product1_04;
+    private TextView  main_product1_05;
+    private TextView  main_product1_06;
 
-    private TextView main_product1;
+    //电子电路
+    private ImageView shoppingmall_more_02;
+    private TextView  main_product2_01;
+    private TextView  main_product2_02;
+    private TextView  main_product2_03;
+    private TextView  main_product2_04;
+    private TextView  main_product2_05;
+    private TextView  main_product2_06;
 
+    //发动机件
+    private ImageView shoppingmall_more_03;
+    private TextView  main_product3_01;
+    private TextView  main_product3_02;
+    private TextView  main_product3_03;
+    private TextView  main_product3_04;
+    private TextView  main_product3_05;
+    private TextView  main_product3_06;
+
+    //底盘配件
+    private ImageView shoppingmall_more_04;
+    private TextView  main_product4_01;
+    private TextView  main_product4_02;
+    private TextView  main_product4_03;
+    private TextView  main_product4_04;
+    private TextView  main_product4_05;
+    private TextView  main_product4_06;
+
+    //车架配件
+    private ImageView shoppingmall_more_05;
+    private TextView  main_product5_01;
+    private TextView  main_product5_02;
+    private TextView  main_product5_03;
+    private TextView  main_product5_04;
+    private TextView  main_product5_05;
+    private TextView  main_product5_06;
+
+
+    //托架配件
+    private ImageView shoppingmall_more_06;
+    private TextView  main_product6_01;
+    private TextView  main_product6_02;
+    private TextView  main_product6_03;
+    private TextView  main_product6_04;
+    private TextView  main_product6_05;
+    private TextView  main_product6_06;
+
+    private LinearLayout shoppingmall01;
+    private LinearLayout shoppingmall02;
+    private LinearLayout shoppingmall03;
+    private LinearLayout shoppingmall04;
+    private LinearLayout shoppingmall05;
+    private LinearLayout shoppingmall06;
 
     // 定义图片的资源
     private String[] strings = {"保养维护", "电子电路", "发动机件", "底盘配件", "车架配件", "拖架配件" };
 
+    //实现点击种类scroll自动滚动
+    private int pointYs[];
+    //是不是已经调用了measure方法
+    private boolean hasMeasure = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,29 +131,54 @@ public class ShoppingMallActivity extends BaseActivity {
 
         findViews();
 
-
+        //广告轮播
         imageUrls = new ArrayList<String>();
-
-//        imageUrls.add("http://image.baidu.com/search/detail?ct=503316480&tn=baiduimagedetail&statnum=wallpaper&ipn=d&z=0&s=0&ic=0&lm=-1&itg=0&cg=wallpaper&word=%E5%A3%81%E7%BA%B8&ie=utf-8&in=3354&cl=2&st=&pn=0&rn=1&di=0&ln=1000&&fmq=1378374347070_R&se=&sme=0&tab=&face=&&cs=1271743327,1430666038&adpicid=0&pi=0&os=2691782811,855557015&istype=&ist=&jit=&objurl=http%3A%2F%2Fa.ikafan.com%2Fattachment%2Fforum%2Fmonth_0807%2F20080726_877668de4f27856575b3y1PzoiAhYveb.jpg&bdtype=-1&gsm=200003c");
-        imageUrls.add("http://www.juzi2.com/uploads/allimg/130619/1_130619193218_1.jpg");
-        imageUrls.add("http://a.hiphotos.baidu.com/zhidao/pic/item/4034970a304e251f4dd80e61a786c9177f3e5378.jpg");
+//        imageUrls.add("http://www.juzi2.com/uploads/allimg/130619/1_130619193218_1.jpg");
+//        imageUrls.add("http://a.hiphotos.baidu.com/zhidao/pic/item/4034970a304e251f4dd80e61a786c9177f3e5378.jpg");
+//        imageUrls.add("http://f.hiphotos.baidu.com/zhidao/pic/item/9e3df8dcd100baa12801ad224710b912c8fc2e7e.jpg");
         imageUrls.add("http://f.hiphotos.baidu.com/zhidao/pic/item/9e3df8dcd100baa12801ad224710b912c8fc2e7e.jpg");
-//        imageUrls.add("http://www.kole8.com/desktop/desk_file-11/2/2/2012/11/2012113013552959.jpg");
-//        imageUrls.add("http://www.237.cc/uploads/pcline/712_0_1680x1050.jpg");
+        imageUrls.add("drawable://" + R.mipmap.defaultflashview);
+        imageUrls.add("drawable://" + R.mipmap.defaultflashview);
+
         shoppingmall_flashview_banner.setImageUris(imageUrls);
         shoppingmall_flashview_banner.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
 
+        //实现点击种类scroll自动滚动
+        pointYs = new int[6];
+        getScrollPoints();
 
-        //商品种类点击提示
-        shoppingmall_species_gridview.setAdapter(new ImageAdapter());
 
-        shoppingmall_species_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    }
+
+    private void getScrollPoints() {
+        ViewTreeObserver observer = shoppingmall_more_01.getViewTreeObserver();
+        observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                toastMgr.builder.display( "-->>" + position, 0);
+            public boolean onPreDraw() {
+                if (hasMeasure)
+                {
+
+                }
+                else
+                {
+                    int height = shoppingmall_more_01.getMeasuredHeight();
+                    ViewGroup.LayoutParams params = shoppingmall_more_01.getLayoutParams();
+                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall01.getTop());
+                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall02.getTop());
+                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall03.getTop());
+                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall04.getTop());
+                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall05.getTop());
+                    pointYs[0] = shoppingmall01.getTop();
+                    pointYs[1] = shoppingmall02.getTop();
+                    pointYs[2] = shoppingmall03.getTop();
+                    pointYs[3] = shoppingmall04.getTop();
+                    pointYs[4] = shoppingmall05.getTop();
+                    pointYs[5] = shoppingmall06.getTop();
+                    hasMeasure = true;
+                }
+                return true;
             }
         });
-
     }
 
     /**
@@ -89,14 +186,81 @@ public class ShoppingMallActivity extends BaseActivity {
      */
     private void findViews() {
 
+
+
         //轮播广告
         shoppingmall_flashview_banner = (FlashView) findViewById(R.id.shoppingmall_flashview_banner);
-        //商品种类的标签
-        shoppingmall_species_gridview = (ForbiddenScrollGridView) findViewById(R.id.shoppingmall_species_gridview);
+
         //搜索
         shoppingmall_search_imageview = (ImageView) findViewById(R.id.shoppingmall_search_imageview);
-        //主打产品1
-        main_product1 = (TextView) findViewById(R.id.main_product1);
+
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
+
+
+        //种类
+        speciese_01 = (ImageView) findViewById(R.id.speciese_01);
+        speciese_02 = (ImageView) findViewById(R.id.speciese_02);
+        speciese_03 = (ImageView) findViewById(R.id.speciese_03);
+        speciese_04 = (ImageView) findViewById(R.id.speciese_04);
+        speciese_05 = (ImageView) findViewById(R.id.speciese_05);
+        speciese_06 = (ImageView) findViewById(R.id.speciese_06);
+        //保养维护
+        shoppingmall_more_01 = (ImageView) findViewById(R.id.shoppingmall_more_01);//更多
+        main_product1_01     = (TextView) findViewById(R.id.main_product1_01);//主打产品
+        main_product1_02     = (TextView) findViewById(R.id.main_product1_02);
+        main_product1_03     = (TextView) findViewById(R.id.main_product1_03);
+        main_product1_04     = (TextView) findViewById(R.id.main_product1_04);
+        main_product1_05     = (TextView) findViewById(R.id.main_product1_05);
+        main_product1_06     = (TextView) findViewById(R.id.main_product1_06);
+
+        //电子电路
+        shoppingmall_more_02 = (ImageView) findViewById(R.id.shoppingmall_more_02);//更多
+        main_product2_01     = (TextView) findViewById(R.id.main_product2_01);//主打产品
+        main_product2_02     = (TextView) findViewById(R.id.main_product2_02);
+        main_product2_03     = (TextView) findViewById(R.id.main_product2_03);
+        main_product2_04     = (TextView) findViewById(R.id.main_product2_04);
+        main_product2_05     = (TextView) findViewById(R.id.main_product2_05);
+        main_product2_06     = (TextView) findViewById(R.id.main_product2_06);
+
+        //发动机件
+        shoppingmall_more_03 = (ImageView) findViewById(R.id.shoppingmall_more_03);//更多
+        main_product3_01     = (TextView) findViewById(R.id.main_product3_01);//主打产品
+        main_product3_02     = (TextView) findViewById(R.id.main_product3_02);
+        main_product3_03     = (TextView) findViewById(R.id.main_product3_03);
+        main_product3_04     = (TextView) findViewById(R.id.main_product3_04);
+        main_product3_05     = (TextView) findViewById(R.id.main_product3_05);
+        main_product3_06     = (TextView) findViewById(R.id.main_product3_06);
+        //底盘配件
+        shoppingmall_more_04 = (ImageView) findViewById(R.id.shoppingmall_more_04);//更多
+        main_product4_01     = (TextView) findViewById(R.id.main_product4_01);//主打产品
+        main_product4_02     = (TextView) findViewById(R.id.main_product4_02);
+        main_product4_03     = (TextView) findViewById(R.id.main_product4_03);
+        main_product4_04     = (TextView) findViewById(R.id.main_product4_04);
+        main_product4_05     = (TextView) findViewById(R.id.main_product4_05);
+        main_product4_06     = (TextView) findViewById(R.id.main_product4_06);
+        //车架配件
+        shoppingmall_more_05 = (ImageView) findViewById(R.id.shoppingmall_more_05);//更多
+        main_product5_01     = (TextView) findViewById(R.id.main_product5_01);//主打产品
+        main_product5_02     = (TextView) findViewById(R.id.main_product5_02);
+        main_product5_03     = (TextView) findViewById(R.id.main_product5_03);
+        main_product5_04     = (TextView) findViewById(R.id.main_product5_04);
+        main_product5_05     = (TextView) findViewById(R.id.main_product5_05);
+        main_product5_06     = (TextView) findViewById(R.id.main_product5_06);
+        //拖架配件
+        shoppingmall_more_06 = (ImageView) findViewById(R.id.shoppingmall_more_06);//更多
+        main_product6_01     = (TextView) findViewById(R.id.main_product6_01);//主打产品
+        main_product6_02     = (TextView) findViewById(R.id.main_product6_02);
+        main_product6_03     = (TextView) findViewById(R.id.main_product6_03);
+        main_product6_04     = (TextView) findViewById(R.id.main_product6_04);
+        main_product6_05     = (TextView) findViewById(R.id.main_product6_05);
+        main_product6_06     = (TextView) findViewById(R.id.main_product6_06);
+
+        shoppingmall01 = (LinearLayout) findViewById(R.id.shoppingmall01);
+        shoppingmall02 = (LinearLayout) findViewById(R.id.shoppingmall02);
+        shoppingmall03 = (LinearLayout) findViewById(R.id.shoppingmall03);
+        shoppingmall04 = (LinearLayout) findViewById(R.id.shoppingmall04);
+        shoppingmall05 = (LinearLayout) findViewById(R.id.shoppingmall05);
+        shoppingmall06 = (LinearLayout) findViewById(R.id.shoppingmall06);
 
 
 
@@ -110,7 +274,7 @@ public class ShoppingMallActivity extends BaseActivity {
             }
         });
 
-        main_product1.setOnClickListener(new View.OnClickListener() {
+        main_product1_01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -119,7 +283,283 @@ public class ShoppingMallActivity extends BaseActivity {
             }
         });
 
+
+        setClickListener();
+
+
     }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent();
+        switch (view.getId())
+        {
+            //种类选择
+            case R.id.speciese_01:
+                scrollView.smoothScrollTo(0, pointYs[0]);
+                break;
+            case R.id.speciese_02:
+                scrollView.smoothScrollTo(0, pointYs[1]);
+                break;
+            case R.id.speciese_03:
+                scrollView.smoothScrollTo(0, pointYs[2]);
+                break;
+            case R.id.speciese_04:
+                scrollView.smoothScrollTo(0, pointYs[3]);
+                break;
+            case R.id.speciese_05:
+                scrollView.smoothScrollTo(0, pointYs[4]);
+                break;
+            case R.id.speciese_06:
+                scrollView.smoothScrollTo(0, pointYs[5]);
+                break;
+            //保养维护
+            case R.id.shoppingmall_more_01://更多
+                toastMgr.builder.display("更多精彩", 0);
+                break;
+            case R.id.main_product1_01:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product1_02:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product1_03:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product1_04:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product1_05:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product1_06:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+
+            //电子电路
+            case R.id.shoppingmall_more_02://更多
+                toastMgr.builder.display("更多精彩", 0);
+                break;
+            case R.id.main_product2_01:
+
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product2_02:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product2_03:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product2_04:
+
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product2_05:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product2_06:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+
+
+            //发动机配件
+            case R.id.shoppingmall_more_03://更多
+                toastMgr.builder.display("更多精彩", 0);
+                break;
+            case R.id.main_product3_01:
+
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product3_02:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product3_03:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product3_04:
+
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product3_05:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product3_06:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+
+            //底盘配件
+            case R.id.shoppingmall_more_04://更多
+                toastMgr.builder.display("更多精彩", 0);
+                break;
+            case R.id.main_product4_01:
+
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product4_02:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product4_03:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product4_04:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product4_05:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product4_06:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+
+            //车架配件
+            case R.id.shoppingmall_more_05://更多
+                toastMgr.builder.display("更多精彩", 0);
+                break;
+            case R.id.main_product5_01:
+
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product5_02:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product5_03:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product5_04:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product5_05:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product5_06:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+
+            //托架配件
+            case R.id.shoppingmall_more_06://更多
+                toastMgr.builder.display("更多精彩", 0);
+                break;
+            case R.id.main_product6_01:
+
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product6_02:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product6_03:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product6_04:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product6_05:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.main_product6_06:
+                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
+                break;
+
+        }
+
+    }
+    /**
+     * 设置所有监听
+     */
+    private void setClickListener() {
+
+        speciese_01.setOnClickListener(this);
+        speciese_02.setOnClickListener(this);
+        speciese_03.setOnClickListener(this);
+        speciese_04.setOnClickListener(this);
+        speciese_05.setOnClickListener(this);
+        speciese_06.setOnClickListener(this);
+        //保养维护
+        shoppingmall_more_01.setOnClickListener(this);
+        main_product1_01.setOnClickListener(this);
+        main_product1_02.setOnClickListener(this);
+        main_product1_03.setOnClickListener(this);
+        main_product1_04.setOnClickListener(this);
+        main_product1_05.setOnClickListener(this);
+        main_product1_06.setOnClickListener(this);
+        //电子电路
+        shoppingmall_more_02.setOnClickListener(this);
+        main_product2_01.setOnClickListener(this);
+        main_product2_02.setOnClickListener(this);
+        main_product2_03.setOnClickListener(this);
+        main_product2_04.setOnClickListener(this);
+        main_product2_05.setOnClickListener(this);
+        main_product2_06.setOnClickListener(this);
+//发动机件
+        shoppingmall_more_03.setOnClickListener(this);
+        main_product3_01.setOnClickListener(this);
+        main_product3_02.setOnClickListener(this);
+        main_product3_03.setOnClickListener(this);
+        main_product3_04.setOnClickListener(this);
+        main_product3_05.setOnClickListener(this);
+        main_product3_06.setOnClickListener(this);
+//底盘配件
+        shoppingmall_more_04.setOnClickListener(this);
+        main_product4_01.setOnClickListener(this);
+        main_product4_02.setOnClickListener(this);
+        main_product4_03.setOnClickListener(this);
+        main_product4_04.setOnClickListener(this);
+        main_product4_05.setOnClickListener(this);
+        main_product4_06.setOnClickListener(this);
+//车架配件
+        shoppingmall_more_05.setOnClickListener(this);
+        main_product5_01.setOnClickListener(this);
+        main_product5_02.setOnClickListener(this);
+        main_product5_03.setOnClickListener(this);
+        main_product5_04.setOnClickListener(this);
+        main_product5_05.setOnClickListener(this);
+        main_product5_06.setOnClickListener(this);
+//拖架配件
+        shoppingmall_more_06.setOnClickListener(this);
+        main_product6_01.setOnClickListener(this);
+        main_product6_02.setOnClickListener(this);
+        main_product6_03.setOnClickListener(this);
+        main_product6_04.setOnClickListener(this);
+        main_product6_05.setOnClickListener(this);
+        main_product6_06.setOnClickListener(this);
+    }
+
+
 
 
     /*
@@ -158,27 +598,4 @@ public class ShoppingMallActivity extends BaseActivity {
     }
 
 
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_shopping_mall, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

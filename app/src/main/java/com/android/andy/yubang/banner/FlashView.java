@@ -110,10 +110,10 @@ public class FlashView extends FrameLayout{
 	 
 	  if(imageUris.size()>0)
 	  {
-	   imageUris.clear();
-	   imageViewsList.clear();
-	   dotViewsList.clear();
-	   mLinearLayout.removeAllViews();
+		   imageUris.clear();
+		   imageViewsList.clear();
+		   dotViewsList.clear();
+		   mLinearLayout.removeAllViews();
 	   
 	  }
 	 
