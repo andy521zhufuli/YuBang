@@ -66,6 +66,9 @@
     <!-- used in smooth progressbar (spb) end -->
 
     <color name="app_home_fengexian">#ffdedcdc</color>
+    <color name="head_colors">#ffe83d40</color>
+    <color name="head_colors_light">#ffef9aa4</color>
+    <color name="heads_colors">#ffb9082e</color>
 
     <color name="black_overlay">#66000000</color>
     <color name="no_network_background">#fff5f0eb</color>
@@ -182,5 +185,20 @@
     <color name="red_add_to_cart_p">#a83a3a</color>
 
     <color name="divider_color">#cccccc</color>
+
+
+    <color name="car_item_buy_num_color">#ff999999</color>
+    <color name="car_item_list_bg_normal">#fff4f4f4</color>
+    <color name="car_item_list_bg_selected">#ffffffff</color>
+    <color name="car_item_list_item_text_normal">#ff333333</color>
+    <color name="car_item_list_item_text_selected">#fff7931e</color>
+    <color name="car_item_name_color">#ff333333</color>
+    <color name="car_item_price_color">#fffc353a</color>
+    <color name="car_name">#ff696969</color>
+    <color name="car_name_lack">#ff636363</color>
+    <color name="car_price">#ffe86054</color>
+    <color name="car_price2">#ffdf3448</color>
+    <color name="check_found">#fff57c33</color>
+    <color name="check_tab_red">#ffe56363</color>
 
 </resources>

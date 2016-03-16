@@ -1,81 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="8dp"
-    android:paddingLeft="10dp"
-    android:background="@drawable/bg_item"
-    >
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:background="#ffced0cf"
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px" />
 
-    <ImageView
-        android:id="@+id/img_icon"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:padding="3dp"
-        android:background="#ffffff"
-        android:src="@mipmap/load_logo" />
+    <RelativeLayout android:id="@+id/produte"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@+id/img_icon"
-        android:layout_marginRight="10dp"
-        android:lines="2"
-        android:ellipsize="end"
-        android:text="AKG K450 头戴式耳机头戴式耳机头戴式耳机头戴式耳机头戴式耳机头戴式耳机" />
 
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_percent"
-        android:layout_alignLeft="@+id/tv_title"
-        android:layout_marginBottom="4dp"
-        android:text="￥389.00"
-        android:textColor="@color/red" />
+        <RelativeLayout android:id="@+id/pro_la"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tv_percent"
-        android:layout_alignBottom="@+id/tv_percent"
-        android:layout_toRightOf="@+id/tv_percent"
-        android:layout_marginLeft="6dp"
-        android:textColor="@color/dimgray"
-        android:textSize="@dimen/micro_text_size"
-        android:text="12386人" />
 
-    <ImageView
-        android:id="@+id/img_icon_vip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv_price"
-        android:layout_toRightOf="@+id/tv_price"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="2dp"
-        android:src="@mipmap/product_price_vip" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <!-- 左边图片显示-->
+                <LinearLayout android:orientation="horizontal"
+                    android:id="@+id/maintenance_produte_layouts" android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" android:layout_weight="1.0">
+                    <FrameLayout
+                        android:orientation="vertical"
+                        android:background="@color/white" android:layout_width="60.0dip"
+                        android:layout_height="60.0dip" android:layout_marginLeft="5.0dip"
+                        android:layout_marginTop="10.0dip" android:layout_marginRight="5.0dip"
+                        android:layout_marginBottom="7.0dip">
+                        <ImageView android:id="@+id/produte_pic"
+                            android:padding="1.0dip" android:layout_width="60.0dip"
+                            android:layout_height="60.0dip"
+                            android:src="@mipmap/ic_launcher" />
+                        <ImageView
+                            android:layout_gravity="bottom"
+                            android:id="@+id/produte_pic_add_1l"
+                            android:visibility="gone"
+                            android:layout_width="60.0dip"
+                            android:layout_height="30.0dip"
+                            android:src="@mipmap/product_item_add1l" />
+                    </FrameLayout>
 
-    <TextView
-        android:id="@+id/tv_percent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/img_icon"
-        android:layout_alignLeft="@+id/tv_price"
-        android:text="好评95%"
-        android:textColor="@color/dimgray"
-        android:textSize="@dimen/micro_text_size" />
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
 
-    <View
-        android:layout_height="@dimen/divider_height_middle"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/img_icon"
-        android:layout_marginTop="8dp"
-        android:background="@color/divider_color"/>
+                        <LinearLayout android:orientation="horizontal"
+                            android:id="@+id/productitem_changge_before"
+                            android:visibility="visible"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent">
+                            <LinearLayout
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:paddingRight="10.0dip"
+                                android:layout_width="0.0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_marginRight="2.0dip"
+                                android:layout_weight="7.0">
+                                <TextView android:textSize="@dimen/text_12"
+                                    android:textColor="#ffbbbbbb"
+                                    android:id="@+id/maintenance_produte_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5.0dip"
+                                    android:text="\ 1111111111" />
+                                <LinearLayout android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/linearLayout1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="2.0dip"
+                                    android:layout_below="@+id/maintenance_produte_name"
+                                    android:layout_alignParentLeft="true">
+                                    <TextView android:id="@+id/maintenance_img_1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="半合成"
+                                        android:textSize="@dimen/text_12"
+                                        />
+                                    <ImageView android:id="@+id/maintenance_img_2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5.0dip" />
+                                </LinearLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:gravity="center|right" android:orientation="vertical" android:paddingRight="5.0dip"
+                                android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="2.0">
+                                <TextView android:textSize="@dimen/text_size" android:textColor="#fffd7222" android:id="@+id/produte_price"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$999" />
+                                <TextView android:textSize="@dimen/text_12" android:textColor="#ffbbbbbb" android:id="@+id/produte_count"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dip"
+                                    android:text="x99" android:layout_below="@+id/produte_price" android:layout_alignRight="@+id/produte_price" />
+                            </LinearLayout>
+                        </LinearLayout>
 
-</RelativeLayout>
+                        <!-- 显示删除  更换-->
+                        <LinearLayout android:orientation="horizontal"
+                            android:id="@+id/productitem_changge_after" android:visibility="gone"
+                            android:layout_width="fill_parent" android:layout_height="fill_parent">
+                            <RelativeLayout android:gravity="center" android:orientation="horizontal" android:paddingRight="10.0dip"
+                                android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0">
+                                <RelativeLayout android:gravity="center" android:id="@+id/jiajian_layout" android:visibility="visible"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                                    <TextView android:textSize="@dimen/margin_15" android:gravity="center" android:id="@+id/count_tx"
+                                        android:background="@anim/shapes" android:layout_width="50.0dip" android:layout_height="30.0dip"
+                                        android:text="\ 1111" android:maxLines="1" android:maxLength="3" android:layout_toRightOf="@+id/jiancount" />
+                                    <Button android:textSize="@dimen/margin_17" android:textColor="@color/car_name_lack" android:gravity="center"
+                                        android:id="@+id/jiancount" android:background="@anim/shapes" android:layout_width="30.0dip"
+                                        android:layout_height="30.0dip" android:text="—" android:layout_alignParentLeft="true" />
+                                    <Button android:textSize="@dimen/margin_17" android:textColor="@color/car_name_lack" android:gravity="center"
+                                        android:id="@+id/jiacount" android:background="@anim/shapes" android:layout_width="30.0dip"
+                                        android:layout_height="30.0dip" android:text="+" android:layout_toRightOf="@+id/count_tx" />
+                                </RelativeLayout>
+                            </RelativeLayout>
+                            <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content"
+                                android:layout_height="fill_parent" android:layout_weight="1.0">
+                                <RelativeLayout android:orientation="horizontal" android:id="@+id/delete_bt"
+                                    android:background="#ffdf3448" android:layout_width="wrap_content"
+                                    android:layout_height="fill_parent" android:layout_weight="1.0">
+                                    <TextView android:textColor="@color/white" android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" android:layout_marginLeft="5.0dip"
+                                        android:layout_marginRight="5.0dip" android:text="删除" android:layout_centerHorizontal="true"
+                                        android:layout_centerVertical="true" />
+                                </RelativeLayout>
+                                <RelativeLayout android:orientation="horizontal" android:id="@+id/change_bt"
+                                    android:background="#fff57c33" android:layout_width="wrap_content"
+                                    android:layout_height="fill_parent" android:layout_weight="1.0">
+                                    <TextView android:textColor="@color/white" android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" android:layout_marginLeft="5.0dip"
+                                        android:layout_marginRight="5.0dip" android:text="更换" android:layout_centerHorizontal="true"
+                                        android:layout_centerVertical="true" />
+                                </RelativeLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+
+
+
+
+    </RelativeLayout>
+    <LinearLayout android:orientation="vertical" android:id="@+id/product_item_detail"
+        android:background="@color/white" android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+
+

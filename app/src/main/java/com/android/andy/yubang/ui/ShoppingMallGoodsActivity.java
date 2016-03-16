@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,9 +28,14 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
 
     private Context mContext;
     private ListView shoppingmall_goods_listview;
-    private TextView tv_modify_goods;
+
     private RelativeLayout btn_pay;//去结算
     private RelativeLayout btn_service;//客服
+    //编辑商品
+    private TextView tv_modify_goods;//编辑
+    private LinearLayout    productitem_changge_before;//商品信息
+    private LinearLayout    productitem_changge_after;//编辑商品之后
+    private boolean         isModified = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,9 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
         tv_modify_goods = (TextView) findViewById(R.id.tv_modify_goods);
         btn_pay = (RelativeLayout) findViewById(R.id.btn_pay);
         btn_service = (RelativeLayout) findViewById(R.id.btn_service);
+
+
+
         /**
          * 监听器
          */
@@ -61,6 +70,23 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 //TODO
+                //一开始是编辑状态
+                if (isModified == false)
+                {
+                    //还没编辑 已经点击  那就去编辑
+                    productitem_changge_before.setVisibility(View.GONE);
+                    productitem_changge_after.setVisibility(View.VISIBLE);
+                    isModified = true;
+                    tv_modify_goods.setText("保存");
+                }
+                else
+                {
+                    productitem_changge_after.setVisibility(View.GONE);
+                    productitem_changge_before.setVisibility(View.VISIBLE);
+                    isModified = false;
+                    tv_modify_goods.setText("编辑");
+                }
+
                 Intent intent = new Intent();
                 //intent.setClass()
                 //startActivity(intent);
@@ -119,6 +145,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
              * 1.手工创建对象 2.加载xml文件
              */
             view = View.inflate(mContext, R.layout.item_test_listview_data, null);
+            productitem_changge_before = (LinearLayout) view.findViewById(R.id.productitem_changge_before);
+            productitem_changge_after  = (LinearLayout) view.findViewById(R.id.productitem_changge_after);
 //            TextView species = (TextView) view.findViewById(R.id.item_search_recommend_textview);
 //            species.setText(strings[position]);
             return view;
