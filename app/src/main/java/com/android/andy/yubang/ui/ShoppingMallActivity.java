@@ -136,9 +136,10 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 //        imageUrls.add("http://www.juzi2.com/uploads/allimg/130619/1_130619193218_1.jpg");
 //        imageUrls.add("http://a.hiphotos.baidu.com/zhidao/pic/item/4034970a304e251f4dd80e61a786c9177f3e5378.jpg");
 //        imageUrls.add("http://f.hiphotos.baidu.com/zhidao/pic/item/9e3df8dcd100baa12801ad224710b912c8fc2e7e.jpg");
-        imageUrls.add("http://f.hiphotos.baidu.com/zhidao/pic/item/9e3df8dcd100baa12801ad224710b912c8fc2e7e.jpg");
-        imageUrls.add("drawable://" + R.mipmap.defaultflashview);
-        imageUrls.add("drawable://" + R.mipmap.defaultflashview);
+        imageUrls.add("drawable://" + R.mipmap.banner01);
+        imageUrls.add("drawable://" + R.mipmap.banner02);
+        imageUrls.add("drawable://" + R.mipmap.banner03);
+
 
         shoppingmall_flashview_banner.setImageUris(imageUrls);
         shoppingmall_flashview_banner.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果

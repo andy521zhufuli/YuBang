@@ -69,7 +69,7 @@
                 <com.android.andy.yubang.banner.FlashView
                     android:id="@+id/shoppingmall_flashview_banner"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="160dp"
                     >
                 </com.android.andy.yubang.banner.FlashView>
             </RelativeLayout>
@@ -77,7 +77,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="#FFF2F2F2"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,7 +91,7 @@
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@mipmap/shoppingmall_baoyangweihu"
+                        android:background="@drawable/shoppingmall_baoyangweihu_selector"
                         android:layout_margin="10dp"
                         />
                     <ImageView
@@ -97,7 +99,7 @@
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@mipmap/shoppingmall_dianzi_dianlu"
+                        android:background="@drawable/shoppingmall_dianzi_dianlu_selector"
                         android:layout_margin="10dp"
                         />
                     <ImageView
@@ -105,7 +107,7 @@
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@mipmap/shoppingmall_fadongji_peijian"
+                        android:background="@drawable/shoppingmall_fadongji_peijian_selector"
                         android:layout_margin="10dp"
                         />
                 </LinearLayout>
@@ -113,13 +115,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:background="#FFF2F2F2"
                     >
                     <ImageView
                         android:id="@+id/speciese_04"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@mipmap/shoppingmall_dipan_peijian"
+                        android:background="@drawable/shoppingmall_dipan_peijian_selector"
                         android:layout_margin="10dp"
                         />
                     <ImageView
@@ -127,7 +130,7 @@
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@mipmap/shoppingmall_chejia_peijian"
+                        android:background="@drawable/shoppingmall_chejia_peijian_selector"
                         android:layout_margin="10dp"
                         />
                     <ImageView
@@ -135,7 +138,7 @@
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@mipmap/shoppingmall_tuoija_peijian"
+                        android:background="@drawable/shoppingmall_tuoija_peijian_selector"
                         android:layout_margin="10dp"
                         />
                 </LinearLayout>

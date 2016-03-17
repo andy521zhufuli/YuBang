@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="#ffffffff"
     >
     <!-- 保养维护  更多-->
     <RelativeLayout
@@ -13,6 +14,7 @@
         android:clickable="true"
         android:layout_width="fill_parent"
         android:layout_height="43.0dip"
+        android:background="#ffffffff"
         >
         <TextView
             android:textSize="15.0sp"
@@ -126,7 +128,7 @@
         android:id="@+id/main_product_ad_2"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:src="@mipmap/shoppingmall_baoyang_01"
+        android:src="@mipmap/shoppingmall_ad_01"
         android:scaleType="fitXY"
         />
 </LinearLayout>

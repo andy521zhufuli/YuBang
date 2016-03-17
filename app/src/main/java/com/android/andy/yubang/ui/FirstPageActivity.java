@@ -482,7 +482,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
             case R.id.layout_order2:
                 //显示进度条
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
-                TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));//需要美工再给我一张图
+                TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang_selected));//需要美工再给我一张图
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
                 TextView04.setBackground(getResources().getDrawable(R.mipmap.peijian));
                 TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu));
@@ -585,7 +585,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
      */
     private void locationClick() {
 
-        toastMgr.builder.display("location click1", 0);
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
         mBaiduMap
                 .setMyLocationConfigeration(new MyLocationConfiguration(

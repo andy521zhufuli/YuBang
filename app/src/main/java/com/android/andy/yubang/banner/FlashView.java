@@ -120,7 +120,7 @@ public class FlashView extends FrameLayout{
 	  if (imageuris.size() <= 0)// 如果得到的图片张数为0，则增加一张默认的图片
 	  {
 	   
-	   imageUris.add("drawable://" + R.mipmap.defaultflashview);
+	   imageUris.add("drawable://" + R.mipmap.banner01);
 	  }
 	  else
 	  {

@@ -16,7 +16,7 @@
 
     <!--   竖线-->
     <style name="line_vertical">
-        <item name="android:background">#ff000000</item>
+        <item name="android:background">#FFE7E7E7</item>
         <item name="android:layout_width">1.0dip</item>
         <item name="android:layout_height">fill_parent</item>
     </style>
