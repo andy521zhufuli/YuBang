@@ -338,7 +338,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
                         android:layout_alignParentRight="true"
-                        android:src="@mipmap/personel_arrow_down" />
+                        android:background="@mipmap/personel_arrow_down" />
                 </RelativeLayout>
 
 

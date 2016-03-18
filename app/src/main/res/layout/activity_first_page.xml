@@ -8,14 +8,16 @@
     <RelativeLayout
         android:id="@+id/bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        >
 
         <RelativeLayout
             android:id="@+id/search_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@mipmap/first_page_search_bg"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="10dp"
             android:layout_centerInParent="true"
             >
 
@@ -30,7 +32,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="搜索电或地址"
+                android:hint="搜索店或地址"
                 android:layout_toRightOf="@+id/search_image"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"

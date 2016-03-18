@@ -17,7 +17,7 @@
     <!--   竖线-->
     <style name="line_vertical">
         <item name="android:background">#FFE7E7E7</item>
-        <item name="android:layout_width">1.0dip</item>
+        <item name="android:layout_width">1.0px</item>
         <item name="android:layout_height">fill_parent</item>
     </style>
 
@@ -133,6 +133,12 @@
         <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimation</item>
     </style>
 
+
+    <style name="roomRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:maxHeight">14.0dip</item>
+        <item name="android:progressDrawable">@drawable/ratingbar_drawable</item>
+        <item name="android:minHeight">14.0dip</item>
+    </style>
 
 
 </resources>

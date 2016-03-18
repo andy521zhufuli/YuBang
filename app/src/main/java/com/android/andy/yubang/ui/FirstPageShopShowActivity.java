@@ -66,32 +66,46 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
     @Override
     public void onClick(View view)
     {
+        Intent intent = new Intent();
         switch (view.getId())
         {
             //店面点击
             case R.id.photo_show:
-                Intent intent = new Intent();
+
                 intent.setClass(FirstPageShopShowActivity.this, FirstPageShopBigPhotoShowActivity.class);
                 startActivity(intent);
                 break;
             //轮胎服务
             case R.id.first_page_shop_show_wheel_service:
                 toastMgr.builder.display( "轮胎服务" , 0);
+                //这里应该跳到对应的商品里面
+                //TODO 这里应该跳到对应的商品里面
+                intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
                 break;
             //保养服务
             case R.id.first_page_shop_show_baoyang_service:
                 toastMgr.builder.display( "保养服务" , 0);
+                //TODO 这里应该跳到对应的商品里面
+                intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
                 break;
             //游湖活动
             case R.id.first_page_shop_show_sales_activity:
                 toastMgr.builder.display( "优惠活动" , 0);
+                //TODO 这里应该跳到对应的商品里面
+                intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
                 break;
             //客户评价
             case R.id.first_page_shop_show_customers_comments:
                 toastMgr.builder.display( "客户评论" , 0);
+                //TODO 这里应该跳到对应的商品里面
+                intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
+                startActivity(intent);
                 break;
 
         }
-
+        intent = null;
     }
 }

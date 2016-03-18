@@ -37,6 +37,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
     private LinearLayout    productitem_changge_after;//编辑商品之后
     private boolean         isModified = false;
 
+    private TestAdapter goodsAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +49,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
 
         findViews();
 
-
-        shoppingmall_goods_listview.setAdapter(new TestAdapter());
+        goodsAdapter = new TestAdapter();
+        shoppingmall_goods_listview.setAdapter(goodsAdapter);
 
 
     }
@@ -78,6 +80,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
                     productitem_changge_after.setVisibility(View.VISIBLE);
                     isModified = true;
                     tv_modify_goods.setText("保存");
+                    shoppingmall_goods_listview.deferNotifyDataSetChanged();
                 }
                 else
                 {
@@ -85,6 +88,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
                     productitem_changge_before.setVisibility(View.VISIBLE);
                     isModified = false;
                     tv_modify_goods.setText("编辑");
+                    shoppingmall_goods_listview.deferNotifyDataSetChanged();
+
                 }
 
                 Intent intent = new Intent();
@@ -144,12 +149,29 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
             /*
              * 1.手工创建对象 2.加载xml文件
              */
-            view = View.inflate(mContext, R.layout.item_test_listview_data, null);
-            productitem_changge_before = (LinearLayout) view.findViewById(R.id.productitem_changge_before);
-            productitem_changge_after  = (LinearLayout) view.findViewById(R.id.productitem_changge_after);
+            ViewHolder holder;
+            if (view == null)
+            {
+                holder =  new ViewHolder();
+                view = View.inflate(mContext, R.layout.item_test_listview_data, null);
+                productitem_changge_before = (LinearLayout) view.findViewById(R.id.productitem_changge_before);
+                productitem_changge_after  = (LinearLayout) view.findViewById(R.id.productitem_changge_after);
 //            TextView species = (TextView) view.findViewById(R.id.item_search_recommend_textview);
 //            species.setText(strings[position]);
+                view.setTag(holder);
+            }
+            else
+            {
+                holder = (ViewHolder) view.getTag();
+            }
+
+
             return view;
+        }
+
+        class ViewHolder
+        {
+            TextView tv_name,tv_phone;
         }
     }
 

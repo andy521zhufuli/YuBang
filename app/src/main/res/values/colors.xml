@@ -57,7 +57,7 @@
     <color name="holo_purple_dark">#9933cc</color>
     <color name="holo_red_dark">#cc0000</color>
     <!-- 商城颜色-->
-    <color name="baoyangweihu">#FF44995D</color>
+    <color name="baoyangweihu">#FF8D8D90</color>
 
     <!-- 选择门店  item-->
     <color name="shop_name_color">#ff686868</color>

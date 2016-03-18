@@ -1,6 +1,9 @@
 package com.android.andy.yubang.ui;
 
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -19,6 +22,8 @@ import com.andy.android.yubang.R;
  * @created 2016-02-29
  */
 public class ShoppingMallConformOrderActivity extends BaseActivity implements View.OnClickListener{
+
+    private Context mContext;
 
     private ImageView      img_back;//返回
     private RelativeLayout payment_way;//选择支付方式
@@ -39,6 +44,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_shopping_mall_conform_order);
+
+        mContext = this;
 
         findViews();
     }
@@ -82,12 +89,12 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 if (conform_order_choose_online_offline_payment.getVisibility() == View.VISIBLE)
                 {
                     conform_order_choose_online_offline_payment.setVisibility(View.GONE);
-                    arrow1.setImageDrawable(getDrawable(R.mipmap.personel_arrow_down));
+                    arrow1.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.personel_arrow_down));
                 }
                 else
                 {
                     conform_order_choose_online_offline_payment.setVisibility(View.VISIBLE);
-                    arrow1.setImageDrawable(getDrawable(R.mipmap.personel_arrow_up));
+                    arrow1.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.personel_arrow_up));
                 }
 
                 break;

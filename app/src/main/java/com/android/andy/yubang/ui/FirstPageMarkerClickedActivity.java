@@ -1,6 +1,7 @@
 package com.android.andy.yubang.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
@@ -94,11 +95,14 @@ public class FirstPageMarkerClickedActivity extends BaseActivity implements View
         shop_like.setOnClickListener(this);
         clicked_shop_call_phone.setOnClickListener(this);
         clicked_shop_close.setOnClickListener(this);
+        clicked_shop_photo.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent();
+
         switch (view.getId())
         {
             case R.id.shop_like:
@@ -138,6 +142,13 @@ public class FirstPageMarkerClickedActivity extends BaseActivity implements View
                         .show();
                 break;
             case R.id.clicked_shop_close:
+                finish();
+                break;
+            //第一个 带喜欢的  店铺点击
+            case R.id.clicked_shop_photo:
+                toastMgr.builder.display("已经关注", Toast.LENGTH_SHORT);
+                intent.setClass(mContext, FirstPageShopShowActivity.class);
+                startActivity(intent);
                 finish();
                 break;
         }

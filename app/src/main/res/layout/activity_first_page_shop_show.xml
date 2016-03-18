@@ -40,17 +40,117 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@mipmap/first_page_shop_show"
+            android:src="@mipmap/first_page_shop_show_big_photo"
+            android:scaleType="fitXY"
             />
 
     </LinearLayout>
+
+    <View 
+        android:id="@+id/view11"
+        android:background="@color/app_home_fengexian"
+        android:layout_below="@+id/photo_show"
+        android:layout_width="fill_parent" android:layout_height="0.5dip" />
+
+
+    <RelativeLayout
+        android:layout_below="@+id/view11"
+        android:id="@+id/shop_kehu_pingjia"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <LinearLayout
+            android:id="@+id/ll111"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:textSize="@dimen/text_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="高德汇车发发汽车城"
+                />
+
+            <LinearLayout android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true">
+
+                <RatingBar android:id="@+id/shop_ratingBar_detai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15.0dip"
+                    android:layout_marginTop="8.0dip"
+                    android:numStars="5"
+                    android:isIndicator="true"
+                    style="@style/roomRatingBar" />
+
+                <TextView android:textSize="@dimen/text_15"
+                    android:text="123"
+                    android:textColor="#fff37c3e"
+                    android:id="@+id/shop_grade_detail1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15.0dip"
+                    android:layout_marginTop="5.0dip"
+                    android:layout_marginBottom="5.0dip" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll222"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            >
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/first_page_shop_show_phone"
+                android:layout_marginRight="@dimen/margin_15"
+                android:layout_marginTop="@dimen/margin_15"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/first_page_shop_show_nav"
+                android:layout_marginRight="@dimen/margin_15"
+                android:layout_marginTop="@dimen/margin_15"
+                />
+
+        </LinearLayout>
+
+        <TextView android:textSize="@dimen/text_15"
+            android:text="123千米"
+            android:textColor="#fff37c3e"
+            android:id="@+id/shop_grade_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ll222"
+            android:layout_marginRight="@dimen/margin_15"
+            />
+
+
+    </RelativeLayout>
 
     <!-- 我的钱包 我的订单-->
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/item_margin_top"
-        android:layout_below="@+id/photo_show"
+        android:layout_below="@+id/shop_kehu_pingjia"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -64,7 +164,7 @@
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="15.0dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/android_personel_quickly_order"
+                android:src="@mipmap/first_page_shop_show_wheel_service"
                 />
 
             <TextView
@@ -95,7 +195,7 @@
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="15.0dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/android_personel_quickly_order"
+                android:src="@mipmap/first_page_shop_show_baoyang_service"
                 />
 
             <TextView
@@ -125,7 +225,7 @@
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="15.0dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/android_personel_quickly_order"
+                android:src="@mipmap/first_page_shop_show_youhui_huodong"
                 />
 
             <TextView
@@ -155,7 +255,7 @@
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="15.0dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/android_personel_quickly_order"
+                android:src="@mipmap/first_page_shop_show_kehu_pingjia"
                 />
 
             <TextView
