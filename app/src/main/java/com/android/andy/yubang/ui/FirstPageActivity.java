@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ZoomControls;
 
 import com.android.andy.yubang.utils.BDMapData;
 import com.android.andy.yubang.utils.L;
@@ -160,6 +161,11 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         //初始化定位
         mBaiduMap.setMyLocationEnabled(true);//使能百度地图的定位功能
         mMapView.showZoomControls(false);
+        View child = mMapView.getChildAt(1);
+        if (child != null && (child instanceof ImageView || child instanceof ZoomControls)) {
+            child.setVisibility(View.INVISIBLE);
+        }
+
         mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
         //初始化定位参数
@@ -176,8 +182,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 intent.setClass(FirstPageActivity.this, FirstPageMarkerClickedActivity.class);
                 //这里需要把要显示的店铺信息放到FirstPageMarkerClickedActivity里面去  让它解析  然后显示
                 startActivity(intent);
-
-                toastMgr.builder.display("修车店", 0);
+                intent = null;
 //                if (bottom.getVisibility() == View.VISIBLE) {
 //                    bottom.setVisibility(View.INVISIBLE);
 //                } else
@@ -318,6 +323,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     /**
      * 初始化覆盖物
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void initOverlay(int nowPage) {
         //这里是根据网上拿到的数据,去看要添加什么覆盖物
         //这里可以抽象出一个类  然后后面就会方便
@@ -331,7 +337,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
         LayoutInflater inflater = LayoutInflater.from(this);
         //首页地图覆盖物 view转变
-        View view = inflater.inflate(R.layout.view_to_marker, null);
+        View view = inflater.inflate(R.layout.view_to_marker2, null);
         //修车店标号
         TextView shop_num = (TextView) view.findViewById(R.id.marker_shop_num);
         shop_num.setText("1");
@@ -339,23 +345,23 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         TextView textView = (TextView) view.findViewById(R.id.marker_info);
         textView.setText("高德汇001");
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.marker_shop_image_style);
+        LinearLayout imageView = (LinearLayout) view.findViewById(R.id.marker_ll_image);
         switch (nowPage)
         {
             case ALL_CAR_PAGE:
-                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.marker_car_1));
+                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_1));
                 break;
             case BAO_YANG_PAGE:
-                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.marker_car_2));
+                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_2));
                 break;
             case DIAN_LU_PAGE:
-                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.marker_car_3));
+                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_3));
                 break;
             case PEI_JIAN_PAGE:
-                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.marker_car_4));
+                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_4));
                 break;
             case YOU_LU_PAGE:
-                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.marker_car_5));
+                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_5));
                 break;
         }
 

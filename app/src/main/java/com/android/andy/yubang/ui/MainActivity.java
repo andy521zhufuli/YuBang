@@ -217,27 +217,27 @@ public class MainActivity extends TabActivity {
          * 购物车
          * 个人中心
          * */
-        String activityToShow = (String) bundle.get("otherActivity");
-        //正常启动
-        if (activityToShow == null)
-        {
-
-        }
-        //购物车没有商品, 跳转到首页
-        else if (activityToShow.equals("login"))
-        {
-            //设置为已经登陆
-            SPUtils.putUserInfo(mContext, "LoginOrNot", Configs.LOGINED);
-
-        }
-        else if (activityToShow.equals("LOGIN_SUCCESS"))
-        {
-            //这里不能判断 就正常启动行了
-        }
-        else if (activityToShow.equals("LOGINOUT_SUCCESS"))//退出了
-        {
-
-        }
+//        String activityToShow = (String) bundle.get("otherActivity");
+//        //正常启动
+//        if (activityToShow == null)
+//        {
+//
+//        }
+//        //购物车没有商品, 跳转到首页
+//        else if (activityToShow.equals("login"))
+//        {
+//            //设置为已经登陆
+//            SPUtils.putUserInfo(mContext, "LoginOrNot", Configs.LOGINED);
+//
+//        }
+//        else if (activityToShow.equals("LOGIN_SUCCESS"))
+//        {
+//            //这里不能判断 就正常启动行了
+//        }
+//        else if (activityToShow.equals("LOGINOUT_SUCCESS"))//退出了
+//        {
+//
+//        }
 
 
     }

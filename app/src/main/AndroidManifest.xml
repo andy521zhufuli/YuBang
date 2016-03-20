@@ -272,7 +272,7 @@
 
         <activity
             android:name="com.android.andy.yubang.ui.FirstPageMarkerClickedActivity"
-            android:theme="@style/popupDialog"
+            android:theme="@style/marker_click_dialog"
             android:screenOrientation="portrait"
             >
 

@@ -38,8 +38,8 @@
 
         <ImageView
             android:id="@+id/search_image_new"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@mipmap/search"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -271,8 +271,8 @@
 
     <Button
         android:id="@+id/first_page_location_btn"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:background="@drawable/first_page_location_selector"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

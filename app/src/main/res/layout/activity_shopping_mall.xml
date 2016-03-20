@@ -40,8 +40,8 @@
 
         <ImageView
             android:id="@+id/shoppingmall_search_imageview"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@mipmap/search"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -78,74 +78,256 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="#FFF2F2F2"
+                android:background="@color/white"
                 >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:paddingBottom="3dp"
+                    android:layout_marginTop="11dp"
                     >
-                    <ImageView
-                        android:id="@+id/speciese_01"
-                        android:layout_width="0dip"
+
+                    <LinearLayout
+                        android:id="@+id/ll_speciese_01"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/shoppingmall_baoyangweihu_selector"
-                        android:layout_margin="10dp"
-                        />
-                    <ImageView
-                        android:id="@+id/speciese_02"
-                        android:layout_width="0dip"
+                        android:gravity="center_horizontal"
+                        android:clickable="true"
+                        android:background="@drawable/shoppingmall_all_kinds_selector"
+                        >
+                        <ImageView
+                            android:id="@+id/speciese_01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/shoppingmall_baoyangweihu"
+
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="保养维护"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/tiny_middle_text_size"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_speciese_02"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/shoppingmall_dianzi_dianlu_selector"
-                        android:layout_margin="10dp"
-                        />
-                    <ImageView
-                        android:id="@+id/speciese_03"
-                        android:layout_width="0dip"
+                        android:gravity="center_horizontal"
+                        android:clickable="true"
+                        android:background="@drawable/shoppingmall_all_kinds_selector"
+                        >
+                        <ImageView
+                            android:orientation="vertical"
+                            android:id="@+id/speciese_02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:background="@mipmap/shoppingmall_dianzi_dianlu"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="电子电路"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/tiny_middle_text_size"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_speciese_03"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/shoppingmall_fadongji_peijian_selector"
-                        android:layout_margin="10dp"
-                        />
+                        android:gravity="center_horizontal"
+                        android:clickable="true"
+                        android:background="@drawable/shoppingmall_all_kinds_selector"
+                        >
+                        <ImageView
+                            android:id="@+id/speciese_03"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/shoppingmall_fadongji_peijian"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="发动机件"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/tiny_middle_text_size"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_speciese_04"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:clickable="true"
+                        android:background="@drawable/shoppingmall_all_kinds_selector"
+                        >
+                        <ImageView
+                            android:id="@+id/speciese_04"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/shoppingmall_dahuangyou"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="打黄油"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/tiny_middle_text_size"
+                            />
+                    </LinearLayout>
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="#FFF2F2F2"
+                    android:background="@color/white"
+                    android:paddingBottom="3dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="8dp"
                     >
-                    <ImageView
-                        android:id="@+id/speciese_04"
-                        android:layout_width="0dip"
+
+                    <LinearLayout
+                        android:id="@+id/ll_speciese_05"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/shoppingmall_dipan_peijian_selector"
-                        android:layout_margin="10dp"
-                        />
-                    <ImageView
-                        android:id="@+id/speciese_05"
-                        android:layout_width="0dip"
+                        android:gravity="center_horizontal"
+                        android:clickable="true"
+                        android:background="@drawable/shoppingmall_all_kinds_selector"
+                        >
+                        <ImageView
+                            android:id="@+id/speciese_05"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/shoppingmall_dipan_peijian"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="底盘配件"
+                            android:textSize="@dimen/tiny_middle_text_size"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_speciese_06"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/shoppingmall_chejia_peijian_selector"
-                        android:layout_margin="10dp"
-                        />
-                    <ImageView
-                        android:id="@+id/speciese_06"
-                        android:layout_width="0dip"
+                        android:gravity="center_horizontal"
+                        android:clickable="true"
+                        android:background="@drawable/shoppingmall_all_kinds_selector"
+                        >
+                        <ImageView
+                            android:id="@+id/speciese_06"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/shoppingmall_cheija_peijian"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="车架配件"
+                            android:textSize="@dimen/tiny_middle_text_size"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_speciese_07"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/shoppingmall_tuoija_peijian_selector"
-                        android:layout_margin="10dp"
-                        />
+                        android:gravity="center_horizontal"
+                        android:clickable="true"
+                        android:background="@drawable/shoppingmall_all_kinds_selector"
+                        >
+                        <ImageView
+                            android:id="@+id/speciese_07"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/shoppingmall_tuojia_paijian"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="托架配件"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/tiny_middle_text_size"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_speciese_08"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:clickable="true"
+                        android:background="@drawable/shoppingmall_all_kinds_selector"
+                        >
+                        <ImageView
+                            android:id="@+id/speciese_08"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/shoppingmall_more"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/tiny_middle_text_size"
+                            />
+                    </LinearLayout>
+
+
+
                 </LinearLayout>
 
 
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                style="@style/line_vertical"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16px"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                style="@style/line_vertical"
+                />
+
 
             <include
                 android:id="@+id/shoppingmall01"

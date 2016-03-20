@@ -9,7 +9,7 @@
         android:right="1dp"
         android:top="1dp" />
     <!-- corners设置圆角，只适用于rectangle -->
-    <corners android:radius="100dp" />
+    <corners android:radius="50dp" />
     <!-- stroke设置描边 -->
     <solid
         android:color="#d7ddd4"
