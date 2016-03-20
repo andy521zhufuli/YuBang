@@ -5,11 +5,56 @@
     tools:context="com.android.andy.yubang.ui.FirstPageActivity">
 
 
+
+    <RelativeLayout
+        android:id="@+id/layout_login_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/head_bg_color"
+        >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:visibility="gone"
+            android:src="@drawable/common_title_back_selector" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/yubang"
+
+            />
+
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+
+        <ImageView
+            android:id="@+id/search_image_new"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/search"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:scaleType="fitXY"
+            />
+    </RelativeLayout>
+
+
     <RelativeLayout
         android:id="@+id/bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:visibility="gone"
         >
 
         <RelativeLayout
@@ -17,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@mipmap/first_page_search_bg"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_centerInParent="true"
             >
 
@@ -40,6 +85,7 @@
 
         </RelativeLayout>
 
+
     </RelativeLayout>
     
 
@@ -52,7 +98,7 @@
         android:id="@+id/first_page_tabs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height_middle"
-        android:layout_below="@+id/bg"
+        android:layout_below="@+id/layout_login_topbar"
         android:background="@drawable/bg_item_bottom"
         >
         <!-- 全部优惠券-->
@@ -225,9 +271,9 @@
 
     <Button
         android:id="@+id/first_page_location_btn"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:background="@mipmap/first_page_location"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/first_page_location_selector"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"

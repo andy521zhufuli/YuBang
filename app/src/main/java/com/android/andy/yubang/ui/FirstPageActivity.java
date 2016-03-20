@@ -61,7 +61,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     private final static String TAG = "FirstPageActivity";
     private BMapManager mBMapManager;
 
-    private RelativeLayout first_page_search;//搜索
+    private ImageView first_page_search;//搜索
 
     private List<BDMapData> bdMapClientList;
     //当前定位结果的经纬度
@@ -134,11 +134,11 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
     //当前界面
     private int currentPage;
-    private static final int ALL_CAR_PAGE = 1;
-    private static final int BAO_YANG_PAGE = 2;
-    private static final int DIAN_LU_PAGE = 3;
-    private static final int PEI_JIAN_PAGE = 4;
-    private static final int YOU_LU_PAGE = 5;
+    private static final int ALL_CAR_PAGE   = 1;
+    private static final int BAO_YANG_PAGE  = 2;
+    private static final int DIAN_LU_PAGE   = 3;
+    private static final int PEI_JIAN_PAGE  = 4;
+    private static final int YOU_LU_PAGE    = 5;
 
 
 
@@ -265,7 +265,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 longitude = location.getLongitude();
                 latitude  = location.getLatitude();
-                initOverlay();
+                initOverlay(1);
             }
             longitude = location.getLongitude();
             latitude  = location.getLatitude();
@@ -318,21 +318,48 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     /**
      * 初始化覆盖物
      */
-    public void initOverlay() {
+    public void initOverlay(int nowPage) {
         //这里是根据网上拿到的数据,去看要添加什么覆盖物
         //这里可以抽象出一个类  然后后面就会方便
         // add marker overlay
         LatLng llA = new LatLng(latitude + 0.024, longitude + 0.024);
         LatLng llB = new LatLng(latitude - 0.0024, longitude + 0.024);
-        LatLng llC = new LatLng(latitude + 0.024, longitude - 0.024);
+        LatLng llC = new LatLng(latitude + 0.0024, longitude - 0.024);
         LatLng llD = new LatLng(latitude - 0.024, longitude - 0.024);
 
         ViewGroupToBitmap vb = new ViewGroupToBitmap();
 
         LayoutInflater inflater = LayoutInflater.from(this);
+        //首页地图覆盖物 view转变
         View view = inflater.inflate(R.layout.view_to_marker, null);
+        //修车店标号
+        TextView shop_num = (TextView) view.findViewById(R.id.marker_shop_num);
+        shop_num.setText("1");
+        //修车店名称
         TextView textView = (TextView) view.findViewById(R.id.marker_info);
         textView.setText("高德汇001");
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.marker_shop_image_style);
+        switch (nowPage)
+        {
+            case ALL_CAR_PAGE:
+                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.marker_car_1));
+                break;
+            case BAO_YANG_PAGE:
+                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.marker_car_2));
+                break;
+            case DIAN_LU_PAGE:
+                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.marker_car_3));
+                break;
+            case PEI_JIAN_PAGE:
+                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.marker_car_4));
+                break;
+            case YOU_LU_PAGE:
+                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.marker_car_5));
+                break;
+        }
+
+
         bdA = BitmapDescriptorFactory.fromBitmap(vb.getViewBitmap(view));
 
         //第一个覆盖物
@@ -436,7 +463,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         bottom = (LinearLayout) findViewById(R.id.bottom);
 
         //搜索
-        first_page_search = (RelativeLayout) findViewById(R.id.search_layout);
+        first_page_search = (ImageView) findViewById(R.id.search_image_new);
 
         //定位
         first_page_location_btn = (Button) findViewById(R.id.first_page_location_btn);
@@ -474,7 +501,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 {
                     first_page_progressbar.setVisibility(View.VISIBLE);
                     locationClick();
-                    initOverlay();
+                    initOverlay(ALL_CAR_PAGE);
                 }
                 currentPage = ALL_CAR_PAGE;
 
@@ -491,7 +518,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 {
                     first_page_progressbar.setVisibility(View.VISIBLE);
                     locationClick();
-                    initOverlay();
+                    initOverlay(BAO_YANG_PAGE);
                 }
                 currentPage = BAO_YANG_PAGE;
 
@@ -508,7 +535,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 {
                     first_page_progressbar.setVisibility(View.VISIBLE);
                     locationClick();
-                    initOverlay();
+                    initOverlay(DIAN_LU_PAGE);
                 }
                 currentPage = DIAN_LU_PAGE;
                 break;
@@ -524,7 +551,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 {
                     first_page_progressbar.setVisibility(View.VISIBLE);
                     locationClick();
-                    initOverlay();
+                    initOverlay(PEI_JIAN_PAGE);
                 }
                 currentPage = PEI_JIAN_PAGE;
                 break;
@@ -540,7 +567,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 {
                     first_page_progressbar.setVisibility(View.VISIBLE);
                     locationClick();
-                    initOverlay();
+                    initOverlay(YOU_LU_PAGE);
                 }
                 currentPage = YOU_LU_PAGE;
                 break;
@@ -566,7 +593,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 toastMgr.builder.display("Big shop Photo",  0);
                 break;
             //搜素
-            case R.id.search_layout:
+            case R.id.search_image_new:
                 Intent intent3 = new Intent();
                 intent3.setClass(FirstPageActivity.this, SearchActivity.class);
                 startActivity(intent3);
@@ -594,7 +621,8 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         mBaiduMap.setMapStatus(status);
         clearOverlay(null);
         mLocationClient.start();
-        initOverlay();
+
+        initOverlay(currentPage);
 
     }
 

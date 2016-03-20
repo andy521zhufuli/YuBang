@@ -21,6 +21,14 @@
         <item name="android:layout_height">fill_parent</item>
     </style>
 
+
+    <!--   主页面  tabs 横线-->
+    <style name="line_main_hori">
+        <item name="android:background">#FFA0A0A0</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">2px</item>
+    </style>
+
     <!-- 标题栏 -->
     <style name="TopbarStyle">
         <item name="android:layout_width">match_parent</item>

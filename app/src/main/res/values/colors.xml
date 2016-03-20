@@ -41,6 +41,10 @@
         <item>@color/pocket_color_4</item>
     </integer-array>
 
+    <!-- app 顶部背景颜色-->
+    <color name="head_bg_color">#FF009140</color>
+
+
     <color name="pocket_color_1">#85edb9</color>
     <color name="pocket_color_2">#34bdb7</color>
     <color name="pocket_color_3">#ee4458</color>
@@ -200,5 +204,6 @@
     <color name="car_price2">#ffdf3448</color>
     <color name="check_found">#fff57c33</color>
     <color name="check_tab_red">#ffe56363</color>
+
 
 </resources>

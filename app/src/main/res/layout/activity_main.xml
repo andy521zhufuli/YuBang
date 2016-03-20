@@ -24,8 +24,15 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/liuliu_tabhost_light"
-            android:orientation="horizontal" >
+            android:orientation="vertical"
+            >
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                style="@style/line_main_hori"
+                android:layout_above="@+id/main_bottom"
+                />
             <include
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
