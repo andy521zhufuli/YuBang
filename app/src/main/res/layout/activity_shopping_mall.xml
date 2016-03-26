@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/android_layout_bg"
-    tools:context="com.android.andy.yubang.ui.ShoppingMallActivity">
+    tools:context="com.car.yubangapk.ui.ShoppingMallActivity">
 
     <RelativeLayout
         android:id="@+id/layout_topbar"
@@ -55,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/layout_topbar"
+        android:scrollbars="none"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,12 +67,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
-                <com.android.andy.yubang.banner.FlashView
+                <com.car.yubangapk.banner.FlashView
                     android:id="@+id/shoppingmall_flashview_banner"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     >
-                </com.android.andy.yubang.banner.FlashView>
+                </com.car.yubangapk.banner.FlashView>
             </RelativeLayout>
             <!-- 导航  6个标签-->
             <LinearLayout

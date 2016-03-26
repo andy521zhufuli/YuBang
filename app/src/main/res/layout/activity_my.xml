@@ -5,12 +5,41 @@
     android:background="@drawable/android_layout_bg"
     tools:context=".MineFragment" >
 
+
     <RelativeLayout
         android:id="@+id/layout_category_topbar"
-        style="@style/TopbarStyle" >
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/head_bg_color"
+        >
 
         <TextView
             android:id="@+id/tv_mine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="我的"
+            android:textSize="@dimen/large_text_size"
+            android:textColor="@color/white"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+
+            />
+
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layout_category_topbar1"
+        style="@style/TopbarStyle"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/tv_mine1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -160,7 +189,7 @@
                 <LinearLayout
                     android:id="@+id/my_layout_mine_wallet"
                     style="@style/MineItemStyle"
-                    android:background="@drawable/bg_item_bottom" >
+                    android:background="@drawable/bg_item_top" >
 
                     <ImageView
                         android:layout_width="26.0dip"
@@ -242,6 +271,7 @@
                         android:src="@mipmap/android_personel_quickly_order"
                         />
 
+
                     <TextView
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
@@ -292,7 +322,9 @@
                 <LinearLayout
                     android:id="@+id/my_layout_mine_member"
                     style="@style/MineItemStyle"
-                    android:background="@drawable/bg_item_bottom" >
+                    android:background="@drawable/bg_item_bottom"
+                    android:visibility="gone"
+                    >
 
                     <ImageView
                         android:layout_width="26.0dip"

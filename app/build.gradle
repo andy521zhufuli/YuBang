@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.andy.android.yubang"
+        applicationId "com.car.yubangapk"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0.4"
+        versionName "1.0.5"
         multiDexEnabled true
     }
     buildTypes {
@@ -22,12 +22,21 @@ android {
 
 }
 
+repositories{
+    flatDir{
+        dirs 'libs' //就是你放aar的目录地址
+    }
+}
+
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //动画
     compile files('libs/nineoldandroids-2.4.0.jar')
     //加载图片
     compile files('libs/universal-image-loader-1.9.3.jar')
+
+
     compile files('src/main/jniLibs/baidumapapi_base_v3_7_1.jar')
     compile files('src/main/jniLibs/baidumapapi_cloud_v3_7_1.jar')
     compile files('src/main/jniLibs/baidumapapi_map_v3_7_1.jar')
@@ -35,8 +44,20 @@ dependencies {
     compile files('src/main/jniLibs/baidumapapi_search_v3_7_1.jar')
     compile files('src/main/jniLibs/baidumapapi_util_v3_7_1.jar')
     compile files('src/main/jniLibs/locSDK_6.13.jar')
+
+
     compile project(':library')
     compile project(':stickylibrary')
+    //短信验证码sdk
+    compile files('libs/MobCommons-2016.0303.1229.jar')
+    compile files('libs/MobTools-2016.0303.1229.jar')
+    compile name:'SMSSDK-2.0.2',ext:'aar'
+
+    //信鸽
+    compile files('libs/jg_filter_sdk_1.1.jar')
+    compile files('libs/wup-1.0.0.E-SNAPSHOT.jar')
+    compile files('libs/Xg_sdk_v2.42_20160111_1539.jar')
+
 
     //支持metail design
     compile 'com.android.support:appcompat-v7:23.1.1'

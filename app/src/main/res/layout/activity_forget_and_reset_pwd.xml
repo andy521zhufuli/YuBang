@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.andy.yubang.ui.ForgetAndResetPwdActivity">
+    tools:context="com.car.yubangapk.ui.ForgetAndResetPwdActivity">
 
     <!-- 头部显示-->
     <RelativeLayout

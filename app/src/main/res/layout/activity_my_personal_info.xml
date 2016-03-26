@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/android_layout_bg"
     android:orientation="vertical"
-    tools:context="com.android.andy.yubang.ui.MyPersonalInfoActivity">
+    tools:context="com.car.yubangapk.ui.MyPersonalInfoActivity">
 
     <!-- 头部显示-->
     <RelativeLayout

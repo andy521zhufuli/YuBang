@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.andy.yubang.ui.FirstPageMarkerClickedActivity">
+    tools:context="com.car.yubangapk.ui.FirstPageMarkerClickedActivity">
 
     <LinearLayout
         android:id="@+id/bottom"

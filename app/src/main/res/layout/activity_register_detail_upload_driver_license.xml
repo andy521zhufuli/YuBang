@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context="com.android.andy.yubang.ui.RegisterDetailUploadIDCardActivity">
+    tools:context="com.car.yubangapk.ui.RegisterDetailUploadIDCardActivity">
 
     <!-- 头部显示-->
     <RelativeLayout

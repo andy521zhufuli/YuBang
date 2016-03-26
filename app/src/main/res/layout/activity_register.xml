@@ -211,7 +211,7 @@
 
             <Button
                 android:id="@+id/register_btn_send_verify_code"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_ok"
                 android:text="发送验证码"

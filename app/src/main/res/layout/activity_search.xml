@@ -99,7 +99,7 @@
             android:layout_marginBottom="10dp"
             />
 
-        <com.android.andy.yubang.view.ForbiddenScrollGridView
+        <com.car.yubangapk.view.ForbiddenScrollGridView
             android:id="@+id/search_recommand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -9,9 +9,18 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 读取联系人-->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 读取短信-->
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <!-- 接收短信-->
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <!-- 写设置-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
 
     <application
-        android:name="com.android.andy.yubang.app.YuBangApplication"
+        android:name="com.car.yubangapk.app.YuBangApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +28,7 @@
 
         <!-- 主界面 -->
         <activity
-            android:name="com.android.andy.yubang.ui.MainActivity"
+            android:name="com.car.yubangapk.ui.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
@@ -31,26 +40,26 @@
         </activity>
         <!-- 基Activity -->
         <activity
-            android:name="com.android.andy.yubang.ui.BaseActivity"
+            android:name="com.car.yubangapk.ui.BaseActivity"
             android:label="@string/title_activity_base" />
         <!-- 首页 -->
         <activity
-            android:name="com.android.andy.yubang.ui.FirstPageActivity"
+            android:name="com.car.yubangapk.ui.FirstPageActivity"
             android:label="@string/title_activity_first_page"
             android:screenOrientation="portrait" />
         <!-- 商城 -->
         <activity
-            android:name="com.android.andy.yubang.ui.ShoppingMallActivity"
+            android:name="com.car.yubangapk.ui.ShoppingMallActivity"
             android:label="@string/title_activity_shopping_mall"
             android:screenOrientation="portrait" />
         <!-- 发现 -->
         <activity
-            android:name="com.android.andy.yubang.ui.DiscoverActivity"
+            android:name="com.car.yubangapk.ui.DiscoverActivity"
             android:label="@string/title_activity_discover"
             android:screenOrientation="portrait" />
         <!-- 我的界面 -->
         <activity
-            android:name="com.android.andy.yubang.ui.MyActivity"
+            android:name="com.car.yubangapk.ui.MyActivity"
             android:label="@string/title_activity_my"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -60,207 +69,207 @@
             android:value="HtFAOVLR8DiUNNDy3cBg0ixw" />
         <!-- 搜索 -->
         <activity
-            android:name="com.android.andy.yubang.ui.SearchActivity"
+            android:name="com.car.yubangapk.ui.SearchActivity"
             android:label="@string/title_activity_search"
             android:screenOrientation="portrait" />
 
         <!-- 登陆 -->
         <activity
-            android:name="com.android.andy.yubang.ui.LoginActivity"
+            android:name="com.car.yubangapk.ui.LoginActivity"
             android:label="@string/title_activity_login"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!-- 注册 -->
         <activity
-            android:name="com.android.andy.yubang.ui.RegisterActivity"
+            android:name="com.car.yubangapk.ui.RegisterActivity"
             android:label="@string/title_activity_register"
             android:screenOrientation="portrait" />
 
         <!-- 忘记密码 并且重置密码 -->
         <activity
-            android:name="com.android.andy.yubang.ui.ForgetAndResetPwdActivity"
+            android:name="com.car.yubangapk.ui.ForgetAndResetPwdActivity"
             android:label="@string/title_activity_forget_and_reset_pwd"
             android:screenOrientation="portrait" />
         <!-- 注册详情 -->
         <activity
-            android:name="com.android.andy.yubang.ui.RegisterDetailsActivity"
+            android:name="com.car.yubangapk.ui.RegisterDetailsActivity"
             android:label="@string/title_activity_register_details"
             android:screenOrientation="portrait" />
 
         <!-- 注册选择车辆信息 -->
         <activity
-            android:name="com.android.andy.yubang.ui.RegisterDetailChooseCarInfoActivity"
+            android:name="com.car.yubangapk.ui.RegisterDetailChooseCarInfoActivity"
             android:label="@string/title_activity_register_detail_choose_car_info"
             android:screenOrientation="portrait" />
 
         <!-- 注册车辆详情 上传身份证 -->
         <activity
-            android:name="com.android.andy.yubang.ui.RegisterDetailUploadIDCardActivity"
+            android:name="com.car.yubangapk.ui.RegisterDetailUploadIDCardActivity"
             android:label="@string/title_activity_register_detail_upload_idcard"
             android:screenOrientation="portrait" />
 
         <!-- 注册车辆详情 上传司机照片 -->
         <activity
-            android:name="com.android.andy.yubang.ui.RegisterDetailUploadDriverPhotoActivity"
+            android:name="com.car.yubangapk.ui.RegisterDetailUploadDriverPhotoActivity"
             android:label="@string/title_activity_register_detail_upload_driver_photo"
             android:screenOrientation="portrait" />
 
         <!-- 注册车辆详情  上传车辆照片 -->
         <activity
-            android:name="com.android.andy.yubang.ui.RegisterDetailUploadCarPhotoActivity"
+            android:name="com.car.yubangapk.ui.RegisterDetailUploadCarPhotoActivity"
             android:label="@string/title_activity_register_detail_upload_car_photo"
             android:screenOrientation="portrait" />
 
         <!-- 注册车辆详情 上传驾驶证 -->
         <activity
-            android:name="com.android.andy.yubang.ui.RegisterDetailUploadDriverLicenseActivity"
+            android:name="com.car.yubangapk.ui.RegisterDetailUploadDriverLicenseActivity"
             android:label="@string/title_activity_register_detail_upload_driver_license"
             android:screenOrientation="portrait" />
 
         <!-- 注册车辆详情 上传行驶证 -->
         <activity
-            android:name="com.android.andy.yubang.ui.RegisterDetailUploadDrivingLicenseActivity"
+            android:name="com.car.yubangapk.ui.RegisterDetailUploadDrivingLicenseActivity"
             android:label="@string/title_activity_register_detail_upload_driving_license"
             android:screenOrientation="portrait" />
 
         <!-- 注册车辆详情 上传营运证 -->
         <activity
-            android:name="com.android.andy.yubang.ui.RegisterDetailUploadTaxiLicenseActivity"
+            android:name="com.car.yubangapk.ui.RegisterDetailUploadTaxiLicenseActivity"
             android:label="@string/title_activity_register_detail_upload_taxi_license"
             android:screenOrientation="portrait" />
 
         <!-- 我的个人信息 -->
         <activity
-            android:name="com.android.andy.yubang.ui.MyPersonalInfoActivity"
+            android:name="com.car.yubangapk.ui.MyPersonalInfoActivity"
             android:label="@string/title_activity_my_personal_info"
             android:screenOrientation="portrait" />
 
         <!-- 我的钱包 -->
         <activity
-            android:name="com.android.andy.yubang.ui.MyWwalletActivity"
+            android:name="com.car.yubangapk.ui.MyWwalletActivity"
             android:label="@string/title_activity_my_wwallet"
             android:screenOrientation="portrait" />
 
         <!-- 我的优惠 -->
         <activity
-            android:name="com.android.andy.yubang.ui.MyCouponActivity"
+            android:name="com.car.yubangapk.ui.MyCouponActivity"
             android:label="@string/title_activity_my_coupon"
             android:screenOrientation="portrait" />
 
         <!-- 我的特权 -->
         <activity
-            android:name="com.android.andy.yubang.ui.MyPrivilegeActivity"
+            android:name="com.car.yubangapk.ui.MyPrivilegeActivity"
             android:label="@string/title_activity_my_privilege"
             android:screenOrientation="portrait" />
 
         <!-- 我的二维码  分享 -->
         <activity
-            android:name="com.android.andy.yubang.ui.MyQRCodeActivity"
+            android:name="com.car.yubangapk.ui.MyQRCodeActivity"
             android:label="@string/title_activity_my_qrcode"
             android:screenOrientation="portrait" />
 
         <!-- 我的订单 -->
         <activity
-            android:name="com.android.andy.yubang.ui.MyOrdersActivity"
+            android:name="com.car.yubangapk.ui.MyOrdersActivity"
             android:label="@string/title_activity_my_orders"
             android:screenOrientation="portrait" />
 
         <!-- 我的界面==>推荐合伙人 -->
         <activity
-            android:name="com.android.andy.yubang.ui.MyRecommendedPartnerActivity"
+            android:name="com.car.yubangapk.ui.MyRecommendedPartnerActivity"
             android:label="@string/title_activity_my_recommended_partner"
             android:screenOrientation="portrait" />
 
         <!--  -->
         <activity
-            android:name="com.android.andy.yubang.ui.MyRecommendedPartnerFirstFragmentActivity"
+            android:name="com.car.yubangapk.ui.MyRecommendedPartnerFirstFragmentActivity"
             android:label="@string/title_activity_my_recommended_partner_first_fragment" />
         <activity
-            android:name="com.android.andy.yubang.ui.MyRecommendedPartnerSecondFragmentActivity"
+            android:name="com.car.yubangapk.ui.MyRecommendedPartnerSecondFragmentActivity"
             android:label="@string/title_activity_my_recommended_partner_second_fragment" />
 
         <!-- 设置 -->
         <activity
-            android:name="com.android.andy.yubang.ui.SettingActivity"
+            android:name="com.car.yubangapk.ui.SettingActivity"
             android:label="@string/title_activity_setting"
             android:screenOrientation="portrait" />
 
         <!-- 商城商品 -->
         <activity
-            android:name="com.android.andy.yubang.ui.ShoppingMallGoodsActivity"
+            android:name="com.car.yubangapk.ui.ShoppingMallGoodsActivity"
             android:label="@string/title_activity_shopping_mall_goods"
             android:screenOrientation="portrait" />
 
         <!-- 确认订单 -->
         <activity
-            android:name="com.android.andy.yubang.ui.ShoppingMallConformOrderActivity"
+            android:name="com.car.yubangapk.ui.ShoppingMallConformOrderActivity"
             android:label="@string/title_activity_shopping_mall_conform_order"
             android:screenOrientation="portrait" />
 
         <!-- 选择支付方式 -->
         <activity
-            android:name="com.android.andy.yubang.ui.ShoppingMallChoosePaymentActivity"
+            android:name="com.car.yubangapk.ui.ShoppingMallChoosePaymentActivity"
             android:label="@string/title_activity_shopping_mall_choose_payment"
             android:screenOrientation="portrait" />
 
         <!-- 添加银行卡 -->
         <activity
-            android:name="com.android.andy.yubang.ui.ShoppingMallPaymentAddBankCardActivity"
+            android:name="com.car.yubangapk.ui.ShoppingMallPaymentAddBankCardActivity"
             android:label="@string/title_activity_shopping_mall_payment_add_bank_card"
             android:screenOrientation="portrait" />
 
         <!-- 选择照片  上传 -->
         <activity
-            android:name="com.android.andy.yubang.ui.UploadFileSelectPicActivity"
+            android:name="com.car.yubangapk.ui.UploadFileSelectPicActivity"
             android:screenOrientation="portrait"
             android:theme="@style/DialogStyleBottom" />
 
         <!-- 首页店铺展示 -->
         <activity
-            android:name="com.android.andy.yubang.ui.FirstPageShopShowActivity"
+            android:name="com.car.yubangapk.ui.FirstPageShopShowActivity"
             android:label="@string/title_activity_first_page_shop_show"
             android:screenOrientation="portrait" />
 
         <!-- 首页店铺大图展示 -->
         <activity
-            android:name="com.android.andy.yubang.ui.FirstPageShopBigPhotoShowActivity"
+            android:name="com.car.yubangapk.ui.FirstPageShopBigPhotoShowActivity"
             android:label="@string/title_activity_first_page_shop_big_photo_show"
             android:screenOrientation="portrait" />
 
         <!-- 发现==>附近的 -->
         <activity
-            android:name="com.android.andy.yubang.ui.DiscoverNearbyActivity"
+            android:name="com.car.yubangapk.ui.DiscoverNearbyActivity"
             android:label="@string/title_activity_discover_nearby" />
 
         <!-- 我的邀请的佣金 -->
         <activity
-            android:name="com.android.andy.yubang.ui.MyCommissionDetailActivity"
+            android:name="com.car.yubangapk.ui.MyCommissionDetailActivity"
             android:label="@string/title_activity_my_commission_detail"
             android:screenOrientation="portrait" />
 
         <!-- 发现  推荐合伙人 -->
         <activity
-            android:name="com.android.andy.yubang.ui.DiscoverRecommendPartnerActivity"
+            android:name="com.car.yubangapk.ui.DiscoverRecommendPartnerActivity"
             android:label="@string/title_activity_discover_recommend_partner"
             android:screenOrientation="portrait" />
 
         <!-- 发现 推荐==>添加合伙人 -->
         <activity
-            android:name="com.android.andy.yubang.ui.DiscoverRecommendAddPartnerActivity"
+            android:name="com.car.yubangapk.ui.DiscoverRecommendAddPartnerActivity"
             android:label="@string/title_activity_discover_recommend_add_partner"
             android:screenOrientation="portrait"
             />
 
         <!-- 发现==>合伙人评论 -->
         <activity
-            android:name="com.android.andy.yubang.ui.DiscoverRecommendPartnerCommentActivity"
+            android:name="com.car.yubangapk.ui.DiscoverRecommendPartnerCommentActivity"
             android:label="@string/title_activity_discover_recommend_partner_comment"
             android:screenOrientation="portrait"
             />
 
         <activity
-            android:name="com.android.andy.yubang.ui.ExpandableListTestActivity"
+            android:name="com.car.yubangapk.ui.ExpandableListTestActivity"
             android:screenOrientation="portrait"
             />
 
@@ -271,12 +280,103 @@
             android:process=":remote" />
 
         <activity
-            android:name="com.android.andy.yubang.ui.FirstPageMarkerClickedActivity"
+            android:name="com.car.yubangapk.ui.FirstPageMarkerClickedActivity"
             android:theme="@style/marker_click_dialog"
             android:screenOrientation="portrait"
             >
 
         </activity>
+        <!--  Mob  短信-->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale|layoutDirection"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 以下为信鸽-->
+        <!-- 【必须】 (2.30及以上版新增)展示通知的activity -->
+        <activity
+            android:name="com.tencent.android.tpush.XGPushActivity"
+            android:theme="@android:style/Theme.Translucent"
+            android:exported="false" >
+            <intent-filter>
+                <!-- 若使用AndroidStudio，请设置android:name="android.intent.action"-->
+                <action android:name="android.intent.action" />
+            </intent-filter>
+        </activity>
+
+        <!-- 【必须】 信鸽receiver广播接收 -->
+        <receiver
+            android:name="com.tencent.android.tpush.XGPushReceiver"
+            android:process=":xg_service_v2" >
+            <intent-filter android:priority="0x7fffffff" >
+
+                <!-- 【必须】 信鸽SDK的内部广播 -->
+                <action android:name="com.tencent.android.tpush.action.SDK" />
+                <action android:name="com.tencent.android.tpush.action.INTERNAL_PUSH_MESSAGE" />
+                <!-- 【必须】 系统广播：网络切换 -->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
+                <!-- 【可选】 系统广播：开屏 -->
+                <action android:name="android.intent.action.USER_PRESENT" />
+
+                <!-- 【可选】 一些常用的系统广播，增强信鸽service的复活机会，请根据需要选择。当然，你也可以添加APP自定义的一些广播让启动service -->
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+            <!-- 【可选】 usb相关的系统广播，增强信鸽service的复活机会，请根据需要添加 -->
+            <intent-filter android:priority="0x7fffffff" >
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+                <action android:name="android.intent.action.MEDIA_REMOVED" />
+                <action android:name="android.intent.action.MEDIA_CHECKING" />
+                <action android:name="android.intent.action.MEDIA_EJECT" />
+
+                <data android:scheme="file" />
+            </intent-filter>
+        </receiver>
+        <!-- 【必须】 信鸽service -->
+        <service
+            android:name="com.tencent.android.tpush.service.XGPushService"
+            android:exported="true"
+            android:persistent="true"
+            android:process=":xg_service_v2" />
+
+        <!-- 【必须】 通知service，其中android:name部分要改为当前包名 -->
+        <service
+            android:name="com.tencent.android.tpush.rpc.XGRemoteService"
+            android:exported="true" >
+            <intent-filter>
+                <!-- 【必须】 请修改为当前APP名包.PUSH_ACTION，如demo的包名为：com.qq.xgdemo -->
+                <action android:name="com.car.yubangapk.PUSH_ACTION" />
+            </intent-filter>
+        </service>
+
+        <!-- 已废弃，可删除之；若不删除也不会有任何副作用 -->
+        <!--<service
+            android:name="com.tencent.android.tpush.service.XGDaemonService"
+            android:process=":qq_push_daemon" />
+        -->
+        <!-- 【可选】信鸽拉起其他APP应用，若应用在本地找不到可以自动下载 -->
+        <!--
+              <service
+            android:name="com.tencent.android.tpush.XGDownloadService"
+            android:enabled="true"
+            android:exported="false" />
+        -->
+        <!-- 【可选】APP实现的Receiver，用于接收消息透传和操作结果的回调，请根据需要添加 -->
+        <!-- YOUR_PACKAGE_PATH.CustomPushReceiver需要改为自己的Receiver： -->
+
+
+        <!-- 【必须】 请修改为APP的AccessId，“21”开头的10位数字，中间没空格 -->
+        <meta-data
+            android:name="XG_V2_ACCESS_ID"
+            android:value="2100190655" />
+        <!-- 【必须】 请修改为APP的AccessKey，“A”开头的12位字符串，中间没空格 -->
+        <meta-data
+            android:name="XG_V2_ACCESS_KEY"
+            android:value="AN2S8HX387TM" />
+        <!-- 以上为信鸽-->
+
     </application>
 
 </manifest>
