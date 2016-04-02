@@ -37,6 +37,11 @@ dependencies {
     compile files('libs/universal-image-loader-1.9.3.jar')
 
 
+
+
+
+
+
     compile files('src/main/jniLibs/baidumapapi_base_v3_7_1.jar')
     compile files('src/main/jniLibs/baidumapapi_cloud_v3_7_1.jar')
     compile files('src/main/jniLibs/baidumapapi_map_v3_7_1.jar')
@@ -44,6 +49,7 @@ dependencies {
     compile files('src/main/jniLibs/baidumapapi_search_v3_7_1.jar')
     compile files('src/main/jniLibs/baidumapapi_util_v3_7_1.jar')
     compile files('src/main/jniLibs/locSDK_6.13.jar')
+
 
 
     compile project(':library')
@@ -64,6 +70,10 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     //圆形图片
     compile 'de.hdodenhof:circleimageview:2.0.0'
+
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+
+
 
     //提醒小红点
     //compile files('libs/android-viewbadger.jar')

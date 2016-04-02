@@ -38,10 +38,11 @@ import com.car.yubangapk.banner.effect.RotateTransformer;
 import com.car.yubangapk.banner.effect.ZoomOutPageTransformer;
 import com.car.yubangapk.banner.listener.FlashViewListener;
 import com.andy.android.yubang.R;
+import com.car.yubangapk.utils.toastMgr;
 
 /**
  * 
- * @author Android将军
+ * @author andy
  * 
  * 
  */
@@ -85,8 +86,9 @@ public class FlashView extends FrameLayout{
 	  }
 
 	 }
+
 	 /**
-	  * 设置监听
+	  * 设置监听 向外提供接口 值得学习
 	  * @param mFlashViewListener
 	  */
 	 public void setOnPageClickListener(FlashViewListener mFlashViewListener)
@@ -94,6 +96,8 @@ public class FlashView extends FrameLayout{
 	 
 	  this.mFlashViewListener=mFlashViewListener;
 	 }
+
+
 	 private void initUI(Context context)
 	 {
 	  imageViewsList = new ArrayList<ImageView>();
@@ -281,12 +285,14 @@ public class FlashView extends FrameLayout{
 	    @Override
 	    public void onClick(View v)
 	    {
-	     if(mFlashViewListener!=null)
+
+			toastMgr.builder.display("点击了 " + pos, 0);
+	     if(mFlashViewListener != null)
 	     {
 	      mFlashViewListener.onClick(posclick);
 	     }else
 	     {
-	     
+
 	     }
 	     
 	    }
@@ -359,10 +365,12 @@ public class FlashView extends FrameLayout{
 	  public void onPageSelected(int pos) {
 	   // TODO Auto-generated method stub
 	   mhandler.sendMessage(Message.obtain(mhandler,ImageHandler.MSG_PAGE_CHANGED, pos, 0));
-	   
+
 	   setImageBackground(pos);
 
+
 	  }
+
 
 	 }
 

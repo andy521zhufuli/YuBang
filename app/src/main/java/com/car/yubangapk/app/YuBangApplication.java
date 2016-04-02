@@ -5,7 +5,11 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.okhttp.OkHttpUtils;
+import com.car.yubangapk.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
+import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
 import com.baidu.mapapi.SDKInitializer;
 import com.tencent.android.tpush.XGIOperateCallback;
@@ -16,12 +20,17 @@ import com.tencent.android.tpush.XGPushNotifactionCallback;
 
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
 
 /**
  * Created by andy on 16/2/22.
  */
 public class YuBangApplication extends Application
 {
+    private static final String TAG = "YuBangApplication";
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -29,13 +38,16 @@ public class YuBangApplication extends Application
         SDKInitializer.initialize(getApplicationContext());
 
         Log.d("TPush", "application oncreate call time");
+        //okhttp
+        OkHttpUtils.getInstance().debug("OkHttpUtils").setConnectTimeout(100000, TimeUnit.MILLISECONDS);
+        //使用https，但是默认信任全部证书
+        OkHttpUtils.getInstance().setCertificates();
+
+
 
         // 在主进程设置信鸽相关的内容
-        if (isMainProcess()) {
-
-
-
-
+        if (isMainProcess())
+        {
             XGPushConfig.enableDebug(getApplicationContext(), true);
             XGPushManager.registerPush(getApplicationContext(), new XGIOperateCallback() {
                 @Override
@@ -71,6 +83,8 @@ public class YuBangApplication extends Application
                         }
                     });
         }
+        //去拿配置信息
+        getAppConfig();
 
     }
 
@@ -87,4 +101,37 @@ public class YuBangApplication extends Application
         }
         return false;
     }
+
+    /**
+     * 拿到启动后配置信息
+     */
+    public void getAppConfig()
+    {
+        OkHttpUtils.post()
+                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_SYS_CONFIG)
+                .build().execute(new MyAppConfigCallback());
+    }
+
+    /**
+     * 获取配置信息回调
+     */
+    public class MyAppConfigCallback extends StringCallback
+    {
+
+        @Override
+        public void onError(Call call, Exception e)
+        {
+            L.d(TAG, "get MyAppConfigCallback error ====" + e.toString());
+        }
+
+        @Override
+        public void onResponse(String response)
+        {
+            //持久性保存
+            SPUtils.put(getApplicationContext(), Configs.APP_SYS_CONFIG, response);
+            L.d(TAG, "get MyAppConfigCallback onResponse ====" + response);
+        }
+    }
+
+
 }

@@ -1,7 +1,9 @@
 package com.car.yubangapk.banner;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.view.View;
 import android.widget.ImageView;
 
 
@@ -9,6 +11,8 @@ import com.andy.android.yubang.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 //UIL
 
 /**
@@ -65,8 +69,30 @@ public class ImageLoaderTools{
 	}
 
 
-	public void displayImage(String mResName, ImageView imageView) {
+	public void displayImage(String mResName, final ImageView imageView) {
 		if(mResName.startsWith("http://")){
+			mImageLoader.displayImage(mResName, imageView, new ImageLoadingListener() {
+				@Override
+				public void onLoadingStarted(String s, View view) {
+
+				}
+
+				@Override
+				public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+				}
+
+				@Override
+				public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+					//这里bitmap判断是不是MD5为error
+					imageView.setImageBitmap(bitmap);
+				}
+
+				@Override
+				public void onLoadingCancelled(String s, View view) {
+
+				}
+			});
 			mImageLoader.displayImage(mResName, imageView);
 		}else if(mResName.startsWith("assets://"))
 		{

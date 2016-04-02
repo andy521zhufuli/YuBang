@@ -64,6 +64,14 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     //当前定位结果的经纬度
     private double latitude;
     private double longitude;
+
+    private String mCountry;    //国家
+    private String mProvince;   //省
+    private String mCity;       //市
+    private String mCityCode;   //市代码
+    private String mDistrict;   //区
+    private String mStreet;     //街道
+
     /**
      * MapView 是地图主控件
      */
@@ -251,6 +259,14 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 toastMgr.builder.display("定位失败", 0);
                 return;
             }
+            //获取定位信息
+            mCountry  = location.getCountry();
+            mProvince = location.getProvince();
+            mCity     = location.getCity();
+            mCityCode = location.getCityCode();
+            mDistrict  = location.getDistrict();
+            mStreet   = location.getStreet();
+
             MyLocationData locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
                             // 此处设置开发者获取到的方向信息，顺时针0-360
@@ -271,7 +287,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
             longitude = location.getLongitude();
             latitude  = location.getLatitude();
 
-
+            L.d(TAG + "当前经纬度",longitude +  "=="+ latitude + "");
 
             mLocationClient.stop();
         }

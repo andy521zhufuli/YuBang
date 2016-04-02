@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.car.yubangapk.app.AppManager;
+import com.car.yubangapk.json.bean.SysConfig;
 
 /**
  * 应用程序Activity的基类
@@ -73,5 +74,11 @@ public class BaseActivity extends Activity {
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    public SysConfig getSystemConfig()
+    {
+        return null;
     }
 }
