@@ -10,7 +10,7 @@ public class Configs {
 
 
     //Mob SMSSdk
-    public static String SMS_APPKEY = "f3fc6baa9ac4";
+    public static String SMS_APPKEY = "1130ebf82262c";
     public static String SMS_APPSECRET = "7f3dedcb36d92deebcb373af921d635a";
 
     //网络请求地址

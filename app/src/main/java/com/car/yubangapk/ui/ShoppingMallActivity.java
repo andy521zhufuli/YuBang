@@ -14,12 +14,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.car.yubangapk.banner.FlashView;
+import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.banner.constants.EffectConstants;
 import com.car.yubangapk.banner.listener.FlashViewListener;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.FormatJson;
 import com.car.yubangapk.json.bean.BannerAd;
 import com.car.yubangapk.json.bean.ShoppingmallPicBean;
+import com.car.yubangapk.json.bean.ShoppingmallSpeciesePicBean;
 import com.car.yubangapk.okhttp.OkHttpUtils;
 import com.car.yubangapk.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
@@ -47,7 +49,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     //banner广告点击
     List<BannerAd> mBannerAdList = null;//全局的banner广告变量  保存广告相关信息
     //商城图片  中部分类
-    List<ShoppingmallPicBean> mShoppingmallSpeciesPicList = null;//种类
+    List<ShoppingmallSpeciesePicBean> mShoppingmallSpeciesPicList = null;//种类
     List<ImageView>           mMiddleSpeciesList = null;
     //商城图片  底部6个大分类 大图片
     List<ShoppingmallPicBean>   mShoppingmallBottomPicList = null;//中部分类以下的
@@ -141,16 +143,17 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 .addParams("dataReqModel.args.needTotal","needTotal")
                 .addParams("dataReqModel.args.position","2")//2代表banner广告
                 .build().execute(new MyBannerAdCallback());
+        L.i(TAG, "banner url = " + Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchAd&dataReqModel.args.needTotal=needTotal&dataReqModel.args.position=2" );
         /**
          * 去拿中间8个的图片
          */
         OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETFILE)
-                .addParams("sqlName", "")
-                .addParams("dataReqMOdel.args.needTotal", "")
+                .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
+                .addParams("sqlName", "clientSearchLogicalService")
+                .addParams("dataReqModel.args.needTotal","needTotal")
                 .build()
                 .execute(new MallSpecieseCallback());
-
+        L.i(TAG, "Species url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchLogicalService&dataReqModel.args.needTotal=clientSearchLogicalService");
 
 //        OkHttpUtils.post()
 //                .url("http://192.168.1.7:8080/carService/getFile")
@@ -198,7 +201,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         mMiddleSpeciesList = new ArrayList<>();
         mMiddleSpeciesList.add(speciese_01);
         mMiddleSpeciesList.add(speciese_02);
-        mMiddleSpeciesList.add(speciese_03 );
+        mMiddleSpeciesList.add(speciese_03);
         mMiddleSpeciesList.add(speciese_04);
         mMiddleSpeciesList.add(speciese_05);
         mMiddleSpeciesList.add(speciese_06);
@@ -210,6 +213,8 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         mShoppingmallBottomPicMap = new HashMap<>();
         mShoppingmallBottomImageviewList = new ArrayList<>();
         //后期做加载图片的时候再做
+
+
 
     }
 
@@ -243,6 +248,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             bannerAdUrl.add(url);
             shoppingmall_flashview_banner.setImageUris(bannerAdUrl);
             shoppingmall_flashview_banner.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
+            toastMgr.builder.display("网络未连接, 请检查您的网络设置.", 1);
         }
 
         @Override
@@ -301,24 +307,78 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
         @Override
         public void onError(Call call, Exception e) {
-
+            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置",1);
         }
 
         @Override
         public void onResponse(String response) {
+            L.d(TAG + "种类 json", response);
             FormatJson formatJson = new FormatJson(response);
-            List<ShoppingmallPicBean> picList;
-            picList = formatJson.getShoppingMallPic();
+            List<ShoppingmallSpeciesePicBean> picList;
+            picList = formatJson.getShoppingMallSpeciesePic();
+            if (picList == null)
+            {
+                toastMgr.builder.display("服务器错误,请稍后再试,", 1);
+                return;
+            }
             mShoppingmallSpeciesPicList = picList;
             //TODO
             //中部分类图片加载
-
+            loadSpeciesImage();
         }
 
         @Override
         public void inProgress(float progress) {
             super.inProgress(progress);
-            L.d(TAG + "MallSpecieseCallback  progress" + "  " + progress*100);
+            L.d(TAG + "MallSpecieseCallback  progress" + "  " + progress * 100);
+        }
+    }
+
+    /**
+     * 中部以下的图标获取
+     */
+    public class MallBottomCallback extends StringCallback
+    {
+
+        @Override
+        public void onError(Call call, Exception e) {
+            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置",1);
+        }
+
+        @Override
+        public void onResponse(String response) {
+            L.i(TAG, "中部以下的图片json = " + response);
+        }
+    }
+
+    /**
+     * 中间部分图片加载
+     */
+    private void loadSpeciesImage()
+    {
+        int size = mMiddleSpeciesList.size();
+        for (int i= 0; i < size - 1; i++)
+        {
+            ShoppingmallSpeciesePicBean shoppingmallSpeciesePicBean = mShoppingmallSpeciesPicList.get(i);
+            String pathcode = shoppingmallSpeciesePicBean.getPathCode();
+            String photoname = shoppingmallSpeciesePicBean.getPhotoName();
+            String id        = shoppingmallSpeciesePicBean.getId();
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
+            L.d(TAG,"商城中间图片加载url = " + url);
+            ImageLoaderTools.getInstance(mContext).displayImage(url, mMiddleSpeciesList.get(i));
+
+            //在此同时, 去拿对应的6个图片
+            /**
+             * 去拿中间以下6个的图片
+             */
+            OkHttpUtils.post()
+                    .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
+                    .addParams("sqlName", "clientSearchRepairService")
+                    .addParams("dataReqModel.args.needTotal","needTotal")
+                    .addParams("dataReqModel.args.logicalService",id)
+                    .build()
+                    .execute(new MallBottomCallback());
+            L.i(TAG, "service all kinds bottom url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+id);
         }
     }
 

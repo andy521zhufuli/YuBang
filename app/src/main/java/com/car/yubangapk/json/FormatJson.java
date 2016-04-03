@@ -8,6 +8,7 @@ import android.content.Context;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.BannerAd;
 import com.car.yubangapk.json.bean.ShoppingmallPicBean;
+import com.car.yubangapk.json.bean.ShoppingmallSpeciesePicBean;
 import com.car.yubangapk.json.bean.SysConfig;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
@@ -141,6 +142,53 @@ public class FormatJson
         }
         return shoppingmallPicBeans;
     }
+
+
+    /**
+     * 解析获取的商城中间的  8个分类图标
+     * @return
+     */
+    public List<ShoppingmallSpeciesePicBean> getShoppingMallSpeciesePic()
+    {
+        List<ShoppingmallSpeciesePicBean> shoppingmallPicBeans = new ArrayList<ShoppingmallSpeciesePicBean>();
+
+        JSONObject total = null;
+
+        try {
+            total = new JSONObject(json);
+            JSONArray rows = total.getJSONArray("rows");
+            int size = rows.length();
+            String id;
+            String pathCode;
+            String sort;
+            String skipType;//跳转类型
+            String photoName;
+            String serviceName;
+            for (int i = 0; i < size; i++)
+            {
+                JSONObject row = (JSONObject) rows.get(i);
+                id = row.getString("id");
+                pathCode = row.getString("pathCode");
+                sort = row.getString("sort");
+                skipType = row.getString("skipType");//跳转类型
+                photoName = row.getString("photoName");
+                serviceName = row.getString("serviceName");
+                ShoppingmallSpeciesePicBean shoppingmallPicBean = new ShoppingmallSpeciesePicBean();
+                shoppingmallPicBean.setId(id);
+                shoppingmallPicBean.setPathCode(pathCode);
+                shoppingmallPicBean.setSort(sort);
+                shoppingmallPicBean.setPhotoName(photoName);
+                shoppingmallPicBean.setSkipType(skipType);
+                shoppingmallPicBean.setServiceName(serviceName);
+                shoppingmallPicBeans.add(shoppingmallPicBean);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;//返回空  服务器错误
+        }
+        return shoppingmallPicBeans;
+    }
+
 
 
 

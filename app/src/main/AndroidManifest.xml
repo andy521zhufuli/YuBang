@@ -17,6 +17,8 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <!-- 写设置-->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
 
     <application
@@ -286,12 +288,7 @@
             >
 
         </activity>
-        <!--  Mob  短信-->
-        <activity
-            android:name="com.mob.tools.MobUIShell"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale|layoutDirection"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <!-- 以下为信鸽-->
         <!-- 【必须】 (2.30及以上版新增)展示通知的activity -->
         <activity
@@ -376,6 +373,24 @@
             android:name="XG_V2_ACCESS_KEY"
             android:value="AN2S8HX387TM" />
         <!-- 以上为信鸽-->
+
+        <!--  以下  Mob  短信-->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale|layoutDirection"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!--  以上  Mob  短信-->
+
+        <!-- 以下为ShareSDK-->
+        <activity
+            android:name="com.car.yubangapk.wxapi.WXEntryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <!-- 以上为ShareSDK-->
+
 
     </application>
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -22,11 +23,13 @@ import com.andy.android.yubang.R;
  * @version 1.0
  * @created 2016-02-22
  */
-public class ShoppingMallGoodsActivity extends BaseActivity {
+public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnClickListener{
 
     private Context mContext;
     private ListView shoppingmall_goods_listview;
 
+    //返回
+    private ImageView       img_back; //返回
     private RelativeLayout btn_pay;//去结算
     private RelativeLayout btn_service;//客服
     //编辑商品
@@ -55,13 +58,15 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
 
     private void findViews() {
 
+        //返回
+        img_back = (ImageView) findViewById(R.id.img_back);
         shoppingmall_goods_listview = (ListView) findViewById(R.id.shoppingmall_goods_listview);
         tv_modify_goods = (TextView) findViewById(R.id.tv_modify_goods);
         btn_pay = (RelativeLayout) findViewById(R.id.btn_pay);
         btn_service = (RelativeLayout) findViewById(R.id.btn_service);
 
 
-
+        img_back.setOnClickListener(this);
         /**
          * 监听器
          */
@@ -119,6 +124,17 @@ public class ShoppingMallGoodsActivity extends BaseActivity {
 
 
     private String[] strings = {"保养维护", "电子电路", "发动机件", "底盘配件", "车架配件", "拖架配件" };
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.img_back:
+                finish();
+                break;
+        }
+    }
+
     /**
      * 适配器的定义,要继承BaseAdapter
      */
