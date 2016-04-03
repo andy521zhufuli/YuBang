@@ -116,16 +116,17 @@ public class MainActivity extends TabActivity {
         @Override
         public void onClick(View v)
         {
-            // TODO Auto-generated method stub
-            mTabHost.setCurrentTabByTag("FirstPage");
-            image_first_page.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_all_dark_press));
-            main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_shoppingcar_bnormal));
-            image_discover.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_discover_normal));
-            image_me.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_my_normal));
+            setDisplayFirstPage();
+
+//            mTabHost.setCurrentTabByTag("FirstPage");
+//            image_first_page.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_all_dark_press));
+//            main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_shoppingcar_bnormal));
+//            image_discover.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_discover_normal));
+//            image_me.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_my_normal));
         }
 
     }
@@ -140,16 +141,16 @@ public class MainActivity extends TabActivity {
         @Override
         public void onClick(View v)
         {
-            // TODO Auto-generated method stub
-            mTabHost.setCurrentTabByTag("ShoppingMall");
-            image_first_page.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_all_dark_normal));
-            main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_shoppingcar_perss));
-            image_discover.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_discover_normal));
-            image_me.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_my_normal));
+            setDisplayShoppingPage();
+//            mTabHost.setCurrentTabByTag("ShoppingMall");
+//            image_first_page.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_all_dark_normal));
+//            main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_shoppingcar_perss));
+//            image_discover.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_discover_normal));
+//            image_me.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_my_normal));
         }
 
     }
@@ -163,15 +164,16 @@ public class MainActivity extends TabActivity {
         @Override
         public void onClick(View view)
         {
-            mTabHost.setCurrentTabByTag("Discover");
-            image_first_page.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_all_dark_normal));
-            main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_shoppingcar_bnormal));
-            image_discover.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_discover_press));
-            image_me.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_my_normal));
+            setDisplayDiscoverPage();
+//            mTabHost.setCurrentTabByTag("Discover");
+//            image_first_page.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_all_dark_normal));
+//            main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_shoppingcar_bnormal));
+//            image_discover.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_discover_press));
+//            image_me.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_my_normal));
         }
     }
     /**
@@ -184,18 +186,71 @@ public class MainActivity extends TabActivity {
         @Override
         public void onClick(View v)
         {
-            // TODO Auto-generated method stub
-            mTabHost.setCurrentTabByTag("My");
-            image_first_page.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_all_dark_normal));
-            main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_shoppingcar_bnormal));
-            image_discover.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_discover_normal));
-            image_me.setImageDrawable(getResources().getDrawable(
-                    R.mipmap.tabhost_my_press));
+            setDisplayMyPage();
+//            mTabHost.setCurrentTabByTag("My");
+//            image_first_page.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_all_dark_normal));
+//            main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_shoppingcar_bnormal));
+//            image_discover.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_discover_normal));
+//            image_me.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.tabhost_my_press));
         }
 
+    }
+
+
+    private void setDisplayFirstPage()
+    {
+        mTabHost.setCurrentTabByTag("FirstPage");
+        image_first_page.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_all_dark_press));
+        main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_shoppingcar_bnormal));
+        image_discover.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_discover_normal));
+        image_me.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_my_normal));
+    }
+
+    private void setDisplayShoppingPage()
+    {
+        mTabHost.setCurrentTabByTag("ShoppingMall");
+        image_first_page.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_all_dark_normal));
+        main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_shoppingcar_perss));
+        image_discover.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_discover_normal));
+        image_me.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_my_normal));
+    }
+
+    private void setDisplayDiscoverPage()
+    {
+        mTabHost.setCurrentTabByTag("Discover");
+        image_first_page.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_all_dark_normal));
+        main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_shoppingcar_bnormal));
+        image_discover.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_discover_press));
+        image_me.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_my_normal));
+    }
+
+    private void setDisplayMyPage()
+    {
+        mTabHost.setCurrentTabByTag("My");
+        image_first_page.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_all_dark_normal));
+        main_activity_footer__shoppingmall.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_shoppingcar_bnormal));
+        image_discover.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_discover_normal));
+        image_me.setImageDrawable(getResources().getDrawable(
+                R.mipmap.tabhost_my_press));
     }
 
 
@@ -209,24 +264,29 @@ public class MainActivity extends TabActivity {
         toastMgr.builder.display("onNewIntent called ", 0);
         setIntent(intent);
         Bundle bundle = intent.getExtras();
+        if (bundle == null)
+            return;
         /**拿到从其他activity传来的参数, 判断应该显示哪个页面
          * 首页
-         * 购物车
+         * 商城
+         * 发现
          * 个人中心
          * */
-//        String activityToShow = (String) bundle.get("otherActivity");
-//        //正常启动
-//        if (activityToShow == null)
-//        {
-//
-//        }
-//        //购物车没有商品, 跳转到首页
-//        else if (activityToShow.equals("login"))
-//        {
-//            //设置为已经登陆
-//            SPUtils.putUserInfo(mContext, "LoginOrNot", Configs.LOGINED);
-//
-//        }
+        String activityToShow = (String) bundle.get("otherActivity");
+        //正常启动
+        if (activityToShow == null)
+        {
+
+        }
+        //购物车没有商品, 跳转到首页
+        else if (activityToShow.equals("login"))
+        {
+            toastMgr.builder.display("login 首页", 0);
+            setDisplayMyPage();
+            //设置为已经登陆
+            //SPUtils.putUserInfo(mContext, "LoginOrNot", Configs.LOGINED);
+
+        }
 //        else if (activityToShow.equals("LOGIN_SUCCESS"))
 //        {
 //            //这里不能判断 就正常启动行了

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.car.yubangapk.ui.RegisterDetailChooseChildBrandActivity">
+
+
+    <!-- 头部显示-->
+    <RelativeLayout
+        android:id="@+id/layout_login_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="6dp"
+            android:paddingRight="10dp"
+            android:layout_margin="6dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="请选择子品牌"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_text_size"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/choose_car_brand_catelog"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#E0E0E0"
+        android:textColor="#454545"
+        android:paddingLeft="5dip"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:text="A"/>
+
+
+    <ListView
+        android:id="@+id/choose_car_brand_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:divider="@null" />
+
+
+
+</LinearLayout>

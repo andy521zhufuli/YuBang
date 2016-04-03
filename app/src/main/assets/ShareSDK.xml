@@ -56,29 +56,14 @@
         AppKey = "10ee722c78ee5"/> <!-- 修改成你在sharesdk后台注册的应用的appkey"-->
     
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
-    <SinaWeibo
-        Id="1"
-        SortId="1"
-        AppKey="568898243"
-        AppSecret="38a4f8204cc784f81f9f0daaf31e02e3"
-        RedirectUrl="http://www.sharesdk.cn"
-        ShareByAppClient="true"
-        Enable="true" />
 
-    <TencentWeibo
-        Id="2" 
-        SortId="2"
-        AppKey="801307650"
-        AppSecret="ae36f4ee3946e1cbb98d6965b0b2ff5c"
-        RedirectUri="http://sharesdk.cn"
-        Enable="true" />
 
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <QZone
         Id="3"
         SortId="3"
-        AppId="100371282"
-        AppKey="aed9b0303e3ed1e27bae87c33761161d"
+        AppId="1105232045"
+        AppKey="Qki3IyN8u6SYyB4a"
         ShareByAppClient="true"
         Enable="true" />
     
@@ -121,14 +106,14 @@
 	<QQ
         Id="7"
         SortId="7"
-        AppId="100371282"
-        AppKey="aed9b0303e3ed1e27bae87c33761161d"
+        AppId="1105232045"
+        AppKey="Qki3IyN8u6SYyB4a"
         ShareByAppClient="true"
         Enable="true" />
-    
 
-    
 
-        
+
+
+
 
 </DevInfor>

@@ -38,6 +38,8 @@ public class RegisterDetailsActivity extends BaseActivity {
     private Button          btn_commit;//提交
 
 
+    String userid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,15 @@ public class RegisterDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_register_details);
 
         mContext = this;
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null)
+        {
+
+        }
+        else
+        {
+            userid = bundle.getString("userid");
+        }
         
         findViews();
 
@@ -53,7 +64,7 @@ public class RegisterDetailsActivity extends BaseActivity {
 
     private void findViews()
     {
-        img_back = (ImageView) findViewById(R.id.img_back  );//返回
+        img_back = (ImageView) findViewById(R.id.img_back);//返回
 
         car_info = (RelativeLayout) findViewById(R.id.car_info  );//车辆信息
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+
+
+
+
+    <ImageView
+        android:id="@+id/choose_car_brand_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ssdk_oks_classic_alipay"
+        android:layout_marginLeft="15dp"
+        />
+
+
+    <TextView
+        android:id="@+id/choose_car_brand_name"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:textColor="#336598"
+        android:layout_marginLeft="15dip"
+        android:paddingTop="10dip"
+        android:paddingBottom="10dip"
+        android:text="hhhh"
+        />
+
+</LinearLayout>

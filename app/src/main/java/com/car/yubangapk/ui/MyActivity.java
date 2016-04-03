@@ -123,7 +123,11 @@ public class MyActivity extends BaseActivity {
         personal_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 Intent intent = new Intent();
+//                intent.setClass(MyActivity.this, RegisterDetailChooseCarInfoActivity.class);
+//                intent.setClass(MyActivity.this, RegisterDetailsActivity.class);
                 intent.setClass(MyActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
@@ -133,7 +137,8 @@ public class MyActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(MyActivity.this, MyRecommendedPartnerActivity.class);
+                //intent.setClass(MyActivity.this, MyRecommendedPartnerActivity.class);
+                intent.setClass(MyActivity.this, RegisterDetailsActivity.class);
                 startActivity(intent);
             }
         });

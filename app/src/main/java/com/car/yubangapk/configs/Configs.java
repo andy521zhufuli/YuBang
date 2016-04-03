@@ -22,6 +22,13 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GETDATA= "/getData";
     public static String IP_ADDRESS_ACTION_GETFILE= "/getFile";
     public static String IP_ADDRESS_ACTION_SYS_CONFIG= "/client/sys/getSysConfig";
+    public static String IP_ADDRESS_ACTION_SEND_VERIFY_MSG= "/sendSms";
+    public static String IP_ADDRESSS_ACTION_REGISTER = "/client/user/register";
+    public static String IP_ADDRESSS_ACTION_LOGIN = "/client/user/login";
+    public static String IP_ADDRESSS_ACTION_GET_CAR_COMPANY = "/client/user/login";
+    public static String IP_ADDRESSS_ACTION_UP_LOAD_FILE = "/client/user/uploadFile";
+
+
 
 
 

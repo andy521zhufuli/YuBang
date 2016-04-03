@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.andy.android.yubang.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
@@ -23,10 +24,25 @@ public class TestBaseAdapter extends BaseAdapter implements
     private Character[] mSectionLetters;
     private LayoutInflater mInflater;
 
+    private List<String> mImageList;
+    private List<String> mCarCompanyNameList;
+
+
+
     public TestBaseAdapter(Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mCountries = context.getResources().getStringArray(R.array.countries);
+        mSectionIndices = getSectionIndices();
+        mSectionLetters = getSectionLetters();
+    }
+
+    public TestBaseAdapter(Context context, List<String> imageList, List<String> carCompanyNameList)
+    {
+        mContext = context;
+        mInflater = LayoutInflater.from(context);
+        this.mImageList = imageList;
+        this.mCarCompanyNameList = carCompanyNameList;
         mSectionIndices = getSectionIndices();
         mSectionLetters = getSectionLetters();
     }

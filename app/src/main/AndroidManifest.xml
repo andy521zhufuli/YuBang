@@ -9,17 +9,16 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 读取联系人-->
+    <!-- 读取联系人 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!-- 读取短信-->
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <!-- 接收短信-->
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-    <!-- 写设置-->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <!-- 读取短信 -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <!-- 接收短信 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <!-- 写设置 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-
 
     <application
         android:name="com.car.yubangapk.app.YuBangApplication"
@@ -260,20 +259,16 @@
         <activity
             android:name="com.car.yubangapk.ui.DiscoverRecommendAddPartnerActivity"
             android:label="@string/title_activity_discover_recommend_add_partner"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <!-- 发现==>合伙人评论 -->
         <activity
             android:name="com.car.yubangapk.ui.DiscoverRecommendPartnerCommentActivity"
             android:label="@string/title_activity_discover_recommend_partner_comment"
-            android:screenOrientation="portrait"
-            />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.car.yubangapk.ui.ExpandableListTestActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <!-- 百度定位的service -->
         <service
@@ -283,20 +278,18 @@
 
         <activity
             android:name="com.car.yubangapk.ui.FirstPageMarkerClickedActivity"
-            android:theme="@style/marker_click_dialog"
             android:screenOrientation="portrait"
-            >
+            android:theme="@style/marker_click_dialog" />
 
-        </activity>
-
-        <!-- 以下为信鸽-->
+        <!-- 以下为信鸽 -->
         <!-- 【必须】 (2.30及以上版新增)展示通知的activity -->
         <activity
             android:name="com.tencent.android.tpush.XGPushActivity"
-            android:theme="@android:style/Theme.Translucent"
-            android:exported="false" >
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent">
             <intent-filter>
-                <!-- 若使用AndroidStudio，请设置android:name="android.intent.action"-->
+
+                <!-- 若使用AndroidStudio，请设置android:name="android.intent.action" -->
                 <action android:name="android.intent.action" />
             </intent-filter>
         </activity>
@@ -304,8 +297,8 @@
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"
-            android:process=":xg_service_v2" >
-            <intent-filter android:priority="0x7fffffff" >
+            android:process=":xg_service_v2">
+            <intent-filter android:priority="0x7fffffff">
 
                 <!-- 【必须】 信鸽SDK的内部广播 -->
                 <action android:name="com.tencent.android.tpush.action.SDK" />
@@ -322,7 +315,7 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
             <!-- 【可选】 usb相关的系统广播，增强信鸽service的复活机会，请根据需要添加 -->
-            <intent-filter android:priority="0x7fffffff" >
+            <intent-filter android:priority="0x7fffffff">
                 <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
                 <action android:name="android.intent.action.MEDIA_REMOVED" />
                 <action android:name="android.intent.action.MEDIA_CHECKING" />
@@ -341,15 +334,17 @@
         <!-- 【必须】 通知service，其中android:name部分要改为当前包名 -->
         <service
             android:name="com.tencent.android.tpush.rpc.XGRemoteService"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
+
                 <!-- 【必须】 请修改为当前APP名包.PUSH_ACTION，如demo的包名为：com.qq.xgdemo -->
                 <action android:name="com.car.yubangapk.PUSH_ACTION" />
             </intent-filter>
         </service>
 
         <!-- 已废弃，可删除之；若不删除也不会有任何副作用 -->
-        <!--<service
+        <!--
+            <service
             android:name="com.tencent.android.tpush.service.XGDaemonService"
             android:process=":qq_push_daemon" />
         -->
@@ -372,26 +367,38 @@
         <meta-data
             android:name="XG_V2_ACCESS_KEY"
             android:value="AN2S8HX387TM" />
-        <!-- 以上为信鸽-->
+        <!-- 以上为信鸽 -->
 
-        <!--  以下  Mob  短信-->
+
+        <!-- 以下  Mob  短信 -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize|locale|layoutDirection"
             android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <!--  以上  Mob  短信-->
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <data android:scheme="tencent1105232045" />
 
-        <!-- 以下为ShareSDK-->
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 以上  Mob  短信 -->
+
+
+        <!-- 以下为ShareSDK -->
         <activity
             android:name="com.car.yubangapk.wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
-        <!-- 以上为ShareSDK-->
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 以上为ShareSDK -->
 
-
+        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseChildBrandActivity" />
+        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarYearActivity"></activity>
     </application>
 
 </manifest>

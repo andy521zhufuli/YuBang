@@ -139,7 +139,7 @@
                 android:background="@null"
                 android:maxLength="16"
                 android:hint="两个汉字以上"
-                android:inputType="textPassword"
+
                 android:textSize="@dimen/small_middle_text_size" />
         </RelativeLayout>
         <View
@@ -173,8 +173,8 @@
                 android:layout_toRightOf="@+id/register_recommend_ren_name_tv"
                 android:background="@null"
                 android:maxLength="16"
-                android:hint="推荐人用户名"
-                android:inputType="textPassword"
+                android:hint="推荐人手机"
+
                 android:textSize="@dimen/small_middle_text_size" />
         </RelativeLayout>
 
@@ -211,7 +211,7 @@
 
             <Button
                 android:id="@+id/register_btn_send_verify_code"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_ok"
                 android:text="发送验证码"
