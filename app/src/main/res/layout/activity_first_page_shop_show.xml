@@ -56,9 +56,10 @@
         android:layout_width="fill_parent" android:layout_height="0.5dip" />
 
 
+    <!-- 顶部店铺信息-->
     <RelativeLayout
         android:layout_below="@+id/view11"
-        android:id="@+id/shop_kehu_pingjia"
+        android:id="@+id/shop_detail_info"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="100dp">
@@ -157,7 +158,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/item_margin_top"
-        android:layout_below="@+id/shop_kehu_pingjia"
+        android:layout_below="@+id/shop_detail_info"
         android:orientation="vertical" >
 
 
@@ -165,13 +166,14 @@
         <ListView
             android:id="@+id/shop_show_service_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
         </ListView>
 
         <!-- 没有服务-->
         <LinearLayout
-            android:id="@+id/first_page_shop_show_wheel_service"
+            android:id="@+id/first_page_shop_no_service"
             style="@style/MineItemStyle"
             android:background="@drawable/bg_item_bottom" >
 
@@ -231,6 +233,7 @@
                 <!--android:layout_marginRight="15dp"-->
                 <!--android:src="@mipmap/personel_arrow_right" />-->
         <!--</LinearLayout>-->
+        <!-- 优化活动-->
         <LinearLayout
             android:id="@+id/first_page_shop_show_sales_activity"
             style="@style/MineItemStyle"
@@ -261,6 +264,7 @@
                 android:layout_marginRight="15dp"
                 android:src="@mipmap/personel_arrow_right" />
         </LinearLayout>
+        <!--客服评价-->
         <LinearLayout
             android:id="@+id/first_page_shop_show_customers_comments"
             style="@style/MineItemStyle"

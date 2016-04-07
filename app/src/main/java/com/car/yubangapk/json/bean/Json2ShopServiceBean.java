@@ -1,13 +1,13 @@
 package com.car.yubangapk.json.bean;
 
 /**
- * Json2ShopShowBean:门店展示的数据
+ * Json2ShopShowBean:门店 店铺的服务
  *
  * @author andy
  * @version 1.0.6
  * @created 2016-04-06
  */
-public class Json2ShopShowBean {
+public class Json2ShopServiceBean {
 
 
 

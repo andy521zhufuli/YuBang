@@ -1,9 +1,7 @@
 package com.car.yubangapk.json.formatJson;
 
 
-import com.car.yubangapk.json.bean.Json2CarSeriesBean;
-import com.car.yubangapk.json.bean.Json2LoginBean;
-import com.car.yubangapk.json.bean.Json2ShopShowBean;
+import com.car.yubangapk.json.bean.Json2ShopServiceBean;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,15 +17,15 @@ import java.util.List;
  * @version 1.0.6
  * @created 2016-04-06
  */
-public class Json2ShopShow {
+public class Json2ShopService {
 
     String json;
 
-    public Json2ShopShow() {
+    public Json2ShopService() {
 
     }
 
-    public Json2ShopShow(String json) {
+    public Json2ShopService(String json) {
         this.json = json;
     }
 
@@ -36,8 +34,8 @@ public class Json2ShopShow {
      *
      * @return
      */
-    public List<Json2ShopShowBean> getShopShowData() {
-        List<Json2ShopShowBean> json2ShopShowBeanList = new ArrayList<>();
+    public List<Json2ShopServiceBean> getShopShowData() {
+        List<Json2ShopServiceBean> json2ShopServiceBeanList = new ArrayList<>();
 
         JSONObject total = null;
         try {
@@ -51,10 +49,10 @@ public class Json2ShopShow {
 
             if (size == 0)
             {
-                Json2ShopShowBean json2ShopShowBean = new Json2ShopShowBean();
-                json2ShopShowBean.setHasData(false);
-                json2ShopShowBeanList.add(json2ShopShowBean);
-                return json2ShopShowBeanList;
+                Json2ShopServiceBean json2ShopServiceBean = new Json2ShopServiceBean();
+                json2ShopServiceBean.setHasData(false);
+                json2ShopServiceBeanList.add(json2ShopServiceBean);
+                return json2ShopServiceBeanList;
             }
 
             for (int i = 0; i < size; i++)
@@ -67,19 +65,19 @@ public class Json2ShopShow {
 
 
 
-                Json2ShopShowBean json2CarBrandBean = new Json2ShopShowBean();
+                Json2ShopServiceBean json2CarBrandBean = new Json2ShopServiceBean();
                 json2CarBrandBean.setId(id);
                 json2CarBrandBean.setServiceName(serviceName);
                 json2CarBrandBean.setSkipType(skipType);
 
                 json2CarBrandBean.setHasData(true);
-                json2ShopShowBeanList.add(json2CarBrandBean);
+                json2ShopServiceBeanList.add(json2CarBrandBean);
             }
         } catch (JSONException e) {
             e.printStackTrace();
             return null;//返回空  服务器错误
         }
-        return json2ShopShowBeanList;
+        return json2ShopServiceBeanList;
 
     }
 }
