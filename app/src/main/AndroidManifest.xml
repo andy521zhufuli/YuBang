@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -19,6 +20,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
 
     <application
         android:name="com.car.yubangapk.app.YuBangApplication"
@@ -96,6 +98,7 @@
         <activity
             android:name="com.car.yubangapk.ui.RegisterDetailsActivity"
             android:label="@string/title_activity_register_details"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!-- 注册选择车辆信息 -->
@@ -397,8 +400,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 以上为ShareSDK -->
 
-        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseChildBrandActivity" />
-        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarYearActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseBrandActivity" />
+        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarChildBrandActivity" />
+        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarYearActivity" />
+        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarCapacityActivity"></activity>
     </application>
 
 </manifest>

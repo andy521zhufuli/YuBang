@@ -15,6 +15,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ZoomControls;
 
+import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.json.bean.Json2FirstPageShopBean;
+import com.car.yubangapk.json.bean.Json2FirstPageTabsBean;
+import com.car.yubangapk.json.formatJson.Json2CarCapacity;
+import com.car.yubangapk.json.formatJson.Json2FirstPageShop;
+import com.car.yubangapk.json.formatJson.Json2FirstPageTabs;
+import com.car.yubangapk.okhttp.OkHttpUtils;
+import com.car.yubangapk.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.BDMapData;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.ViewGroupToBitmap;
@@ -39,9 +47,15 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.car.yubangapk.view.AlertDialog;
+import com.car.yubangapk.view.CustomProgressDialog;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
 
 /**
  * FirstPageActivity: 首页界面
@@ -146,7 +160,19 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     private static final int YOU_LU_PAGE    = 5;
 
 
+    List<Json2FirstPageTabsBean> mPageTabsBeanList;
+    private static int FITST_GET_SHOP = 1;//第一次去拿店铺
+    private static int SECOND_GET_SHOP = 2;//如果没有区里面没有店铺信息  就去拿市里的
+    private static int THIRD_GET_SHOP = 3;//如果没有市里面没有店铺信息  就去拿省里的
+    private int CURRENT_GET_SHOP_TIME = 1;
 
+
+    private String mShopBeanResponse;
+
+
+    private CustomProgressDialog mProgressDialog;
+    //保存拿来的店铺信息
+    private List<Json2FirstPageShopBean> mJson2FirstPageShopBeanList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +186,56 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         currentPage = ALL_CAR_PAGE;
 
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
+        //进度框
+        mProgressDialog = new CustomProgressDialog(mContext);
 
+
+        //去拿首页上面导航的5getab
+        httpGetFirstPageTopTab();
+
+
+
+
+    }
+
+    /**
+     * 首页拿导航tabs
+     */
+    private void httpGetFirstPageTopTab()
+    {
+
+        OkHttpUtils.post()
+                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_FIRST_PAGE_TAB)
+                .addParams("sqlName",  "clientSearchLogicalService")
+                .build()
+                .execute(new GetTabsCallBack());
+        L.i(TAG, "获取首页tab url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_FIRST_PAGE_TAB + "?"
+                        + "sqlName=" + "clientSearchLogicalService"
+        );
+
+    }
+    class GetTabsCallBack extends StringCallback{
+
+        @Override
+        public void onError(Call call, Exception e) {
+            toastMgr.builder.display("网络错误,请重试!",1);
+            initMAp();
+        }
+
+        @Override
+        public void onResponse(String response) {
+            L.d(TAG, "获取首页tab json = " + response);
+            initMAp();
+            Json2FirstPageTabs pageTabs = new Json2FirstPageTabs(response);
+            List<Json2FirstPageTabsBean> pageTabsBeanList = pageTabs.getFirstPageTabs();
+            mPageTabsBeanList = pageTabsBeanList;
+            setTabsName(pageTabsBeanList);
+        }
+    }
+
+
+    private void initMAp()
+    {
         mBaiduMap = mMapView.getMap();
         //初始化定位
         mBaiduMap.setMyLocationEnabled(true);//使能百度地图的定位功能
@@ -184,6 +259,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
                 Intent intent = new Intent();
                 intent.setClass(FirstPageActivity.this, FirstPageMarkerClickedActivity.class);
+                intent.putExtra("shopBean", mShopBeanResponse);
                 //这里需要把要显示的店铺信息放到FirstPageMarkerClickedActivity里面去  让它解析  然后显示
                 startActivity(intent);
                 intent = null;
@@ -223,8 +299,17 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         });
 
         mLocationClient.start();
+    }
+
+
+    /**
+     * s设置顶部tab的名字
+     * @param pageTabsBeanList
+     */
+    private void setTabsName(List<Json2FirstPageTabsBean> pageTabsBeanList) {
 
     }
+
 
     /**
      * 初始化定位配置参数
@@ -256,7 +341,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         public void onReceiveLocation(BDLocation location) {
             // map view 销毁后不在处理新接收的位置
             if (location == null || mMapView == null) {
-                toastMgr.builder.display("定位失败", 0);
+                toastMgr.builder.display("定位失败, 请确保开启网络,然后重试!!", 1);
                 return;
             }
             //获取定位信息
@@ -282,7 +367,12 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 longitude = location.getLongitude();
                 latitude  = location.getLatitude();
-                initOverlay(1);
+
+
+                //首次定位成功才会去请求附近的店铺, 成功之后添加覆盖物
+                mProgressDialog = mProgressDialog.show(mContext,"正在定位", false, null);
+                httpSearchShop(mProvince, mCity, mDistrict, mPageTabsBeanList.get(0).getId(), longitude, latitude, FITST_GET_SHOP);
+                //initOverlay(1, mJson2FirstPageShopBeanList);
             }
             longitude = location.getLongitude();
             latitude  = location.getLatitude();
@@ -293,6 +383,163 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
+        }
+    }
+
+    /**
+     * 去请求附近的店铺
+     * @param Province
+     * @param City
+     * @param serviceId  这是上面tab点击的时候对应的id   这里还需要逻辑处理
+     * @param District
+     * @param longitude
+     * @param latitude
+     */
+    private void httpSearchShop(String Province, String City, String District, String serviceId, double longitude, double latitude, int condition) {
+
+        mProgressDialog.setMessage("正在加载店铺信息...");
+        if (condition == FITST_GET_SHOP)
+        {
+            OkHttpUtils.post()
+                    .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_SHOP)
+                    .addParams("sqlName", "clientSearchShop")
+                    .addParams("dataReqModel.args.logicalService",serviceId)
+                    .addParams("dataReqModel.args.needTotal", "needTotal")
+                    .addParams("dataReqModel.args.shopProvince", getUTF8XMLString(Province))
+                    .addParams("dataReqModel.args.shopCity",getUTF8XMLString(City))
+                    .addParams("dataReqModel.args.shopDistrict",getUTF8XMLString(District))
+                    .addParams("shopReq.lon", longitude + "")
+                    .addParams("shopReq.lat",latitude + "")
+                    .build()
+                    .execute(new GetShopCallback());
+            CURRENT_GET_SHOP_TIME = 1;
+            L.i(TAG, "获取首页店铺url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_SHOP + "?"
+                            + "sqlName=" + "clientSearchShop"
+                            + "&dataReqModel.args.logicalService=" + serviceId
+                            + "&dataReqModel.args.needTotal=needTotal"
+                            + "&dataReqModel.args.shopProvince=" + Province
+                            + "&dataReqModel.args.shopCity=" + City
+                            + "&dataReqModel.args.shopDistrict=" + District
+                            + "&shopReq.lon=" + longitude
+                            + "&shopReq.lat=" + latitude
+            );
+        }
+        else if (condition == SECOND_GET_SHOP)
+        {
+            //
+            OkHttpUtils.post()
+                    .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_SHOP)
+                    .addParams("sqlName", "clientSearchShop")
+                    .addParams("dataReqModel.args.logicalService",serviceId)
+                    .addParams("dataReqModel.args.needTotal","needTotal")
+                    .addParams("dataReqModel.args.shopProvince",getUTF8XMLString(Province))
+                    .addParams("dataReqModel.args.shopCity",getUTF8XMLString(City))
+                    .addParams("shopReq.lon",longitude + "")
+                    .addParams("shopReq.lat",latitude + "")
+                    .build()
+                    .execute(new GetShopCallback());
+            CURRENT_GET_SHOP_TIME = 2;
+            L.i(TAG, "获取首页店铺 市 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_SHOP + "?"
+                            + "sqlName=" + "clientSearchShop"
+                            + "&dataReqModel.args.logicalService=" + serviceId
+                            + "&dataReqModel.args.needTotal=needTotal"
+                            + "&dataReqModel.args.shopProvince=" + Province
+                            + "&dataReqModel.args.shopCity=" + City
+                            + "&shopReq.lon=" + longitude
+                            + "&shopReq.lat=" + latitude
+            );
+        }
+        else if (condition == THIRD_GET_SHOP)
+        {
+            OkHttpUtils.post()
+                    .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_SHOP)
+                    .addParams("sqlName", "clientSearchShop")
+                    .addParams("dataReqModel.args.logicalService",serviceId)
+                    .addParams("dataReqModel.args.needTotal","needTotal")
+                    .addParams("dataReqModel.args.shopProvince",getUTF8XMLString(Province))
+                    .addParams("shopReq.lon", longitude + "")
+                    .addParams("shopReq.lat",latitude + "")
+                    .build()
+                    .execute(new GetShopCallback());
+            CURRENT_GET_SHOP_TIME = 3;
+            L.i(TAG, "获取首页店铺 省url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_SHOP + "?"
+                            + "sqlName=" + "clientSearchShop"
+                            + "&dataReqModel.args.logicalService=" + serviceId
+                            + "&dataReqModel.args.needTotal=needTotal"
+                            + "&dataReqModel.args.shopProvince=" + Province
+                            + "&shopReq.lon=" + longitude
+                            + "&shopReq.lat=" + latitude
+            );
+        }
+
+
+
+
+    }
+
+    class GetShopCallback extends StringCallback
+    {
+
+        @Override
+        public void onError(Call call, Exception e) {
+            toastMgr.builder.display("网络错误, 请重试!", 0);
+            mProgressDialog.dismiss();
+        }
+
+        @Override
+        public void onResponse(String response) {
+            L.d(TAG, "获取店铺 json = " + response );
+            Json2FirstPageShop json2FirstPageShop = new Json2FirstPageShop(response);
+            List<Json2FirstPageShopBean> json2FirstPageShopBeanList = json2FirstPageShop.getFirstPageShop();
+            mJson2FirstPageShopBeanList = json2FirstPageShopBeanList;
+            if (json2FirstPageShopBeanList == null)
+            {
+                //解析json错误 就是服务器错误 提示更新app???
+                toastMgr.builder.display("更新app", 0);
+                mProgressDialog.dismiss();
+            }
+            else
+            {
+                if (json2FirstPageShopBeanList.get(0).getId().equals("0"))
+                {
+                    //证明附近没有店铺需要重新获取
+                    if (CURRENT_GET_SHOP_TIME == 1)
+                    {
+                        //去请求市
+                        httpSearchShop(mProvince, mCity, mDistrict, json2FirstPageShopBeanList.get(0).getId(), longitude, latitude, CURRENT_GET_SHOP_TIME+1);
+                    }
+                    else if (CURRENT_GET_SHOP_TIME == 2)
+                    {
+                        //去请求省
+                        httpSearchShop(mProvince, mCity, mDistrict, json2FirstPageShopBeanList.get(0).getId(), longitude, latitude, CURRENT_GET_SHOP_TIME+1);
+                        first_page_progressbar.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        mProgressDialog.dismiss();
+                        AlertDialog alertDialog = new AlertDialog(mContext);
+                        alertDialog.builder().setCancelable(false)
+                                .setTitle("您所在区域暂无店铺,请持续关注...")
+                                .setPositiveButton("确定", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                    }
+                                })
+                                .show();
+                    }
+
+
+                }
+                else
+                {
+                    //里面有数据, 那就显示出来数据
+                    mProgressDialog.dismiss();
+                    initOverlay(1, mJson2FirstPageShopBeanList);
+                    mShopBeanResponse = response;
+
+                }
+            }
         }
     }
 
@@ -336,84 +583,143 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
      * 初始化覆盖物
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void initOverlay(int nowPage) {
+    public void initOverlay(int nowPage, List<Json2FirstPageShopBean> jsonPageShopBeanList) {
         //这里是根据网上拿到的数据,去看要添加什么覆盖物
         //这里可以抽象出一个类  然后后面就会方便
         // add marker overlay
-        LatLng llA = new LatLng(latitude + 0.024, longitude + 0.024);
-        LatLng llB = new LatLng(latitude - 0.0024, longitude + 0.024);
-        LatLng llC = new LatLng(latitude + 0.0024, longitude - 0.024);
-        LatLng llD = new LatLng(latitude - 0.024, longitude - 0.024);
+        List<LatLng> lls = new ArrayList<>();
+        int size = jsonPageShopBeanList.size();
 
-        ViewGroupToBitmap vb = new ViewGroupToBitmap();
-
-        LayoutInflater inflater = LayoutInflater.from(this);
-        //首页地图覆盖物 view转变
-        View view = inflater.inflate(R.layout.view_to_marker2, null);
-        //修车店标号
-        TextView shop_num = (TextView) view.findViewById(R.id.marker_shop_num);
-        shop_num.setText("1");
-        //修车店名称
-        TextView textView = (TextView) view.findViewById(R.id.marker_info);
-        textView.setText("高德汇001");
-
-        LinearLayout imageView = (LinearLayout) view.findViewById(R.id.marker_ll_image);
-        switch (nowPage)
+        for (int i = 0; i < size; i++)
         {
-            case ALL_CAR_PAGE:
-                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_1));
-                break;
-            case BAO_YANG_PAGE:
-                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_2));
-                break;
-            case DIAN_LU_PAGE:
-                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_3));
-                break;
-            case PEI_JIAN_PAGE:
-                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_4));
-                break;
-            case YOU_LU_PAGE:
-                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_5));
-                break;
+            double _lat =  jsonPageShopBeanList.get(i).getShopLatitude();
+
+            double _lon = jsonPageShopBeanList.get(i).getShopLongitude();
+            L.d(TAG, "覆盖物经纬度,la = " + _lat + "lo = " + _lon);
+            LatLng ll = new LatLng(_lat, _lon);
+
+            ViewGroupToBitmap vb = new ViewGroupToBitmap();
+
+            LayoutInflater inflater = LayoutInflater.from(this);
+            //首页地图覆盖物 view转变
+            View view = inflater.inflate(R.layout.view_to_marker2, null);
+            //修车店标号
+            TextView shop_num = (TextView) view.findViewById(R.id.marker_shop_num);
+            shop_num.setText(jsonPageShopBeanList.get(i).getOrder()+"");
+            //修车店名称
+            TextView textView = (TextView) view.findViewById(R.id.marker_info);
+            textView.setText(jsonPageShopBeanList.get(i).getShopName());
+
+            LinearLayout imageView = (LinearLayout) view.findViewById(R.id.marker_ll_image);
+            switch (nowPage)
+            {
+                case ALL_CAR_PAGE:
+                    imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_1));
+                    break;
+                case BAO_YANG_PAGE:
+                    imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_2));
+                    break;
+                case DIAN_LU_PAGE:
+                    imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_3));
+                    break;
+                case PEI_JIAN_PAGE:
+                    imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_4));
+                    break;
+                case YOU_LU_PAGE:
+                    imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_5));
+                    break;
+            }
+            bdA = BitmapDescriptorFactory.fromBitmap(vb.getViewBitmap(view));
+            //第一个覆盖物
+            MarkerOptions ooA = new MarkerOptions().position(ll).icon(bdA)
+                    .zIndex(9).draggable(true);
+            // 掉下动画
+            ooA.animateType(MarkerOptions.MarkerAnimateType.drop);
+            mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
+
+            LatLng loc = new LatLng(latitude, longitude);
+            MapStatusUpdate u = MapStatusUpdateFactory
+                    .newLatLng(loc);
+            mBaiduMap.setMapStatus(u);
+
+            first_page_progressbar.setVisibility(View.GONE);
+
         }
 
-
-        bdA = BitmapDescriptorFactory.fromBitmap(vb.getViewBitmap(view));
-
-        //第一个覆盖物
-        MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdA)
-                .zIndex(9).draggable(true);
-        // 掉下动画
-        ooA.animateType(MarkerOptions.MarkerAnimateType.drop);
-        mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
-
-        //第二个覆盖物
-        MarkerOptions ooB = new MarkerOptions().position(llB).icon(bdA)
-                .zIndex(5);
-        // 掉下动画
-        ooB.animateType(MarkerOptions.MarkerAnimateType.drop);
-        mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
-
-        //第三个覆盖物
-        MarkerOptions ooC = new MarkerOptions().position(llC).icon(bdA)
-                .perspective(false).zIndex(7);
-        // 生长动画
-        ooC.animateType(MarkerOptions.MarkerAnimateType.drop);
-        mMarkerC = (Marker) (mBaiduMap.addOverlay(ooC));
-
-        //第四个覆盖物
-        MarkerOptions ooD = new MarkerOptions().position(llD).icon(bdA)
-                .zIndex(0);
-        // 生长动画
-        ooD.animateType(MarkerOptions.MarkerAnimateType.drop);
-        mMarkerD = (Marker) (mBaiduMap.addOverlay(ooD));
-
-        LatLng loc = new LatLng(latitude, longitude);
-        MapStatusUpdate u = MapStatusUpdateFactory
-                .newLatLng(loc);
-        mBaiduMap.setMapStatus(u);
-
-        first_page_progressbar.setVisibility(View.GONE);
+//        LatLng llA = new LatLng(latitude + 0.024, longitude + 0.024);
+//        LatLng llB = new LatLng(latitude - 0.0024, longitude + 0.024);
+//        LatLng llC = new LatLng(latitude + 0.0024, longitude - 0.024);
+//        LatLng llD = new LatLng(latitude - 0.024, longitude - 0.024);
+//
+//        ViewGroupToBitmap vb = new ViewGroupToBitmap();
+//
+//        LayoutInflater inflater = LayoutInflater.from(this);
+//        //首页地图覆盖物 view转变
+//        View view = inflater.inflate(R.layout.view_to_marker2, null);
+//        //修车店标号
+//        TextView shop_num = (TextView) view.findViewById(R.id.marker_shop_num);
+//        shop_num.setText("1");
+//        //修车店名称
+//        TextView textView = (TextView) view.findViewById(R.id.marker_info);
+//        textView.setText("高德汇001");
+//
+//        LinearLayout imageView = (LinearLayout) view.findViewById(R.id.marker_ll_image);
+//        switch (nowPage)
+//        {
+//            case ALL_CAR_PAGE:
+//                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_1));
+//                break;
+//            case BAO_YANG_PAGE:
+//                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_2));
+//                break;
+//            case DIAN_LU_PAGE:
+//                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_3));
+//                break;
+//            case PEI_JIAN_PAGE:
+//                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_4));
+//                break;
+//            case YOU_LU_PAGE:
+//                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_5));
+//                break;
+//        }
+//
+//
+//        bdA = BitmapDescriptorFactory.fromBitmap(vb.getViewBitmap(view));
+//
+//        //第一个覆盖物
+//        MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdA)
+//                .zIndex(9).draggable(true);
+//        // 掉下动画
+//        ooA.animateType(MarkerOptions.MarkerAnimateType.drop);
+//        mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
+//
+//        //第二个覆盖物
+//        MarkerOptions ooB = new MarkerOptions().position(llB).icon(bdA)
+//                .zIndex(5);
+//        // 掉下动画
+//        ooB.animateType(MarkerOptions.MarkerAnimateType.drop);
+//        mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
+//
+//        //第三个覆盖物
+//        MarkerOptions ooC = new MarkerOptions().position(llC).icon(bdA)
+//                .perspective(false).zIndex(7);
+//        // 生长动画
+//        ooC.animateType(MarkerOptions.MarkerAnimateType.drop);
+//        mMarkerC = (Marker) (mBaiduMap.addOverlay(ooC));
+//
+//        //第四个覆盖物
+//        MarkerOptions ooD = new MarkerOptions().position(llD).icon(bdA)
+//                .zIndex(0);
+//        // 生长动画
+//        ooD.animateType(MarkerOptions.MarkerAnimateType.drop);
+//        mMarkerD = (Marker) (mBaiduMap.addOverlay(ooD));
+//
+//        LatLng loc = new LatLng(latitude, longitude);
+//        MapStatusUpdate u = MapStatusUpdateFactory
+//                .newLatLng(loc);
+//        mBaiduMap.setMapStatus(u);
+//
+//        first_page_progressbar.setVisibility(View.GONE);
 
 
     }
@@ -508,7 +814,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         {
             case R.id.layout_order1:
                 //显示进度条
-
+                CURRENT_GET_SHOP_TIME = 1;//每次点击都默认是第一次去拿店铺
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car_selected));
                 TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
@@ -519,13 +825,14 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 {
                     first_page_progressbar.setVisibility(View.VISIBLE);
                     locationClick();
-                    initOverlay(ALL_CAR_PAGE);
+                    initOverlay(ALL_CAR_PAGE,mJson2FirstPageShopBeanList);
                 }
                 currentPage = ALL_CAR_PAGE;
 
                 break;
             case R.id.layout_order2:
                 //显示进度条
+                CURRENT_GET_SHOP_TIME = 1;//每次点击都默认是第一次去拿店铺
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
                 TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang_selected));//需要美工再给我一张图
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
@@ -536,13 +843,13 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 {
                     first_page_progressbar.setVisibility(View.VISIBLE);
                     locationClick();
-                    initOverlay(BAO_YANG_PAGE);
+                    initOverlay(BAO_YANG_PAGE,mJson2FirstPageShopBeanList);
                 }
                 currentPage = BAO_YANG_PAGE;
 
                 break;
             case R.id.layout_order3:
-
+                CURRENT_GET_SHOP_TIME = 1;//每次点击都默认是第一次去拿店铺
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
                 TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu_selected));
@@ -553,12 +860,12 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 {
                     first_page_progressbar.setVisibility(View.VISIBLE);
                     locationClick();
-                    initOverlay(DIAN_LU_PAGE);
+                    initOverlay(DIAN_LU_PAGE,mJson2FirstPageShopBeanList);
                 }
                 currentPage = DIAN_LU_PAGE;
                 break;
             case R.id.layout_order4:
-
+                CURRENT_GET_SHOP_TIME = 1;//每次点击都默认是第一次去拿店铺
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
                 TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
@@ -569,12 +876,12 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 {
                     first_page_progressbar.setVisibility(View.VISIBLE);
                     locationClick();
-                    initOverlay(PEI_JIAN_PAGE);
+                    initOverlay(PEI_JIAN_PAGE,mJson2FirstPageShopBeanList);
                 }
                 currentPage = PEI_JIAN_PAGE;
                 break;
             case R.id.layout_order5:
-
+                CURRENT_GET_SHOP_TIME = 1;//每次点击都默认是第一次去拿店铺
                 TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
                 TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
                 TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
@@ -585,7 +892,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 {
                     first_page_progressbar.setVisibility(View.VISIBLE);
                     locationClick();
-                    initOverlay(YOU_LU_PAGE);
+                    initOverlay(YOU_LU_PAGE,mJson2FirstPageShopBeanList);
                 }
                 currentPage = YOU_LU_PAGE;
                 break;
@@ -640,7 +947,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         clearOverlay(null);
         mLocationClient.start();
 
-        initOverlay(currentPage);
+        initOverlay(currentPage,mJson2FirstPageShopBeanList);
 
     }
 
@@ -653,6 +960,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         //回收bitmap资源
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -756,5 +1064,31 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
             }
             L.i("BaiduLocationApiDem", sb.toString());
         }
+    }
+
+
+
+
+    /**
+     * Get XML String of utf-8
+     *
+     * @return XML-Formed string
+     */
+    public static String getUTF8XMLString(String xml) {
+        // A StringBuffer Object
+        StringBuffer sb = new StringBuffer();
+        sb.append(xml);
+        String xmString = "";
+        String xmlUTF8="";
+        try {
+            xmString = new String(sb.toString().getBytes("UTF-8"));
+//            xmlUTF8 = URLEncoder.encode(xmString, "UTF-8");
+            System.out.println("utf-8 编码：" + xmString) ;
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // return to String Formed
+        return xmlUTF8;
     }
 }

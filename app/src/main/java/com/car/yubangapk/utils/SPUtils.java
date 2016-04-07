@@ -158,14 +158,26 @@ public class SPUtils
      * 把用户信息放在Sp里面
      * @param context 上下文信息
      * @param keyID 对应服务器的地址id
-     * @param addressJson 地址信息 json格式
+     * @param value 地址信息 json格式
      */
-    public static void putUserInfo(Context context, String keyID, String addressJson)
+    public static void putUserInfo(Context context, String keyID, Object value)
     {
         SharedPreferences sp = context.getSharedPreferences(FILE_USER_INFO,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(keyID, addressJson);
+        if (value instanceof Integer)
+        {
+            editor.putInt(keyID, (int)value);
+        }
+        else if (value instanceof String)
+        {
+            editor.putString(keyID, (String)value);
+        }
+        else if (value instanceof Boolean)
+        {
+            editor.putBoolean(keyID, (boolean) value);
+        }
+
         SharedPreferencesCompat.apply(editor);
     }
 
@@ -173,13 +185,29 @@ public class SPUtils
      * 拿到用户信息  判断 用户是否登陆可以用
      * @param context
      * @param keyID
-     * @param defaultString
+     * @param defaultObj
      * @return
      */
-    public static String getUserInfo(Context context, String keyID, String defaultString)
+    public static Object getUserInfo(Context context, String keyID, Object defaultObj)
     {
         SharedPreferences sp = context.getSharedPreferences(FILE_USER_INFO,context.MODE_PRIVATE);
-        return sp.getString(keyID, defaultString);
+        if (defaultObj instanceof Integer)
+        {
+            return sp.getInt(keyID, (int)defaultObj);
+        }
+        else if (defaultObj instanceof String)
+        {
+            return sp.getString(keyID, (String) defaultObj);
+        }
+        else if (defaultObj instanceof Boolean)
+        {
+            return sp.getBoolean(keyID, (boolean) defaultObj);
+        }
+        else
+        {
+            return null;
+        }
+
     }
     /**
      * 删除用户信息   退出登陆的时候  用

@@ -14,7 +14,7 @@ import com.andy.android.yubang.R;
  * @version 1.0
  * @created 2016-03-01
  */
-public class FirstPageShopBigPhotoShowActivity extends BaseActivity {
+public class FirstPageShopBigPhotoShowActivity extends BaseActivity implements View.OnClickListener{
 
     private ImageView img_back;
 
@@ -34,12 +34,16 @@ public class FirstPageShopBigPhotoShowActivity extends BaseActivity {
         /**
          * 监听器
          */
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        img_back.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.img_back:
+                finish();
+                break;
+        }
+    }
 }

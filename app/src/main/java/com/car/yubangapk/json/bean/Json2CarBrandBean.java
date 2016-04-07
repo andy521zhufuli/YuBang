@@ -1,7 +1,11 @@
 package com.car.yubangapk.json.bean;
 
 /**
- * Created by andy on 16/4/3.
+ * Json2CarBrandBean: 汽车品牌
+ *
+ * @author andy
+ * @version 1.0.6
+ * @created 2016-04-04
  */
 public class Json2CarBrandBean {
 //    {"total":0,

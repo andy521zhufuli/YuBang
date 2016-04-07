@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/first_page_shop_show_wheel_service"
+        style="@style/MineItemStyle"
+        android:background="@drawable/bg_item_bottom" >
+
+        <ImageView
+            android:id="@+id/item_shop_service_logo"
+            android:layout_width="26.0dip"
+            android:layout_height="26.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="15.0dip"
+            android:scaleType="fitXY"
+            android:src="@mipmap/first_page_shop_show_wheel_service"
+            />
+
+        <TextView
+            android:id="@+id/item_shop_service_name"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="轮胎服务"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_medium_text_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/personel_arrow_right" />
+    </LinearLayout>
+
+</LinearLayout>

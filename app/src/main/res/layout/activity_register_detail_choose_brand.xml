@@ -1,8 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.car.yubangapk.ui.RegisterDetailChooseCarInfoActivity">
+    tools:context="com.car.yubangapk.ui.RegisterDetailChooseBrandActivity">
+
 
     <!-- 头部显示-->
     <RelativeLayout
@@ -25,11 +28,12 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="请选择产商"
+            android:text="请选择品牌"
             android:textColor="@color/black"
             android:textSize="@dimen/medium_text_size"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </RelativeLayout>
+
 
     <com.car.yubangapk.view.sortListview.ClearEditText
         android:id="@+id/filter_edit"
@@ -47,7 +51,7 @@
         android:layout_height="fill_parent" >
 
         <ListView
-            android:id="@+id/country_lvcountry"
+            android:id="@+id/choose_car_brand_listview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
@@ -73,15 +77,10 @@
 
 
 
-    <!--<se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView-->
-        <!--android:id="@+id/register_detail_choose_car_info_stickylistheaders_list"-->
-        <!--android:layout_below="@+id/layout_login_topbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:clipToPadding="false"-->
-        <!--android:drawSelectorOnTop="true"-->
-        <!--android:paddingTop="10dp"-->
-        <!--android:scrollbarStyle="outsideOverlay"-->
-        <!--android:fastScrollEnabled="true"-->
-        <!--android:overScrollMode="never"/>-->
+
+
+
+
+
+
 </LinearLayout>

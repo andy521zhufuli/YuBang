@@ -5,6 +5,7 @@
     tools:context="com.car.yubangapk.ui.FirstPageShopBigPhotoShowActivity">
 
 
+    <!-- 头部-->
     <RelativeLayout
         android:id="@+id/layout_category_topbar"
         style="@style/TopbarStyle" >

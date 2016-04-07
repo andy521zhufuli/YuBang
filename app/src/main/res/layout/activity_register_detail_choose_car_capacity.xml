@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.car.yubangapk.ui.RegisterDetailChooseChildBrandActivity">
+    tools:context="com.car.yubangapk.ui.RegisterDetailChooseCarCapacityActivity">
 
 
     <!-- 头部显示-->
@@ -35,25 +35,11 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/choose_car_brand_catelog"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#E0E0E0"
-        android:textColor="#454545"
-        android:paddingLeft="5dip"
-        android:paddingTop="5dip"
-        android:paddingBottom="5dip"
-        android:text="A"/>
-
-
     <ListView
-        android:id="@+id/choose_car_brand_listview"
+        android:id="@+id/choose_car_capacity_listview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:divider="@null" />
-
-
 
 </LinearLayout>

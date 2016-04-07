@@ -100,22 +100,22 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             case R.id.conform_order_choose_online:
                 if (isOnlineOrOffline == false)
                 {
-                    online_pay_imageview.setImageDrawable(getDrawable(R.mipmap.button_l_01));
+                    online_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_01));
                 }
                 else
                 {
-                    online_pay_imageview.setImageDrawable(getDrawable(R.mipmap.button_l_02));
+                    online_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_02));
                 }
                 isOnlineOrOffline = true;//线上支付
                 break;
             case R.id.conform_order_choose_offline:
                 if (isOnlineOrOffline == true)
                 {
-                    offline_pay_imageview.setImageDrawable(getDrawable(R.mipmap.button_l_01));
+                    offline_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_01));
                 }
                 else
                 {
-                    offline_pay_imageview.setImageDrawable(getDrawable(R.mipmap.button_l_02));
+                    offline_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_02));
                 }
                 isOnlineOrOffline = false;
                 break;

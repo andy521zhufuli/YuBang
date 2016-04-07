@@ -180,7 +180,9 @@ public class RegisterDetailUploadIDCardActivity extends BaseActivity implements 
         {
 
             toastMgr.builder.display("图片 = " + picPath, 1);
-            uploadFile(picPath);
+            lastIntent.putExtra(KEY_PHOTO_PATH, picPath);
+            setResult(Activity.RESULT_OK, lastIntent);
+            finish();
 
         }
         else

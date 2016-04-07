@@ -1,7 +1,7 @@
 package com.car.yubangapk.json.formatJson;
 
-import com.car.yubangapk.json.bean.Json2CarBrandBean;
 import com.car.yubangapk.json.bean.Json2CarSeriesBean;
+import com.car.yubangapk.json.bean.Json2CarYearBean;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,18 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Json2CarSeries:汽车子品牌品牌名字的格式转换成Json2CarBrand类
+ * Json2CarYear:汽车生产年份的格式转换成Json2CarYear类
  *
  * @author andy
  * @version 1.0.6
  * @created 2016-04-03
  */
-public class Json2CarSeries {
-
-
+public class Json2CarYear
+{
     String json;
 
-    public Json2CarSeries()
+    public Json2CarYear()
     {
 
     }
@@ -33,7 +32,7 @@ public class Json2CarSeries {
 //        }catch ()
 //    }
 
-    public Json2CarSeries(String json)
+    public Json2CarYear(String json)
     {
         this.json = json;
     }
@@ -43,9 +42,9 @@ public class Json2CarSeries {
      *
      * @return List<BannerAd>
      */
-    public List<Json2CarSeriesBean> getSeriesList() {
+    public List<Json2CarYearBean> getCarYearList() {
 
-        List<Json2CarSeriesBean> carBrandBeans = new ArrayList<Json2CarSeriesBean>();
+        List<Json2CarYearBean> json2CarYearBeanList = new ArrayList<Json2CarYearBean>();
 
         JSONObject total = null;
 
@@ -53,31 +52,31 @@ public class Json2CarSeries {
             total = new JSONObject(json);
             JSONArray rows = total.getJSONArray("rows");
             int size = rows.length();
-            String pathCode;
+
             String id;
-            String carSeriesName;
+            String carProduceYear;
 
             for (int i = 0; i < size; i++)
             {
                 JSONObject row = (JSONObject) rows.get(i);
 
-                carSeriesName = row.getString("carSeriesName");
+                carProduceYear = row.getString("carProduceYear");
                 id = row.getString("id");
-                pathCode = row.getString("pathCode");
 
 
 
-                Json2CarSeriesBean json2CarBrandBean = new Json2CarSeriesBean();
+
+                Json2CarYearBean json2CarBrandBean = new Json2CarYearBean();
                 json2CarBrandBean.setId(id);
-                json2CarBrandBean.setCarSeriesName(carSeriesName);
-                json2CarBrandBean.setPathCode(pathCode);
+                json2CarBrandBean.setCarProduceYear(carProduceYear);
 
-                carBrandBeans.add(json2CarBrandBean);
+
+                json2CarYearBeanList.add(json2CarBrandBean);
             }
         } catch (JSONException e) {
             e.printStackTrace();
             return null;//返回空  服务器错误
         }
-        return carBrandBeans;
+        return json2CarYearBeanList;
     }
 }

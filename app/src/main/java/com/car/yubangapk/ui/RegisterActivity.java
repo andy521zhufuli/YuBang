@@ -233,7 +233,7 @@ public class RegisterActivity extends BaseActivity {
 
 
         OkHttpUtils.post().url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_SEND_VERIFY_MSG)
-                .addParams("smsReqModel.phoneNum", "18620647064")
+                .addParams("smsReqModel.phoneNum", phoneNum)
                 .addParams("smsReqModel.type", SMS_MODEL_TYPE)
                 .addParams("smsReqModel.actionCode", MsgType.SEND_MESSAGE)
                 .build().execute(new GetVerifyCodeCallback());

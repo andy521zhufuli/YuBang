@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.car.yubangapk.configs.Configs;
@@ -22,6 +23,7 @@ import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.view.AlertDialog;
+import com.car.yubangapk.view.CustomProgressDialog;
 
 import okhttp3.Call;
 
@@ -46,7 +48,11 @@ public class LoginActivity extends BaseActivity {
     private EditText edit_uid;//手机号
     private EditText edit_psw;//密码
 
+    private ImageView img_back;
+
     private int phoneNumLength;
+
+    private CustomProgressDialog mProgressDialog;
 
 
     @Override
@@ -58,6 +64,8 @@ public class LoginActivity extends BaseActivity {
         mContext = this;
 
         findViews();
+
+        mProgressDialog = new CustomProgressDialog(mContext);
 
 
         
@@ -71,10 +79,12 @@ public class LoginActivity extends BaseActivity {
         tv_quick_sign_up    = (TextView) findViewById(R.id.tv_quick_sign_up);//
         edit_uid            = (EditText) findViewById(R.id.edit_uid);//用户名  手机号
         edit_psw            = (EditText) findViewById(R.id.edit_psw);//密码
+
+        img_back            = (ImageView) findViewById(R.id.img_back);//返回
+
         /**
          * 设置监听器
          */
-
 
         edit_uid.addTextChangedListener(uidWatcher);
 
@@ -118,12 +128,21 @@ public class LoginActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     /**
      * 登陆处理
      */
     private void login() {
+
+        mProgressDialog = mProgressDialog.show(mContext, "正在登陆中...", false, null);
+
         String phone = edit_uid.getText().toString().trim();
         String pwd = edit_psw.getText().toString().trim();
         OkHttpUtils.post()
@@ -147,24 +166,37 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onError(Call call, Exception e) {
             toastMgr.builder.display("登陆失败, 网络错误", 1);
+            mProgressDialog.dismiss();
         }
 
         @Override
         public void onResponse(String response) {
             L.d(TAG, "登陆返回json = " + response);
             Json2Login json2Login = new Json2Login(response);
-
+            mProgressDialog.dismiss();
             Json2LoginBean json2LoginBean = json2Login.getLoginObj();
             if (json2LoginBean == null)
             {
                 toastMgr.builder.display("服务器返回错误", 1);
                 return;
             }
-            int returnCode = json2LoginBean.getReturnCode();
-            String status  = json2LoginBean.getStatus();
-            String userid = json2LoginBean.getUserid();
-            SPUtils.put(mContext,"userid", userid);
+            //{"userid":"","carType":"","name":"住福利","status":"5","isJson":true,"isReturnStr":false,"returnCode":0,"returneMsg":"SUCCESS","message":"登陆成功"}
 
+
+
+            String userid = json2LoginBean.getUserid();
+            boolean isJson = json2LoginBean.isJson();
+            boolean isReturnStr = json2LoginBean.isReturnStr();
+            int returnCode = json2LoginBean.getReturnCode();
+            String returneMsg = json2LoginBean.getReturneMsg();
+            String  message = json2LoginBean.getMessage();
+            String carType = json2LoginBean.getCarType();
+            String name = json2LoginBean.getName();
+            String status = json2LoginBean.getStatus();
+
+            //将登录信息保存起来  SP里面
+            Configs.putLoginedInfo(mContext, json2LoginBean);
+            SPUtils.putUserInfo(mContext, Configs.LoginOrNot,Configs.LOGINED);
             if (returnCode == 0)//成功
             {
                 if ("0".equals(status))
@@ -186,6 +218,7 @@ public class LoginActivity extends BaseActivity {
                     bundle.putString("userid", userid);//根据这个区请求网络
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.LOGINED);
                     finish();
                 }
                 else if ("2".equals(status))

@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 
 import com.car.yubangapk.app.AppManager;
+import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.utils.L;
+import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 
@@ -284,7 +286,7 @@ public class MainActivity extends TabActivity {
             toastMgr.builder.display("login 首页", 0);
             setDisplayMyPage();
             //设置为已经登陆
-            //SPUtils.putUserInfo(mContext, "LoginOrNot", Configs.LOGINED);
+            SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.LOGINED);
 
         }
 //        else if (activityToShow.equals("LOGIN_SUCCESS"))

@@ -4,6 +4,7 @@
     android:background="@drawable/android_layout_bg"
     tools:context="com.car.yubangapk.ui.FirstPageShopShowActivity">
 
+    <!-- 头部-->
     <RelativeLayout
         android:id="@+id/layout_category_topbar"
         style="@style/TopbarStyle" >
@@ -29,6 +30,7 @@
             android:textSize="@dimen/medium_text_size" />
     </RelativeLayout>
 
+    <!-- 店铺照片-->
     <LinearLayout
         android:id="@+id/photo_show"
         android:layout_below="@+id/layout_category_topbar"
@@ -38,6 +40,7 @@
         android:clickable="true"
         >
         <ImageView
+            android:id="@+id/show_shop_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@mipmap/first_page_shop_show_big_photo"
@@ -69,10 +72,11 @@
             android:layout_centerVertical="true">
 
             <TextView
+                android:id="@+id/show_shop_name"
                 android:textSize="@dimen/text_20"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="高德汇车发发汽车城"
+                android:text="强哥汽修"
                 />
 
             <LinearLayout android:orientation="vertical"
@@ -92,9 +96,10 @@
                     style="@style/roomRatingBar" />
 
                 <TextView android:textSize="@dimen/text_15"
+
                     android:text="123"
                     android:textColor="#fff37c3e"
-                    android:id="@+id/shop_grade_detail1"
+                    android:id="@+id/show_shop_dan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15.0dip"
@@ -113,6 +118,7 @@
 
 
             <ImageView
+                android:id="@+id/show_shop_tele"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/first_page_shop_show_phone"
@@ -121,6 +127,7 @@
                 />
 
             <ImageView
+                android:id="@+id/show_shop_nav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/first_page_shop_show_nav"
@@ -133,7 +140,7 @@
         <TextView android:textSize="@dimen/text_15"
             android:text="123千米"
             android:textColor="#fff37c3e"
-            android:id="@+id/shop_grade_detail"
+            android:id="@+id/show_shop_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5.0dip"
@@ -145,7 +152,7 @@
 
     </RelativeLayout>
 
-    <!-- 我的钱包 我的订单-->
+    <!-- 店铺的服务-->
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -153,6 +160,16 @@
         android:layout_below="@+id/shop_kehu_pingjia"
         android:orientation="vertical" >
 
+
+
+        <ListView
+            android:id="@+id/shop_show_service_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+        <!-- 没有服务-->
         <LinearLayout
             android:id="@+id/first_page_shop_show_wheel_service"
             style="@style/MineItemStyle"
@@ -173,7 +190,7 @@
                 android:layout_weight="1.0"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="轮胎服务"
+                android:text="对不起,此店没有服务"
                 android:textColor="@color/black"
                 android:textSize="@dimen/small_medium_text_size" />
 
@@ -184,36 +201,36 @@
                 android:src="@mipmap/personel_arrow_right" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/first_page_shop_show_baoyang_service"
-            style="@style/MineItemStyle"
-            android:background="@drawable/bg_item_top" >
+        <!--<LinearLayout-->
+            <!--android:id="@+id/first_page_shop_show_baoyang_service"-->
+            <!--style="@style/MineItemStyle"-->
+            <!--android:background="@drawable/bg_item_top" >-->
 
-            <ImageView
-                android:layout_width="26.0dip"
-                android:layout_height="26.0dip"
-                android:layout_marginLeft="20.0dip"
-                android:layout_marginRight="15.0dip"
-                android:scaleType="fitXY"
-                android:src="@mipmap/first_page_shop_show_baoyang_service"
-                />
+            <!--<ImageView-->
+                <!--android:layout_width="26.0dip"-->
+                <!--android:layout_height="26.0dip"-->
+                <!--android:layout_marginLeft="20.0dip"-->
+                <!--android:layout_marginRight="15.0dip"-->
+                <!--android:scaleType="fitXY"-->
+                <!--android:src="@mipmap/first_page_shop_show_baoyang_service"-->
+                <!--/>-->
 
-            <TextView
-                android:layout_width="0.0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="保养服务"
-                android:textColor="@color/black"
-                android:textSize="@dimen/small_medium_text_size" />
+            <!--<TextView-->
+                <!--android:layout_width="0.0dip"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1.0"-->
+                <!--android:ellipsize="end"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="保养服务"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textSize="@dimen/small_medium_text_size" />-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/personel_arrow_right" />
-        </LinearLayout>
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:src="@mipmap/personel_arrow_right" />-->
+        <!--</LinearLayout>-->
         <LinearLayout
             android:id="@+id/first_page_shop_show_sales_activity"
             style="@style/MineItemStyle"

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Json2CarBrand:汽车品牌名字的格式转换成Json2CarBrand类
@@ -28,11 +29,25 @@ public class Json2CarBrand {
 
     }
 
-//    public static String getString(jsonobject , key0){
-//        try{
+    private Object getString(String jsonobject , Object object)
+    {
+
+        if (object instanceof JSONArray)
+        {
+
+        }
+
+//        try
+//        {
 //
-//        }catch ()
-//    }
+//
+//        }
+//        catch (JSONException e)
+//        {
+//
+//        }
+        return null;
+    }
 
     public Json2CarBrand(String json)
     {

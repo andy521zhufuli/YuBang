@@ -60,7 +60,6 @@ public class Json2CarCompany {
                 Json2CarCompanyBean json2CarCompanyBean = new Json2CarCompanyBean();
                 json2CarCompanyBean.setId(id);
                 json2CarCompanyBean.setCompanyName(companyName);
-
                 carCompanyBeans.add(json2CarCompanyBean);
             }
         } catch (JSONException e) {

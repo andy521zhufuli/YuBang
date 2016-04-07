@@ -8,6 +8,7 @@ import android.util.Log;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.okhttp.OkHttpUtils;
 import com.car.yubangapk.okhttp.callback.StringCallback;
+import com.car.yubangapk.utils.DensityUtil;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
@@ -43,6 +44,8 @@ public class YuBangApplication extends Application
         //使用https，但是默认信任全部证书
         OkHttpUtils.getInstance().setCertificates();
 
+        DensityUtil densityUtil = new DensityUtil(getApplicationContext());
+        densityUtil.px2dip((float)1.0);
 
 
         // 在主进程设置信鸽相关的内容
