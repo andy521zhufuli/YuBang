@@ -402,7 +402,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             holder.produte_count.setText(mpplist.get(position).getProductAmount() + "");
             holder.produte_price.setText(mpplist.get(position).getRetailPrice() + "");
             holder.produte_price.setText(mpplist.get(position).getRetailPrice() + "");
-            holder.count_tx.setText(mpplist.get(position).getProductAmount());
+            holder.count_tx.setText(mpplist.get(position).getProductAmount()+"");
 
             holder.delete_bt.setOnClickListener(this);
             holder.change_bt.setOnClickListener(this);
@@ -421,8 +421,10 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             switch (view.getId())
             {
                 case R.id.delete_bt:
+                    toastMgr.builder.display("删除商品",1);
                     break;
                 case R.id.change_bt:
+                    toastMgr.builder.display("编辑商品",1);
                     break;
             }
 

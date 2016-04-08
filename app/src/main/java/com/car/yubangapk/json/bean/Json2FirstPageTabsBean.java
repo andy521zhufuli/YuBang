@@ -1,5 +1,7 @@
 package com.car.yubangapk.json.bean;
 
+import com.car.yubangapk.json.Base;
+
 /**
  * Json2FirstPageTabsBean:首页tabs bean
  *
@@ -7,7 +9,7 @@ package com.car.yubangapk.json.bean;
  * @version 1.0.6
  * @created 2016-04-05
  */
-public class Json2FirstPageTabsBean {
+public class Json2FirstPageTabsBean extends Base{
 //    [
 //        {"id":"1df3cd46-f2e5-40f1-b408-266a7d59a8b6","pathCode":"1","sort":"1","skipType":"2","photoName":"bab3355b-ac05-42c9-b669-cab7c3d836aa.png","serviceName":"保养维护"},
 //        {"id":"841ffbca-8063-4561-b7f3-9193f43ff731","pathCode":"1","sort":"2","skipType":"2","photoName":"74b87f9c-c54c-42f3-9a9b-b3ef0005acf9.png","serviceName":"电子电路"},

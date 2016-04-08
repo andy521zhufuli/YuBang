@@ -195,6 +195,9 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+    /**
+     * 中间分类8个
+     */
     private void addImageviewTOListMap()
     {
         //中部分类快捷方式
@@ -300,7 +303,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
 
     /**
-     * 中部图标
+     * 中部图标 分类
      */
     public class MallSpecieseCallback extends StringCallback
     {
@@ -334,22 +337,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    /**
-     * 中部以下的图标获取
-     */
-    public class MallBottomCallback extends StringCallback
-    {
 
-        @Override
-        public void onError(Call call, Exception e) {
-            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置",1);
-        }
-
-        @Override
-        public void onResponse(String response) {
-            L.i(TAG, "中部以下的图片json = " + response);
-        }
-    }
 
     /**
      * 中间部分图片加载
@@ -379,6 +367,23 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                     .build()
                     .execute(new MallBottomCallback());
             L.i(TAG, "service all kinds bottom url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+id);
+        }
+    }
+    /**
+     * 细节分类 没给7个图标 还不算广告
+     * 中部以下的图标获取
+     */
+    public class MallBottomCallback extends StringCallback
+    {
+
+        @Override
+        public void onError(Call call, Exception e) {
+            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置",1);
+        }
+
+        @Override
+        public void onResponse(String response) {
+            L.i(TAG, "中部以下的图片json = " + response);
         }
     }
 

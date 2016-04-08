@@ -218,18 +218,43 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
         @Override
         public void onError(Call call, Exception e) {
-            toastMgr.builder.display("网络错误,请重试!",1);
-            initMAp();
+            first_page_progressbar.setVisibility(View.GONE);
+            toastMgr.builder.display("网络错误,请连接网络后重试!", 1);
+            //网络错误  就不要加载地图了
+            //initMAp();
         }
 
         @Override
         public void onResponse(String response) {
             L.d(TAG, "获取首页tab json = " + response);
-            initMAp();
+
+
             Json2FirstPageTabs pageTabs = new Json2FirstPageTabs(response);
             List<Json2FirstPageTabsBean> pageTabsBeanList = pageTabs.getFirstPageTabs();
-            mPageTabsBeanList = pageTabsBeanList;
-            setTabsName(pageTabsBeanList);
+
+            if (pageTabsBeanList == null)
+            {
+                toastMgr.builder.display("版本太低,请更新app!",1);
+            }
+            else
+            {
+                if (pageTabsBeanList.get(0).isHasData() ==false)
+                {
+                    //没有数据
+                    toastMgr.builder.display("没有数据, 服务器错误,请联系客服!", 1);
+                }
+                else
+                {
+                    //里面有数据
+                    initMAp();
+                    mPageTabsBeanList = pageTabsBeanList;
+                    setTabsName(pageTabsBeanList);
+                }
+
+            }
+
+
+
         }
     }
 
@@ -371,6 +396,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
                 //首次定位成功才会去请求附近的店铺, 成功之后添加覆盖物
                 mProgressDialog = mProgressDialog.show(mContext,"正在定位", false, null);
+
                 httpSearchShop(mProvince, mCity, mDistrict, mPageTabsBeanList.get(0).getId(), longitude, latitude, FITST_GET_SHOP);
                 //initOverlay(1, mJson2FirstPageShopBeanList);
             }

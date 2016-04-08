@@ -65,6 +65,15 @@ public class Json2FirstPageTabs {
             String serviceName;
 
             int size = total.length();
+
+            //里面没有数据   就返回一个没有数据的
+            if (size == 0)
+            {
+                Json2FirstPageTabsBean pageTabsBean = new Json2FirstPageTabsBean();
+                pageTabsBean.setHasData(false);
+                json2FirstPageTabsBeanList.add(pageTabsBean);
+                return json2FirstPageTabsBeanList;
+            }
             for (int i= 0; i < size; i++)
             {
                 Json2FirstPageTabsBean pageTabsBean = new Json2FirstPageTabsBean();
@@ -76,12 +85,14 @@ public class Json2FirstPageTabs {
                 photoName = object.getString("photoName");
                 serviceName = object.getString("serviceName");
 
+
                 pageTabsBean.setId(id);
                 pageTabsBean.setPathCode(pathCode);
                 pageTabsBean.setSort(sort);
                 pageTabsBean.setSkipType(skipType);
                 pageTabsBean.setPhotoName(photoName);
                 pageTabsBean.setServiceName(serviceName);
+                pageTabsBean.setHasData(true);
                 char[] name = serviceName.toCharArray();
                 if (name.length < 2)
                 {
