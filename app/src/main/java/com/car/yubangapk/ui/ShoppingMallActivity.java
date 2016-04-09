@@ -420,7 +420,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     /**
      * 拿到了图片 去给下面的控件设置图片
      */
-    private void setBottomPics(int position, List<Json2ShoppingmallBottomPicsBean> beanList)
+    private synchronized void setBottomPics(int position, List<Json2ShoppingmallBottomPicsBean> beanList)
     {
         switch (position)
         {
@@ -470,6 +470,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
      */
     private void setBottomPicsBaoyang(List<Json2ShoppingmallBottomPicsBean> beanList)
     {
+
 
 
         List<ImageView> baoyangweihuList = new ArrayList<>();
@@ -898,6 +899,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 toastMgr.builder.display("更多精彩", 0);
                 break;
             case R.id.main_product1_01:
+                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
+                {
+                    toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                    break;
+                }
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
 
                 Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean = mBAOYANGWEIHUList.get(BAOYANGWEIHU);
@@ -937,6 +944,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.main_product1_02:
+                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
+                {
+                    toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                    break;
+                }
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
 
                 Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean2 = mBAOYANGWEIHUList.get(DIANZIDIANLU);
@@ -978,6 +991,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.main_product1_03:
+                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
+                {
+                    toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                    break;
+                }
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
                 Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean3 = mBAOYANGWEIHUList.get(FADONGJIJIAN);
                 String serviceId3 = json2ShoppingmallBottomPicsBean3.getId();
@@ -1017,6 +1036,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.main_product1_04:
+                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
+                {
+                    toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                    break;
+                }
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
                 Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean4 = mBAOYANGWEIHUList.get(DAHUANGYOU);
                 String serviceId4 = json2ShoppingmallBottomPicsBean4.getId();
@@ -1055,6 +1080,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.main_product1_05:
+                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
+                {
+                    toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                    break;
+                }
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
                 Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean5 = mBAOYANGWEIHUList.get(DIPANPEIJIAN);
                 String serviceId5 = json2ShoppingmallBottomPicsBean5.getId();
@@ -1093,6 +1124,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.main_product1_06:
+                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
+                {
+                    toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                    break;
+                }
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
                 Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean6 = mBAOYANGWEIHUList.get(CHEJIAPEIJIAN);
                 String serviceId6 = json2ShoppingmallBottomPicsBean6.getId();
@@ -1239,7 +1276,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 dianziFadongjiClick01(5, 6);
                 break;
 
-            //托架配件
+            //车架
             case R.id.shoppingmall_more_06://更多
                 toastMgr.builder.display("更多精彩", 0);
                 break;
@@ -1344,6 +1381,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
         if (type == 2)
         {
+            if (mDIANZIDIANLUList == null || mDIANZIDIANLUList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                return;
+            }
             if (item == 1)
             {
                 json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(BAOYANGWEIHU);
@@ -1371,6 +1414,14 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }
         else if(type == 3)
         {
+
+            if (mFADONGJIJIANList == null || mFADONGJIJIANList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                return;
+            }
+
             if (item == 1)
             {
                 json2ShoppingmallBottomPicsBean6 = mFADONGJIJIANList.get(BAOYANGWEIHU);
@@ -1398,6 +1449,14 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }
         else if(type == 4)
         {
+
+            if (mDAHUANGYOUList == null || mDAHUANGYOUList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                return;
+            }
+
             if (item == 1)
             {
                 json2ShoppingmallBottomPicsBean6 = mDAHUANGYOUList.get(BAOYANGWEIHU);
@@ -1425,6 +1484,14 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }
         else if(type == 5)
         {
+
+            if (mDIPANPEIJIANList == null || mDIPANPEIJIANList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                return;
+            }
+
             if (item == 1)
             {
                 json2ShoppingmallBottomPicsBean6 = mDIPANPEIJIANList.get(BAOYANGWEIHU);
@@ -1452,6 +1519,14 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }
         else if(type == 6)
         {
+
+            if (mCHEJIAPEIJIANList == null || mCHEJIAPEIJIANList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                return;
+            }
+
             if (item == 1)
             {
                 json2ShoppingmallBottomPicsBean6 = mCHEJIAPEIJIANList.get(BAOYANGWEIHU);
