@@ -20,6 +20,7 @@ import com.car.yubangapk.banner.listener.FlashViewListener;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.FormatJson;
 import com.car.yubangapk.json.bean.BannerAd;
+import com.car.yubangapk.json.bean.Json2LoginBean;
 import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
 import com.car.yubangapk.json.bean.ShoppingmallPicBean;
 import com.car.yubangapk.json.bean.ShoppingmallSpeciesePicBean;
@@ -551,7 +552,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
         for (int i = 0; i < 6; i++)
         {
-            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i), baoyangweihuList.get(i));
         }
     }
 
@@ -864,7 +865,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
         switch (view.getId())
         {
             //种类选择
@@ -911,27 +912,10 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 String serviceId = json2ShoppingmallBottomPicsBean.getId();
                 String carType = Configs.getLoginedInfo(mContext).getCarType();
                 mCarType = carType;
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 if (carType == null || carType.equals(""))
                 {
-                    AlertDialog alertDialog = new AlertDialog(mContext);
-                    alertDialog.builder()
-                            .setCancelable(false)
-                            .setTitle("提示")
-                            .setMsg("您还没有添加车型,请添加车型")
-                            .setPositiveButton("去添加", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .setNegativeButton("先逛逛", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .show();
+                    warnNoCarType();
                 }
                 else
                 {
@@ -960,24 +944,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 Bundle bundle2 = new Bundle();
                 if (carType2 == null || carType2.equals(""))
                 {
-                    AlertDialog alertDialog = new AlertDialog(mContext);
-                    alertDialog.builder()
-                            .setCancelable(false)
-                            .setTitle("提示")
-                            .setMsg("您还没有添加车型,请添加车型")
-                            .setPositiveButton("去添加", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .setNegativeButton("先逛逛", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .show();
+                    warnNoCarType();
                 }
                 else
                 {
@@ -1005,24 +972,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 Bundle bundle3 = new Bundle();
                 if (carType3 == null || carType3.equals(""))
                 {
-                    AlertDialog alertDialog = new AlertDialog(mContext);
-                    alertDialog.builder()
-                            .setCancelable(false)
-                            .setTitle("提示")
-                            .setMsg("您还没有添加车型,请添加车型")
-                            .setPositiveButton("去添加", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .setNegativeButton("先逛逛", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .show();
+                    warnNoCarType();
                 }
                 else
                 {
@@ -1050,24 +1000,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 Bundle bundle4 = new Bundle();
                 if (carType4 == null || carType4.equals(""))
                 {
-                    AlertDialog alertDialog = new AlertDialog(mContext);
-                    alertDialog.builder()
-                            .setCancelable(false)
-                            .setTitle("提示")
-                            .setMsg("您还没有添加车型,请添加车型")
-                            .setPositiveButton("去添加", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .setNegativeButton("先逛逛", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .show();
+                    warnNoCarType();
                 }
                 else
                 {
@@ -1094,24 +1027,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 Bundle bundle5 = new Bundle();
                 if (carType5 == null || carType5.equals(""))
                 {
-                    AlertDialog alertDialog = new AlertDialog(mContext);
-                    alertDialog.builder()
-                            .setCancelable(false)
-                            .setTitle("提示")
-                            .setMsg("您还没有添加车型,请添加车型")
-                            .setPositiveButton("去添加", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .setNegativeButton("先逛逛", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .show();
+                    warnNoCarType();
                 }
                 else
                 {
@@ -1138,24 +1054,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 Bundle bundle6 = new Bundle();
                 if (carType6 == null || carType6.equals(""))
                 {
-                    AlertDialog alertDialog = new AlertDialog(mContext);
-                    alertDialog.builder()
-                            .setCancelable(false)
-                            .setTitle("提示")
-                            .setMsg("您还没有添加车型,请添加车型")
-                            .setPositiveButton("去添加", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .setNegativeButton("先逛逛", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .show();
+                    warnNoCarType();
                 }
                 else
                 {
@@ -1304,6 +1203,44 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+    /**
+     * 提示用户 您好没有添加车型  麻痹的麻溜的去添加车型
+     */
+    private void warnNoCarType()
+    {
+        AlertDialog alertDialog = new AlertDialog(mContext);
+        alertDialog.builder()
+                .setCancelable(false)
+                .setTitle("提示")
+                .setMsg("您还没有添加车型,请添加车型")
+                .setPositiveButton("去添加", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        gotoAddRegisterDetailAddCarType();
+                    }
+                })
+                .setNegativeButton("先逛逛", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * 去添加车型
+     */
+    private void gotoAddRegisterDetailAddCarType() {
+        Intent intent1 = new Intent();
+        intent1.setClass(mContext, RegisterDetailsActivity.class);
+        Bundle bundle1 = new Bundle();
+        Json2LoginBean json2LoginBean = Configs.getLoginedInfo(mContext);
+        String id = json2LoginBean.getUserid();
+        bundle1.putString("userid",id);
+        intent1.putExtras(bundle1);
+        startActivity(intent1);
+    }
 
 
     private void dianziDianluClick01(int item)
@@ -1342,24 +1279,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         Bundle bundle6 = new Bundle();
         if (carType6 == null || carType6.equals(""))
         {
-            AlertDialog alertDialog = new AlertDialog(mContext);
-            alertDialog.builder()
-                    .setCancelable(false)
-                    .setTitle("提示")
-                    .setMsg("您还没有添加车型,请添加车型")
-                    .setPositiveButton("去添加", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                        }
-                    })
-                    .setNegativeButton("先逛逛", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                        }
-                    })
-                    .show();
+            warnNoCarType();
         }
         else
         {
@@ -1561,24 +1481,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         Bundle bundle6 = new Bundle();
         if (carType6 == null || carType6.equals(""))
         {
-            AlertDialog alertDialog = new AlertDialog(mContext);
-            alertDialog.builder()
-                    .setCancelable(false)
-                    .setTitle("提示")
-                    .setMsg("您还没有添加车型,请添加车型")
-                    .setPositiveButton("去添加", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                        }
-                    })
-                    .setNegativeButton("先逛逛", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                        }
-                    })
-                    .show();
+            warnNoCarType();
         }
         else
         {
