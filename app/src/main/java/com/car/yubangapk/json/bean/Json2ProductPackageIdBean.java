@@ -11,30 +11,21 @@ import com.car.yubangapk.json.Base;
  */
 public class Json2ProductPackageIdBean extends Base{
 
-//    [
-//        {"id":"1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
-//                "pathCode":"1",
-//                "sort":"1",
-//                "skipType":"2",
-//                "photoName":"bab3355b-ac05-42c9-b669-cab7c3d836aa.png",
-//                "serviceName":"保养维护"},
-//        {"id":"841ffbca-8063-4561-b7f3-9193f43ff731","pathCode":"1","sort":"2","skipType":"2","photoName":"74b87f9c-c54c-42f3-9a9b-b3ef0005acf9.png","serviceName":"电子电路"},
-//        {"id":"76e787e5-123c-4bde-8abd-e758f268f706","pathCode":"1","sort":"3","skipType":"2","photoName":"eaec2fcf-1ece-4e30-8a41-065b2940b785.png","serviceName":"发动机件"},
-//        {"id":"91f3b4a2-537e-42c7-a9f5-bed66ae5ef46","pathCode":"1","sort":"4","skipType":"2","photoName":"c1f700aa-695c-4383-aa77-2374a63e06f8.png","serviceName":"打黄油"},
-//        {"id":"4792a819-67ac-47e1-ad42-ab5f6ee3f854","pathCode":"1","sort":"5","skipType":"2","photoName":"299d4112-d903-471f-87b8-2108ce35238a.png","serviceName":"底盘配件"},
-//        {"id":"f10b454f-0ae0-4747-a5ca-57f6a12a979a","pathCode":"1","sort":"6","skipType":"2","photoName":"f8c7b5a5-36a6-48cd-bec5-a36fef2f0cca.png","serviceName":"车架配件"},
-//        {"id":"150091b7-0e11-489c-ac34-bdaa63711bcd","pathCode":"1","sort":"7","skipType":"2","photoName":"625aaef7-153c-4dee-83e7-a6b66a92a433.png","serviceName":"拖架配件"}
-//    ]
+    //{"total":0,"rows":[{"packageName":"美孚速霸保养包","id":"42d3e125-e906-11e5-b9b6-28d244001fe5","packageCode":"PG0001"}]}
 
     private String id;
     private String pathCode;
-    private String sort;
-    private String skipType;
-    private String photoName;
-    private String serviceName;
-
     private String packageName;
     private String packageCode;
+
+
+
+    private String sort;//不用
+    private String skipType;//不用
+    private String photoName;//不用
+    private String serviceName;//不用
+
+
 
     public String getPackageCode() {
         return packageCode;

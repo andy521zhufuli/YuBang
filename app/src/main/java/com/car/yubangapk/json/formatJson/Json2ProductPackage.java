@@ -73,6 +73,7 @@ public class Json2ProductPackage {
             String productName;
             int productAmount;
             String photoName;
+            String productShow;
 
             if (size == 0)
             {
@@ -91,7 +92,7 @@ public class Json2ProductPackage {
                 productName = row.getString("productName");
                 productAmount = row.getInt("productAmount");
                 photoName = row.getString("photoName");
-
+                productShow = row.getString("productShow");
 
                 Json2ProductPackageBean json2ProductPackageBean = new Json2ProductPackageBean();
                 json2ProductPackageBean.setCategoryName(categoryName);
@@ -100,6 +101,8 @@ public class Json2ProductPackage {
                 json2ProductPackageBean.setProductName(productName);
                 json2ProductPackageBean.setProductAmount(productAmount);
                 json2ProductPackageBean.setPhotoName(photoName);
+                json2ProductPackageBean.setProductShow(productShow);
+
                 json2ProductPackageBean.setHasData(true);
 
                 carBrandBeans.add(json2ProductPackageBean);

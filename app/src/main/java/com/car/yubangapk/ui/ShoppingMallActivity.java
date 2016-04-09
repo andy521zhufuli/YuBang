@@ -20,13 +20,17 @@ import com.car.yubangapk.banner.listener.FlashViewListener;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.FormatJson;
 import com.car.yubangapk.json.bean.BannerAd;
+import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
 import com.car.yubangapk.json.bean.ShoppingmallPicBean;
 import com.car.yubangapk.json.bean.ShoppingmallSpeciesePicBean;
+import com.car.yubangapk.json.formatJson.Json2ShoppingmallBottomPics;
 import com.car.yubangapk.okhttp.OkHttpUtils;
+import com.car.yubangapk.okhttp.callback.MyStringCallback;
 import com.car.yubangapk.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
+import com.car.yubangapk.view.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -209,7 +213,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         mMiddleSpeciesList.add(speciese_05);
         mMiddleSpeciesList.add(speciese_06);
         mMiddleSpeciesList.add(speciese_07);
-        mMiddleSpeciesList.add(speciese_07);
+        mMiddleSpeciesList.add(speciese_08);
 
         //中部以下
         mShoppingmallBottomPicList = new ArrayList<>();
@@ -345,7 +349,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private void loadSpeciesImage()
     {
         int size = mMiddleSpeciesList.size();
-        for (int i= 0; i < size - 1; i++)
+        for (int i = 0; i < size - 1; i++)
         {
             ShoppingmallSpeciesePicBean shoppingmallSpeciesePicBean = mShoppingmallSpeciesPicList.get(i);
             String pathcode = shoppingmallSpeciesePicBean.getPathCode();
@@ -365,40 +369,375 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                     .addParams("dataReqModel.args.needTotal","needTotal")
                     .addParams("dataReqModel.args.logicalService",id)
                     .build()
-                    .execute(new MallBottomCallback());
-            L.i(TAG, "service all kinds bottom url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+id);
+                    .executeMy(new MallBottomCallback(),i);
+            L.i(TAG, "service all kinds bottom " + i  + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+id);
         }
     }
     /**
      * 细节分类 没给7个图标 还不算广告
      * 中部以下的图标获取
      */
-    public class MallBottomCallback extends StringCallback
+    public class MallBottomCallback extends MyStringCallback
     {
 
+
         @Override
-        public void onError(Call call, Exception e) {
-            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置",1);
+        public void onError(Call call, int position, Exception e) {
+            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置", 1);
+            //这时候点击任何一个都会提示不能点击  不能进入到下一个页面
         }
 
         @Override
-        public void onResponse(String response) {
+        public void onResponse(String response, int position) {
             L.i(TAG, "中部以下的图片json = " + response);
+            L.i(TAG, "中部以下的图片position = " + position);
+            Json2ShoppingmallBottomPics json2ShoppingmallBottomPics = new Json2ShoppingmallBottomPics(response);
+            List<Json2ShoppingmallBottomPicsBean> beans = json2ShoppingmallBottomPics.getShoppingmallBottomPics();
+            if (beans == null)
+            {
+                //提示更新app
+                toastMgr.builder.display("版本太低, 请更新app", 1);
+
+            }
+            else
+            {
+                if (beans.get(0).isHasData() == true)
+                {
+                    //有数据  拿到了数据
+
+                    setBottomPics(position, beans);
+                }
+                else
+                {
+                    toastMgr.builder.display("服务器异常!", 0);
+                }
+            }
+        }
+
+    }
+
+
+    /**
+     * 拿到了图片 去给下面的控件设置图片
+     */
+    private void setBottomPics(int position, List<Json2ShoppingmallBottomPicsBean> beanList)
+    {
+        switch (position)
+        {
+            case 0://保养维护
+                mBAOYANGWEIHUList = beanList;
+                //先去去显示图片
+                setBottomPicsBaoyang(beanList);
+                break;
+            case 1://电子电路
+                mDIANZIDIANLUList = beanList;
+                setBottomPicsDianziDianlu(beanList);
+                break;
+            case 2://发动机件
+                mFADONGJIJIANList = beanList;
+                setBottomPicsFaDongjijian(beanList);
+                break;
+            case 3://打黄油
+                mDAHUANGYOUList = beanList;
+                setBottomPicsDaHuangyou(beanList);
+                break;
+            case 4://底盘配件
+                mDIPANPEIJIANList = beanList;
+                setBottomPicsDiPan(beanList);
+                break;
+            case 5://车架配件
+                mCHEJIAPEIJIANList = beanList;
+                setBottomPicsCheJia(beanList);
+                break;
+            case 6://托架配件
+                mTUOJIAPEIJIANList = beanList;
+                break;
+            case 7://更多
+                //TODO
+                break;
+
+
+
+        }
+
+    }
+
+
+
+
+    /**
+     * 保养维护 设置图片
+     */
+    private void setBottomPicsBaoyang(List<Json2ShoppingmallBottomPicsBean> beanList)
+    {
+
+
+        List<ImageView> baoyangweihuList = new ArrayList<>();
+        baoyangweihuList.add(main_product1_01);
+        baoyangweihuList.add(main_product1_02);
+        baoyangweihuList.add(main_product1_03);
+        baoyangweihuList.add(main_product1_04);
+        baoyangweihuList.add(main_product1_05);
+        baoyangweihuList.add(main_product1_06);
+        List<String> urls = new ArrayList<>();
+        for (int i = 0; i < 6; i++)
+        {
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+            String id;
+            String logicalService;
+            String pathCode;
+            String photoName;
+            String serviceCode;
+            int repairServiceSort;
+            String serviceName;
+            id = bean.getId();
+            logicalService = bean.getLogicalService();
+            pathCode = bean.getPathCode();
+
+            photoName = bean.getPhotoName();
+
+            serviceCode = bean.getServiceCode();
+            repairServiceSort = bean.getRepairServiceSort();
+            serviceName = bean.getServiceName();
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+            urls.add(url);
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+        }
+
+    }
+
+
+    /**
+     * 电子电路 设置图片
+     * @param beanList
+     */
+    private void setBottomPicsDianziDianlu(List<Json2ShoppingmallBottomPicsBean> beanList)
+    {
+        List<ImageView> baoyangweihuList = new ArrayList<>();
+        baoyangweihuList.add(main_product2_01);
+        baoyangweihuList.add(main_product2_02);
+        baoyangweihuList.add(main_product2_03);
+        baoyangweihuList.add(main_product2_04);
+        baoyangweihuList.add(main_product2_05);
+        baoyangweihuList.add(main_product2_06);
+        List<String> urls = new ArrayList<>();
+        for (int i = 0; i < 6; i++)
+        {
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+            String id;
+            String logicalService;
+            String pathCode;
+            String photoName;
+            String serviceCode;
+            int repairServiceSort;
+            String serviceName;
+            id = bean.getId();
+            logicalService = bean.getLogicalService();
+            pathCode = bean.getPathCode();
+
+            photoName = bean.getPhotoName();
+
+            serviceCode = bean.getServiceCode();
+            repairServiceSort = bean.getRepairServiceSort();
+            serviceName = bean.getServiceName();
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+            urls.add(url);
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
         }
     }
 
 
+    /**
+     * 发动机件 设置图片
+     * @param beanList
+     */
+    private void setBottomPicsFaDongjijian(List<Json2ShoppingmallBottomPicsBean> beanList)
+    {
+        List<ImageView> baoyangweihuList = new ArrayList<>();
+        baoyangweihuList.add(main_product3_01);
+        baoyangweihuList.add(main_product3_02);
+        baoyangweihuList.add(main_product3_03);
+        baoyangweihuList.add(main_product3_04);
+        baoyangweihuList.add(main_product3_05);
+        baoyangweihuList.add(main_product3_06);
+        List<String> urls = new ArrayList<>();
+        for (int i = 0; i < 6; i++)
+        {
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+            String id;
+            String logicalService;
+            String pathCode;
+            String photoName;
+            String serviceCode;
+            int repairServiceSort;
+            String serviceName;
+            id = bean.getId();
+            logicalService = bean.getLogicalService();
+            pathCode = bean.getPathCode();
+
+            photoName = bean.getPhotoName();
+
+            serviceCode = bean.getServiceCode();
+            repairServiceSort = bean.getRepairServiceSort();
+            serviceName = bean.getServiceName();
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+            urls.add(url);
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+        }
+    }
+    /**
+     * 打黄油 设置图片
+     * @param beanList
+     */
+    private void setBottomPicsDaHuangyou(List<Json2ShoppingmallBottomPicsBean> beanList)
+    {
+        List<ImageView> baoyangweihuList = new ArrayList<>();
+        baoyangweihuList.add(main_product4_01);
+        baoyangweihuList.add(main_product4_02);
+        baoyangweihuList.add(main_product4_03);
+        baoyangweihuList.add(main_product4_04);
+        baoyangweihuList.add(main_product4_05);
+        baoyangweihuList.add(main_product4_06);
+        List<String> urls = new ArrayList<>();
+        for (int i = 0; i < 6; i++)
+        {
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+            String id;
+            String logicalService;
+            String pathCode;
+            String photoName;
+            String serviceCode;
+            int repairServiceSort;
+            String serviceName;
+            id = bean.getId();
+            logicalService = bean.getLogicalService();
+            pathCode = bean.getPathCode();
+
+            photoName = bean.getPhotoName();
+
+            serviceCode = bean.getServiceCode();
+            repairServiceSort = bean.getRepairServiceSort();
+            serviceName = bean.getServiceName();
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+            urls.add(url);
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+        }
+    }
+
+
+    /**
+     * 底盘 设置图片
+     * @param beanList
+     */
+    private void setBottomPicsDiPan(List<Json2ShoppingmallBottomPicsBean> beanList)
+    {
+        List<ImageView> baoyangweihuList = new ArrayList<>();
+        baoyangweihuList.add(main_product5_01);
+        baoyangweihuList.add(main_product5_02);
+        baoyangweihuList.add(main_product5_03);
+        baoyangweihuList.add(main_product5_04);
+        baoyangweihuList.add(main_product5_05);
+        baoyangweihuList.add(main_product5_06);
+        List<String> urls = new ArrayList<>();
+        for (int i = 0; i < 6; i++)
+        {
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+            String id;
+            String logicalService;
+            String pathCode;
+            String photoName;
+            String serviceCode;
+            int repairServiceSort;
+            String serviceName;
+            id = bean.getId();
+            logicalService = bean.getLogicalService();
+            pathCode = bean.getPathCode();
+
+            photoName = bean.getPhotoName();
+
+            serviceCode = bean.getServiceCode();
+            repairServiceSort = bean.getRepairServiceSort();
+            serviceName = bean.getServiceName();
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+            urls.add(url);
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+        }
+    }
+
+    /**
+     * 车架 设置图片
+     * @param beanList
+     */
+    private void setBottomPicsCheJia(List<Json2ShoppingmallBottomPicsBean> beanList)
+    {
+        List<ImageView> baoyangweihuList = new ArrayList<>();
+        baoyangweihuList.add(main_product6_01);
+        baoyangweihuList.add(main_product6_02);
+        baoyangweihuList.add(main_product6_03);
+        baoyangweihuList.add(main_product6_04);
+        baoyangweihuList.add(main_product6_05);
+        baoyangweihuList.add(main_product6_06);
+        List<String> urls = new ArrayList<>();
+        for (int i = 0; i < 6; i++)
+        {
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+            String id;
+            String logicalService;
+            String pathCode;
+            String photoName;
+            String serviceCode;
+            int repairServiceSort;
+            String serviceName;
+            id = bean.getId();
+            logicalService = bean.getLogicalService();
+            pathCode = bean.getPathCode();
+
+            photoName = bean.getPhotoName();
+
+            serviceCode = bean.getServiceCode();
+            repairServiceSort = bean.getRepairServiceSort();
+            serviceName = bean.getServiceName();
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+            urls.add(url);
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+        }
+    }
+
+    /**
+     * 点击分类跳转到对应分类
+     */
     private void getScrollPoints() {
         ViewTreeObserver observer = shoppingmall_more_01.getViewTreeObserver();
         observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                if (hasMeasure)
-                {
+                if (hasMeasure) {
 
-                }
-                else
-                {
+                } else {
                     int height = shoppingmall_more_01.getMeasuredHeight();
                     ViewGroup.LayoutParams params = shoppingmall_more_01.getLayoutParams();
                     L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall01.getTop());
@@ -450,54 +789,54 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
         //保养维护
         shoppingmall_more_01 = (ImageView) findViewById(R.id.shoppingmall_more_01);//更多
-        main_product1_01     = (TextView) findViewById(R.id.main_product1_01);//主打产品
-        main_product1_02     = (TextView) findViewById(R.id.main_product1_02);
-        main_product1_03     = (TextView) findViewById(R.id.main_product1_03);
-        main_product1_04     = (TextView) findViewById(R.id.main_product1_04);
-        main_product1_05     = (TextView) findViewById(R.id.main_product1_05);
-        main_product1_06     = (TextView) findViewById(R.id.main_product1_06);
+        main_product1_01     = (ImageView) findViewById(R.id.main_product1_01);//主打产品
+        main_product1_02     = (ImageView) findViewById(R.id.main_product1_02);
+        main_product1_03     = (ImageView) findViewById(R.id.main_product1_03);
+        main_product1_04     = (ImageView) findViewById(R.id.main_product1_04);
+        main_product1_05     = (ImageView) findViewById(R.id.main_product1_05);
+        main_product1_06     = (ImageView) findViewById(R.id.main_product1_06);
 
         //电子电路
         shoppingmall_more_02 = (ImageView) findViewById(R.id.shoppingmall_more_02);//更多
-        main_product2_01     = (TextView) findViewById(R.id.main_product2_01);//主打产品
-        main_product2_02     = (TextView) findViewById(R.id.main_product2_02);
-        main_product2_03     = (TextView) findViewById(R.id.main_product2_03);
-        main_product2_04     = (TextView) findViewById(R.id.main_product2_04);
-        main_product2_05     = (TextView) findViewById(R.id.main_product2_05);
-        main_product2_06     = (TextView) findViewById(R.id.main_product2_06);
+        main_product2_01     = (ImageView) findViewById(R.id.main_product2_01);//主打产品
+        main_product2_02     = (ImageView) findViewById(R.id.main_product2_02);
+        main_product2_03     = (ImageView) findViewById(R.id.main_product2_03);
+        main_product2_04     = (ImageView) findViewById(R.id.main_product2_04);
+        main_product2_05     = (ImageView) findViewById(R.id.main_product2_05);
+        main_product2_06     = (ImageView) findViewById(R.id.main_product2_06);
 
         //发动机件
         shoppingmall_more_03 = (ImageView) findViewById(R.id.shoppingmall_more_03);//更多
-        main_product3_01     = (TextView) findViewById(R.id.main_product3_01);//主打产品
-        main_product3_02     = (TextView) findViewById(R.id.main_product3_02);
-        main_product3_03     = (TextView) findViewById(R.id.main_product3_03);
-        main_product3_04     = (TextView) findViewById(R.id.main_product3_04);
-        main_product3_05     = (TextView) findViewById(R.id.main_product3_05);
-        main_product3_06     = (TextView) findViewById(R.id.main_product3_06);
+        main_product3_01     = (ImageView) findViewById(R.id.main_product3_01);//主打产品
+        main_product3_02     = (ImageView) findViewById(R.id.main_product3_02);
+        main_product3_03     = (ImageView) findViewById(R.id.main_product3_03);
+        main_product3_04     = (ImageView) findViewById(R.id.main_product3_04);
+        main_product3_05     = (ImageView) findViewById(R.id.main_product3_05);
+        main_product3_06     = (ImageView) findViewById(R.id.main_product3_06);
         //底盘配件
         shoppingmall_more_04 = (ImageView) findViewById(R.id.shoppingmall_more_04);//更多
-        main_product4_01     = (TextView) findViewById(R.id.main_product4_01);//主打产品
-        main_product4_02     = (TextView) findViewById(R.id.main_product4_02);
-        main_product4_03     = (TextView) findViewById(R.id.main_product4_03);
-        main_product4_04     = (TextView) findViewById(R.id.main_product4_04);
-        main_product4_05     = (TextView) findViewById(R.id.main_product4_05);
-        main_product4_06     = (TextView) findViewById(R.id.main_product4_06);
+        main_product4_01     = (ImageView) findViewById(R.id.main_product4_01);//主打产品
+        main_product4_02     = (ImageView) findViewById(R.id.main_product4_02);
+        main_product4_03     = (ImageView) findViewById(R.id.main_product4_03);
+        main_product4_04     = (ImageView) findViewById(R.id.main_product4_04);
+        main_product4_05     = (ImageView) findViewById(R.id.main_product4_05);
+        main_product4_06     = (ImageView) findViewById(R.id.main_product4_06);
         //车架配件
         shoppingmall_more_05 = (ImageView) findViewById(R.id.shoppingmall_more_05);//更多
-        main_product5_01     = (TextView) findViewById(R.id.main_product5_01);//主打产品
-        main_product5_02     = (TextView) findViewById(R.id.main_product5_02);
-        main_product5_03     = (TextView) findViewById(R.id.main_product5_03);
-        main_product5_04     = (TextView) findViewById(R.id.main_product5_04);
-        main_product5_05     = (TextView) findViewById(R.id.main_product5_05);
-        main_product5_06     = (TextView) findViewById(R.id.main_product5_06);
+        main_product5_01     = (ImageView) findViewById(R.id.main_product5_01);//主打产品
+        main_product5_02     = (ImageView) findViewById(R.id.main_product5_02);
+        main_product5_03     = (ImageView) findViewById(R.id.main_product5_03);
+        main_product5_04     = (ImageView) findViewById(R.id.main_product5_04);
+        main_product5_05     = (ImageView) findViewById(R.id.main_product5_05);
+        main_product5_06     = (ImageView) findViewById(R.id.main_product5_06);
         //拖架配件
         shoppingmall_more_06 = (ImageView) findViewById(R.id.shoppingmall_more_06);//更多
-        main_product6_01     = (TextView) findViewById(R.id.main_product6_01);//主打产品
-        main_product6_02     = (TextView) findViewById(R.id.main_product6_02);
-        main_product6_03     = (TextView) findViewById(R.id.main_product6_03);
-        main_product6_04     = (TextView) findViewById(R.id.main_product6_04);
-        main_product6_05     = (TextView) findViewById(R.id.main_product6_05);
-        main_product6_06     = (TextView) findViewById(R.id.main_product6_06);
+        main_product6_01     = (ImageView) findViewById(R.id.main_product6_01);//主打产品
+        main_product6_02     = (ImageView) findViewById(R.id.main_product6_02);
+        main_product6_03     = (ImageView) findViewById(R.id.main_product6_03);
+        main_product6_04     = (ImageView) findViewById(R.id.main_product6_04);
+        main_product6_05     = (ImageView) findViewById(R.id.main_product6_05);
+        main_product6_06     = (ImageView) findViewById(R.id.main_product6_06);
 
         shoppingmall01 = (LinearLayout) findViewById(R.id.shoppingmall01);
         shoppingmall02 = (LinearLayout) findViewById(R.id.shoppingmall02);
@@ -517,17 +856,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 mContext.startActivity(intent);
             }
         });
-
-        main_product1_01.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
         setClickListener();
 
 
@@ -571,27 +899,237 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product1_01:
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+
+                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean = mBAOYANGWEIHUList.get(BAOYANGWEIHU);
+                String serviceId = json2ShoppingmallBottomPicsBean.getId();
+                String carType = Configs.getLoginedInfo(mContext).getCarType();
+                mCarType = carType;
+                Bundle bundle = new Bundle();
+                if (carType == null || carType.equals(""))
+                {
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    alertDialog.builder()
+                            .setCancelable(false)
+                            .setTitle("提示")
+                            .setMsg("您还没有添加车型,请添加车型")
+                            .setPositiveButton("去添加", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setNegativeButton("先逛逛", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .show();
+                }
+                else
+                {
+
+                    bundle.putString("serviceId", serviceId);
+                    bundle.putString("mCarType", mCarType);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.main_product1_02:
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+
+                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean2 = mBAOYANGWEIHUList.get(DIANZIDIANLU);
+                String serviceId2 = json2ShoppingmallBottomPicsBean2.getId();
+
+                String carType2 = Configs.getLoginedInfo(mContext).getCarType();
+                mCarType = carType2;
+                Bundle bundle2 = new Bundle();
+                if (carType2 == null || carType2.equals(""))
+                {
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    alertDialog.builder()
+                            .setCancelable(false)
+                            .setTitle("提示")
+                            .setMsg("您还没有添加车型,请添加车型")
+                            .setPositiveButton("去添加", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setNegativeButton("先逛逛", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .show();
+                }
+                else
+                {
+
+                    bundle2.putString("serviceId", serviceId2);
+                    bundle2.putString("mCarType", mCarType);
+                    intent.putExtras(bundle2);
+                    startActivity(intent);
+                }
+
+
                 break;
             case R.id.main_product1_03:
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean3 = mBAOYANGWEIHUList.get(FADONGJIJIAN);
+                String serviceId3 = json2ShoppingmallBottomPicsBean3.getId();
+                String carType3 = Configs.getLoginedInfo(mContext).getCarType();
+                mCarType = carType3;
+                Bundle bundle3 = new Bundle();
+                if (carType3 == null || carType3.equals(""))
+                {
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    alertDialog.builder()
+                            .setCancelable(false)
+                            .setTitle("提示")
+                            .setMsg("您还没有添加车型,请添加车型")
+                            .setPositiveButton("去添加", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setNegativeButton("先逛逛", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .show();
+                }
+                else
+                {
+
+                    bundle3.putString("serviceId", serviceId3);
+                    bundle3.putString("mCarType", mCarType);
+                    intent.putExtras(bundle3);
+                    startActivity(intent);
+                }
+
+
                 break;
             case R.id.main_product1_04:
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean4 = mBAOYANGWEIHUList.get(DAHUANGYOU);
+                String serviceId4 = json2ShoppingmallBottomPicsBean4.getId();
+                String carType4 = Configs.getLoginedInfo(mContext).getCarType();
+                mCarType = carType4;
+                Bundle bundle4 = new Bundle();
+                if (carType4 == null || carType4.equals(""))
+                {
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    alertDialog.builder()
+                            .setCancelable(false)
+                            .setTitle("提示")
+                            .setMsg("您还没有添加车型,请添加车型")
+                            .setPositiveButton("去添加", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setNegativeButton("先逛逛", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .show();
+                }
+                else
+                {
+
+                    bundle4.putString("serviceId", serviceId4);
+                    bundle4.putString("mCarType", mCarType);
+                    intent.putExtras(bundle4);
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.main_product1_05:
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean5 = mBAOYANGWEIHUList.get(DIPANPEIJIAN);
+                String serviceId5 = json2ShoppingmallBottomPicsBean5.getId();
+                String carType5 = Configs.getLoginedInfo(mContext).getCarType();
+                mCarType = carType5;
+                Bundle bundle5 = new Bundle();
+                if (carType5 == null || carType5.equals(""))
+                {
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    alertDialog.builder()
+                            .setCancelable(false)
+                            .setTitle("提示")
+                            .setMsg("您还没有添加车型,请添加车型")
+                            .setPositiveButton("去添加", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setNegativeButton("先逛逛", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .show();
+                }
+                else
+                {
+
+                    bundle5.putString("serviceId", serviceId5);
+                    bundle5.putString("mCarType", mCarType);
+                    intent.putExtras(bundle5);
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.main_product1_06:
                 intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean6 = mBAOYANGWEIHUList.get(CHEJIAPEIJIAN);
+                String serviceId6 = json2ShoppingmallBottomPicsBean6.getId();
+                String carType6 = Configs.getLoginedInfo(mContext).getCarType();
+                mCarType = carType6;
+                Bundle bundle6 = new Bundle();
+                if (carType6 == null || carType6.equals(""))
+                {
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    alertDialog.builder()
+                            .setCancelable(false)
+                            .setTitle("提示")
+                            .setMsg("您还没有添加车型,请添加车型")
+                            .setPositiveButton("去添加", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setNegativeButton("先逛逛", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .show();
+                }
+                else
+                {
+
+                    bundle6.putString("serviceId", serviceId6);
+                    bundle6.putString("mCarType", mCarType);
+                    intent.putExtras(bundle6);
+                    startActivity(intent);
+
+                }
+
                 break;
 
             //电子电路
@@ -600,29 +1138,24 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product2_01:
 
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(2, 1);
+
                 break;
             case R.id.main_product2_02:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(2, 2);
                 break;
             case R.id.main_product2_03:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(2, 3);
                 break;
             case R.id.main_product2_04:
 
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(2, 4);
                 break;
             case R.id.main_product2_05:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(2, 5);
                 break;
             case R.id.main_product2_06:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(2, 6);
                 break;
 
 
@@ -632,29 +1165,30 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product3_01:
 
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(3,1);
+
                 break;
             case R.id.main_product3_02:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(3, 2);
+
+
                 break;
             case R.id.main_product3_03:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(3, 3);
+
                 break;
             case R.id.main_product3_04:
+                dianziFadongjiClick01(3, 4);
 
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+
                 break;
             case R.id.main_product3_05:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(3, 5);
+
                 break;
             case R.id.main_product3_06:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(3, 6);
+
                 break;
 
             //底盘配件
@@ -663,28 +1197,22 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product4_01:
 
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(4, 1);
                 break;
             case R.id.main_product4_02:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(4, 2);
                 break;
             case R.id.main_product4_03:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(4, 3);
                 break;
             case R.id.main_product4_04:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(4, 4);
                 break;
             case R.id.main_product4_05:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(4, 5);
                 break;
             case R.id.main_product4_06:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(4, 6);
                 break;
 
             //车架配件
@@ -693,28 +1221,22 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product5_01:
 
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(5, 1);
                 break;
             case R.id.main_product5_02:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(5, 2);
                 break;
             case R.id.main_product5_03:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(5, 3);
                 break;
             case R.id.main_product5_04:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(5, 4);
                 break;
             case R.id.main_product5_05:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(5, 5);
                 break;
             case R.id.main_product5_06:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(5, 6);
                 break;
 
             //托架配件
@@ -723,33 +1245,282 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product6_01:
 
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(6, 1);
                 break;
             case R.id.main_product6_02:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(6, 2);
                 break;
             case R.id.main_product6_03:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(6, 3);
                 break;
             case R.id.main_product6_04:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(6, 4);
                 break;
             case R.id.main_product6_05:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(6, 5);
                 break;
             case R.id.main_product6_06:
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                dianziFadongjiClick01(6, 6);
                 break;
 
         }
 
     }
+
+
+
+    private void dianziDianluClick01(int item)
+    {
+        Intent intent =  new Intent();
+        intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+        Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean6 = null;
+        if (item == 1)
+        {
+            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(BAOYANGWEIHU);
+        }
+        else if (item == 2)
+        {
+            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(DIANZIDIANLU);
+        }
+        else if (item == 3)
+        {
+            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(FADONGJIJIAN);
+        }
+        else if (item == 4)
+        {
+            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(DAHUANGYOU);
+        }
+        else if (item == 5)
+        {
+            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(DIPANPEIJIAN);
+        }
+        else if (item == 6)
+        {
+            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(CHEJIAPEIJIAN);
+        }
+
+        String serviceId6 = json2ShoppingmallBottomPicsBean6.getId();
+        String carType6 = Configs.getLoginedInfo(mContext).getCarType();
+        mCarType = carType6;
+        Bundle bundle6 = new Bundle();
+        if (carType6 == null || carType6.equals(""))
+        {
+            AlertDialog alertDialog = new AlertDialog(mContext);
+            alertDialog.builder()
+                    .setCancelable(false)
+                    .setTitle("提示")
+                    .setMsg("您还没有添加车型,请添加车型")
+                    .setPositiveButton("去添加", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .setNegativeButton("先逛逛", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .show();
+        }
+        else
+        {
+
+            bundle6.putString("serviceId", serviceId6);
+            bundle6.putString("mCarType", mCarType);
+            intent.putExtras(bundle6);
+            startActivity(intent);
+
+        }
+    }
+
+    private void dianziFadongjiClick01(int type,int item)
+    {
+        Intent intent =  new Intent();
+        intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
+        Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean6 = null;
+
+
+        if (type == 2)
+        {
+            if (item == 1)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(BAOYANGWEIHU);
+            }
+            else if (item == 2)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(DIANZIDIANLU);
+            }
+            else if (item == 3)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(FADONGJIJIAN);
+            }
+            else if (item == 4)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(DAHUANGYOU);
+            }
+            else if (item == 5)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(DIPANPEIJIAN);
+            }
+            else if (item == 6)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(CHEJIAPEIJIAN);
+            }
+        }
+        else if(type == 3)
+        {
+            if (item == 1)
+            {
+                json2ShoppingmallBottomPicsBean6 = mFADONGJIJIANList.get(BAOYANGWEIHU);
+            }
+            else if (item == 2)
+            {
+                json2ShoppingmallBottomPicsBean6 = mFADONGJIJIANList.get(DIANZIDIANLU);
+            }
+            else if (item == 3)
+            {
+                json2ShoppingmallBottomPicsBean6 = mFADONGJIJIANList.get(FADONGJIJIAN);
+            }
+            else if (item == 4)
+            {
+                json2ShoppingmallBottomPicsBean6 = mFADONGJIJIANList.get(DAHUANGYOU);
+            }
+            else if (item == 5)
+            {
+                json2ShoppingmallBottomPicsBean6 = mFADONGJIJIANList.get(DIPANPEIJIAN);
+            }
+            else if (item == 6)
+            {
+                json2ShoppingmallBottomPicsBean6 = mFADONGJIJIANList.get(CHEJIAPEIJIAN);
+            }
+        }
+        else if(type == 4)
+        {
+            if (item == 1)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDAHUANGYOUList.get(BAOYANGWEIHU);
+            }
+            else if (item == 2)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDAHUANGYOUList.get(DIANZIDIANLU);
+            }
+            else if (item == 3)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDAHUANGYOUList.get(FADONGJIJIAN);
+            }
+            else if (item == 4)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDAHUANGYOUList.get(DAHUANGYOU);
+            }
+            else if (item == 5)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDAHUANGYOUList.get(DIPANPEIJIAN);
+            }
+            else if (item == 6)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDAHUANGYOUList.get(CHEJIAPEIJIAN);
+            }
+        }
+        else if(type == 5)
+        {
+            if (item == 1)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIPANPEIJIANList.get(BAOYANGWEIHU);
+            }
+            else if (item == 2)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIPANPEIJIANList.get(DIANZIDIANLU);
+            }
+            else if (item == 3)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIPANPEIJIANList.get(FADONGJIJIAN);
+            }
+            else if (item == 4)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIPANPEIJIANList.get(DAHUANGYOU);
+            }
+            else if (item == 5)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIPANPEIJIANList.get(DIPANPEIJIAN);
+            }
+            else if (item == 6)
+            {
+                json2ShoppingmallBottomPicsBean6 = mDIPANPEIJIANList.get(CHEJIAPEIJIAN);
+            }
+        }
+        else if(type == 6)
+        {
+            if (item == 1)
+            {
+                json2ShoppingmallBottomPicsBean6 = mCHEJIAPEIJIANList.get(BAOYANGWEIHU);
+            }
+            else if (item == 2)
+            {
+                json2ShoppingmallBottomPicsBean6 = mCHEJIAPEIJIANList.get(DIANZIDIANLU);
+            }
+            else if (item == 3)
+            {
+                json2ShoppingmallBottomPicsBean6 = mCHEJIAPEIJIANList.get(FADONGJIJIAN);
+            }
+            else if (item == 4)
+            {
+                json2ShoppingmallBottomPicsBean6 = mCHEJIAPEIJIANList.get(DAHUANGYOU);
+            }
+            else if (item == 5)
+            {
+                json2ShoppingmallBottomPicsBean6 = mCHEJIAPEIJIANList.get(DIPANPEIJIAN);
+            }
+            else if (item == 6)
+            {
+                json2ShoppingmallBottomPicsBean6 = mCHEJIAPEIJIANList.get(CHEJIAPEIJIAN);
+            }
+        }
+
+
+
+        String serviceId6 = json2ShoppingmallBottomPicsBean6.getId();
+        String carType6 = Configs.getLoginedInfo(mContext).getCarType();
+        mCarType = carType6;
+        Bundle bundle6 = new Bundle();
+        if (carType6 == null || carType6.equals(""))
+        {
+            AlertDialog alertDialog = new AlertDialog(mContext);
+            alertDialog.builder()
+                    .setCancelable(false)
+                    .setTitle("提示")
+                    .setMsg("您还没有添加车型,请添加车型")
+                    .setPositiveButton("去添加", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .setNegativeButton("先逛逛", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .show();
+        }
+        else
+        {
+
+            bundle6.putString("serviceId", serviceId6);
+            bundle6.putString("mCarType", mCarType);
+            intent.putExtras(bundle6);
+            startActivity(intent);
+
+        }
+    }
+
+
+
+
+
+
     /**
      * 设置所有监听
      */
@@ -853,6 +1624,9 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
 
 
+    //是不是通过网络拿到了bottom的图片  这样点击的时候才知道跳转的参数
+    private boolean isBottomPicGetted = false;
+    private String  mCarType;//用户选的车型
 
     private Context mContext;
     private final static String TAG = "ShoppingMallActivity";
@@ -875,58 +1649,58 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView speciese_08;//更多
     //保养维护
     private ImageView shoppingmall_more_01;//更多
-    private TextView  main_product1_01;//主打产品
-    private TextView  main_product1_02;
-    private TextView  main_product1_03;
-    private TextView  main_product1_04;
-    private TextView  main_product1_05;
-    private TextView  main_product1_06;
+    private ImageView  main_product1_01;//主打产品
+    private ImageView  main_product1_02;
+    private ImageView  main_product1_03;
+    private ImageView  main_product1_04;
+    private ImageView  main_product1_05;
+    private ImageView  main_product1_06;
 
     //电子电路
     private ImageView shoppingmall_more_02;
-    private TextView  main_product2_01;
-    private TextView  main_product2_02;
-    private TextView  main_product2_03;
-    private TextView  main_product2_04;
-    private TextView  main_product2_05;
-    private TextView  main_product2_06;
+    private ImageView  main_product2_01;
+    private ImageView  main_product2_02;
+    private ImageView  main_product2_03;
+    private ImageView  main_product2_04;
+    private ImageView  main_product2_05;
+    private ImageView  main_product2_06;
 
     //发动机件
     private ImageView shoppingmall_more_03;
-    private TextView  main_product3_01;
-    private TextView  main_product3_02;
-    private TextView  main_product3_03;
-    private TextView  main_product3_04;
-    private TextView  main_product3_05;
-    private TextView  main_product3_06;
+    private ImageView  main_product3_01;
+    private ImageView  main_product3_02;
+    private ImageView  main_product3_03;
+    private ImageView  main_product3_04;
+    private ImageView  main_product3_05;
+    private ImageView  main_product3_06;
 
     //底盘配件
     private ImageView shoppingmall_more_04;
-    private TextView  main_product4_01;
-    private TextView  main_product4_02;
-    private TextView  main_product4_03;
-    private TextView  main_product4_04;
-    private TextView  main_product4_05;
-    private TextView  main_product4_06;
+    private ImageView main_product4_01;
+    private ImageView main_product4_02;
+    private ImageView main_product4_03;
+    private ImageView main_product4_04;
+    private ImageView main_product4_05;
+    private ImageView main_product4_06;
 
     //车架配件
     private ImageView shoppingmall_more_05;
-    private TextView  main_product5_01;
-    private TextView  main_product5_02;
-    private TextView  main_product5_03;
-    private TextView  main_product5_04;
-    private TextView  main_product5_05;
-    private TextView  main_product5_06;
+    private ImageView main_product5_01;
+    private ImageView main_product5_02;
+    private ImageView main_product5_03;
+    private ImageView main_product5_04;
+    private ImageView main_product5_05;
+    private ImageView main_product5_06;
 
 
     //托架配件
     private ImageView shoppingmall_more_06;
-    private TextView  main_product6_01;
-    private TextView  main_product6_02;
-    private TextView  main_product6_03;
-    private TextView  main_product6_04;
-    private TextView  main_product6_05;
-    private TextView  main_product6_06;
+    private ImageView main_product6_01;
+    private ImageView main_product6_02;
+    private ImageView main_product6_03;
+    private ImageView main_product6_04;
+    private ImageView main_product6_05;
+    private ImageView main_product6_06;
 
     private LinearLayout shoppingmall01;
     private LinearLayout shoppingmall02;
@@ -934,5 +1708,24 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private LinearLayout shoppingmall04;
     private LinearLayout shoppingmall05;
     private LinearLayout shoppingmall06;
+
+    private static int BAOYANGWEIHU  = 0;//保养维护
+    private static int DIANZIDIANLU  = 1;//电子电路
+    private static int FADONGJIJIAN  = 2;//发动机件
+    private static int DAHUANGYOU    = 3;//打黄油
+    private static int DIPANPEIJIAN  = 4;//底盘配件
+    private static int CHEJIAPEIJIAN = 5;//车架配件
+    private static int TUOJIAPEIJIAN = 6;//托架配件
+    private static int GEBGDUO       = 7;//更多
+
+
+    private List<Json2ShoppingmallBottomPicsBean> mBAOYANGWEIHUList;        //保养维护保存获取的图片信息
+    private List<Json2ShoppingmallBottomPicsBean> mDIANZIDIANLUList;        //电子电路保存获取的图片信息
+    private List<Json2ShoppingmallBottomPicsBean> mFADONGJIJIANList;        //发动机件保存获取的图片信息
+    private List<Json2ShoppingmallBottomPicsBean> mDAHUANGYOUList;          //打黄油保存获取的图片信息
+    private List<Json2ShoppingmallBottomPicsBean> mDIPANPEIJIANList;        //底盘配件保存获取的图片信息
+    private List<Json2ShoppingmallBottomPicsBean> mCHEJIAPEIJIANList;       //车架配件保存获取的图片信息
+    private List<Json2ShoppingmallBottomPicsBean> mTUOJIAPEIJIANList;       //托架配件保存获取的图片信息
+    private List<Json2ShoppingmallBottomPicsBean> mGEBGDUOList;             //更多保存获取的图片信息
 
 }

@@ -1,6 +1,7 @@
 package com.car.yubangapk.okhttp.request;
 
 import com.car.yubangapk.okhttp.callback.Callback;
+import com.car.yubangapk.okhttp.callback.MyCallback;
 import com.car.yubangapk.okhttp.utils.Exceptions;
 
 import java.util.Map;
@@ -55,6 +56,11 @@ public abstract class OkHttpRequest
         return requestBody;
     }
 
+    protected RequestBody wrapMyRequestBody(RequestBody requestBody, final MyCallback callback)
+    {
+        return requestBody;
+    }
+
     protected abstract Request buildRequest(RequestBody requestBody);
 
     public RequestCall build()
@@ -67,6 +73,13 @@ public abstract class OkHttpRequest
     {
         RequestBody requestBody = buildRequestBody();
         RequestBody wrappedRequestBody = wrapRequestBody(requestBody, callback);
+        Request request = buildRequest(wrappedRequestBody);
+        return request;
+    }
+    public Request generateMyRequest(MyCallback callback)
+    {
+        RequestBody requestBody = buildRequestBody();
+        RequestBody wrappedRequestBody = wrapMyRequestBody(requestBody, callback);
         Request request = buildRequest(wrappedRequestBody);
         return request;
     }

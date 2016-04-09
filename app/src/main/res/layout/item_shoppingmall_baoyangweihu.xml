@@ -59,12 +59,12 @@
         android:orientation="horizontal"
         >
 
-        <TextView
+        <ImageView
             android:id="@+id/main_product1_01"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/shoppingmall_baoyang_01"
+            android:src="@mipmap/shoppingmall_baoyang_01"
             android:gravity="center"
             />
 
@@ -74,7 +74,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             style="@style/line_vertical" />
-        <TextView
+        <ImageView
             android:id="@+id/main_product1_02"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -96,7 +96,7 @@
         android:layout_height="90dp"
         android:orientation="horizontal"
         >
-        <TextView
+        <ImageView
             android:id="@+id/main_product1_03"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -110,7 +110,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             style="@style/line_vertical" />
-        <TextView
+        <ImageView
             android:id="@+id/main_product1_04"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -123,7 +123,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             style="@style/line_vertical" />
-        <TextView
+        <ImageView
             android:id="@+id/main_product1_05"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -136,7 +136,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             style="@style/line_vertical" />
-        <TextView
+        <ImageView
             android:id="@+id/main_product1_06"
             android:layout_width="0dp"
             android:layout_height="match_parent"

@@ -52,25 +52,27 @@
         android:orientation="horizontal"
 
         >
-        <TextView
+        <ImageView
             android:id="@+id/main_product4_01"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/shoppingmall_baoyang_01"
+            android:src="@mipmap/shoppingmall_baoyang_01"
             android:gravity="center"
+            android:scaleType="fitXY"
             />
 
         <View android:layout_width="1.0px" android:layout_height="match_parent"
             android:layout_alignParentLeft="true" android:layout_centerVertical="true"
             style="@style/line_vertical" />
-        <TextView
+        <ImageView
             android:id="@+id/main_product4_02"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:background="@mipmap/shoppingmall_baoyang_02"
+            android:src="@mipmap/shoppingmall_baoyang_02"
+            android:scaleType="fitXY"
             />
     </LinearLayout>
     <!-- 保养维护 一行显示四个-->
@@ -79,48 +81,52 @@
         android:layout_height="90dp"
         android:orientation="horizontal"
         >
-        <TextView
+        <ImageView
             android:id="@+id/main_product4_03"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/shoppingmall_baoyang_03"
+            android:src="@mipmap/shoppingmall_baoyang_03"
             android:gravity="center"
+            android:scaleType="fitXY"
             />
         <View
             android:layout_width="1.0px"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true" android:layout_centerVertical="true"
             style="@style/line_vertical" />
-        <TextView
+        <ImageView
             android:id="@+id/main_product4_04"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/shoppingmall_baoyang_04"
+            android:src="@mipmap/shoppingmall_baoyang_04"
             android:gravity="center"
+            android:scaleType="fitXY"
             />
         <View android:layout_width="1.0px" android:layout_height="match_parent"
             android:layout_alignParentLeft="true" android:layout_centerVertical="true"
             style="@style/line_vertical" />
-        <TextView
+        <ImageView
             android:id="@+id/main_product4_05"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/shoppingmall_baoyang_05"
+            android:src="@mipmap/shoppingmall_baoyang_05"
             android:gravity="center"
+            android:scaleType="fitXY"
             />
         <View android:layout_width="1.0px" android:layout_height="match_parent"
             android:layout_alignParentLeft="true" android:layout_centerVertical="true"
             style="@style/line_vertical" />
-        <TextView
+        <ImageView
             android:id="@+id/main_product4_06"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/shoppingmall_baoyang_06"
+            android:src="@mipmap/shoppingmall_baoyang_06"
             android:gravity="center"
+            android:scaleType="fitXY"
             />
 
     </LinearLayout>

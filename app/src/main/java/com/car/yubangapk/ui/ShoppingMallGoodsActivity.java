@@ -61,6 +61,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     String mCarType;
 
     private ProductPackageAdapter goodsAdapter;
+    private List<Json2ProductPackageBean> mJson2ProductPackageBeanList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +142,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             if (json2ProductId == null)
             {
                 toastMgr.builder.display("您当前版本太低,请升级版本", 1);
+                //这里需要修改
+                tv_modify_goods.setClickable(false);
             }
             else
             {
@@ -150,6 +153,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     toastMgr.builder.display("对不起, 没有相关产品包",1);
                     AlertDialog alertDialog = new AlertDialog(mContext);
                     alertDialog.builder().setTitle("提示")
+                            .setCancelable(false)
                             .setMsg("没有相关产品包")
                             .setPositiveButton("确定", new View.OnClickListener() {
                                 @Override
@@ -204,6 +208,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         @Override
         public void onError(Call call, Exception e) {
             toastMgr.builder.display("您当前版本太低,请升级版本", 1);
+            //TODO 这里需要删除
+            tv_modify_goods.setClickable(false);
         }
 
         @Override
@@ -226,6 +232,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     toastMgr.builder.display("对不起, 没有相关产品包",1);
                     AlertDialog alertDialog = new AlertDialog(mContext);
                     alertDialog.builder().setTitle("提示")
+                            .setCancelable(false)
                             .setMsg("没有相关产品包")
                             .setPositiveButton("确定", new View.OnClickListener() {
                                 @Override
@@ -240,6 +247,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 {
                     //拿到产品包  就去listview里面显示
                     goodsAdapter = new ProductPackageAdapter(json2ProductPackageBeanList);
+                    mJson2ProductPackageBeanList = json2ProductPackageBeanList;
                     shoppingmall_goods_listview.setAdapter(goodsAdapter);
                 }
             }
@@ -265,22 +273,25 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 //TODO
+
+                isModifyList = true;
+
                 //一开始是编辑状态
                 if (isModified == false)
                 {
                     //还没编辑 已经点击  那就去编辑
-                    productitem_changge_before.setVisibility(View.GONE);
-                    productitem_changge_after.setVisibility(View.VISIBLE);
+
                     isModified = true;
                     tv_modify_goods.setText("保存");
+                    goodsAdapter.refresh(mJson2ProductPackageBeanList);
                     shoppingmall_goods_listview.deferNotifyDataSetChanged();
                 }
                 else
                 {
-                    productitem_changge_after.setVisibility(View.GONE);
-                    productitem_changge_before.setVisibility(View.VISIBLE);
+
                     isModified = false;
                     tv_modify_goods.setText("编辑");
+                    goodsAdapter.refresh(mJson2ProductPackageBeanList);
                     shoppingmall_goods_listview.deferNotifyDataSetChanged();
 
                 }
@@ -325,6 +336,11 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         }
     }
 
+
+
+
+
+
     /**
      * 适配器的定义,要继承BaseAdapter
      */
@@ -338,6 +354,13 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
         public ProductPackageAdapter(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
             this.mpplist = json2ProductPackageBeanList;
+        }
+
+
+        public void refresh(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
+            mpplist = json2ProductPackageBeanList;
+            notifyDataSetChanged();
+            L.d("refresh");
         }
 
 
@@ -361,7 +384,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             /*
              * 1.手工创建对象 2.加载xml文件
              */
-            ViewHolder holder;
+            final ViewHolder holder;
             if (view == null)
             {
                 holder =  new ViewHolder();
@@ -373,10 +396,10 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 holder.produte_pic = (ImageView) view.findViewById(R.id.produte_pic);
                 holder.productitem_changge_before = (LinearLayout) view.findViewById(R.id.productitem_changge_before);
                 holder.maintenance_produte_name = (TextView) view.findViewById(R.id.maintenance_produte_name);
-                holder.maintenance_img_1 = (TextView) view.findViewById(R.id.maintenance_img_1);
+                holder.maintenance_img_1 = (TextView) view.findViewById(R.id.maintenance_hecheng_1);
                 holder.produte_price = (TextView) view.findViewById(R.id.produte_price);
                 holder.produte_count = (TextView) view.findViewById(R.id.produte_count);
-
+                holder.maintenance_hecheng_1 = (TextView) view.findViewById(R.id.maintenance_hecheng_1);
 
                 holder.productitem_changge_after = (LinearLayout) view.findViewById(R.id.productitem_changge_after);
                 holder.jiancount = (Button) view.findViewById(R.id.jiancount);
@@ -394,23 +417,82 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             String pathcode = mpplist.get(position).getPathCode();
             String photoname = mpplist.get(position).getPhotoName();
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
-            L.d(TAG, "产品包图片加载url = " + url);
-            ImageLoaderTools.getInstance(mContext).displayImage(url, holder.produte_pic);
+
+
+            if (isModifyList == false)
+            {
+                L.d(TAG, "产品包图片加载url = " + url);
+                ImageLoaderTools.getInstance(mContext).displayImage(url, holder.produte_pic);
+            }
+
+
+            if (tv_modify_goods.getText().toString().equals("保存"))
+            {
+                holder.productitem_changge_before.setVisibility(View.GONE);
+                holder.productitem_changge_after.setVisibility(View.VISIBLE);
+            }
+            else if (tv_modify_goods.getText().toString().equals("编辑"))
+            {
+                holder.productitem_changge_after.setVisibility(View.GONE);
+                holder.productitem_changge_before.setVisibility(View.VISIBLE);
+            }
+
             holder.maintenance_produte_name.setText(mpplist.get(position).getProductName());
             holder.produte_price.setText(mpplist.get(position).getRetailPrice() + "");
+
+            holder.maintenance_hecheng_1.setText(mpplist.get(position).getProductShow());
 
             holder.produte_count.setText(mpplist.get(position).getProductAmount() + "");
             holder.produte_price.setText(mpplist.get(position).getRetailPrice() + "");
             holder.produte_price.setText(mpplist.get(position).getRetailPrice() + "");
-            holder.count_tx.setText(mpplist.get(position).getProductAmount()+"");
+            holder.count_tx.setText(mpplist.get(position).getProductAmount() + "");
 
             holder.delete_bt.setOnClickListener(this);
             holder.change_bt.setOnClickListener(this);
+            holder.jiacount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String num = holder.produte_count.getText().toString();
+                    int num1 = Integer.parseInt(num);
+                    num1++;
+                    holder.produte_count.setText("" + num1);
+                    holder.count_tx.setText("" + num1);
+                }
+            });
+            holder.jiancount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String numJian = holder.produte_count.getText().toString();
+                    int num2 = Integer.parseInt(numJian);
+                    if (num2 == 1)
+                    {
+                        AlertDialog alertDialog = new AlertDialog(mContext);
+                        alertDialog.builder()
+                                .setTitle("提示")
+                                .setMsg("您确定要删除商品吗?")
+                                .setPositiveButton("确定", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
 
+                                    }
+                                })
+                                .setNegativeButton("取消", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
 
+                                    }
+                                })
+                                .show();
+                        toastMgr.builder.display("请点击删除来删除商品",1);
+                        return;
+                    }
+                    num2--;
+                    holder.produte_count.setText("" + num2);
+                    holder.count_tx.setText("" + num2);
+                }
+            });
 
-
-
+            L.d("会不会重新刷新");
 
 
             return view;
@@ -418,13 +500,16 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
         @Override
         public void onClick(View view) {
+
             switch (view.getId())
             {
                 case R.id.delete_bt:
                     toastMgr.builder.display("删除商品",1);
+
                     break;
                 case R.id.change_bt:
                     toastMgr.builder.display("编辑商品",1);
+
                     break;
             }
 
@@ -439,6 +524,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             TextView        maintenance_img_1;//半合成
             TextView        produte_price;//产品价格
             TextView        produte_count;//产品数量
+            TextView        maintenance_hecheng_1;//半合成
 
             LinearLayout    productitem_changge_after;//商品数量删除 加减 更换
             Button          jiancount;//减商品数量
@@ -449,5 +535,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         }
     }
 
-
+    private boolean isModifyList = false;//判断是不是点击编辑保存,
+    private int productNum;
+    private double productPrice;
+    private double totalPrice;
 }

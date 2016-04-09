@@ -83,7 +83,7 @@
                                     android:layout_marginBottom="2.0dip"
                                     android:layout_below="@+id/maintenance_produte_name"
                                     android:layout_alignParentLeft="true">
-                                    <TextView android:id="@+id/maintenance_img_1"
+                                    <TextView android:id="@+id/maintenance_hecheng_1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="半合成"

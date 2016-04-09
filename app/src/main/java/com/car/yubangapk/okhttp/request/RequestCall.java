@@ -2,6 +2,7 @@ package com.car.yubangapk.okhttp.request;
 
 import com.car.yubangapk.okhttp.OkHttpUtils;
 import com.car.yubangapk.okhttp.callback.Callback;
+import com.car.yubangapk.okhttp.callback.MyCallback;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -71,9 +72,38 @@ public class RequestCall
         return call;
     }
 
+
+    public Call myBuildCall(MyCallback callback)
+    {
+        request = generateMyRequest(callback);
+
+        if (readTimeOut > 0 || writeTimeOut > 0 || connTimeOut > 0)
+        {
+            readTimeOut = readTimeOut > 0 ? readTimeOut : OkHttpUtils.DEFAULT_MILLISECONDS;
+            writeTimeOut = writeTimeOut > 0 ? writeTimeOut : OkHttpUtils.DEFAULT_MILLISECONDS;
+            connTimeOut = connTimeOut > 0 ? connTimeOut : OkHttpUtils.DEFAULT_MILLISECONDS;
+
+            clone = OkHttpUtils.getInstance().getOkHttpClient().newBuilder()
+                    .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
+                    .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS)
+                    .connectTimeout(connTimeOut, TimeUnit.MILLISECONDS)
+                    .build();
+
+            call = clone.newCall(request);
+        } else
+        {
+            call = OkHttpUtils.getInstance().getOkHttpClient().newCall(request);
+        }
+        return call;
+    }
+
     private Request generateRequest(Callback callback)
     {
         return okHttpRequest.generateRequest(callback);
+    }
+    private Request generateMyRequest(MyCallback callback)
+    {
+        return okHttpRequest.generateMyRequest(callback);
     }
 
     public void execute(Callback callback)
@@ -86,6 +116,18 @@ public class RequestCall
         }
 
         OkHttpUtils.getInstance().execute(this, callback);
+    }
+
+    public void executeMy(MyCallback callback, int position)
+    {
+        myBuildCall(callback);
+
+        if (callback != null)
+        {
+            callback.onBefore(request);
+        }
+
+        OkHttpUtils.getInstance().executeParam(this, callback, position);
     }
 
     public Call getCall()

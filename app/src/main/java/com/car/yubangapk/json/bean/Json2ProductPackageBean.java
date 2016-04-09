@@ -16,7 +16,7 @@ public class Json2ProductPackageBean extends Base
 {
 
 //    {"total":0,"rows":[
-//        {"categoryName":"刹车油","retailPrice":220.0,"pathCode":"2","productName":"爆发刹车油","productAmount":1,"photoName":"5f0c5700-aa3b-40cc-bfb8-3b160f507e3d.png"},
+//        {"categoryName":"刹车油","retailPrice":220.0,"pathCode":"2",productShow"productName":"爆发刹车油","productAmount":1,"photoName":"5f0c5700-aa3b-40cc-bfb8-3b160f507e3d.png"},
 //        {"categoryName":"油管","retailPrice":1.0,"pathCode":"2","productName":"爆炸油管","productAmount":1,"photoName":"827d461c-03d5-4532-9f7d-c00fc4ac6584.png"},
 //        {"categoryName":"油管","retailPrice":1.0,"pathCode":"2","productName":"爆炸油管","productAmount":1,"photoName":"827d461c-03d5-4532-9f7d-c00fc4ac6584.png"}]}
 
@@ -26,6 +26,15 @@ public class Json2ProductPackageBean extends Base
     private String productName;
     private int productAmount;
     private String photoName;
+    private String productShow;
+
+    public String getProductShow() {
+        return productShow;
+    }
+
+    public void setProductShow(String productShow) {
+        this.productShow = productShow;
+    }
 
     public String getPhotoName() {
         return photoName;
