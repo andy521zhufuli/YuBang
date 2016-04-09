@@ -49,14 +49,18 @@
 
                     <RelativeLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
+                        android:layout_height="fill_parent"
+                        >
 
 
                         <LinearLayout android:orientation="horizontal"
                             android:id="@+id/productitem_changge_before"
                             android:visibility="visible"
                             android:layout_width="fill_parent"
-                            android:layout_height="fill_parent">
+                            android:layout_height="fill_parent"
+                            android:clickable="true"
+                            android:background="@drawable/bg_item_bottom"
+                            >
 
 
                             <!-- 中间产品名字  半合成-->
@@ -218,6 +222,9 @@
 
                     </RelativeLayout>
                 </LinearLayout>
+
+
+
             </LinearLayout>
         </RelativeLayout>
 

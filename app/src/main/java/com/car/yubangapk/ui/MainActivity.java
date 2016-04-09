@@ -289,6 +289,11 @@ public class MainActivity extends TabActivity {
             SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.LOGINED);
 
         }
+        else if (activityToShow.equals("check"))
+        {
+            //上传成功, 到首页去
+            setDisplayShoppingPage();
+        }
 //        else if (activityToShow.equals("LOGIN_SUCCESS"))
 //        {
 //            //这里不能判断 就正常启动行了

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.car.yubangapk.ui.UploadedInfosCheckActivity">
+
+
+
+    <RelativeLayout
+        android:id="@+id/layout_category_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:layout_margin="6dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="审核"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/check_info"
+        android:layout_below="@+id/layout_category_topbar"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="您的信息正在审核,请耐心等待..."
+        android:gravity="center_horizontal|center_vertical"
+        android:textSize="20sp"
+        />
+
+
+    <TextView
+        android:id="@+id/bukejian"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_below="@+id/bukejian"
+        android:layout_marginTop="50dp"
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/info_check_sure_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/item_margin_large"
+            android:background="@drawable/btn_ok"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="确定"
+            android:layout_weight="1"
+            android:textColor="@color/white" />
+        <Button
+            android:id="@+id/info_check_relogin_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/item_margin_large"
+            android:background="@drawable/btn_ok"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="重新登陆"
+            android:layout_weight="1"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -15,9 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ZoomControls;
 
+import com.car.yubangapk.app.AppManager;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2FirstPageShopBean;
 import com.car.yubangapk.json.bean.Json2FirstPageTabsBean;
+import com.car.yubangapk.json.bean.Json2LoginBean;
 import com.car.yubangapk.json.formatJson.Json2CarCapacity;
 import com.car.yubangapk.json.formatJson.Json2FirstPageShop;
 import com.car.yubangapk.json.formatJson.Json2FirstPageTabs;
@@ -25,6 +27,7 @@ import com.car.yubangapk.okhttp.OkHttpUtils;
 import com.car.yubangapk.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.BDMapData;
 import com.car.yubangapk.utils.L;
+import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.ViewGroupToBitmap;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
@@ -183,6 +186,10 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
         findViews();
 
+
+
+        isLogined();
+
         currentPage = ALL_CAR_PAGE;
 
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
@@ -196,6 +203,128 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
 
 
+    }
+
+
+
+    /**
+     * 判断用户是否已经登录
+     */
+    private void isLogined() {
+        //首先判断是不是登录了
+        //--登录了,那就ok
+        AlertDialog alertDialog = new AlertDialog(mContext);
+        String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+        if (Configs.NOTLOGINED.equals(loinged))
+        {
+            //没有 登录
+            alertDialog.builder().setTitle("提示")
+                    .setMsg("您还没登录,请先登录!")
+                    .setCancelable(false)
+                    .setPositiveButton("去登录", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent();
+                            intent.setClass(mContext, LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("取消", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AppManager.getAppManager().finishAllActivity();
+                        }
+                    })
+                    .show();
+            return;
+        }
+        else
+        {
+            //已登录  判断是不是添加了车型
+            Json2LoginBean json2LoginBean = Configs.getLoginedInfo(mContext);
+            String cartype = json2LoginBean.getCarType();
+            final String userid = json2LoginBean.getUserid();
+            int returnCode = json2LoginBean.getReturnCode();
+            String status = json2LoginBean.getStatus();
+            if (returnCode == 0)//表示成功的
+            {
+                if ("0".equals(status))
+                {
+                    //用户未审核处在正在审核
+                    toastMgr.builder.display("您正在审核中,暂时不可登陆",1);
+                    alertDialog.builder().setTitle("提示")
+                            .setMsg("您正在审核中,暂时不可操作!")
+                            .setCancelable(false)
+                            .setPositiveButton("确定", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent();
+                                    intent.setClass(mContext, UploadedInfosCheckActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("status", "0");
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("取消", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    AppManager.getAppManager().finishAllActivity();
+                                }
+                            })
+                            .show();
+                    return;
+                }
+                else if ("2".equals(status))
+                {
+                    //用户未审核处在正在审核
+                    toastMgr.builder.display("您审核不通过,暂时不可登陆",1);
+                    alertDialog.builder().setTitle("提示")
+                            .setMsg("您审核不通过,暂时不可操作!")
+                            .setCancelable(false)
+                            .setPositiveButton("确定", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent();
+                                    intent.setClass(mContext, UploadedInfosCheckActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("status", "2");
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("取消", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    AppManager.getAppManager().finishAllActivity();
+                                }
+                            })
+                            .show();
+                    return;
+                }
+            }
+            if (cartype == null || cartype.equals(""))
+            {
+                //没有 登录
+                alertDialog.builder().setTitle("提示")
+                        .setMsg("您还未添加车型,请添加!")
+                        .setCancelable(false)
+                        .setPositiveButton("去添加", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent();
+                                intent.setClass(mContext, RegisterDetailsActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("userid", userid);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        })
+                        .show();
+                return;
+            }
+
+        }
     }
 
     /**
@@ -214,6 +343,9 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         );
 
     }
+
+
+
     class GetTabsCallBack extends StringCallback{
 
         @Override
@@ -991,7 +1123,10 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
+        toastMgr.builder.display("onresume", 1);
+
         mMapView.onResume();
+        isLogined();
     }
     @Override
     protected void onPause() {

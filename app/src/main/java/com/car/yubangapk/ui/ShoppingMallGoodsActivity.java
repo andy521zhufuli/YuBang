@@ -31,7 +31,6 @@ import com.car.yubangapk.view.CustomProgressDialog;
 import java.util.List;
 
 import okhttp3.Call;
-
 /**
  * ShoppingMallGoodsActivity: 商城产品包
  *
@@ -449,6 +448,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
             holder.delete_bt.setOnClickListener(this);
             holder.change_bt.setOnClickListener(this);
+            //加商品
             holder.jiacount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -459,6 +459,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     holder.count_tx.setText("" + num1);
                 }
             });
+            //减商品
             holder.jiancount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -489,6 +490,12 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     num2--;
                     holder.produte_count.setText("" + num2);
                     holder.count_tx.setText("" + num2);
+                }
+            });
+            holder.productitem_changge_before.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    toastMgr.builder.display("商品详情",1);
                 }
             });
 

@@ -184,7 +184,7 @@ public class LoginActivity extends BaseActivity {
 
 
 
-            String userid = json2LoginBean.getUserid();
+            final String userid = json2LoginBean.getUserid();
             boolean isJson = json2LoginBean.isJson();
             boolean isReturnStr = json2LoginBean.isReturnStr();
             int returnCode = json2LoginBean.getReturnCode();
@@ -196,19 +196,46 @@ public class LoginActivity extends BaseActivity {
 
             //将登录信息保存起来  SP里面
             Configs.putLoginedInfo(mContext, json2LoginBean);
-            SPUtils.putUserInfo(mContext, Configs.LoginOrNot,Configs.LOGINED);
+
             if (returnCode == 0)//成功
             {
                 if ("0".equals(status))
                 {
-                    //用户未审核  正在审核
-                    toastMgr.builder.display("您正在审核中,暂时不可登陆",1);
+                    //用户未审核处在正在审核
+                    toastMgr.builder.display("您正在审核中,请等待审核...",1);
+                    //状态为已经登陆
+                    SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.LOGINED);
                     return;
                 }
                 else if ("1".equals(status))
                 {
                     //审核通过 可以登陆
                     toastMgr.builder.display(json2LoginBean.getMessage(), 1);
+                    //设置已经登录
+                    SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.LOGINED);
+                    //
+
+
+                    //已登录  判断是不是添加了车型
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    if (carType == null || carType.equals("")) {
+                        //没有 登录
+                        alertDialog.builder().setTitle("提示")
+                                .setMsg("您还未添加车型,请添加!")
+                                .setPositiveButton("去添加", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent();
+                                        intent.setClass(mContext, RegisterDetailsActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("userid", userid);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                    }
+                                })
+                                .show();
+
+                    }
 
                     //这里是直接我的界面   onnew Intent里面去判断
                     Intent intent = new Intent();
@@ -291,7 +318,7 @@ public class LoginActivity extends BaseActivity {
                 else if ("5".equals(status))
                 {
                     //审核不通过, 不可以登陆 重新上传
-                    toastMgr.builder.display("您正在审核中,请重新上传",1);
+                    toastMgr.builder.display("未添加相片",1);
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this, RegisterDetailsActivity.class);
                     Bundle bundle = new Bundle();
@@ -302,6 +329,36 @@ public class LoginActivity extends BaseActivity {
                 }
 
 
+
+
+
+            }
+            else if (returnCode == -2)
+            {
+                //审核不通过, 不可以登陆 重新上传
+                toastMgr.builder.display("您还没注册", 1);
+
+
+                AlertDialog alertDialog = new AlertDialog(mContext);
+                alertDialog.builder().setCancelable(false)
+                        .setTitle("提示")
+                        .setMsg("您还未注册,请注册!")
+                        .setNegativeButton("取消", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //TODO
+                            }
+                        })
+                        .setPositiveButton("注册", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                Intent intent = new Intent();
+                                intent.setClass(LoginActivity.this, RegisterActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .show();
 
             }
             else

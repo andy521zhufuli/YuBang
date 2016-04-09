@@ -265,7 +265,7 @@ public class FlashView extends FrameLayout{
 	    position = position + imageViewsList.size();
 
 	   }
-	   System.out.println("position111:::"+position);
+	   //System.out.println("position111:::"+position);
 	   if(isTwo)
 	   {
 		    pos=position%2;
@@ -301,9 +301,9 @@ public class FlashView extends FrameLayout{
 	   if (vp != null )
 	   {
 	   
-	    System.out.println("JJJJJ"+pos);
+	    //System.out.println("JJJJJ"+pos);
 	    ViewPager pager = (ViewPager) vp;
-	    System.out.println("pager.getChildCount()::"+pager.getChildCount());
+	    //System.out.println("pager.getChildCount()::"+pager.getChildCount());
 
 	    pager.removeView(view);
 	   }

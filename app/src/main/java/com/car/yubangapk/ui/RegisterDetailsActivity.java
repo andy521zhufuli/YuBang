@@ -223,6 +223,23 @@ public class RegisterDetailsActivity extends BaseActivity {
 
                 mCurrentUploadingStatus = UploadStatus.CAR_NUM;
 
+
+                if (register_detail_select_car_num.getText().toString().equals(""))
+                {
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    alertDialog.builder().
+                            setCancelable(true)
+                            .setTitle("没有填写车牌号")
+                            .setPositiveButton("继续继续填写", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .show();
+                    return;
+                }
+
                 if ((isSetPhoto1 && isSetPhoto2 && isSetPhoto3 && isSetPhoto4 && isSetPhoto5 && isSetPhoto6) != true)
                 {
                     AlertDialog alertDialog = new AlertDialog(mContext);
@@ -239,7 +256,7 @@ public class RegisterDetailsActivity extends BaseActivity {
                     return;
                 }
 
-                upLoadCarTNum("粤A11111", Configs.getLoginedInfo(mContext).getUserid());
+                upLoadCarTNum(register_detail_select_car_num.getText().toString(), Configs.getLoginedInfo(mContext).getUserid());
             }
         });
         //TODO 这里 应该是 在下一个界面上传  上传完了回到这个界面  在响应的图片上面打钩 最后所有都完成之后  提交 然后后台去处理
@@ -450,7 +467,7 @@ public class RegisterDetailsActivity extends BaseActivity {
                                 String _userid
     )
     {
-        mProgressDialog = mProgressDialog.show(mContext,"正在上传车辆拍照...", false, null);
+        mProgressDialog = mProgressDialog.show(mContext,"正在上传车辆牌照...", false, null);
 
         OkHttpUtils.post()
                 .url(Configs.IP_ADDRESS + Configs.IP_ADDRESSS_ACTION_UP_LOAD_CAR_NUM)
@@ -622,7 +639,7 @@ public class RegisterDetailsActivity extends BaseActivity {
         @Override
         public void onError(Call call, Exception e) {
             mProgressDialog.dismiss();
-            toastMgr.builder.display("上传失败,网络错误", 1);
+            toastMgr.builder.display("上传失败,网络错误,请重新上传", 1);
         }
 
         @Override
@@ -672,6 +689,9 @@ public class RegisterDetailsActivity extends BaseActivity {
                             @Override
                             public void onClick(View view) {
                                 toastMgr.builder.display("前往审核界面,", 1);
+                                Intent intent = new Intent();
+                                intent.setClass(mContext,UploadedInfosCheckActivity.class);
+                                startActivity(intent);
                             }
                         })
                         .show();

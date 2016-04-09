@@ -20,7 +20,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name="com.car.yubangapk.app.YuBangApplication"
@@ -403,7 +403,8 @@
         <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseBrandActivity" />
         <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarChildBrandActivity" />
         <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarYearActivity" />
-        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarCapacityActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarCapacityActivity" />
+        <activity android:name="com.car.yubangapk.ui.UploadedInfosCheckActivity"></activity>
     </application>
 
 </manifest>
