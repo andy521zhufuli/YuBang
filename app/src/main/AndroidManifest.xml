@@ -404,7 +404,9 @@
         <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarChildBrandActivity" />
         <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarYearActivity" />
         <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarCapacityActivity" />
-        <activity android:name="com.car.yubangapk.ui.UploadedInfosCheckActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.UploadedInfosCheckActivity" />
+        <activity android:name="com.car.yubangapk.ui.AdWebViewActivity" />
+        <activity android:name="com.car.yubangapk.ui.ShoppingmallProductChangeActivity"></activity>
     </application>
 
 </manifest>

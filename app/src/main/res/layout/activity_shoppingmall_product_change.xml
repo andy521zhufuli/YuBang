@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:visibility="visible" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:listSelector="@android:color/transparent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 头部-->
+    <RelativeLayout
+        android:id="@+id/layout_category_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:layout_margin="6dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="可更换商品"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/carmaintence_touch_back"
+        android:background="@android:color/transparent"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="150.0dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+    <LinearLayout android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true">
+        <RelativeLayout android:background="#ffeeeeee"
+            android:visibility="visible"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip">
+            <TextView android:textColor="#ff707070"
+                android:id="@+id/logolist_text_produte"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip" android:text="可更换商品列表"
+                android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+            <View android:id="@+id/logolist_view_produte"
+                android:background="#ffd9d9d9"
+                android:layout_width="2.0px" android:layout_height="30.0dip"
+                android:layout_marginLeft="10.0dip"
+                android:layout_toRightOf="@+id/logolist_text_produte"
+                android:layout_centerVertical="true" />
+            <RelativeLayout android:gravity="center"
+                android:orientation="horizontal" android:id="@+id/logo_selcet_liner"
+                android:background="#ffc6c6c6" android:padding="1.0dip"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip" android:layout_toRightOf="@+id/logolist_view_produte"
+                android:layout_centerVertical="true">
+                <RelativeLayout android:gravity="center" android:orientation="horizontal"
+                    android:background="#ffeeeeee"
+                    android:paddingLeft="10.0dip"
+                    android:paddingTop="5.0dip"
+                    android:paddingRight="10.0dip"
+                    android:paddingBottom="5.0dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView android:textColor="#fffd7222"
+                        android:id="@+id/logolist_text_produte_logo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="品牌选择" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <LinearLayout android:gravity="center"
+                android:orientation="horizontal"
+                android:id="@+id/logo_selcet_close"
+                android:paddingLeft="10.0dip" android:paddingRight="10.0dip"
+                android:layout_width="wrap_content" android:layout_height="fill_parent"
+                android:layout_alignParentRight="true" android:layout_centerVertical="true">
+                <ImageView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/product_close" />
+            </LinearLayout>
+        </RelativeLayout>
+        <LinearLayout android:gravity="center_vertical"
+            android:orientation="horizontal" android:id="@+id/checkbox_layout"
+            android:visibility="visible" android:layout_width="fill_parent"
+            android:layout_height="50.0dip" android:weightSum="1.0">
+            <ImageView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip"
+                android:src="@mipmap/all_producte" />
+            <TextView
+                android:textSize="@dimen/activity_vertical_margin"
+                android:textColor="@color/shop_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip"
+                android:text="全部商品"
+                android:singleLine="true" />
+        </LinearLayout>
+        <LinearLayout
+            android:textColor="#ff707070"
+            android:background="@color/white"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <ListView android:id="@+id/change_produte"
+                android:background="#ffeeeeee"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scrollingCache="true"
+                android:divider="@null"
+                android:layout_weight="1.0" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

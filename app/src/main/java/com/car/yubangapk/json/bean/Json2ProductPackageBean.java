@@ -15,18 +15,54 @@ import com.car.yubangapk.json.Base;
 public class Json2ProductPackageBean extends Base
 {
 
-//    {"total":0,"rows":[
-//        {"categoryName":"刹车油","retailPrice":220.0,"pathCode":"2",productShow"productName":"爆发刹车油","productAmount":1,"photoName":"5f0c5700-aa3b-40cc-bfb8-3b160f507e3d.png"},
-//        {"categoryName":"油管","retailPrice":1.0,"pathCode":"2","productName":"爆炸油管","productAmount":1,"photoName":"827d461c-03d5-4532-9f7d-c00fc4ac6584.png"},
-//        {"categoryName":"油管","retailPrice":1.0,"pathCode":"2","productName":"爆炸油管","productAmount":1,"photoName":"827d461c-03d5-4532-9f7d-c00fc4ac6584.png"}]}
-
+//    产品包
+//                {"total":0,"rows":[
+        //        {
+        //        "categoryName":"刹车油",
+        //        "retailPrice":220.0,
+        //        "pathCode":"2",
+        //        "category":"6f134e82-23e6-4015-a6be-c16a212c7c1e",
+        //        "productCode":"PP00001",
+        //        "photoName":"5f0c5700-aa3b-40cc-bfb8-3b160f507e3d.png",
+        //        "productShow":"合成",
+        //        "productName":"爆发刹车油",
+        //        "productAmount":1},
+//        {"categoryName":"油管","retailPrice":1.0,"pathCode":"2","productShow":"合成","productName":"爆炸油管","productAmount":1,"photoName":"827d461c-03d5-4532-9f7d-c00fc4ac6584.png"},{"categoryName":"油管","retailPrice":1.0,"pathCode":"2","productShow":"合成","productName":"爆炸油管","productAmount":1,"photoName":"827d461c-03d5-4532-9f7d-c00fc4ac6584.png"}]}
     private String categoryName;
+
     private double retailPrice;
+
     private String pathCode;
-    private String productName;
-    private int productAmount;
+
+    private String category;
+
+    private String productCode;
+
     private String photoName;
+
     private String productShow;
+
+    private String productName;
+
+    private int productAmount;
+
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public String getCategory() {
+
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getProductShow() {
         return productShow;

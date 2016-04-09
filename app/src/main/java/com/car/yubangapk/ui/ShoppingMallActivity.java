@@ -17,6 +17,7 @@ import com.car.yubangapk.banner.FlashView;
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.banner.constants.EffectConstants;
 import com.car.yubangapk.banner.listener.FlashViewListener;
+import com.car.yubangapk.configs.BannerSkipType;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.FormatJson;
 import com.car.yubangapk.json.bean.BannerAd;
@@ -51,8 +52,7 @@ import okhttp3.Request;
 public class ShoppingMallActivity extends BaseActivity implements View.OnClickListener{
 
 
-    //banner广告点击
-    List<BannerAd> mBannerAdList = null;//全局的banner广告变量  保存广告相关信息
+
     //商城图片  中部分类
     List<ShoppingmallSpeciesePicBean> mShoppingmallSpeciesPicList = null;//种类
     List<ImageView>           mMiddleSpeciesList = null;
@@ -70,6 +70,9 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     //是不是已经调用了measure方法
     private boolean hasMeasure = false;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,44 +86,8 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         //将需要设置图片的所有空间添加到list  或者  map  里面去
         addImageviewTOListMap();
 
-
-        //广告轮播点击监听器设置
-        shoppingmall_flashview_banner.setOnPageClickListener(new FlashViewListener() {
-            @Override
-            public void onClick(int position) {
-                toastMgr.builder.display("position"+position + "clicked" , 0);
-                if (mBannerAdList == null || mBannerAdList.size() == 0)
-                {
-
-                }
-                else
-                {
-                    BannerAd bannerAd = mBannerAdList.get(position);
-                    toastMgr.builder.display(bannerAd.getAdvertisementName() + bannerAd.getSkipType(), 0);
-                    bannerAd.getLink();
-
-                    String skipType = bannerAd.getSkipType();
-                    if (skipType.equals(Configs.SKIP_TYPE_WEB))
-                    {
-                        //网页
-
-                    }
-                    else if (skipType.equals(Configs.SKIP_TYPE_PRODUCT_PACKAGE))
-                    {
-                        //产品包
-                    }
-                    else if (skipType.equals(Configs.SKIP_TYPE_LOGIC_SERVICE))
-                    {
-                        //逻辑服务
-                    }
-                }
-            }
-        });
-
-
-
-
-
+        //设置banner的点击监听
+        setBannerClickedListener();
 
         //广告轮播 最开始的广告轮播
 //        imageUrls = new ArrayList<String>();
@@ -139,27 +106,10 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         pointYs = new int[8];
         getScrollPoints();
 
-        /**
-         * 去拿轮播图片
-         */
-        OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
-                .addParams("sqlName", "clientSearchAd")
-                .addParams("dataReqModel.args.needTotal","needTotal")
-                .addParams("dataReqModel.args.position","2")//2代表banner广告
-                .build().execute(new MyBannerAdCallback());
-        L.i(TAG, "banner url = " + Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchAd&dataReqModel.args.needTotal=needTotal&dataReqModel.args.position=2" );
-        /**
-         * 去拿中间8个的图片
-         */
-        OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
-                .addParams("sqlName", "clientSearchLogicalService")
-                .addParams("dataReqModel.args.needTotal","needTotal")
-                .build()
-                .execute(new MallSpecieseCallback());
-        L.i(TAG, "Species url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchLogicalService&dataReqModel.args.needTotal=clientSearchLogicalService");
-
+        //去拿轮播图片
+        httpGetBannerPics();
+        //去拿中间8个的图片
+        httpGetMiddleSpeciesPics();
 //        OkHttpUtils.post()
 //                .url("http://192.168.1.7:8080/carService/getFile")
 //                .addParams("fileReq.pathCode","0")
@@ -194,11 +144,108 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 //                    }
 //                });
 //
+    }
 
 
-
+    /**
+     * 网络连接去拿banner的图片
+     */
+    private void httpGetBannerPics()
+    {
+        /**
+         * 去拿轮播图片
+         */
+        OkHttpUtils.post()
+                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
+                .addParams("sqlName", "clientSearchAd")
+                .addParams("dataReqModel.args.needTotal","needTotal")
+                .addParams("dataReqModel.args.position","2")//2代表banner广告
+                .build().execute(new MyBannerAdCallback());
+        L.i(TAG, "banner url = " + Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchAd&dataReqModel.args.needTotal=needTotal&dataReqModel.args.position=2" );
 
     }
+
+    /**
+     * 去拿中间分类的小图标以及信息
+     */
+    private void httpGetMiddleSpeciesPics()
+    {
+        /**
+         * 去拿中间8个的图片
+         */
+        OkHttpUtils.post()
+                .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
+                .addParams("sqlName", "clientSearchLogicalService")
+                .addParams("dataReqModel.args.needTotal","needTotal")
+                .build()
+                .execute(new MallSpecieseCallback());
+        L.i(TAG, "Species url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchLogicalService&dataReqModel.args.needTotal=clientSearchLogicalService");
+
+    }
+
+
+    /**
+     * 为顶部banner设置监听
+     */
+    private void setBannerClickedListener()
+    {
+        //广告轮播点击监听器设置
+        shoppingmall_flashview_banner.setOnPageClickListener(new FlashViewListener() {
+            @Override
+            public void onClick(int position) {
+                Intent intent = new Intent();
+                toastMgr.builder.display("position"+position + "clicked" , 0);
+                if (mBannerAdList == null || mBannerAdList.size() == 0)
+                {
+                    toastMgr.builder.display("服务器错误,没有数据",1);
+                }
+                else
+                {
+                    BannerAd bannerAd = mBannerAdList.get(position);
+                    toastMgr.builder.display(bannerAd.getAdvertisementName() + "skipType" + bannerAd.getSkipType(), 0);
+                    String link = bannerAd.getLink();
+
+
+
+                    String skipType = bannerAd.getSkipType();
+                    if (BannerSkipType.SKIP_TYPE_WEB.equals(skipType))
+                    {
+                        //网页
+                        intent.setClass(mContext, AdWebViewActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("link", link);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+                    }
+                    else if (BannerSkipType.SKIP_TYPE_PRODUCT_PACKAGE.equals(skipType))
+                    {
+                        //产品包
+                        intent.setClass(mContext, ShoppingMallGoodsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Configs.serviceId,link);
+                        String carType = Configs.getLoginedInfo(mContext).getCarType();
+                        if ("".equals(carType) || carType == null)
+                        {
+                            bannerClickWarnNoCarType();
+                            return;
+                        }
+                        bundle.putString(Configs.mCarType, carType);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+
+                    }
+                    else if (BannerSkipType.SKIP_TYPE_LOGIC_SERVICE.equals(skipType))
+                    {
+                        //逻辑服务
+                        toastMgr.builder.display("没有相关商品", 1);
+                    }
+                }
+            }
+        });
+    }
+
 
     /**
      * 中间分类8个
@@ -306,7 +353,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-
     /**
      * 中部图标 分类
      */
@@ -341,8 +387,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             L.d(TAG + "MallSpecieseCallback  progress" + "  " + progress * 100);
         }
     }
-
-
 
     /**
      * 中间部分图片加载
@@ -462,9 +506,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }
 
     }
-
-
-
 
     /**
      * 保养维护 设置图片
@@ -1228,6 +1269,27 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 .show();
     }
 
+
+    /**
+     * banner点击的时候
+     * 发现没有车型
+     */
+    private void bannerClickWarnNoCarType()
+    {
+        AlertDialog alertDialog = new AlertDialog(mContext);
+        alertDialog.builder()
+                .setCancelable(false)
+                .setTitle("提示")
+                .setMsg("您还没有添加车型,请添加车型")
+                .setPositiveButton("去添加", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        gotoAddRegisterDetailAddCarType();
+                    }
+                })
+                .show();
+    }
+
     /**
      * 去添加车型
      */
@@ -1494,11 +1556,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-
-
-
-
-
     /**
      * 设置所有监听
      */
@@ -1562,9 +1619,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product6_06.setOnClickListener(this);
     }
 
-
-
-
     /*
      * 适配器的定义,要继承BaseAdapter
      */
@@ -1599,8 +1653,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             return view;
         }
     }
-
-
 
     //是不是通过网络拿到了bottom的图片  这样点击的时候才知道跳转的参数
     private boolean isBottomPicGetted = false;
@@ -1705,5 +1757,9 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private List<Json2ShoppingmallBottomPicsBean> mCHEJIAPEIJIANList;       //车架配件保存获取的图片信息
     private List<Json2ShoppingmallBottomPicsBean> mTUOJIAPEIJIANList;       //托架配件保存获取的图片信息
     private List<Json2ShoppingmallBottomPicsBean> mGEBGDUOList;             //更多保存获取的图片信息
+
+
+    //banner广告点击
+    List<BannerAd> mBannerAdList = null;//全局的banner广告变量  保存广告相关信息
 
 }

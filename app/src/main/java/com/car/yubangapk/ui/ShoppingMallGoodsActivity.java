@@ -83,8 +83,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         else
         {
             //从首页门店过来  就要获取产品包
-            String serviceId = bundle.getString("serviceId");//服务id
-            String carType = bundle.getString("mCarType");//车主车类型
+            String serviceId = bundle.getString(Configs.serviceId);//服务id
+            String carType = bundle.getString(Configs.mCarType);//车主车类型
             //去拿产品包的id  拿到产品包的id时候  再去根据产品包的id获取产品包的内容
             mServiceId = serviceId;
             mCarType = carType;
@@ -343,7 +343,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     /**
      * 适配器的定义,要继承BaseAdapter
      */
-    public class ProductPackageAdapter extends BaseAdapter implements View.OnClickListener{
+    public class ProductPackageAdapter extends BaseAdapter{
 
         List<Json2ProductPackageBean> mpplist;
 
@@ -379,7 +379,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         }
 
         @Override
-        public View getView(int position, View view, ViewGroup parent) {
+        public View getView(final int position, View view, ViewGroup parent) {
             /*
              * 1.手工创建对象 2.加载xml文件
              */
@@ -446,8 +446,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             holder.produte_price.setText(mpplist.get(position).getRetailPrice() + "");
             holder.count_tx.setText(mpplist.get(position).getProductAmount() + "");
 
-            holder.delete_bt.setOnClickListener(this);
-            holder.change_bt.setOnClickListener(this);
             //加商品
             holder.jiacount.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -499,28 +497,33 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 }
             });
 
+
+            holder.delete_bt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    toastMgr.builder.display("删除商品", 1);
+                }
+            });
+            holder.change_bt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    toastMgr.builder.display("更换商品", 1);
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, ShoppingmallProductChangeActivity.class);
+                    String categoryid = mpplist.get(position).getCategory();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Configs.categoryId,categoryid);
+                    intent.putExtras(bundle);
+                    ShoppingMallGoodsActivity.this.startActivity(intent);
+                }
+            });
+
             L.d("会不会重新刷新");
 
 
             return view;
         }
 
-        @Override
-        public void onClick(View view) {
-
-            switch (view.getId())
-            {
-                case R.id.delete_bt:
-                    toastMgr.builder.display("删除商品",1);
-
-                    break;
-                case R.id.change_bt:
-                    toastMgr.builder.display("编辑商品",1);
-
-                    break;
-            }
-
-        }
 
         class ViewHolder
         {

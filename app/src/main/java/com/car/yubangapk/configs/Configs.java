@@ -84,12 +84,10 @@ public class Configs {
     //--------------------------是否登录-------------------------------------
 
 
-
-
-    //banner SkipType
-    public static String SKIP_TYPE_WEB= "1";//网页
-    public static String SKIP_TYPE_PRODUCT_PACKAGE= "1";//产品包
-    public static String SKIP_TYPE_LOGIC_SERVICE= "1";//逻辑服务
+    //--------------------------获取产品包id需要的参数-------------------------------------
+    public static final String mCarType = "mCarType";
+    public static final String serviceId = "serviceId";
+    public static final String categoryId = "categoryId";//更换产品的时候的分类id
 
     //程序一启动的配置信息
     public static String APP_SYS_CONFIG= "APP_SYS_CONFIG";
