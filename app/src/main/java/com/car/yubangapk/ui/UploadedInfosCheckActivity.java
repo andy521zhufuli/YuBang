@@ -104,6 +104,9 @@ public class UploadedInfosCheckActivity extends BaseActivity implements View.OnC
                 intent.putExtras(bundle);
                 startActivity(intent);
 
+//                intent.setClass(mContext, ShoppingmallNewActivity.class);
+//                startActivity(intent);
+
                 break;
             case R.id.img_back:
                 //TODO  这里不可返回  返回就要重新提交啊

@@ -1,5 +1,6 @@
 package com.car.yubangapk.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.json.bean.Json2ChangeableProductBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageIdBean;
 import com.car.yubangapk.json.formatJson.Json2ProductPackage;
@@ -54,6 +56,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     private LinearLayout    productitem_changge_before;//商品信息
     private LinearLayout    productitem_changge_after;//编辑商品之后
     private boolean         isModified = false;
+    private TextView        tv_price;//商品总价
 
     private CustomProgressDialog mProgressDialog;
     String mServiceId;
@@ -261,6 +264,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         tv_modify_goods = (TextView) findViewById(R.id.tv_modify_goods);
         btn_pay = (RelativeLayout) findViewById(R.id.btn_pay);
         btn_service = (RelativeLayout) findViewById(R.id.btn_service);
+        tv_price = (TextView) findViewById(R.id.tv_price);
+
 
 
         img_back.setOnClickListener(this);
@@ -453,8 +458,11 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     String num = holder.produte_count.getText().toString();
                     int num1 = Integer.parseInt(num);
                     num1++;
+                    mJson2ProductPackageBeanList.get(position).setProductAmount(num1);
                     holder.produte_count.setText("" + num1);
                     holder.count_tx.setText("" + num1);
+
+                    countTotalPrice(mJson2ProductPackageBeanList);
                 }
             });
             //减商品
@@ -486,14 +494,19 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                         return;
                     }
                     num2--;
+                    mJson2ProductPackageBeanList.get(position).setProductAmount(num2);
                     holder.produte_count.setText("" + num2);
                     holder.count_tx.setText("" + num2);
+
+                    countTotalPrice(mJson2ProductPackageBeanList);
+
                 }
             });
             holder.productitem_changge_before.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     toastMgr.builder.display("商品详情",1);
+
                 }
             });
 
@@ -511,15 +524,28 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     Intent intent = new Intent();
                     intent.setClass(mContext, ShoppingmallProductChangeActivity.class);
                     String categoryid = mpplist.get(position).getCategory();
+
+
                     Bundle bundle = new Bundle();
-                    bundle.putString(Configs.categoryId,categoryid);
+                    bundle.putInt("position",position);
+                    bundle.putSerializable("product", mpplist.get(position));
+                    bundle.putString(Configs.categoryId, categoryid);
                     intent.putExtras(bundle);
-                    ShoppingMallGoodsActivity.this.startActivity(intent);
+                    ShoppingMallGoodsActivity.this.startActivityForResult(intent, CHANGE_PRODUCT_Request);
                 }
             });
 
             L.d("会不会重新刷新");
 
+
+
+
+            listviewItemLoadTimes++;
+            if (listviewItemLoadTimes == mpplist.size())
+            {
+                listviewItemLoadTimes = 0;
+                countTotalPrice(mJson2ProductPackageBeanList);
+            }
 
             return view;
         }
@@ -539,14 +565,79 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             LinearLayout    productitem_changge_after;//商品数量删除 加减 更换
             Button          jiancount;//减商品数量
             Button          jiacount;//加商品数量
-            TextView        count_tx;//商品数量显示
+            TextView        count_tx;//商品数量  加减中间的
             RelativeLayout  delete_bt;//商品删除
             RelativeLayout  change_bt;//商品更换
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK)
+        {
+
+            Bundle bundle = data.getExtras();
+            Json2ChangeableProductBean bean = (Json2ChangeableProductBean) bundle.getSerializable("changedProductBean");
+            int _position = bundle.getInt("position");
+
+            mJson2ProductPackageBeanList.get(_position).setCategory(bean.getCategory());
+            mJson2ProductPackageBeanList.get(_position).setPathCode(bean.getPathCode());
+            mJson2ProductPackageBeanList.get(_position).setCategoryName(bean.getCategoryName());
+            mJson2ProductPackageBeanList.get(_position).setPhotoName(bean.getPhotoName());
+            mJson2ProductPackageBeanList.get(_position).setProductCode(bean.getProductCode());
+            mJson2ProductPackageBeanList.get(_position).setProductName(bean.getProductName());
+            mJson2ProductPackageBeanList.get(_position).setProductShow(bean.getProductShow());
+            mJson2ProductPackageBeanList.get(_position).setRetailPrice(bean.getRetailPrice());
+
+
+            goodsAdapter.refresh(mJson2ProductPackageBeanList);
+
+            countTotalPrice(mJson2ProductPackageBeanList);
+
+        }
+        else if (resultCode == Activity.RESULT_CANCELED)
+        {
+            toastMgr.builder.display("您没有更改产品",1);
+        }
+
+
+
+    }
+
+
+    /**
+     * 计算商品总价
+     * @param beans
+     */
+    private void countTotalPrice(List<Json2ProductPackageBean> beans)
+    {
+        int size = beans.size();
+        double l_total_size = 0;
+        for (Json2ProductPackageBean bean : beans)
+        {
+            int num = bean.getProductAmount();
+            double price = bean.getRetailPrice();
+            l_total_size  = l_total_size + ((double)num) * price;
+        }
+        setTotalPrice(l_total_size);
+    }
+
+
+    private void setTotalPrice(double price)
+    {
+        tv_price.setText("￥" + price + "");
     }
 
     private boolean isModifyList = false;//判断是不是点击编辑保存,
     private int productNum;
     private double productPrice;
     private double totalPrice;
+
+    private static int CHANGE_PRODUCT_Request = 1;
+    private static int CHANGE_PRODUCT_Result = 2;
+
+    int listviewItemLoadTimes = 0;//列表商品是否加载完成  加载的次数
 }

@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/img_back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:paddingLeft="10dp"
@@ -30,6 +30,8 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="@dimen/medium_text_size" />
     </RelativeLayout>
+
+    <!-- 最上面透明显示  不需要-->
     <RelativeLayout
         android:id="@+id/carmaintence_touch_back"
         android:background="@android:color/transparent"
@@ -38,33 +40,42 @@
         android:layout_height="150.0dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
-    <LinearLayout android:orientation="vertical"
+
+    <LinearLayout
+        android:orientation="vertical"
         android:background="@color/white"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentBottom="true">
-        <RelativeLayout android:background="#ffeeeeee"
+        <!-- 可更换商品  品牌选择-->
+        <RelativeLayout
+            android:background="#ffeeeeee"
             android:visibility="visible"
             android:layout_width="fill_parent"
             android:layout_height="40.0dip">
+
             <TextView android:textColor="#ff707070"
-                android:id="@+id/logolist_text_produte"
+                android:id="@+id/logolist_text_product"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginLeft="10.0dip" android:text="可更换商品列表"
                 android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
-            <View android:id="@+id/logolist_view_produte"
+
+            <View android:id="@+id/logolist_view_product"
                 android:background="#ffd9d9d9"
                 android:layout_width="2.0px" android:layout_height="30.0dip"
                 android:layout_marginLeft="10.0dip"
-                android:layout_toRightOf="@+id/logolist_text_produte"
+                android:layout_toRightOf="@+id/logolist_text_product"
                 android:layout_centerVertical="true" />
+
             <RelativeLayout android:gravity="center"
                 android:orientation="horizontal" android:id="@+id/logo_selcet_liner"
                 android:background="#ffc6c6c6" android:padding="1.0dip"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginLeft="10.0dip" android:layout_toRightOf="@+id/logolist_view_produte"
+                android:layout_marginLeft="10.0dip" android:layout_toRightOf="@+id/logolist_view_product"
                 android:layout_centerVertical="true">
-                <RelativeLayout android:gravity="center" android:orientation="horizontal"
+                <RelativeLayout 
+                    android:gravity="center"
+                    android:orientation="horizontal"
                     android:background="#ffeeeeee"
                     android:paddingLeft="10.0dip"
                     android:paddingTop="5.0dip"
@@ -73,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <TextView android:textColor="#fffd7222"
-                        android:id="@+id/logolist_text_produte_logo"
+                        android:id="@+id/logolist_text_product_logo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="品牌选择" />
@@ -90,10 +101,17 @@
                     android:src="@mipmap/product_close" />
             </LinearLayout>
         </RelativeLayout>
-        <LinearLayout android:gravity="center_vertical"
-            android:orientation="horizontal" android:id="@+id/checkbox_layout"
-            android:visibility="visible" android:layout_width="fill_parent"
-            android:layout_height="50.0dip" android:weightSum="1.0">
+        <!-- 全部商品-->
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:id="@+id/all_kind_goods_check_layout"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:weightSum="1.0"
+            android:background="@drawable/bg_item_bottom"
+            >
             <ImageView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10.0dip"
@@ -107,12 +125,13 @@
                 android:text="全部商品"
                 android:singleLine="true" />
         </LinearLayout>
+        <!-- listview-->
         <LinearLayout
             android:textColor="#ff707070"
             android:background="@color/white"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-            <ListView android:id="@+id/change_produte"
+            <ListView android:id="@+id/change_product_listview"
                 android:background="#ffeeeeee"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

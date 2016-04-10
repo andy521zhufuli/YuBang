@@ -406,7 +406,10 @@
         <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarCapacityActivity" />
         <activity android:name="com.car.yubangapk.ui.UploadedInfosCheckActivity" />
         <activity android:name="com.car.yubangapk.ui.AdWebViewActivity" />
-        <activity android:name="com.car.yubangapk.ui.ShoppingmallProductChangeActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.ShoppingmallProductChangeActivity" />
+        <activity android:name="com.car.yubangapk.ui.ShoppingmallNewActivity" />
+        <activity android:name="com.car.yubangapk.ui.ListViewRefreshAcivity" />
+        <activity android:name="com.car.yubangapk.ui.UpdateAppActivity"></activity>
     </application>
 
 </manifest>

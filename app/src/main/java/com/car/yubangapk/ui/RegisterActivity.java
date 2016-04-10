@@ -290,8 +290,17 @@ public class RegisterActivity extends BaseActivity {
         boolean isRecommendPeopele = Validator.isMobile(recommendPeople);
         if (isRecommendPeopele == false)
         {
-            toastMgr.builder.display("推荐人手机号码填写格式错误!", 1);
-            return;
+            if (recommendPeople.equals("") || recommendPeople == null)
+            {
+                toastMgr.builder.display("推荐人手机号码没有填写!", 1);
+                recommendPeople = "";
+            }
+            else
+            {
+                toastMgr.builder.display("推荐人手机号码填写格式错误!", 1);
+                return;
+            }
+
         }
         verifyCode = register_verify_code_edittext.getText().toString().trim();//输入的验证码
 

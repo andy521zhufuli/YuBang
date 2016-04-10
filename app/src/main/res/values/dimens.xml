@@ -104,5 +104,17 @@
     <dimen name="small_marging">2.0dip</dimen>
     <dimen name="small_padding">2.0dip</dimen>
 
+    <!--京东-->
+    <dimen name="refresh_header_height_jd">100.0dip</dimen>
+    <!-- twitter样式-->
+    <dimen name="refresh_header_height_twitter">80.0dip</dimen>
+    <dimen name="load_more_footer_height_classic">60.0dip</dimen>
+
+    <dimen name="hero_avatar_size">120dp</dimen>
+    <dimen name="hero_avatar_border">3dp</dimen>
+    <dimen name="viewpager_height">240dp</dimen>
+    <dimen name="indicator_size">6dp</dimen>
+    <dimen name="indicator_margin">6dp</dimen>
+
 
 </resources>

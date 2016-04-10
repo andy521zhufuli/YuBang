@@ -1,7 +1,7 @@
 package com.car.yubangapk.json.formatJson;
 
 
-import com.car.yubangapk.json.bean.Json2CarBrandBean;
+import com.car.yubangapk.json.bean.Json2ChangeableProductBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
 
 import org.json.JSONArray;
@@ -12,16 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Json2ProductPackage:产皮包信息
+ * Json2ChangeableProduct:可更换信息
  *
  * @author andy
  * @version 1.0.6
- * @created 2016-04-07
+ * @created 2016-04-10
  */
-/**
- * Created by andy on 16/4/7.
- */
-public class Json2ProductPackage {
+public class Json2ChangeableProduct {
 
 
 
@@ -29,7 +26,7 @@ public class Json2ProductPackage {
 
     String json;
 
-    public Json2ProductPackage()
+    public Json2ChangeableProduct()
     {
 
     }
@@ -54,7 +51,7 @@ public class Json2ProductPackage {
         return null;
     }
 
-    public Json2ProductPackage(String json)
+    public Json2ChangeableProduct(String json)
     {
         this.json = json;
     }
@@ -64,9 +61,9 @@ public class Json2ProductPackage {
      *
      * @return List<BannerAd>
      */
-    public List<Json2ProductPackageBean> getProductPackage() {
+    public List<Json2ChangeableProductBean> getChangeableProduct() {
 
-        List<Json2ProductPackageBean> carBrandBeans = new ArrayList<Json2ProductPackageBean>();
+        List<Json2ChangeableProductBean> carBrandBeans = new ArrayList<Json2ChangeableProductBean>();
 
         JSONObject total = null;
 
@@ -78,7 +75,7 @@ public class Json2ProductPackage {
             double retailPrice;
             String pathCode;
             String productName;
-            int productAmount;
+
             String photoName;
             String productShow;
             String category;
@@ -86,7 +83,7 @@ public class Json2ProductPackage {
 
             if (size == 0)
             {
-                Json2ProductPackageBean json2ProductPackageBean = new Json2ProductPackageBean();
+                Json2ChangeableProductBean json2ProductPackageBean = new Json2ChangeableProductBean();
                 json2ProductPackageBean.setHasData(false);
                 carBrandBeans.add(json2ProductPackageBean);
                 return carBrandBeans;
@@ -99,18 +96,18 @@ public class Json2ProductPackage {
                 retailPrice = row.getDouble("retailPrice");
                 pathCode = row.getString("pathCode");
                 productName = row.getString("productName");
-                productAmount = row.getInt("productAmount");
+
                 photoName = row.getString("photoName");
                 productShow = row.getString("productShow");
                 category = row.getString("category");
                 productCode = row.getString("productCode");
 
-                Json2ProductPackageBean json2ProductPackageBean = new Json2ProductPackageBean();
+                Json2ChangeableProductBean json2ProductPackageBean = new Json2ChangeableProductBean();
                 json2ProductPackageBean.setCategoryName(categoryName);
                 json2ProductPackageBean.setRetailPrice(retailPrice);
                 json2ProductPackageBean.setPathCode(pathCode);
                 json2ProductPackageBean.setProductName(productName);
-                json2ProductPackageBean.setProductAmount(productAmount);
+
                 json2ProductPackageBean.setPhotoName(photoName);
                 json2ProductPackageBean.setProductShow(productShow);
                 json2ProductPackageBean.setCategory(category);
