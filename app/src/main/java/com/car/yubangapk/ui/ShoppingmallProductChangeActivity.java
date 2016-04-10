@@ -77,6 +77,7 @@ public class ShoppingmallProductChangeActivity extends BaseActivity implements V
         {
             mPosition = bundle.getInt("position");
             categoryId = bundle.getString(Configs.categoryId);
+
         }
 
 
