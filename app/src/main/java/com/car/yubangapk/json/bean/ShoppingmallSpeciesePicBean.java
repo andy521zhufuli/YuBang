@@ -1,5 +1,7 @@
 package com.car.yubangapk.json.bean;
 
+import java.io.Serializable;
+
 /**
  * ShoppingmallSpeciesePicBean:商城图片json类 网络获取json 转成类 保存信息  中间8个分类
  *
@@ -7,7 +9,7 @@ package com.car.yubangapk.json.bean;
  * @version 1.0.6
  * @created 2016-04-02
  */
-public class ShoppingmallSpeciesePicBean
+public class ShoppingmallSpeciesePicBean implements Serializable
 {
 
 

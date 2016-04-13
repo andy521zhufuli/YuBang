@@ -8,6 +8,15 @@ import android.view.Window;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.okhttp.callback.StringCallback;
 
+
+/**
+ * UpdateAppActivity: 更新应用界面
+ *
+ * @author andyzhu
+ * @version 1.0
+ * @created 2016-02-22
+ */
+
 public class UpdateAppActivity extends AppCompatActivity {
 
 
@@ -19,6 +28,8 @@ public class UpdateAppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_update_app);
+
+        mContext = this;
 
         findViews();
 

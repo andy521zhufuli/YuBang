@@ -11,6 +11,7 @@ import com.car.yubangapk.okhttp.builder.PostFormBuilder;
 import com.car.yubangapk.okhttp.builder.PostStringBuilder;
 import com.car.yubangapk.okhttp.callback.Callback;
 import com.car.yubangapk.okhttp.callback.MyCallback;
+import com.car.yubangapk.okhttp.callback.MyProductPkgCallback;
 import com.car.yubangapk.okhttp.callback.ShoppingmallPicCallback;
 import com.car.yubangapk.okhttp.cookie.CookieJarImpl;
 import com.car.yubangapk.okhttp.cookie.store.CookieStore;
@@ -217,6 +218,43 @@ public class OkHttpUtils
             }
         });
     }
+
+
+    public void executePP(final RequestCall requestCall, MyProductPkgCallback callback, final String pkgName)
+    {
+        if (callback == null)
+            callback = MyProductPkgCallback.CALLBACK_DEFAULT;
+        final MyProductPkgCallback finalCallback = callback;
+
+
+        requestCall.getCall().enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, final IOException e) {
+                sendPPFailResultCallback(call, pkgName, e, finalCallback);
+            }
+
+            @Override
+            public void onResponse(final Call call, final Response response) {
+                if (response.code() >= 400 && response.code() <= 599) {
+                    try {
+                        sendPPFailResultCallback(call, pkgName,new RuntimeException(response.body().string()), finalCallback);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+
+                try {
+                    Object o = finalCallback.parseNetworkResponse(response);
+                    sendMyPPSuccessResultCallback(o, pkgName, finalCallback);
+                } catch (Exception e) {
+                    sendPPFailResultCallback(call, pkgName,e, finalCallback);
+                }
+
+            }
+        });
+    }
+
     public void executeParam(final RequestCall requestCall, MyCallback callback, final int pos)
     {
         if (callback == null)
@@ -284,6 +322,21 @@ public class OkHttpUtils
         });
     }
 
+    public void sendPPFailResultCallback(final Call call, final String pkgName, final Exception e, final MyProductPkgCallback callback)
+    {
+        if (callback == null) return;
+
+        mDelivery.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                callback.onError(call, pkgName ,e);
+                callback.onAfter();
+            }
+        });
+    }
+
     public void sendMyFailResultCallback(final Call call, final int pos, final Exception e, final MyCallback callback)
     {
         if (callback == null) return;
@@ -312,6 +365,21 @@ public class OkHttpUtils
             }
         });
     }
+
+    public void sendMyPPSuccessResultCallback(final Object object, final String pkgName,final MyProductPkgCallback callback)
+    {
+        if (callback == null) return;
+        mDelivery.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                callback.onResponse(object,pkgName);
+                callback.onAfter();
+            }
+        });
+    }
+
     public void sendMySuccessResultCallback(final Object object, final int pos,final MyCallback callback)
     {
         if (callback == null) return;

@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.andy.android.yubang.R;
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2ChangeableProductBean;
@@ -32,7 +33,6 @@ import com.car.yubangapk.okhttp.callback.MyStringCallback;
 import com.car.yubangapk.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
-import com.andy.android.yubang.R;
 import com.car.yubangapk.view.AlertDialog;
 import com.car.yubangapk.view.CustomProgressDialog;
 
@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
+
 /**
  * ShoppingMallGoodsActivity: 商城产品包
  *
@@ -48,9 +49,9 @@ import okhttp3.Call;
  * @version 1.0
  * @created 2016-02-22
  */
-public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnClickListener{
+public class ShoppingMallGoodsFromShopActivity extends BaseActivity implements View.OnClickListener{
 
-    private static final String TAG = ShoppingMallGoodsActivity.class.getName();
+    private static final String TAG = ShoppingMallGoodsFromShopActivity.class.getName();
 
     private Context mContext;
     private ListView shoppingmall_goods_listview;
@@ -122,12 +123,12 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             mCarType = carType;
             if (Configs.FROM_SHOPPINGMALL.equals(mFrom))
             {
-                //从商城来  这里是去显示有多少个可修改  可供选择的项目 最顶部
+                //从商城来
                 httpGetLogicalService(serviceId, mFrom);
             }
             else
             {
-                //从店铺来  这里是去显示有多少个可修改  可供选择的项目 最顶部
+                //从店铺来
                 mShopInfoID = bundle.getString("shopId");
                 httpGetLogicalService(serviceId, mFrom);
 
@@ -476,7 +477,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         );
 
     }
-//拿产品包id
+
     private class GetProductPackageIdCallback extends StringCallback{
 
         @Override
@@ -494,6 +495,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             final List<Json2ProductPackageIdBean> json2ProductIdBeanList = json2ProductId.getProductIds();
 
             mJson2ProductPackageIdBeanList = json2ProductIdBeanList;
+
             if (json2ProductIdBeanList == null)
             {
                 toastMgr.builder.display("您当前版本太低,请升级版本", 1);
@@ -514,7 +516,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                                 @Override
                                 public void onClick(View view) {
                                     //就关掉这个界面????
-                                    ShoppingMallGoodsActivity.this.finish();
+                                    ShoppingMallGoodsFromShopActivity.this.finish();
                                 }
                             })
                             .show();
@@ -642,7 +644,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     .executeProcudtPkg(new GetProductPackagesCallback(), ppList.get(index).getPackageName());
 
             L.i("FirstPageShopShowActivity", "获取产品包id url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                    + "sqlName=" + "clientSearchProductPackageProduct"
+                    + "sqlName=" + "clientSearchCarRepairServiceProductPackage"
                     + "&dataReqModel.args.needTotal=needTotal"
                     + "&dataReqModel.args.productPackage=" + productPackageId
             );
@@ -651,7 +653,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
 
 
-    private void httpGetShopServiceByIds(List<Json2ShopServiceBean> ppList)
+    private void httpGetShopServiceByIds(List<Json2ProductPackageIdBean> ppList)
     {
 
         int size = ppList.size();
@@ -662,17 +664,16 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             String productPackageId = ppList.get(index).getId();
             OkHttpUtils.post()
                     .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
-                    .addParams("sqlName", "clientSearchCarRepairServiceProductPackage")
+                    .addParams("sqlName", "clientSearchProductPackageProduct")
                     .addParams("dataReqModel.args.needTotal", "needTotal")
-                    .addParams("dataReqModel.args.carType", mCarType)
-                    .addParams("dataReqModel.args.repairService", productPackageId)
+                    .addParams("dataReqModel.args.productPackage", productPackageId)
                     .build()
-                    .executeProcudtPkg(new GetProductPackagesCallback(), ppList.get(index).getServiceName());
+                    .executeProcudtPkg(new GetProductPackagesCallback(), ppList.get(index).getPackageName());
 
             L.i("FirstPageShopShowActivity", "获取产品包id url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
                     + "sqlName=" + "clientSearchCarRepairServiceProductPackage"
                     + "&dataReqModel.args.needTotal=needTotal"
-                    + "&dataReqModel.args.repairService=" + productPackageId
+                    + "&dataReqModel.args.productPackage=" + productPackageId
             );
         }
     }
@@ -696,7 +697,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             mProgressDialog.dismiss();
             synchronized (this)
             {
-                if (mFrom.equals(Configs.FROM_SHOPPINGMALL) || mFrom.equals(Configs.FROM_SHOP))
+                if (mFrom.equals(Configs.FROM_SHOPPINGMALL))
                 {
                     //从商城过来
                     Json2ProductPackage json2ProductPackage = new Json2ProductPackage(response);
@@ -870,7 +871,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(ShoppingMallGoodsActivity.this, ShoppingMallConformOrderActivity.class);
+                intent.setClass(ShoppingMallGoodsFromShopActivity.this, ShoppingMallConformOrderActivity.class);
                 startActivity(intent);
             }
         });
@@ -879,7 +880,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(ShoppingMallGoodsActivity.this, ClientServiceActivity.class);
+                intent.setClass(ShoppingMallGoodsFromShopActivity.this, ClientServiceActivity.class);
                 startActivity(intent);
                 toastMgr.builder.display("联系客服", 0);
             }
@@ -909,7 +910,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     private void modifyLayoutClicked(String response,String carType)
     {
         Intent intent = new Intent();
-        intent.setClass(mContext, ShoppingmallProductModifyActivity.class);
+        intent.setClass(mContext, ShoppingmallProductModifyFromShopActivity.class);
         Bundle bundle = new Bundle();
         if (mModifyableItemList.size() == 0 && mModifyableSHopItemList.size() == 0)
         {
@@ -1181,7 +1182,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     bundle.putSerializable("product", mpplist.get(position));
                     bundle.putString(Configs.categoryId, categoryid);
                     intent.putExtras(bundle);
-                    ShoppingMallGoodsActivity.this.startActivityForResult(intent, CHANGE_PRODUCT_Request);
+                    ShoppingMallGoodsFromShopActivity.this.startActivityForResult(intent, CHANGE_PRODUCT_Request);
                 }
             });
 
@@ -1243,7 +1244,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //更换商品
         if(requestCode == CHANGE_PRODUCT_Request)
         {
             if (resultCode == Activity.RESULT_OK)
@@ -1273,13 +1273,12 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 toastMgr.builder.display("您没有更改产品",1);
             }
         }
-        //修改可选的产品包
         else if (requestCode == MODIFY_PRODUCT_PKG_Request)
         {
             if (resultCode == Activity.RESULT_OK)
             {
                 Bundle bundle = data.getExtras();
-                String from1 = mFrom;
+                String from1 = bundle.getString(Configs.FROM);
 
                 if (from1.equals(Configs.FROM_SHOPPINGMALL))
                 {
@@ -1298,16 +1297,10 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 else
                 {
 
-                    List<Json2ShopServiceBean> json2ShopServiceBean = (List<Json2ShopServiceBean>) bundle.getSerializable("bean");
-                    mGetModifyProductPkgCount = json2ShopServiceBean.size();
-                    if (mGetModifyProductPkgCount == 0)
-                    {
-                        toastMgr.builder.display("您没有选择",1);
-                        return;
-                    }
-                    httpGetShopServiceByIds(json2ShopServiceBean);
-                    FROM_SHOPPINGMALL = 2;
                 }
+
+
+
             }
             else
             {

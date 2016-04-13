@@ -225,4 +225,15 @@
     <color name="yalantis_sienna">#EB6460</color>
     <!-- swipe to refresh-->
 
+
+
+
+    <!-- 商品详情-->
+    <color name="little_black">#ff4c5054</color>
+    <color name="title_custom_color">#ff707070</color>
+    <color name="fontColorce">#ff666666</color>
+    <color name="product_tag_bg">#ffff9c4c</color>
+    <color name="product_text_bg">#fffef2ee</color>
+    <color name="shallow_white">#fff0f0ed</color>
+
 </resources>

@@ -11,7 +11,37 @@
         android:layout_height="wrap_content">
 
 
+        <LinearLayout
+            android:id="@+id/product_service_title_layout"
+            style="@style/MineItemStyle"
+            android:background="@drawable/bg_item_bottom" >
+
+            <ImageView
+                android:id="@+id/product_service_left_image"
+                android:layout_width="26.0dip"
+                android:layout_height="26.0dip"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:scaleType="fitXY"
+                android:visibility="invisible"
+                android:src="@mipmap/android_personel_quickly_order"
+                />
+
+            <TextView
+                android:id="@+id/product_service_name"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="保养服务"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_medium_text_size" />
+        </LinearLayout>
+
+
         <RelativeLayout android:id="@+id/pro_la"
+            android:layout_below="@+id/product_service_title_layout"
             android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -131,7 +161,7 @@
                         <!-- 显示删除  更换-->
                         <LinearLayout android:orientation="horizontal"
                             android:id="@+id/productitem_changge_after"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent">
                             <RelativeLayout android:gravity="center"

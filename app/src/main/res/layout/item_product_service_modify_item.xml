@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/product_service_modify_layout"
+        style="@style/MineItemStyle"
+        android:background="@drawable/bg_item_bottom" >
+
+        <ImageView
+            android:id="@+id/product_service_modify_left_image"
+            android:layout_width="26.0dip"
+            android:layout_height="26.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="15.0dip"
+            android:scaleType="fitXY"
+            android:src="@mipmap/android_personel_quickly_order"
+            />
+
+        <TextView
+            android:id="@+id/product_service_modify_name"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="到店支付"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_medium_text_size" />
+
+
+
+        <CheckBox
+            android:id="@+id/product_service_modify_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:layout_marginRight="15dp"
+            android:background="@mipmap/button_l_02" />
+    </LinearLayout>
+
+
+</LinearLayout>

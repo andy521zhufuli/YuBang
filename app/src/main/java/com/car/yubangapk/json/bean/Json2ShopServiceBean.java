@@ -1,5 +1,7 @@
 package com.car.yubangapk.json.bean;
 
+import com.car.yubangapk.json.Base;
+
 /**
  * Json2ShopShowBean:门店 店铺的服务
  *
@@ -7,7 +9,7 @@ package com.car.yubangapk.json.bean;
  * @version 1.0.6
  * @created 2016-04-06
  */
-public class Json2ShopServiceBean {
+public class Json2ShopServiceBean extends Base{
 
 
 
@@ -19,16 +21,8 @@ public class Json2ShopServiceBean {
     private String id;
     private String skipType;
     private String serviceName;
-    private boolean hasData;
 
     //这里hasData应该是一个基类 所有的都应该继承这个类的这个属性 以后再改
-    public boolean isHasData() {
-        return hasData;
-    }
-
-    public void setHasData(boolean hasData) {
-        this.hasData = hasData;
-    }
 
     public String getServiceName() {
         return serviceName;

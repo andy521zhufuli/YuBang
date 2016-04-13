@@ -223,6 +223,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                         //产品包
                         intent.setClass(mContext, ShoppingMallGoodsActivity.class);
                         Bundle bundle = new Bundle();
+                        //传的就是repairService
                         bundle.putString(Configs.serviceId,link);
                         String carType = Configs.getLoginedInfo(mContext).getCarType();
                         if ("".equals(carType) || carType == null)
@@ -230,6 +231,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                             bannerClickWarnNoCarType();
                             return;
                         }
+                        bundle.putString(Configs.FROM, Configs.FROM_SHOPPINGMALL);
                         bundle.putString(Configs.mCarType, carType);
                         intent.putExtras(bundle);
                         startActivity(intent);
@@ -400,6 +402,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             String pathcode = shoppingmallSpeciesePicBean.getPathCode();
             String photoname = shoppingmallSpeciesePicBean.getPhotoName();
             String id        = shoppingmallSpeciesePicBean.getId();
+
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
             L.d(TAG,"商城中间图片加载url = " + url);
             ImageLoaderTools.getInstance(mContext).displayImage(url, mMiddleSpeciesList.get(i));
@@ -415,7 +418,8 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                     .addParams("dataReqModel.args.logicalService",id)
                     .build()
                     .executeMy(new MallBottomCallback(),i);
-            L.i(TAG, "service all kinds bottom " + i  + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+id);
+            L.i(TAG, "service all kinds bottom " + i  + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
+                    + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+id);
         }
     }
     /**
@@ -438,6 +442,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             L.i(TAG, "中部以下的图片position = " + position);
             Json2ShoppingmallBottomPics json2ShoppingmallBottomPics = new Json2ShoppingmallBottomPics(response);
             List<Json2ShoppingmallBottomPicsBean> beans = json2ShoppingmallBottomPics.getShoppingmallBottomPics();
+
             if (beans == null)
             {
                 //提示更新app
@@ -450,7 +455,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 {
                     //有数据  拿到了数据
 
-                    setBottomPics(position, beans);
+                    setBottomPics(position, beans, response);
                 }
                 else
                 {
@@ -465,21 +470,24 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     /**
      * 拿到了图片 去给下面的控件设置图片
      */
-    private synchronized void setBottomPics(int position, List<Json2ShoppingmallBottomPicsBean> beanList)
+    private synchronized void setBottomPics(int position, List<Json2ShoppingmallBottomPicsBean> beanList,String response)
     {
         switch (position)
         {
             case 0://保养维护
                 mBAOYANGWEIHUList = beanList;
+                mBAOYANGWEIHUString = response;
                 //先去去显示图片
                 setBottomPicsBaoyang(beanList);
                 break;
             case 1://电子电路
                 mDIANZIDIANLUList = beanList;
+                mDIANZIDIANLUString = response;
                 setBottomPicsDianziDianlu(beanList);
                 break;
             case 2://发动机件
                 mFADONGJIJIANList = beanList;
+                mFADONGJIJIANString = response;
                 setBottomPicsFaDongjijian(beanList);
                 break;
             case 3://打黄油
@@ -488,16 +496,21 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case 4://底盘配件
                 mDIPANPEIJIANList = beanList;
+                mDIPANPEIJIANString = response;
                 setBottomPicsDiPan(beanList);
                 break;
             case 5://车架配件
                 mCHEJIAPEIJIANList = beanList;
+                mCHEJIAPEIJIANString = response;
                 setBottomPicsCheJia(beanList);
                 break;
             case 6://托架配件
                 mTUOJIAPEIJIANList = beanList;
+                mTUOJIAPEIJIANString = response;
                 break;
             case 7://更多
+                mGEBGDUOList = beanList;
+                mGEBGDUOString = response;
                 //TODO
                 break;
 
@@ -940,199 +953,49 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             case R.id.shoppingmall_more_01://更多
                 toastMgr.builder.display("更多精彩", 0);
                 break;
+            //保养维护
             case R.id.main_product1_01:
-                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
-                {
-                    toastMgr.builder.display("服务器异常,没有数据", 1);
-
-                    break;
-                }
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-
-                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean = mBAOYANGWEIHUList.get(BAOYANGWEIHU);
-                String serviceId = json2ShoppingmallBottomPicsBean.getId();
-                String carType = Configs.getLoginedInfo(mContext).getCarType();
-                mCarType = carType;
-                final Bundle bundle = new Bundle();
-                if (carType == null || carType.equals(""))
-                {
-                    warnNoCarType();
-                }
-                else
-                {
-
-                    bundle.putString("serviceId", serviceId);
-                    bundle.putString("mCarType", mCarType);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-
+                repairServiceItemClick(1, 1);
                 break;
             case R.id.main_product1_02:
-                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
-                {
-                    toastMgr.builder.display("服务器异常,没有数据", 1);
-
-                    break;
-                }
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-
-                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean2 = mBAOYANGWEIHUList.get(DIANZIDIANLU);
-                String serviceId2 = json2ShoppingmallBottomPicsBean2.getId();
-
-                String carType2 = Configs.getLoginedInfo(mContext).getCarType();
-                mCarType = carType2;
-                Bundle bundle2 = new Bundle();
-                if (carType2 == null || carType2.equals(""))
-                {
-                    warnNoCarType();
-                }
-                else
-                {
-
-                    bundle2.putString("serviceId", serviceId2);
-                    bundle2.putString("mCarType", mCarType);
-                    intent.putExtras(bundle2);
-                    startActivity(intent);
-                }
-
-
+                repairServiceItemClick(1, 2);
                 break;
             case R.id.main_product1_03:
-                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
-                {
-                    toastMgr.builder.display("服务器异常,没有数据", 1);
-
-                    break;
-                }
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean3 = mBAOYANGWEIHUList.get(FADONGJIJIAN);
-                String serviceId3 = json2ShoppingmallBottomPicsBean3.getId();
-                String carType3 = Configs.getLoginedInfo(mContext).getCarType();
-                mCarType = carType3;
-                Bundle bundle3 = new Bundle();
-                if (carType3 == null || carType3.equals(""))
-                {
-                    warnNoCarType();
-                }
-                else
-                {
-
-                    bundle3.putString("serviceId", serviceId3);
-                    bundle3.putString("mCarType", mCarType);
-                    intent.putExtras(bundle3);
-                    startActivity(intent);
-                }
-
-
+                repairServiceItemClick(1, 3);
                 break;
             case R.id.main_product1_04:
-                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
-                {
-                    toastMgr.builder.display("服务器异常,没有数据", 1);
-
-                    break;
-                }
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean4 = mBAOYANGWEIHUList.get(DAHUANGYOU);
-                String serviceId4 = json2ShoppingmallBottomPicsBean4.getId();
-                String carType4 = Configs.getLoginedInfo(mContext).getCarType();
-                mCarType = carType4;
-                Bundle bundle4 = new Bundle();
-                if (carType4 == null || carType4.equals(""))
-                {
-                    warnNoCarType();
-                }
-                else
-                {
-
-                    bundle4.putString("serviceId", serviceId4);
-                    bundle4.putString("mCarType", mCarType);
-                    intent.putExtras(bundle4);
-                    startActivity(intent);
-                }
-
+                repairServiceItemClick(1, 4);
                 break;
             case R.id.main_product1_05:
-                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
-                {
-                    toastMgr.builder.display("服务器异常,没有数据", 1);
-
-                    break;
-                }
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean5 = mBAOYANGWEIHUList.get(DIPANPEIJIAN);
-                String serviceId5 = json2ShoppingmallBottomPicsBean5.getId();
-                String carType5 = Configs.getLoginedInfo(mContext).getCarType();
-                mCarType = carType5;
-                Bundle bundle5 = new Bundle();
-                if (carType5 == null || carType5.equals(""))
-                {
-                    warnNoCarType();
-                }
-                else
-                {
-
-                    bundle5.putString("serviceId", serviceId5);
-                    bundle5.putString("mCarType", mCarType);
-                    intent.putExtras(bundle5);
-                    startActivity(intent);
-                }
-
+                repairServiceItemClick(1, 5);
                 break;
             case R.id.main_product1_06:
-                if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
-                {
-                    toastMgr.builder.display("服务器异常,没有数据", 1);
-
-                    break;
-                }
-                intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-                Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean6 = mBAOYANGWEIHUList.get(CHEJIAPEIJIAN);
-                String serviceId6 = json2ShoppingmallBottomPicsBean6.getId();
-                String carType6 = Configs.getLoginedInfo(mContext).getCarType();
-                mCarType = carType6;
-                Bundle bundle6 = new Bundle();
-                if (carType6 == null || carType6.equals(""))
-                {
-                    warnNoCarType();
-                }
-                else
-                {
-
-                    bundle6.putString("serviceId", serviceId6);
-                    bundle6.putString("mCarType", mCarType);
-                    intent.putExtras(bundle6);
-                    startActivity(intent);
-
-                }
-
+                repairServiceItemClick(1, 6);
                 break;
-
             //电子电路
             case R.id.shoppingmall_more_02://更多
                 toastMgr.builder.display("更多精彩", 0);
                 break;
             case R.id.main_product2_01:
 
-                dianziFadongjiClick01(2, 1);
+                repairServiceItemClick(2, 1);
 
                 break;
             case R.id.main_product2_02:
-                dianziFadongjiClick01(2, 2);
+                repairServiceItemClick(2, 2);
                 break;
             case R.id.main_product2_03:
-                dianziFadongjiClick01(2, 3);
+                repairServiceItemClick(2, 3);
                 break;
             case R.id.main_product2_04:
 
-                dianziFadongjiClick01(2, 4);
+                repairServiceItemClick(2, 4);
                 break;
             case R.id.main_product2_05:
-                dianziFadongjiClick01(2, 5);
+                repairServiceItemClick(2, 5);
                 break;
             case R.id.main_product2_06:
-                dianziFadongjiClick01(2, 6);
+                repairServiceItemClick(2, 6);
                 break;
 
 
@@ -1142,29 +1005,29 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product3_01:
 
-                dianziFadongjiClick01(3,1);
+                repairServiceItemClick(3,1);
 
                 break;
             case R.id.main_product3_02:
-                dianziFadongjiClick01(3, 2);
+                repairServiceItemClick(3, 2);
 
 
                 break;
             case R.id.main_product3_03:
-                dianziFadongjiClick01(3, 3);
+                repairServiceItemClick(3, 3);
 
                 break;
             case R.id.main_product3_04:
-                dianziFadongjiClick01(3, 4);
+                repairServiceItemClick(3, 4);
 
 
                 break;
             case R.id.main_product3_05:
-                dianziFadongjiClick01(3, 5);
+                repairServiceItemClick(3, 5);
 
                 break;
             case R.id.main_product3_06:
-                dianziFadongjiClick01(3, 6);
+                repairServiceItemClick(3, 6);
 
                 break;
 
@@ -1174,22 +1037,22 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product4_01:
 
-                dianziFadongjiClick01(4, 1);
+                repairServiceItemClick(4, 1);
                 break;
             case R.id.main_product4_02:
-                dianziFadongjiClick01(4, 2);
+                repairServiceItemClick(4, 2);
                 break;
             case R.id.main_product4_03:
-                dianziFadongjiClick01(4, 3);
+                repairServiceItemClick(4, 3);
                 break;
             case R.id.main_product4_04:
-                dianziFadongjiClick01(4, 4);
+                repairServiceItemClick(4, 4);
                 break;
             case R.id.main_product4_05:
-                dianziFadongjiClick01(4, 5);
+                repairServiceItemClick(4, 5);
                 break;
             case R.id.main_product4_06:
-                dianziFadongjiClick01(4, 6);
+                repairServiceItemClick(4, 6);
                 break;
 
             //车架配件
@@ -1198,22 +1061,22 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product5_01:
 
-                dianziFadongjiClick01(5, 1);
+                repairServiceItemClick(5, 1);
                 break;
             case R.id.main_product5_02:
-                dianziFadongjiClick01(5, 2);
+                repairServiceItemClick(5, 2);
                 break;
             case R.id.main_product5_03:
-                dianziFadongjiClick01(5, 3);
+                repairServiceItemClick(5, 3);
                 break;
             case R.id.main_product5_04:
-                dianziFadongjiClick01(5, 4);
+                repairServiceItemClick(5, 4);
                 break;
             case R.id.main_product5_05:
-                dianziFadongjiClick01(5, 5);
+                repairServiceItemClick(5, 5);
                 break;
             case R.id.main_product5_06:
-                dianziFadongjiClick01(5, 6);
+                repairServiceItemClick(5, 6);
                 break;
 
             //车架
@@ -1222,22 +1085,22 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product6_01:
 
-                dianziFadongjiClick01(6, 1);
+                repairServiceItemClick(6, 1);
                 break;
             case R.id.main_product6_02:
-                dianziFadongjiClick01(6, 2);
+                repairServiceItemClick(6, 2);
                 break;
             case R.id.main_product6_03:
-                dianziFadongjiClick01(6, 3);
+                repairServiceItemClick(6, 3);
                 break;
             case R.id.main_product6_04:
-                dianziFadongjiClick01(6, 4);
+                repairServiceItemClick(6, 4);
                 break;
             case R.id.main_product6_05:
-                dianziFadongjiClick01(6, 5);
+                repairServiceItemClick(6, 5);
                 break;
             case R.id.main_product6_06:
-                dianziFadongjiClick01(6, 6);
+                repairServiceItemClick(6, 6);
                 break;
 
         }
@@ -1305,63 +1168,60 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    private void dianziDianluClick01(int item)
+    /**
+     * 底下的repairService点击 跳转到产品包界面
+     * @param type
+     * @param item
+     */
+    private void repairServiceItemClick(int type, int item)
     {
         Intent intent =  new Intent();
         intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
         Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean6 = null;
-        if (item == 1)
-        {
-            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(BAOYANGWEIHU);
-        }
-        else if (item == 2)
-        {
-            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(DIANZIDIANLU);
-        }
-        else if (item == 3)
-        {
-            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(FADONGJIJIAN);
-        }
-        else if (item == 4)
-        {
-            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(DAHUANGYOU);
-        }
-        else if (item == 5)
-        {
-            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(DIPANPEIJIAN);
-        }
-        else if (item == 6)
-        {
-            json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(CHEJIAPEIJIAN);
-        }
-
-        String serviceId6 = json2ShoppingmallBottomPicsBean6.getId();
-        String carType6 = Configs.getLoginedInfo(mContext).getCarType();
-        mCarType = carType6;
         Bundle bundle6 = new Bundle();
-        if (carType6 == null || carType6.equals(""))
+
+
+        bundle6.putString(Configs.FROM,Configs.FROM_SHOPPINGMALL);
+
+        if (type == 1)
         {
-            warnNoCarType();
+
+            if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                return;
+            }
+            bundle6.putString("repairService",mBAOYANGWEIHUString);
+
+            if (item == 1)
+            {
+                json2ShoppingmallBottomPicsBean6 = mBAOYANGWEIHUList.get(BAOYANGWEIHU);
+            }
+            else if (item == 2)
+            {
+                json2ShoppingmallBottomPicsBean6 = mBAOYANGWEIHUList.get(DIANZIDIANLU);
+            }
+            else if (item == 3)
+            {
+                json2ShoppingmallBottomPicsBean6 = mBAOYANGWEIHUList.get(FADONGJIJIAN);
+            }
+            else if (item == 4)
+            {
+                json2ShoppingmallBottomPicsBean6 = mBAOYANGWEIHUList.get(DAHUANGYOU);
+            }
+            else if(item == 5)
+            {
+                json2ShoppingmallBottomPicsBean6 = mBAOYANGWEIHUList.get(DIPANPEIJIAN);
+            }
+            else if (item == 6)
+            {
+                json2ShoppingmallBottomPicsBean6 = mBAOYANGWEIHUList.get(CHEJIAPEIJIAN);
+            }
+
+
         }
-        else
-        {
-
-            bundle6.putString("serviceId", serviceId6);
-            bundle6.putString("mCarType", mCarType);
-            intent.putExtras(bundle6);
-            startActivity(intent);
-
-        }
-    }
-
-    private void dianziFadongjiClick01(int type,int item)
-    {
-        Intent intent =  new Intent();
-        intent.setClass(ShoppingMallActivity.this, ShoppingMallGoodsActivity.class);
-        Json2ShoppingmallBottomPicsBean json2ShoppingmallBottomPicsBean6 = null;
-
-
-        if (type == 2)
+        else if (type == 2)
         {
             if (mDIANZIDIANLUList == null || mDIANZIDIANLUList.size() == 0)
             {
@@ -1369,6 +1229,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
                 return;
             }
+            bundle6.putString("repairService",mDIANZIDIANLUString);
             if (item == 1)
             {
                 json2ShoppingmallBottomPicsBean6 = mDIANZIDIANLUList.get(BAOYANGWEIHU);
@@ -1403,6 +1264,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
                 return;
             }
+            bundle6.putString("repairService",mFADONGJIJIANString);
 
             if (item == 1)
             {
@@ -1438,7 +1300,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
                 return;
             }
-
+            bundle6.putString("repairService",mDAHUANGYOUString);
             if (item == 1)
             {
                 json2ShoppingmallBottomPicsBean6 = mDAHUANGYOUList.get(BAOYANGWEIHU);
@@ -1473,7 +1335,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
                 return;
             }
-
+            bundle6.putString("repairService",mDIPANPEIJIANString);
             if (item == 1)
             {
                 json2ShoppingmallBottomPicsBean6 = mDIPANPEIJIANList.get(BAOYANGWEIHU);
@@ -1508,7 +1370,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
                 return;
             }
-
+            bundle6.putString("repairService",mCHEJIAPEIJIANString);
             if (item == 1)
             {
                 json2ShoppingmallBottomPicsBean6 = mCHEJIAPEIJIANList.get(BAOYANGWEIHU);
@@ -1540,7 +1402,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         String serviceId6 = json2ShoppingmallBottomPicsBean6.getId();
         String carType6 = Configs.getLoginedInfo(mContext).getCarType();
         mCarType = carType6;
-        Bundle bundle6 = new Bundle();
+
         if (carType6 == null || carType6.equals(""))
         {
             warnNoCarType();
@@ -1550,6 +1412,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
             bundle6.putString("serviceId", serviceId6);
             bundle6.putString("mCarType", mCarType);
+
             intent.putExtras(bundle6);
             startActivity(intent);
 
@@ -1757,6 +1620,17 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private List<Json2ShoppingmallBottomPicsBean> mCHEJIAPEIJIANList;       //车架配件保存获取的图片信息
     private List<Json2ShoppingmallBottomPicsBean> mTUOJIAPEIJIANList;       //托架配件保存获取的图片信息
     private List<Json2ShoppingmallBottomPicsBean> mGEBGDUOList;             //更多保存获取的图片信息
+
+    private String mBAOYANGWEIHUString;
+    private String mDIANZIDIANLUString;
+    private String mFADONGJIJIANString;
+    private String mDAHUANGYOUString;
+    private String mDIPANPEIJIANString;
+    private String mCHEJIAPEIJIANString;
+    private String mTUOJIAPEIJIANString;
+    private String mGEBGDUOString;
+
+
 
 
     //banner广告点击

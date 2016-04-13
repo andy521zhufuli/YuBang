@@ -21,6 +21,13 @@ import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.AlertDialog;
 
+/**
+ * AdWebViewActivity:广告的页面
+ *
+ * @author andy
+ * @version 1.0
+ * @created 2016-02-22
+ */
 public class AdWebViewActivity extends BaseActivity implements View.OnClickListener{
 
 

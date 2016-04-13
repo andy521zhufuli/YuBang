@@ -72,7 +72,7 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
 
 
     //店铺信息
-    private String shopInfoId;
+    private String shopInfoId;//店铺id
     private String shopInfoShopAddress;
     private String shopInfoPhoneNum;
     private String shopInfoShopPhoto;
@@ -305,10 +305,13 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
 
             String serviceId = mShopService.get(position).getId();
             Intent intent = new Intent();
+//            intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsFromShopActivity.class);
             intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
             //拿到的shopInfoId
             //拿到的车型mCarType
             Bundle bundle = new Bundle();
+            bundle.putString("shopId", shopInfoId);
+            bundle.putString(Configs.FROM, Configs.FROM_SHOP);
             bundle.putString("serviceId",serviceId);//店铺的id
             bundle.putString("mCarType", mCarType);//用户的车型
             intent.putExtras(bundle);
@@ -428,36 +431,19 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
                 startActivity(intent);
                 break;
 
-
-
-//            //轮胎服务
-//            case R.id.first_page_shop_show_wheel_service:
-//                toastMgr.builder.display( "轮胎服务" , 0);
-//                //这里应该跳到对应的商品里面
-//                //TODO 这里应该跳到对应的商品里面
-//                intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
-//                startActivity(intent);
-//                break;
-//            //保养服务
-//            case R.id.first_page_shop_show_baoyang_service:
-//                toastMgr.builder.display( "保养服务" , 0);
-//                //TODO 这里应该跳到对应的商品里面
-//                intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
-//                startActivity(intent);
-//                break;
             //游湖活动
             case R.id.first_page_shop_show_sales_activity:
-                toastMgr.builder.display( "优惠活动" , 0);
                 //TODO 这里应该跳到对应的商品里面
-                intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+                toastMgr.builder.display("暂无优惠活动",1);
+//                intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
+//                startActivity(intent);
                 break;
             //客户评价
             case R.id.first_page_shop_show_customers_comments:
-                toastMgr.builder.display( "客户评论" , 0);
+                toastMgr.builder.display( "暂无客户评论" , 0);
                 //TODO 这里应该跳到对应的商品里面
-                intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
-                startActivity(intent);
+//                intent.setClass(FirstPageShopShowActivity.this, ShoppingMallGoodsActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.img_back:
                 finish();

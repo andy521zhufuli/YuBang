@@ -46,6 +46,15 @@ public class Json2ProductPackageBean extends Base
 
     private int productAmount;
 
+    private String packageName;//为了适应项目 而自己加的字段  后台没有这个字段
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
 
     public String getProductCode() {
         return productCode;

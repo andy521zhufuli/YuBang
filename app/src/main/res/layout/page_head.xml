@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/head" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/back_color"
+            android:background="@color/head_colors" android:layout_width="fill_parent"
+            android:layout_height="50.0dip" />
+        <LinearLayout
+            android:id="@+id/weizhang_head"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <LinearLayout
+                android:gravity="fill_vertical" android:layout_width="50.0dip"
+                android:layout_height="50.0dip">
+                <ImageView
+                    android:layout_gravity="center" android:id="@+id/weizhang_icon"
+                    android:layout_width="30.0dip" android:layout_height="30.0dip"
+                    android:layout_marginRight="5.0dip" />
+            </LinearLayout>
+            <TextView
+                android:textSize="@dimen/title_big" android:textColor="@color/white"
+                android:gravity="center" android:layout_gravity="center"
+                android:id="@+id/weizhang_text_top_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="111"
+                android:singleLine="true" />
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip">
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="50.0dip"
+                android:layout_height="wrap_content">
+                <Button android:textSize="16.0sp" android:textColor="@color/white"
+                    android:id="@+id/btn_top_left"
+                    android:background="@null"
+                    android:visibility="visible"
+                    android:layout_width="50.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10.0dip"
+                    android:drawableLeft="@mipmap/click_left_btn" />
+                <ImageView android:id="@+id/home_car"
+                    android:background="@mipmap/logobg"
+                    android:padding="3.0dip"
+                    android:visibility="gone" android:layout_width="60.0dip"
+                    android:layout_height="35.0dip" android:layout_marginLeft="5.0dip"
+                    android:contentDescription="@string/app_name" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:orientation="vertical"
+                android:layout_width="0.0dip" android:layout_height="fill_parent"
+                android:layout_weight="1.0">
+                <TextView android:textSize="@dimen/title_big"
+                    android:textColor="@color/white" android:gravity="center"
+                    android:id="@+id/text_top_center" android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" android:singleLine="true" />
+                <TextView android:textSize="@dimen/text_size"
+                    android:textColor="@color/little_black" android:gravity="center"
+                    android:id="@+id/text_top_center_bottom" android:visibility="gone"
+                    android:layout_width="fill_parent" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout android:gravity="center|right" android:id="@+id/layout_top_right"
+                android:background="@null" android:visibility="visible" android:layout_width="50.0dip"
+                android:layout_height="50.0dip">
+                <ImageView android:id="@+id/img_top_right_left" android:visibility="invisible"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name" />
+                <TextView android:textSize="16.0sp" android:textColor="@color/white"
+                    android:gravity="center" android:id="@+id/text_top_right_center"
+                    android:visibility="gone" android:layout_width="wrap_content"
+                    android:layout_height="fill_parent" android:layout_marginRight="5.0dip"
+                    android:singleLine="true" />
+                <ImageView android:id="@+id/img_top_right_right"
+                    android:visibility="gone"
+                    android:layout_width="13.0dip" android:layout_height="18.0dip"
+                    android:layout_marginRight="@dimen/margin_2"
+                    android:contentDescription="@string/app_name" />
+            </LinearLayout>
+            <RelativeLayout android:id="@+id/share_layout"
+                android:visibility="gone" android:layout_width="50.0dip"
+                android:layout_height="50.0dip" android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+                <ImageView android:id="@+id/share" android:background="@mipmap/share__more"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <TextView android:textSize="@dimen/title_big"
+            android:textColor="@color/white"
+            android:id="@+id/auto_top_center" android:visibility="gone"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:singleLine="true" android:layout_centerInParent="true" />
+    </RelativeLayout>
+</LinearLayout>

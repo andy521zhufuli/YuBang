@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="汽车品牌"
+            android:text="产皮包"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="@dimen/medium_text_size" />
     </RelativeLayout>
@@ -31,6 +31,7 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="@dimen/item_height_middle"
         android:layout_below="@+id/layout_category_topbar"
         android:background="@drawable/bg_item_bottom"
@@ -90,6 +91,7 @@
         android:background="@drawable/bg_item_top" >
 
         <TextView
+            android:id="@+id/modifyable_product_count"
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"

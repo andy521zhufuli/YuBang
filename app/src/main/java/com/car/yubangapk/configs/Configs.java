@@ -92,6 +92,12 @@ public class Configs {
     //程序一启动的配置信息
     public static String APP_SYS_CONFIG= "APP_SYS_CONFIG";
 
+    //from
+    public static String FROM = "from";
+    public static String FROM_SHOPPINGMALL = "shoppingmall";//商城
+    public static String FROM_SHOP         = "shop";//门店
+
+
     /**
      * 登陆之后的信息设置到sp里面
      * @param mContext

@@ -3,6 +3,7 @@ package com.car.yubangapk.okhttp.request;
 import com.car.yubangapk.okhttp.OkHttpUtils;
 import com.car.yubangapk.okhttp.callback.Callback;
 import com.car.yubangapk.okhttp.callback.MyCallback;
+import com.car.yubangapk.okhttp.callback.MyProductPkgCallback;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -73,6 +74,30 @@ public class RequestCall
     }
 
 
+    public Call myPPBuildCall(MyProductPkgCallback callback)
+    {
+        request = generateMyPPRequest(callback);
+
+        if (readTimeOut > 0 || writeTimeOut > 0 || connTimeOut > 0)
+        {
+            readTimeOut = readTimeOut > 0 ? readTimeOut : OkHttpUtils.DEFAULT_MILLISECONDS;
+            writeTimeOut = writeTimeOut > 0 ? writeTimeOut : OkHttpUtils.DEFAULT_MILLISECONDS;
+            connTimeOut = connTimeOut > 0 ? connTimeOut : OkHttpUtils.DEFAULT_MILLISECONDS;
+
+            clone = OkHttpUtils.getInstance().getOkHttpClient().newBuilder()
+                    .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
+                    .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS)
+                    .connectTimeout(connTimeOut, TimeUnit.MILLISECONDS)
+                    .build();
+
+            call = clone.newCall(request);
+        } else
+        {
+            call = OkHttpUtils.getInstance().getOkHttpClient().newCall(request);
+        }
+        return call;
+    }
+
     public Call myBuildCall(MyCallback callback)
     {
         request = generateMyRequest(callback);
@@ -105,6 +130,10 @@ public class RequestCall
     {
         return okHttpRequest.generateMyRequest(callback);
     }
+    private Request generateMyPPRequest(MyProductPkgCallback callback)
+    {
+        return okHttpRequest.generateMyPPRequest(callback);
+    }
 
     public void execute(Callback callback)
     {
@@ -117,6 +146,20 @@ public class RequestCall
 
         OkHttpUtils.getInstance().execute(this, callback);
     }
+
+    public void executeProcudtPkg(MyProductPkgCallback callback, String pkgName)
+    {
+        myPPBuildCall(callback);
+
+        if (callback != null)
+        {
+            callback.onBefore(request);
+        }
+
+        OkHttpUtils.getInstance().executePP(this, callback,pkgName);
+    }
+
+
 
     public void executeMy(MyCallback callback, int position)
     {
