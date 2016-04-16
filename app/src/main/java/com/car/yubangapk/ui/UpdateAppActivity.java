@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.andy.android.yubang.R;
-import com.car.yubangapk.okhttp.callback.StringCallback;
 
 
 /**

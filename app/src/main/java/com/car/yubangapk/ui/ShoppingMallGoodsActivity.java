@@ -26,10 +26,11 @@ import com.car.yubangapk.json.formatJson.Json2ProductPackage;
 import com.car.yubangapk.json.formatJson.Json2ProductPackageId;
 import com.car.yubangapk.json.formatJson.Json2ShopService;
 import com.car.yubangapk.json.formatJson.Json2ShoppingmallBottomPics;
-import com.car.yubangapk.okhttp.OkHttpUtils;
-import com.car.yubangapk.okhttp.callback.MyPPStringCallback;
-import com.car.yubangapk.okhttp.callback.MyStringCallback;
-import com.car.yubangapk.okhttp.callback.StringCallback;
+import com.car.yubangapk.network.myHttp.HttpReqProductPackageFromMallBannerShop;
+import com.car.yubangapk.network.okhttp.OkHttpUtils;
+import com.car.yubangapk.network.okhttp.callback.MyPPStringCallback;
+import com.car.yubangapk.network.okhttp.callback.MyStringCallback;
+import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
@@ -48,7 +49,9 @@ import okhttp3.Call;
  * @version 1.0
  * @created 2016-02-22
  */
-public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnClickListener{
+public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnClickListener,
+        HttpReqProductPackageFromMallBannerShop.GetProductPackageContent
+{
 
     private static final String TAG = ShoppingMallGoodsActivity.class.getName();
 
@@ -134,7 +137,12 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             }
 
             //都需要调用这句话, 来展示产品包
-            httpGetProductPackageId(serviceId, carType);
+
+            HttpReqProductPackageFromMallBannerShop req = new HttpReqProductPackageFromMallBannerShop(serviceId, carType, mContext);
+            req.setInterface(this);
+            req.getProductPackageId();
+
+//            httpGetProductPackageId(serviceId, carType);
         }
     }
 
@@ -165,6 +173,41 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         );
 
     }
+
+
+    /**
+     * 根据上一个界面(商城 banner 门店)的serviceId 去拿对应产品包id 再根据id 去拿产品包内容成功后的回调
+     *
+     * 就是去listview显示
+     *
+     * @param json2ProductPackageBeanList
+     */
+
+    @Override
+    public void onGetPPkgSucces(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
+        goodsAdapter = new ProductPackageAdapter(json2ProductPackageBeanList,FROM_SHOPPINGMALL);
+        mJson2ProductPackageBeanList = json2ProductPackageBeanList;
+        shoppingmall_goods_listview.setAdapter(goodsAdapter);
+    }
+
+
+
+    /**
+     * 根据上一个界面(商城 banner 门店)的serviceId 去拿对应产品包id 再根据id 去拿产品包内容失败后的回调
+     *
+     * 给出失败的原因
+     *
+     * @param errorCode
+     */
+
+    @Override
+    public void onGetPPkgFail(int errorCode) {
+        toastMgr.builder.display("errorcode = " + errorCode , 1);
+    }
+
+
+
+
 
     /**
      * httpGetProductPackageId调用
@@ -1104,14 +1147,10 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     holder.product_service_title_layout.setVisibility(View.GONE);
                 }
             }
-
-
-
-
-            if (from == 1)
-            {
-                mJson2ProductPackageIdBeanList.get(0).getPackageName();
-            }
+//            if (from == 1)
+//            {
+//                mJson2ProductPackageIdBeanList.get(0).getPackageName();
+//            }
 
 
             if (isModifyList == false)

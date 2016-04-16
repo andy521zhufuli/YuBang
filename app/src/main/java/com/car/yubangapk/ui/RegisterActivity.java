@@ -18,9 +18,9 @@ import com.car.yubangapk.json.bean.MsgType;
 import com.car.yubangapk.json.bean.GetVerifyCodeBean;
 import com.car.yubangapk.json.bean.VerifyCodeBean;
 import com.car.yubangapk.json.formatJson.VerifyCode;
-import com.car.yubangapk.okhttp.OkHttpUtils;
+import com.car.yubangapk.network.okhttp.OkHttpUtils;
 
-import com.car.yubangapk.okhttp.callback.StringCallback;
+import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.TimerCount;
 import com.car.yubangapk.utils.Validator;

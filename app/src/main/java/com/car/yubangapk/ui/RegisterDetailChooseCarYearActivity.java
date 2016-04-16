@@ -15,12 +15,10 @@ import android.widget.TextView;
 
 import com.andy.android.yubang.R;
 import com.car.yubangapk.configs.Configs;
-import com.car.yubangapk.json.bean.Json2CarBrandBean;
 import com.car.yubangapk.json.bean.Json2CarYearBean;
-import com.car.yubangapk.json.formatJson.Json2CarBrand;
 import com.car.yubangapk.json.formatJson.Json2CarYear;
-import com.car.yubangapk.okhttp.OkHttpUtils;
-import com.car.yubangapk.okhttp.callback.StringCallback;
+import com.car.yubangapk.network.okhttp.OkHttpUtils;
+import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;

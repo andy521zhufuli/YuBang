@@ -20,11 +20,10 @@ import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2FirstPageShopBean;
 import com.car.yubangapk.json.bean.Json2FirstPageTabsBean;
 import com.car.yubangapk.json.bean.Json2LoginBean;
-import com.car.yubangapk.json.formatJson.Json2CarCapacity;
 import com.car.yubangapk.json.formatJson.Json2FirstPageShop;
 import com.car.yubangapk.json.formatJson.Json2FirstPageTabs;
-import com.car.yubangapk.okhttp.OkHttpUtils;
-import com.car.yubangapk.okhttp.callback.StringCallback;
+import com.car.yubangapk.network.okhttp.OkHttpUtils;
+import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.BDMapData;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
@@ -54,7 +53,6 @@ import com.car.yubangapk.view.AlertDialog;
 import com.car.yubangapk.view.CustomProgressDialog;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 

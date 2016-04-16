@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.andy.android.yubang.R;
 import com.car.yubangapk.adapter.SectionAdapter;
-import com.car.yubangapk.okhttp.callback.StringCallback;
 import com.car.yubangapk.swipetoloadlayout.OnLoadMoreListener;
 import com.car.yubangapk.swipetoloadlayout.OnRefreshListener;
 import com.car.yubangapk.swipetoloadlayout.SwipeToLoadLayout;

@@ -6,8 +6,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.car.yubangapk.configs.Configs;
-import com.car.yubangapk.okhttp.OkHttpUtils;
-import com.car.yubangapk.okhttp.callback.StringCallback;
+import com.car.yubangapk.network.okhttp.OkHttpUtils;
+import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.DensityUtil;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
