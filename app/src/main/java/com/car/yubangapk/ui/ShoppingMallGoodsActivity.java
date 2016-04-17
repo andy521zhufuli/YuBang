@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2ChangeableProductBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageIdBean;
@@ -32,6 +33,8 @@ import com.car.yubangapk.network.okhttp.callback.MyPPStringCallback;
 import com.car.yubangapk.network.okhttp.callback.MyStringCallback;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
+import com.car.yubangapk.utils.Warn.NoProductPackage;
+import com.car.yubangapk.utils.Warn.UpdateApp;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.view.AlertDialog;
@@ -141,38 +144,11 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             HttpReqProductPackageFromMallBannerShop req = new HttpReqProductPackageFromMallBannerShop(serviceId, carType, mContext);
             req.setInterface(this);
             req.getProductPackageId();
+            mProgressDialog = mProgressDialog.show(mContext, "正在加载...",false, null);
 
-//            httpGetProductPackageId(serviceId, carType);
         }
     }
 
-    /**
-     * 首次进来加载
-     * 根据参数去获取产品包id  只选第一个作为显示
-     * @param serviceId 门店id
-     * @param carType 车主车类型
-     */
-    private void httpGetProductPackageId(String serviceId, String carType) {
-
-        mProgressDialog = mProgressDialog.show(mContext,"正在加载店铺服务...", false, null);
-
-        OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
-                .addParams("sqlName", "clientSearchCarRepairServiceProductPackage")
-                .addParams("dataReqModel.args.needTotal", "needTotal")
-                .addParams("dataReqModel.args.carType", carType)
-                .addParams("dataReqModel.args.repairService",serviceId)
-                .build()
-                .execute(new GetProductPackageIdCallback());
-
-        L.i("FirstPageShopShowActivity", "获取产品包id url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                + "sqlName=" + "clientSearchCarRepairServiceProductPackage"
-                + "&dataReqModel.args.carType=" + carType
-                + "&dataReqModel.args.needTotal=needTotal"
-                + "&dataReqModel.args.repairService=" + serviceId
-        );
-
-    }
 
 
     /**
@@ -185,9 +161,11 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onGetPPkgSucces(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
+
         goodsAdapter = new ProductPackageAdapter(json2ProductPackageBeanList,FROM_SHOPPINGMALL);
         mJson2ProductPackageBeanList = json2ProductPackageBeanList;
         shoppingmall_goods_listview.setAdapter(goodsAdapter);
+        mProgressDialog.dismiss();
     }
 
 
@@ -199,165 +177,32 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
      *
      * @param errorCode
      */
-
     @Override
     public void onGetPPkgFail(int errorCode) {
+        mProgressDialog.dismiss();
+        if (ErrorCodes.ERROR_CODE_LOW_VERSION == errorCode)
+        {
+            //提示去升级
+            UpdateApp.gotoUpdateApp(mContext);
+        }
+        else if (ErrorCodes.ERROR_CODE_NETWORK == errorCode)
+        {
+            //提示网络错误
+            toastMgr.builder.display("网络错误", 1);
+        }
+        else if (ErrorCodes.ERROR_CODE_NO_PRODUCT_PKG == errorCode)
+        {
+            //提示没有相关产品包
+            NoProductPackage.tishiNoPPkg(ShoppingMallGoodsActivity.this);
+        }
+        else if (ErrorCodes.ERROR_CODE_SERVER == errorCode)
+        {
+            //其实服务器错误
+            toastMgr.builder.display("服务器错误", 1);
+        }
+
         toastMgr.builder.display("errorcode = " + errorCode , 1);
     }
-
-
-
-
-
-    /**
-     * httpGetProductPackageId调用
-     */
-    private class GetProductPackageIdCallback extends StringCallback{
-
-        @Override
-        public void onError(Call call, Exception e) {
-            toastMgr.builder.display("服务器错误", 1);
-            mProgressDialog.dismiss();
-            //这里应该在布局文件里面写多一个  就是提示用户 没有相关产品包
-        }
-
-        @Override
-        public void onResponse(String response) {
-            L.d(TAG, "产品包id json = " + response);
-
-            Json2ProductPackageId json2ProductId = new Json2ProductPackageId(response);
-            final List<Json2ProductPackageIdBean> json2ProductIdBeanList = json2ProductId.getProductIds();
-
-            mJson2ProductPackageIdBeanList = json2ProductIdBeanList;
-            if (json2ProductIdBeanList == null)
-            {
-                toastMgr.builder.display("您当前版本太低,请升级版本", 1);
-                //这里需要修改
-                tv_modify_goods.setClickable(false);
-            }
-            else
-            {
-                if (json2ProductIdBeanList.get(0).isHasData() == false)
-                {
-                    //没有产品包
-                    toastMgr.builder.display("对不起, 没有相关产品包",1);
-                    AlertDialog alertDialog = new AlertDialog(mContext);
-                    alertDialog.builder().setTitle("提示")
-                            .setCancelable(false)
-                            .setMsg("没有相关产品包")
-                            .setPositiveButton("确定", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    //就关掉这个界面????
-                                    ShoppingMallGoodsActivity.this.finish();
-                                }
-                            })
-                            .show();
-
-                }
-                else
-                {
-                    //拿到数据了
-                    //就去拿产品包对应的商品
-                    httpGetProductPackageById(json2ProductIdBeanList);
-                }
-            }
-        }
-    }
-    /**
-     * 首次加载进来, 不管是从banner 商城repairService  还是门店  都是根据这个去拿商品包
-     *
-     *GetProductPackageIdCallback调用此方法
-     *
-     * 通过产品包id 去拿产品包的信息
-     * @param ids 产品包id
-     */
-    private void httpGetProductPackageById(List<Json2ProductPackageIdBean> ids)
-    {
-
-        int size = 0;
-        size = ids.size();
-        //取第一个
-        String productPackageId = ids.get(0).getId();
-
-        OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
-                .addParams("sqlName", "clientSearchProductPackageProduct")
-                .addParams("dataReqModel.args.needTotal", "needTotal")
-                .addParams("dataReqModel.args.productPackage", productPackageId)
-                .build()
-                .executeProcudtPkg(new GetProductPackageCallback(), ids.get(0).getPackageName());
-
-        L.i("FirstPageShopShowActivity", "获取产品包url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                + "sqlName=" + "clientSearchProductPackageProduct"
-                + "&dataReqModel.args.productPackage=" + productPackageId
-                + "&dataReqModel.args.needTotal=needTotal"
-        );
-    }
-
-    /**
-     * httpGetProductPackageById调用次回调
-     *
-     * 然后生成adapter 在listview里面去展示
-     *
-     */
-    class GetProductPackageCallback extends MyPPStringCallback{
-        @Override
-        public void onError(Call call, String packageName, Exception e) {
-            toastMgr.builder.display("您当前版本太低,请升级版本", 1);
-            //TODO 这里需要删除
-            tv_modify_goods.setClickable(false);
-        }
-        @Override
-        public void onResponse(String response, String packageName) {
-            L.d(TAG, "产品包 json = " + response);
-            mProgressDialog.dismiss();
-            synchronized (this)
-            {
-                //这里对应的改
-                Json2ProductPackage json2ProductPackage = new Json2ProductPackage(response);
-                final List<Json2ProductPackageBean> json2ProductPackageBeanList = json2ProductPackage.getProductPackage();
-
-                if (json2ProductPackageBeanList == null)
-                {
-                    toastMgr.builder.display("您当前版本太低,请升级版本", 1);
-                }
-                else
-                {
-                    if (json2ProductPackageBeanList.get(0).isHasData() == false)
-                    {
-                        //没有产品包
-                        toastMgr.builder.display("对不起, 没有相关产品包",1);
-                        AlertDialog alertDialog = new AlertDialog(mContext);
-                        alertDialog.builder().setTitle("提示")
-                                .setCancelable(false)
-                                .setMsg("没有相关产品包")
-                                .setPositiveButton("确定", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                    }
-                                })
-                                .show();
-                    }
-                    else
-                    {
-                        //拿到产品包  就去listview里面显示
-                        for (Json2ProductPackageBean bean : json2ProductPackageBeanList)
-                        {
-                            bean.setPackageName(packageName);
-                        }
-                        goodsAdapter = new ProductPackageAdapter(json2ProductPackageBeanList,FROM_SHOPPINGMALL);
-                        mJson2ProductPackageBeanList = json2ProductPackageBeanList;
-                        shoppingmall_goods_listview.setAdapter(goodsAdapter);
-                    }
-                }
-            }
-        }
-    }
-
-
-
 
 
     /**
@@ -801,12 +646,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 }
                 else
                 {
-
-
                 }
-
-
-
                 GET_IDS_TIMES++;
 
             }
@@ -878,24 +718,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         }
     }
 
-    /**
-     *
-     * @param id
-     * @param packageName
-     */
-    private void httpGetProductPackageByIdsFromShop(String id, String packageName)
-    {
-
-    }
-
-
     private  int FROM_SHOPPINGMALL = 1;//从商品界面过来
     private static final int FROM_MODIFY       = 2;//从修改界面过来
-
-
-
-
-
 
     private void findViews() {
 
@@ -973,9 +797,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         });
 
     }
-
-
-
 
     @Override
     public void onClick(View view) {
@@ -1301,7 +1122,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         }
     }
 
-
     /**
      * 方法废弃 暂时没用
      */
@@ -1325,9 +1145,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
         }
     }
-
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1402,13 +1219,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             }
         }
     }
-
-
-
-
-
-
-
 
     /**
      * 计算商品总价

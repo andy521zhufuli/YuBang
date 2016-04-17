@@ -1,5 +1,6 @@
 package com.car.yubangapk.network.okhttp;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -16,6 +17,7 @@ import com.car.yubangapk.network.okhttp.cookie.CookieJarImpl;
 import com.car.yubangapk.network.okhttp.cookie.store.CookieStore;
 import com.car.yubangapk.network.okhttp.cookie.store.HasCookieStore;
 import com.car.yubangapk.network.okhttp.cookie.store.MemoryCookieStore;
+import com.car.yubangapk.network.okhttp.cookie.store.PersistentCookieStore;
 import com.car.yubangapk.network.okhttp.https.HttpsUtils;
 import com.car.yubangapk.network.okhttp.log.LoggerInterceptor;
 import com.car.yubangapk.network.okhttp.request.RequestCall;
@@ -70,6 +72,32 @@ public class OkHttpUtils
         init();
     }
 
+
+    public OkHttpUtils(OkHttpClient okHttpClient, Context context)
+    {
+        if (okHttpClient == null)
+        {
+            OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+            //cookie enabled
+            okHttpClientBuilder.cookieJar(new CookieJarImpl(new PersistentCookieStore(context)));
+            okHttpClientBuilder.hostnameVerifier(new HostnameVerifier()
+            {
+                @Override
+                public boolean verify(String hostname, SSLSession session)
+                {
+                    return true;
+                }
+            });
+
+            mOkHttpClient = okHttpClientBuilder.build();
+        } else
+        {
+            mOkHttpClient = okHttpClient;
+        }
+
+        init();
+    }
+
     private void init()
     {
         mDelivery = new Handler(Looper.getMainLooper());
@@ -97,6 +125,7 @@ public class OkHttpUtils
 
     public static OkHttpUtils getInstance(OkHttpClient okHttpClient)
     {
+
         if (mInstance == null)
         {
             synchronized (OkHttpUtils.class)
@@ -104,6 +133,7 @@ public class OkHttpUtils
                 if (mInstance == null)
                 {
                     mInstance = new OkHttpUtils(okHttpClient);
+
                 }
             }
         }
@@ -119,6 +149,21 @@ public class OkHttpUtils
                 if (mInstance == null)
                 {
                     mInstance = new OkHttpUtils(null);
+                }
+            }
+        }
+        return mInstance;
+    }
+
+    public static OkHttpUtils getInstance(Context context)
+    {
+        if (mInstance == null)
+        {
+            synchronized (OkHttpUtils.class)
+            {
+                if (mInstance == null)
+                {
+                    mInstance = new OkHttpUtils(null, context);
                 }
             }
         }

@@ -40,7 +40,7 @@ public class YuBangApplication extends Application
 
         Log.d("TPush", "application oncreate call time");
         //okhttp
-        OkHttpUtils.getInstance().debug("OkHttpUtils").setConnectTimeout(100000, TimeUnit.MILLISECONDS);
+        OkHttpUtils.getInstance(getApplicationContext()).debug("OkHttpUtils").setConnectTimeout(100000, TimeUnit.MILLISECONDS);
         //使用https，但是默认信任全部证书
         OkHttpUtils.getInstance().setCertificates();
 

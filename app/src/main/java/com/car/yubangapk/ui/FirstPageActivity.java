@@ -518,7 +518,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 LatLng ll = new LatLng(location.getLatitude(),
                         location.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(14.0f);
+                builder.target(ll).zoom(12.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 longitude = location.getLongitude();
                 latitude  = location.getLatitude();

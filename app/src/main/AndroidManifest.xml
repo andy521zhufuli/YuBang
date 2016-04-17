@@ -412,7 +412,9 @@
         <activity android:name="com.car.yubangapk.ui.UpdateAppActivity" />
         <activity android:name="com.car.yubangapk.ui.ShoppingmallProductDetailActivity" />
         <activity android:name="com.car.yubangapk.ui.ClientServiceActivity" />
-        <activity android:name="com.car.yubangapk.ui.ShoppingmallProductModifyActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.ShoppingmallProductModifyActivity" />
+        <activity android:name="com.car.yubangapk.ui.ShoppingmallAddReceivePeopleInfoActivity" />
+        <activity android:name="com.car.yubangapk.ui.ShoppingmallChooseReceiveAddressActivity"></activity>
     </application>
 
 </manifest>

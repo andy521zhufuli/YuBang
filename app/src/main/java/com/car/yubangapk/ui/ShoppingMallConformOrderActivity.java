@@ -8,7 +8,18 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.configs.ErrorCodes;
+import com.car.yubangapk.json.bean.Json2AddressBean;
+import com.car.yubangapk.json.bean.Json2LoginBean;
+
+
+import com.car.yubangapk.network.myHttp.HttpReqAddress;
+import com.car.yubangapk.network.myHttp.httpReqInterface;
+import com.car.yubangapk.utils.Warn.NotLogin;
+import com.car.yubangapk.utils.Warn.UpdateApp;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 
@@ -34,7 +45,17 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private LinearLayout   conform_order_choose_online_offline_payment;//隐藏的线上与到店支付的布局
     private boolean        isOnlineOrOffline = false; //false 代表线下支付
 
+    private TextView       textview_receiver_name_content;//收货名字
+    private TextView       textview_receiver_mobile_content;//收货电话
+    private RelativeLayout name_phone;//
+
+
+
+
     private RelativeLayout btn_pay;//提交订单  去支付
+
+
+    private Json2AddressBean mAddressBean;
 
 
     @Override
@@ -46,6 +67,49 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         mContext = this;
 
         findViews();
+
+        Json2LoginBean bean = Configs.getLoginedInfo(mContext);
+        String userid = bean.getUserid();
+        HttpReqAddress reqGetAddressConformOrder = new HttpReqAddress(userid,"3", null, null, null);
+        reqGetAddressConformOrder.setCallback(new httpReqInterface() {
+            @Override
+            public void onGetAddressSucces(Json2AddressBean addressBean) {
+                Json2AddressBean json2AddressBean = addressBean;
+                mAddressBean = json2AddressBean;
+                //去设置地址
+                textview_receiver_name_content.setText(json2AddressBean.getDefaultAddress().getName());
+                textview_receiver_mobile_content.setText(json2AddressBean.getDefaultAddress().getPhone());
+            }
+
+            @Override
+            public void onGetAddressFail(int errorCode) {
+                if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
+                {
+                    UpdateApp.gotoUpdateApp(mContext);
+                }
+                else if (errorCode == ErrorCodes.ERROR_CODE_NETWORK)
+                {
+                    toastMgr.builder.display("网络错误" ,1);
+                }
+                else if (errorCode == ErrorCodes.ERROR_CODE_NO_ADDRESS)
+                {
+                    toastMgr.builder.display("没有收货信息信息" ,1);
+                }
+                else if (errorCode == ErrorCodes.ERROR_CODE_NOT_LOGIN)
+                {
+                    toastMgr.builder.display("没有登录" ,1);
+                    NotLogin.gotoLogin(ShoppingMallConformOrderActivity.this);
+
+                }
+                else if (errorCode == ErrorCodes.ERROR_CODE_SERVER)
+                {
+                    toastMgr.builder.display("服务器错误" ,1);
+                }
+            }
+        });
+        reqGetAddressConformOrder.getAddressPeopleInfo();
+
+
     }
 
     private void findViews() {
@@ -60,6 +124,13 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         my_layout_mine_order = (RelativeLayout) findViewById(R.id.my_layout_mine_order);//优惠券
         conform_order_choose_online_offline_payment = (LinearLayout) findViewById(R.id.conform_order_choose_online_offline_payment);
         btn_pay = (RelativeLayout) findViewById(R.id.btn_pay);
+
+
+        textview_receiver_name_content = (TextView) findViewById(R.id.textview_receiver_name_content);;//收货名字
+        textview_receiver_mobile_content = (TextView) findViewById(R.id.textview_receiver_mobile_content);;//收货电话
+
+        name_phone = (RelativeLayout) findViewById(R.id.name_phone);;//电话 姓名layout
+
         //注册监听器
 
         img_back.setOnClickListener(this);//返回
@@ -71,6 +142,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         my_layout_mine_order.setOnClickListener(this);//优惠券
 
         btn_pay.setOnClickListener(this);//提交订单
+        name_phone.setOnClickListener(this);
     }
 
     @Override
@@ -129,6 +201,23 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 intent.setClass(ShoppingMallConformOrderActivity.this, ShoppingMallChoosePaymentActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.name_phone:
+                chooseAddress();
+                break;
         }
     }
+
+    /**
+     * 去选择收货人信息
+     *
+     *
+     */
+    private void chooseAddress() {
+        Intent intent = new Intent();
+        intent.setClass(mContext, ShoppingmallChooseReceiveAddressActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_CHOOSE_ADDRESS);
+    }
+
+    private static final int REQUEST_CODE_CHOOSE_ADDRESS = 0X01;
+
 }

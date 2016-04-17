@@ -78,19 +78,19 @@ public class MyActivity extends BaseActivity {
 
         toastMgr.builder.display("logined?  = " + loinged, 1);
 
-//        if (loinged.equals(Configs.LOGINED))
-//        {
-//
-//            //就是说明从登陆过来的
-//            layout_not_logined.setVisibility(View.GONE);//还没登陆
-//            layout_logined.setVisibility(View.VISIBLE);//已经登陆
-//        }
-//        else if (loinged.equals(Configs.NOTLOGINED))
-//        {
-//            //就是说明没登陆
-//            layout_not_logined.setVisibility(View.VISIBLE);//还没登陆
-//            layout_logined.setVisibility(View.GONE);//已经登陆
-//        }
+        if (loinged.equals(Configs.LOGINED))
+        {
+
+            //就是说明从登陆过来的
+            layout_not_logined.setVisibility(View.GONE);//还没登陆
+            layout_logined.setVisibility(View.VISIBLE);//已经登陆
+        }
+        else if (loinged.equals(Configs.NOTLOGINED))
+        {
+            //就是说明没登陆
+            layout_not_logined.setVisibility(View.VISIBLE);//还没登陆
+            layout_logined.setVisibility(View.GONE);//已经登陆
+        }
     }
 
     private void findViews() {
