@@ -1,5 +1,6 @@
 package com.car.yubangapk.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
+import com.car.yubangapk.json.bean.AddressBean;
 import com.car.yubangapk.json.bean.Json2AddressBean;
 import com.car.yubangapk.json.bean.Json2LoginBean;
 
@@ -76,9 +78,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             public void onGetAddressSucces(Json2AddressBean addressBean) {
                 Json2AddressBean json2AddressBean = addressBean;
                 mAddressBean = json2AddressBean;
-                //去设置地址
-                textview_receiver_name_content.setText(json2AddressBean.getDefaultAddress().getName());
-                textview_receiver_mobile_content.setText(json2AddressBean.getDefaultAddress().getPhone());
+                setTopAddressDetail(json2AddressBean.getDefaultAddress().getName(), json2AddressBean.getDefaultAddress().getPhone());
             }
 
             @Override
@@ -110,6 +110,19 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         reqGetAddressConformOrder.getAddressPeopleInfo();
 
 
+    }
+
+
+    /**
+     * 设置顶部电话的名字
+     * @param name
+     * @param phone
+     */
+    private void setTopAddressDetail(String name , String phone)
+    {
+        //去设置地址
+        textview_receiver_name_content.setText(name);
+        textview_receiver_mobile_content.setText(phone);
     }
 
     private void findViews() {
@@ -215,7 +228,28 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private void chooseAddress() {
         Intent intent = new Intent();
         intent.setClass(mContext, ShoppingmallChooseReceiveAddressActivity.class);
+
         startActivityForResult(intent, REQUEST_CODE_CHOOSE_ADDRESS);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+        {
+            if (requestCode == REQUEST_CODE_CHOOSE_ADDRESS)
+            {
+                Bundle bundle = data.getExtras();
+                AddressBean bean = (AddressBean) bundle.getSerializable("address");
+
+                setTopAddressDetail(bean.getName(), bean.getPhone());
+            }
+        }
+        else
+        {
+
+        }
     }
 
     private static final int REQUEST_CODE_CHOOSE_ADDRESS = 0X01;

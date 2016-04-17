@@ -8,11 +8,13 @@ import android.support.v4.app.NotificationCompatSideChannelService;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andy.android.yubang.R;
@@ -35,7 +37,7 @@ import java.util.List;
 /**
  * 选择收货人列表
  */
-public class ShoppingmallChooseReceiveAddressActivity extends BaseActivity implements View.OnClickListener{
+public class ShoppingmallChooseReceiveAddressActivity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
 
     private static final String TAG = ShoppingmallChooseReceiveAddressActivity.class.getSimpleName();
     private Context mContext;
@@ -79,6 +81,8 @@ public class ShoppingmallChooseReceiveAddressActivity extends BaseActivity imple
                 mProgress.dismiss();
                 Json2AddressBean json2AddressBean = addressBean;
                 List<AddressBean> list = json2AddressBean.getAddresses();
+
+
                 mAdapter = new ReceivePeopleListViewAdapter(list);
                 myaddresnew_listview.setAdapter(mAdapter);
             }
@@ -139,6 +143,7 @@ public class ShoppingmallChooseReceiveAddressActivity extends BaseActivity imple
         switch (view.getId())
         {
             case R.id.img_back:
+                setResult(Activity.RESULT_CANCELED, null);
                 finish();
                 break;
             case R.id.btn_add_new_receive_people:
@@ -152,6 +157,15 @@ public class ShoppingmallChooseReceiveAddressActivity extends BaseActivity imple
 
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+        toastMgr.builder.display("position" + position + "click", 1);
+
+
+
     }
 
 
@@ -201,6 +215,7 @@ public class ShoppingmallChooseReceiveAddressActivity extends BaseActivity imple
                 holder.tv_address_item_phone = (TextView) view.findViewById(R.id.tv_address_item_phone);
                 holder.tv_address_item_default = (TextView) view.findViewById(R.id.tv_address_item_default);
                 holder.modify_address_layout = (LinearLayout) view.findViewById(R.id.modify_address_layout);
+                holder.relatalayout_address_item = (RelativeLayout) view.findViewById(R.id.relatalayout_address_item);
                 view.setTag(holder);
             }
             else
@@ -228,6 +243,19 @@ public class ShoppingmallChooseReceiveAddressActivity extends BaseActivity imple
                 }
             });
 
+            holder.relatalayout_address_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AddressBean bean = peopleList.get(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("address", bean);
+                    Intent intent = new Intent();
+                    intent.putExtras(bundle);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
+            });
+
             return view;
         }
 
@@ -236,7 +264,7 @@ public class ShoppingmallChooseReceiveAddressActivity extends BaseActivity imple
             TextView        tv_address_item_name;//名字
             TextView        tv_address_item_phone;//电话
             TextView        tv_address_item_default;//是否默认
-
+            RelativeLayout  relatalayout_address_item;//item
             LinearLayout    modify_address_layout;//编辑地址
         }
     }
