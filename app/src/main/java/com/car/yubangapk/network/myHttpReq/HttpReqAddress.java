@@ -1,4 +1,4 @@
-package com.car.yubangapk.network.myHttp;
+package com.car.yubangapk.network.myHttpReq;
 
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
@@ -24,14 +24,14 @@ public class HttpReqAddress {
     private String mPhone;
     private String mAddressId;
 
-    private httpReqInterface callback;
+    private httpReqAddressInterface callback;
 
 
     private static final String ARGS_USER_NAME = "addressReqModel.userName";//0 1 必填
     private static final String ARGS_PHONE_NUM = "addressReqModel.phoneNum";//0 1 必填
     private static final String ARGS_FUNCTION = "addressReqModel.function";//0添加，1修改，2删除，3查询，4修改默认地址
     private static final String ARGS_ADDRESS_ID = "addressReqModel.addressId";//2，4必填
-    private static final String ARGS_USER_ID = "addressReqModel.userId";
+    private static final String ARGS_USER_ID = "addressReqModel.userid";
 
 
     /**
@@ -55,7 +55,7 @@ public class HttpReqAddress {
      * 设置回调
      * @param callback
      */
-    public void setCallback(httpReqInterface callback)
+    public void setCallback(httpReqAddressInterface callback)
     {
         this.callback = callback;
     }

@@ -19,8 +19,8 @@ import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.AddressBean;
 import com.car.yubangapk.json.bean.Json2AddressBean;
-import com.car.yubangapk.network.myHttp.HttpReqAddress;
-import com.car.yubangapk.network.myHttp.httpReqInterface;
+import com.car.yubangapk.network.myHttpReq.HttpReqAddress;
+import com.car.yubangapk.network.myHttpReq.httpReqAddressInterface;
 import com.car.yubangapk.utils.String2UTF8;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.Warn.UpdateApp;
@@ -181,7 +181,7 @@ public class ShoppingmallAddReceivePeopleInfoActivity extends BaseActivity imple
             mPHone = String2UTF8.getUTF8String(mPHone);
 
             HttpReqAddress httpReqAddress = new HttpReqAddress(mAddressBean.getCUserid(),"1", mName, mPHone, mAddressBean.getId() );
-            httpReqAddress.setCallback(new httpReqInterface() {
+            httpReqAddress.setCallback(new httpReqAddressInterface() {
                 @Override
                 public void onGetAddressSucces(Json2AddressBean addressBean) {
                     mProgress.dismiss();
@@ -227,7 +227,7 @@ public class ShoppingmallAddReceivePeopleInfoActivity extends BaseActivity imple
             String userid = Configs.getLoginedInfo(mContext).getUserid();
 
             HttpReqAddress httpReqAddress = new HttpReqAddress(userid,"0", mName, mPHone, null );
-            httpReqAddress.setCallback(new httpReqInterface() {
+            httpReqAddress.setCallback(new httpReqAddressInterface() {
                 @Override
                 public void onGetAddressSucces(Json2AddressBean addressBean) {
                     mProgress.dismiss();

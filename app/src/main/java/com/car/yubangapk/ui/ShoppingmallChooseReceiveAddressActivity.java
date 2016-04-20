@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompatSideChannelService;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -24,8 +23,8 @@ import com.car.yubangapk.json.bean.AddressBean;
 
 import com.car.yubangapk.json.bean.Json2AddressBean;
 import com.car.yubangapk.json.bean.Json2LoginBean;
-import com.car.yubangapk.network.myHttp.HttpReqAddress;
-import com.car.yubangapk.network.myHttp.httpReqInterface;
+import com.car.yubangapk.network.myHttpReq.HttpReqAddress;
+import com.car.yubangapk.network.myHttpReq.httpReqAddressInterface;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.Warn.UpdateApp;
 import com.car.yubangapk.utils.toastMgr;
@@ -75,7 +74,7 @@ public class ShoppingmallChooseReceiveAddressActivity extends BaseActivity imple
         Json2LoginBean bean = Configs.getLoginedInfo(mContext);
         String userid = bean.getUserid();
         HttpReqAddress reqGetAddressConformOrder = new HttpReqAddress(userid,"3", null, null, null);
-        reqGetAddressConformOrder.setCallback(new httpReqInterface() {
+        reqGetAddressConformOrder.setCallback(new httpReqAddressInterface() {
             @Override
             public void onGetAddressSucces(Json2AddressBean addressBean) {
                 mProgress.dismiss();

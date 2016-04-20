@@ -1,5 +1,6 @@
 package com.car.yubangapk.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,10 @@ import com.andy.android.yubang.R;
  */
 public class ShoppingMallChoosePaymentActivity extends BaseActivity implements View.OnClickListener {
 
+
+    private final static String TAG = ShoppingMallChoosePaymentActivity.class.getSimpleName();
+
+    private Context mContext;
 
     private RelativeLayout shoppingmall_choose_payment_weixin_wallet_layout;//微信支付
 

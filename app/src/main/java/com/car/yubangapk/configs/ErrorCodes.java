@@ -17,4 +17,15 @@ public class ErrorCodes {
     public static final int ERROR_CODE_NO_ADDRESS = 4;
     public static final int ERROR_CODE_NOT_LOGIN = 100;
     public static final int ERROR_CODE_SERVER_ERROR = -100;
+
+
+    public static final int ERROR_CODE_NO_INSTALL_SHOP = -2;//没有安装店铺  该区域
+
+
+
+
+
+
+
+
 }

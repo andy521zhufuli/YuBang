@@ -218,7 +218,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/my_layout_mine_order"
+                    android:id="@+id/my_layout_order_coupon"
                     style="@style/MineItemStyle"
                     android:background="@drawable/bg_item_top" >
 

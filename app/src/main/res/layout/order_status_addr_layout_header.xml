@@ -125,7 +125,7 @@
             />
 
         <RelativeLayout
-            android:id="@+id/choose_shop"
+            android:id="@+id/conform_order_choose_shop"
             android:layout_below="@+id/mar1"
             android:background="#fffffaf3"
             android:paddingLeft="10.0dip" android:paddingTop="16.0dip"
@@ -155,7 +155,7 @@
 
 
         <View
-            android:layout_below="@+id/choose_shop"
+            android:layout_below="@+id/conform_order_choose_shop"
             android:id="@+id/mar2"
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -253,7 +253,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/my_layout_mine_order"
+            android:id="@+id/my_layout_order_coupon"
             style="@style/MineItemStyle"
             android:background="@drawable/bg_item_top" >
 

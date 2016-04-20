@@ -19,7 +19,7 @@ public class Configs {
 
     //网络请求地址
     public static String IP_ADDRESS = "http://203.195.206.146/carService";
-    //public static String IP_ADDRESS = "http://192.168.1.49:8080/carService";
+    //public static String IP_ADDRESS = "http://192.168.1.7:8080/carService";
 
     //--------------------------网络请求action-------------------------------------
     //action
@@ -36,6 +36,7 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GET_FIRST_PAGE_TAB= "/getData";
     public static String IP_ADDRESS_ACTION_GET_SHOP =  "/client/shop/getShop";
     public static String IP_ADDRESS_ACTION_GET_ADDRESS = "/client/address/address";
+    public static String IP_ADDRESS_ACTION_GET_INSTALL_SHOP = "/client/shop/getServiceShop";
     //--------------------------网络请求action-------------------------------------
 
     //Sputil

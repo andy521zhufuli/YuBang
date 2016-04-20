@@ -27,7 +27,7 @@ import com.car.yubangapk.json.formatJson.Json2ProductPackage;
 import com.car.yubangapk.json.formatJson.Json2ProductPackageId;
 import com.car.yubangapk.json.formatJson.Json2ShopService;
 import com.car.yubangapk.json.formatJson.Json2ShoppingmallBottomPics;
-import com.car.yubangapk.network.myHttp.HttpReqProductPackageFromMallBannerShop;
+import com.car.yubangapk.network.myHttpReq.HttpReqProductPackageFromMallBannerShop;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.MyPPStringCallback;
 import com.car.yubangapk.network.okhttp.callback.MyStringCallback;
@@ -782,6 +782,9 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(ShoppingMallGoodsActivity.this, ShoppingMallConformOrderActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("productPackageList", (Serializable) mProductPkgBeanListToConformOrderPage);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -886,11 +889,13 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         public ProductPackageAdapter(List<Json2ProductPackageBean> json2ProductPackageBeanList, int _from) {
             this.mpplist = json2ProductPackageBeanList;
             this.from = _from;
+            mProductPkgBeanListToConformOrderPage = json2ProductPackageBeanList;
         }
 
 
         public void refresh(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
             mpplist = json2ProductPackageBeanList;
+            mProductPkgBeanListToConformOrderPage = json2ProductPackageBeanList;
             notifyDataSetChanged();
             L.d("refresh");
         }
@@ -1264,4 +1269,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     private String nowItemTitle = "";
 
     private String[] strings = {"保养维护", "电子电路", "发动机件", "底盘配件", "车架配件", "拖架配件" };
+
+    private List<Json2ProductPackageBean> mProductPkgBeanListToConformOrderPage;
 }

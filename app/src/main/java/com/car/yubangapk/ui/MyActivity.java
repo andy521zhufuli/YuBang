@@ -101,7 +101,7 @@ public class MyActivity extends BaseActivity {
 
         my_layout_mine_wallet= (LinearLayout) findViewById(R.id.my_layout_mine_wallet);         //我的钱包
 
-        my_layout_mine_order= (LinearLayout) findViewById(R.id.my_layout_mine_order);          //我的订单
+        my_layout_mine_order= (LinearLayout) findViewById(R.id.my_layout_order_coupon);          //我的订单
 
         my_layout_mine_privilege= (LinearLayout) findViewById(R.id.my_layout_mine_privilege);      //我的特权
 

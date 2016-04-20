@@ -1,4 +1,4 @@
-package com.car.yubangapk.network.myHttp;
+package com.car.yubangapk.network.myHttpReq;
 
 /**
  * HttpReqProductPackageFromMallBannerShop:产品包界面的网络请求
@@ -12,7 +12,6 @@ package com.car.yubangapk.network.myHttp;
  */
 
 import android.content.Context;
-import android.view.View;
 
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
@@ -24,7 +23,6 @@ import com.car.yubangapk.network.okhttp.callback.MyPPStringCallback;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
-import com.car.yubangapk.view.AlertDialog;
 
 import java.util.List;
 
