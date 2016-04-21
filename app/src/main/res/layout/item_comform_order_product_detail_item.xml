@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:background="#ffced0cf"
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <!-- 左边图片显示-->
+        <LinearLayout android:orientation="horizontal"
+            android:id="@+id/maintenance_produte_layouts" android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_weight="1.0">
+
+            <!-- 左边图片-->
+            <FrameLayout
+                android:orientation="vertical"
+                android:background="@color/white" android:layout_width="60.0dip"
+                android:layout_height="60.0dip" android:layout_marginLeft="5.0dip"
+                android:layout_marginTop="10.0dip" android:layout_marginRight="5.0dip"
+                android:layout_marginBottom="7.0dip">
+                <ImageView
+                    android:id="@+id/produte_pic"
+                    android:padding="1.0dip" android:layout_width="60.0dip"
+                    android:layout_height="60.0dip"
+                    android:src="@mipmap/ic_launcher" />
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                >
+                <LinearLayout android:orientation="horizontal"
+                    android:id="@+id/productitem_changge_before"
+                    android:visibility="visible"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:clickable="true"
+                    android:background="@drawable/bg_item_bottom"
+                    >
+                    <!-- 中间产品名字  半合成-->
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingRight="10.0dip"
+                        android:layout_width="0.0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_marginRight="2.0dip"
+                        android:layout_weight="7.0">
+                        <TextView android:textSize="@dimen/text_12"
+                            android:textColor="#ffbbbbbb"
+                            android:id="@+id/maintenance_produte_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5.0dip"
+                            android:text="\ 1111111111" />
+                        <LinearLayout android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:id="@+id/linearLayout1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2.0dip"
+                            android:layout_below="@+id/maintenance_produte_name"
+                            android:layout_alignParentLeft="true">
+                            <TextView android:id="@+id/maintenance_hecheng_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="半合成"
+                                android:textSize="@dimen/text_12"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <!--产品价格和数量-->
+                    <LinearLayout
+                        android:gravity="center|right"
+                        android:orientation="vertical"
+                        android:paddingRight="5.0dip"
+                        android:layout_width="0.0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="2.0">
+                        <TextView
+                            android:textSize="@dimen/text_size"
+                            android:textColor="#fffd7222"
+                            android:id="@+id/produte_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$999" />
+                        <TextView android:textSize="@dimen/text_12"
+                            android:textColor="#ffbbbbbb"
+                            android:id="@+id/produte_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5.0dip"
+                            android:text="x99"
+                            android:layout_below="@+id/produte_price"
+                            android:layout_alignRight="@+id/produte_price" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+

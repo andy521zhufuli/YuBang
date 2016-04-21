@@ -91,6 +91,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private TextView       textview_receiver_mobile_content;//收货电话
     private RelativeLayout name_phone;//
 
+    private TextView        tv_price;//价格
+
 
 
 
@@ -121,6 +123,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
         List<Json2ProductPackageBean> productPackageList = (List<Json2ProductPackageBean>) bundle.getSerializable("productPackageList");
         mProductPackageListToOrderProductDetailPage = productPackageList;
+
+        countTotalPrice(mProductPackageListToOrderProductDetailPage);
 
         if (mFrom.equals(Configs.FROM_SHOPPINGMALL))
         {
@@ -279,7 +283,12 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
         youhui_list = (ListView) findViewById(R.id.youhui_list);
 
+        tv_price = (TextView) findViewById(R.id.tv_price);
+
+
+
         //注册监听器
+
 
         img_back.setOnClickListener(this);//返回
         payment_way.setOnClickListener(this);//选择支付方式
@@ -343,7 +352,17 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 datePickerShow(conform_order_install_time);
                 break;
 
+
         }
+    }
+
+    /**
+     * 提交订单
+     */
+    private void commitOrder() {
+
+
+
     }
 
     /**
@@ -484,9 +503,11 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
      */
     private void productNumDetailShow() {
         Intent intent = new Intent();
-//        intent.setClass(mContext, ShoppingmallChooseReceiveAddressActivity.class);
-//
-//        startActivityForResult(intent, REQUEST_CODE_CHOOSE_ADDRESS);
+        intent.setClass(mContext, ConformOrderProductDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("productPackageList", (Serializable) mProductPackageListToOrderProductDetailPage);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     /**
@@ -528,7 +549,15 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 //选择优惠券
                 Bundle bundle = data.getExtras();
                 CouponsBean coupon = (CouponsBean) bundle.getSerializable("coupon");
-                coupon_description.setText(coupon.getCouponName()+"优惠券");
+
+                if (coupon.getCouponName().equals("不使用"))
+                {
+                    coupon_description.setText(coupon.getCouponName()+"优惠券");
+                }
+                else
+                {
+                    coupon_description.setText("满" + coupon.getRegulationReach()+ "减" + coupon.getRegulationSubtract() + "优惠券");
+                }
             }
         }
         else
@@ -620,6 +649,30 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     }
 
 
+
+
+    /**
+     * 计算商品总价
+     * @param beans
+     */
+    private void countTotalPrice(List<Json2ProductPackageBean> beans)
+    {
+        int size = beans.size();
+        double l_total_size = 0;
+        for (Json2ProductPackageBean bean : beans)
+        {
+            int num = bean.getProductAmount();
+            double price = bean.getRetailPrice();
+            l_total_size  = l_total_size + ((double)num) * price;
+        }
+        setTotalPrice(l_total_size);
+    }
+
+
+    private void setTotalPrice(double price)
+    {
+        tv_price.setText("￥" + price + "");
+    }
 
     /**
      * 设置选择的店铺

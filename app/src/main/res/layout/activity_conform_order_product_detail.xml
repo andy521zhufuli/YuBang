@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.car.yubangapk.ui.ConformOrderProductDetailActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_category_topbar"
+        android:layout_alignParentTop="true"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:layout_margin="6dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="产品包列表"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/product_service_title_layout"
+        style="@style/MineItemStyle"
+        android:background="@drawable/bg_item_bottom" >
+
+        <ImageView
+            android:id="@+id/product_service_left_image"
+            android:layout_width="1dp"
+            android:layout_height="26.0dip"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:scaleType="fitXY"
+            android:visibility="invisible"
+            android:src="@mipmap/android_personel_quickly_order"
+            />
+
+        <TextView
+            android:id="@+id/product_service_name"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="商品"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_medium_text_size" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/product_detail_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
+
+</LinearLayout>

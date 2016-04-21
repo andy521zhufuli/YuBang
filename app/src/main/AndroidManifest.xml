@@ -417,7 +417,8 @@
         <activity android:name="com.car.yubangapk.ui.ShoppingmallChooseReceiveAddressActivity" />
         <activity android:name="com.car.yubangapk.ui.ShoppingmallConformOrderProductDetailActivity" />
         <activity android:name="com.car.yubangapk.ui.ShoppingmallConformOrderChooseInstallShopActivity" />
-        <activity android:name="com.car.yubangapk.ui.ConformOrderUseableCouponActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.ConformOrderUseableCouponActivity" />
+        <activity android:name="com.car.yubangapk.ui.ConformOrderProductDetailActivity"></activity>
     </application>
 
 </manifest>

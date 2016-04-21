@@ -123,7 +123,7 @@ public class ConformOrderUseableCouponActivity extends BaseActivity {
             }
             else
             {
-                holder.coupon_name.setText(coupons.get(position).getRegulationReach()+"元");
+                holder.coupon_name.setText("满" + coupons.get(position).getRegulationReach()+ "减" + coupons.get(position).getRegulationSubtract() + "优惠券");
             }
 
 
