@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_wheel_date_picker_white_norma"
+    android:orientation="vertical" >
+
+
+    <TextView
+        android:id="@+id/datepicker_date_and_weekday"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_18"
+        android:text="shijian "
+        android:ellipsize="middle"
+
+        />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray_line_3"/>
+    <com.car.yubangapk.view.WheelDatePicker.MyDatePicker
+        android:id="@+id/datepicker_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:orientation="horizontal">
+
+    </com.car.yubangapk.view.WheelDatePicker.MyDatePicker>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_line_3"/>
+    <LinearLayout
+        android:id="@+id/datepicker_button_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/datepicker_btsure"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/bg_item_bottom"
+            android:text="设定"
+
+            />
+        <Button
+            android:id="@+id/datepicker_btcancel"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/black"
+            android:background="@drawable/bg_item_bottom"
+            android:text="取消"
+
+            />
+    </LinearLayout>
+
+</LinearLayout>

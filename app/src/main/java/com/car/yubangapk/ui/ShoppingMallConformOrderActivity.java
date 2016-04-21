@@ -1,11 +1,15 @@
 package com.car.yubangapk.ui;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,6 +31,7 @@ import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.Warn.UpdateApp;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
+import com.car.yubangapk.view.WheelDatePicker.MyDatePicker;
 
 import java.util.List;
 
@@ -52,6 +57,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private LinearLayout   conform_order_choose_online_offline_payment;//隐藏的线上与到店支付的布局
     private boolean        isOnlineOrOffline = false; //false 代表线下支付
     private RelativeLayout  my_layout_order_coupon;//我的优惠券
+    private RelativeLayout  conform_order_choose_time;//选择安装时间
+    private TextView        conform_order_install_time;//安装时间显示
 
 
 
@@ -194,6 +201,10 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         product_num_display = (LinearLayout) findViewById(R.id.product_num_display);//显示多少商品的布局
 
 
+        conform_order_choose_time = (RelativeLayout) findViewById(R.id.conform_order_choose_time);//选择安装时间
+        conform_order_install_time = (TextView) findViewById(R.id.conform_order_install_time);//安装时间显示
+
+
         conform_order_choose_shop = (RelativeLayout) findViewById(R.id.conform_order_choose_shop);//选择店铺
 
 
@@ -222,7 +233,9 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
         conform_order_choose_shop.setOnClickListener(this);//选择店铺
 
-        my_layout_order_coupon.setOnClickListener(this);
+        my_layout_order_coupon.setOnClickListener(this);//我的优惠券
+
+        conform_order_choose_time.setOnClickListener(this);//选择安装时间
     }
 
     @Override
@@ -276,7 +289,6 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 toastMgr.builder.display("没有可用优惠券", 0);
                 //请求网络, 看看是有有可用优惠券
 
-
                 break;
             //提交订单 去支付
             case R.id.btn_pay:
@@ -293,6 +305,10 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
             case R.id.conform_order_choose_shop://选择店铺
                 chooseInstallShop();
+                break;
+
+            case R.id.conform_order_choose_time:
+                datePickerShow(conform_order_install_time);
                 break;
 
         }
@@ -367,6 +383,108 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
 
     }
+
+    int dateYear;
+    int dateMonth;
+    int dateDay;
+    protected void datePickerShow(final TextView textView)
+    {
+//      DatePickerDialog picker = new DatePickerDialog(this,
+//          new OnDateSetListener() {
+//              @Override
+//              public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                  if (monthOfYear < 9 && dayOfMonth < 10) {
+//                      textView.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+//                  } else if (monthOfYear >= 9 && dayOfMonth < 10) {
+//                      textView.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+//                  } else if (monthOfYear < 9 && dayOfMonth >= 10) {
+//                      textView.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
+//                  } else {
+//                      textView.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+//                  }
+//              }
+//          }, cd.get(Calendar.YEAR), cd.get(Calendar.MONTH), cd.get(Calendar.DAY_OF_MONTH));
+//      picker.show();
+
+        final Dialog dialog = new Dialog(this, R.style.ActionSheetDialogStyle);
+        dialog.setContentView(R.layout.wheel_date_picker_dialog);
+
+        MyDatePicker dpicker = (MyDatePicker) dialog.findViewById(R.id.datepicker_layout);
+        final TextView txDateAndWeekDay = (TextView) dialog.findViewById(R.id.datepicker_date_and_weekday);
+        Button btBeDown = (Button) dialog.findViewById(R.id.datepicker_btsure);
+        Button btCancel = (Button) dialog.findViewById(R.id.datepicker_btcancel);
+        dpicker.setOnChangeListener(new MyDatePicker.OnChangeListener() {
+            @Override
+            public void onChange(int year, int month, int day, int day_of_week) {
+//              txDateAndWeekDay.setText(year + "年" + month + "月" + day + "日  星期" + MyDatePicker.getDayOfWeekCN(day_of_week));
+                dateYear  = year;
+                dateMonth = month;
+                dateDay   = day;
+
+                if (dateMonth < 10 && dateDay < 10) {
+                    txDateAndWeekDay.setText(dateYear + "-0" + dateMonth + "-0" + dateDay+ " 星期" + MyDatePicker.getDayOfWeekCN(day_of_week));
+                } else if (dateMonth >= 10 && dateDay < 10) {
+                    txDateAndWeekDay.setText(dateYear + "-" + dateMonth + "-0" + dateDay+ " 星期" + MyDatePicker.getDayOfWeekCN(day_of_week));
+                } else if (dateMonth < 10 && dateDay >= 10) {
+                    txDateAndWeekDay.setText(dateYear + "-0" + dateMonth + "-" + dateDay+ " 星期" + MyDatePicker.getDayOfWeekCN(day_of_week));
+                } else {
+                    txDateAndWeekDay.setText(dateYear + "-" + dateMonth + "-" + dateDay+ " 星期" + MyDatePicker.getDayOfWeekCN(day_of_week));
+                }
+            }
+        });
+
+
+        btBeDown.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if (dateMonth < 10 && dateDay < 10) {
+                    textView.setText(dateYear + "-0" + dateMonth  + "-0" + dateDay);
+                } else if (dateMonth >= 10 && dateDay < 10) {
+                    textView.setText(dateYear + "-" + dateMonth  + "-0" + dateDay);
+                } else if (dateMonth < 10 && dateDay >= 10) {
+                    textView.setText(dateYear + "-0" + dateMonth + "-" + dateDay);
+                } else {
+                    textView.setText(dateYear + "-" + dateMonth  + "-" + dateDay);
+                }
+//              textView.setText(dateYear + "-" + dateMonth + "-" + dateDay);
+                dialog.dismiss();
+            }
+        });
+
+        btCancel.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.setOnKeyListener(new android.content.DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                switch (keyCode) {
+                    case KeyEvent.KEYCODE_BACK:
+                        return true;
+                }
+                return false;
+            }
+        });
+        dialog.show();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private static final int REQUEST_CODE_CHOOSE_ADDRESS = 0X01;//选择地址
     private static final int REQUEST_CODE_CHOOSE_INSTALL_SHOP = 0X10;//选择安装门店

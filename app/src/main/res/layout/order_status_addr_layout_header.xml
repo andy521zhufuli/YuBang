@@ -164,7 +164,7 @@
             />
 
         <RelativeLayout
-            android:id="@+id/choose_time"
+            android:id="@+id/conform_order_choose_time"
             android:layout_below="@+id/mar2"
             android:background="#fffffaf3"
             android:paddingLeft="10.0dip" android:paddingTop="16.0dip"
