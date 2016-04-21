@@ -12,6 +12,7 @@ import com.car.yubangapk.network.okhttp.builder.PostFormBuilder;
 import com.car.yubangapk.network.okhttp.builder.PostStringBuilder;
 import com.car.yubangapk.network.okhttp.callback.Callback;
 import com.car.yubangapk.network.okhttp.callback.MyCallback;
+import com.car.yubangapk.network.okhttp.callback.MyObjectCallback;
 import com.car.yubangapk.network.okhttp.callback.MyProductPkgCallback;
 import com.car.yubangapk.network.okhttp.cookie.CookieJarImpl;
 import com.car.yubangapk.network.okhttp.cookie.store.CookieStore;
@@ -25,6 +26,7 @@ import com.car.yubangapk.network.okhttp.utils.Exceptions;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
@@ -299,6 +301,41 @@ public class OkHttpUtils
         });
     }
 
+    public void executeObj(final RequestCall requestCall, MyObjectCallback callback, final Object pkgName, final int position)
+    {
+        if (callback == null)
+            callback = MyObjectCallback.CALLBACK_DEFAULT;
+        final MyObjectCallback finalCallback = callback;
+
+
+        requestCall.getCall().enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, final IOException e) {
+                sendObjFailResultCallback(call, pkgName, position, e, finalCallback);
+            }
+
+            @Override
+            public void onResponse(final Call call, final Response response) {
+                if (response.code() >= 400 && response.code() <= 599) {
+                    try {
+                        sendObjFailResultCallback(call, pkgName,position, new RuntimeException(response.body().string()), finalCallback);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+
+                try {
+                    Object o = finalCallback.parseNetworkResponse(response);
+                    sendMyObjSuccessResultCallback(o, pkgName,position, finalCallback);
+                } catch (Exception e) {
+                    sendObjFailResultCallback(call, pkgName, position, e, finalCallback);
+                }
+
+            }
+        });
+    }
+
     public void executeParam(final RequestCall requestCall, MyCallback callback, final int pos)
     {
         if (callback == null)
@@ -376,6 +413,34 @@ public class OkHttpUtils
             public void run()
             {
                 callback.onError(call, pkgName ,e);
+                callback.onAfter();
+            }
+        });
+    }
+    public void sendObjFailResultCallback(final Call call, final Object pkgName, final int position, final Exception e, final MyObjectCallback callback)
+    {
+        if (callback == null) return;
+
+        mDelivery.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                callback.onError(call, pkgName , position,e);
+                callback.onAfter();
+            }
+        });
+    }
+
+    public void sendMyObjSuccessResultCallback(final Object object, final Object pkgName, final int position, final MyObjectCallback callback)
+    {
+        if (callback == null) return;
+        mDelivery.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                callback.onResponse(object,pkgName, position);
                 callback.onAfter();
             }
         });

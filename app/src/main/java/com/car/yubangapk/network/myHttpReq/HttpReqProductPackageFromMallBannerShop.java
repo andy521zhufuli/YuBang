@@ -14,11 +14,13 @@ package com.car.yubangapk.network.myHttpReq;
 import android.content.Context;
 
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageIdBean;
 import com.car.yubangapk.json.formatJson.Json2ProductPackage;
 import com.car.yubangapk.json.formatJson.Json2ProductPackageId;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
+import com.car.yubangapk.network.okhttp.callback.MyObjectStringCallback;
 import com.car.yubangapk.network.okhttp.callback.MyPPStringCallback;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
@@ -116,7 +118,7 @@ public class HttpReqProductPackageFromMallBannerShop
 
         @Override
         public void onError(Call call, Exception e) {
-            toastMgr.builder.display("服务器错误", 1);
+
 
             mCallback.onGetPPkgFail(ERROR_CODE_SERVER);
             //这里应该在布局文件里面写多一个  就是提示用户 没有相关产品包
@@ -176,7 +178,7 @@ public class HttpReqProductPackageFromMallBannerShop
                 .addParams(ARGS_NEED_TOTAL, "needTotal")
                 .addParams(ARGG_PRODUCT_PACKAGE, productPackageId)
                 .build()
-                .executeProcudtPkg(new GetProductPackageCallback(), ids.get(0).getPackageName());
+                .executeObject(new GetProductPackageCallback(), ids, 0);
 
         L.i(TAG, TAG_GET_P_PKG_CONTENT_BY_PPID + "URL = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
                 + "sqlName=" + "clientSearchProductPackageProduct"
@@ -191,16 +193,19 @@ public class HttpReqProductPackageFromMallBannerShop
      * 然后生成adapter 在listview里面去展示
      *
      */
-    class GetProductPackageCallback extends MyPPStringCallback {
+    class GetProductPackageCallback extends MyObjectStringCallback {
+
         @Override
-        public void onError(Call call, String packageName, Exception e) {
+        public void onError(Call call, Object object, int position, Exception e) {
             toastMgr.builder.display(LOW_VERSION_TO_UPGRADE_APP, 1);
             mCallback.onGetPPkgFail(ERROR_CODE_LOW_VERSION);
-
         }
+
         @Override
-        public void onResponse(String response, String packageName) {
+        public void onResponse(String response, Object object, int position) {
             L.d(TAG,  TAG_GET_P_PKG_CONTENT_BY_PPID + "json = " + response);
+
+            List<Json2ProductPackageIdBean> ids = (List<Json2ProductPackageIdBean>) object;
 
             synchronized (this)
             {
@@ -237,7 +242,8 @@ public class HttpReqProductPackageFromMallBannerShop
                         for (Json2ProductPackageBean bean : json2ProductPackageBeanList)
                         {
                             //设置产品包的名字
-                            bean.setPackageName(packageName);
+                            bean.setPackageName(ids.get(0).getPackageName());
+                            bean.setProductPackageId(ids.get(0).getId());
                         }
                         //
                         if (mCallback == null)
@@ -263,6 +269,85 @@ public class HttpReqProductPackageFromMallBannerShop
         void onGetPPkgSucces(List<Json2ProductPackageBean> json2ProductPackageBeanList);//得到的产品包列表
         void onGetPPkgFail(int errorCode);//失败的理由
     }
+
+
+    /**
+     * 根据从修改界面拿回来的数据, 去重新加载产品包  所有产品包
+     * 通过产品包的id 去拿产品包  所有产品的id  拿到所有的产品包
+     * @param ppList
+     */
+    public void httpGetProductPackageByIds(List<Json2ProductPackageIdBean> ppList)
+    {
+
+        int size = ppList.size();
+        int index = 0;
+
+        for (index = 0; index < size; index++)
+        {
+            String productPackageId = ppList.get(index).getId();
+            OkHttpUtils.post()
+                    .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
+                    .addParams("sqlName", "clientSearchProductPackageProduct")
+                    .addParams("dataReqModel.args.needTotal", "needTotal")
+                    .addParams("dataReqModel.args.productPackage", productPackageId)
+                    .build()
+                    .executeObject(new GetProductPackagesCallback(), ppList, index);
+
+            L.i("FirstPageShopShowActivity", "获取产品包id url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
+                    + "sqlName=" + "clientSearchProductPackageProduct"
+                    + "&dataReqModel.args.needTotal=needTotal"
+                    + "&dataReqModel.args.productPackage=" + productPackageId
+            );
+        }
+    }
+
+    class GetProductPackagesCallback extends MyObjectStringCallback {
+
+        @Override
+        public void onError(Call call, Object object, int position, Exception e) {
+            mCallback.onGetPPkgFail(ErrorCodes.ERROR_CODE_LOW_VERSION);
+        }
+
+        @Override
+        public void onResponse(String response, Object object, int position) {
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //以下是产皮包里面产出的
 

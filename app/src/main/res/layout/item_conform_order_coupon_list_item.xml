@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/conform_order_coupon_layout"
+        android:clickable="true"
+        style="@style/MineItemStyle"
+        android:background="@drawable/android_layout_bg" >
+
+        <TextView
+            android:id="@+id/coupon_name"
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="10元"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_medium_text_size" />
+
+        <TextView
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="优惠券"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_medium_text_size" />
+
+        <ImageView
+            android:id="@+id/coupon_check_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/button_l_02" />
+    </LinearLayout>
+
+
+</LinearLayout>

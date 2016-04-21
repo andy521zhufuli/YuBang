@@ -83,6 +83,7 @@ public class Json2ProductPackage {
             String productShow;
             String category;
             String productCode;
+            String id;
 
             if (size == 0)
             {
@@ -104,6 +105,7 @@ public class Json2ProductPackage {
                 productShow = row.getString("productShow");
                 category = row.getString("category");
                 productCode = row.getString("productCode");
+                id = row.getString("id");
 
                 Json2ProductPackageBean json2ProductPackageBean = new Json2ProductPackageBean();
                 json2ProductPackageBean.setCategoryName(categoryName);
@@ -115,6 +117,7 @@ public class Json2ProductPackage {
                 json2ProductPackageBean.setProductShow(productShow);
                 json2ProductPackageBean.setCategory(category);
                 json2ProductPackageBean.setProductCode(productCode);
+                json2ProductPackageBean.setId(id);
 
                 json2ProductPackageBean.setHasData(true);
 

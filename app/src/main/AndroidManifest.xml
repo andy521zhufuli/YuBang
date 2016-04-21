@@ -416,7 +416,8 @@
         <activity android:name="com.car.yubangapk.ui.ShoppingmallAddReceivePeopleInfoActivity" />
         <activity android:name="com.car.yubangapk.ui.ShoppingmallChooseReceiveAddressActivity" />
         <activity android:name="com.car.yubangapk.ui.ShoppingmallConformOrderProductDetailActivity" />
-        <activity android:name="com.car.yubangapk.ui.ShoppingmallConformOrderChooseInstallShopActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.ShoppingmallConformOrderChooseInstallShopActivity" />
+        <activity android:name="com.car.yubangapk.ui.ConformOrderUseableCouponActivity"></activity>
     </application>
 
 </manifest>

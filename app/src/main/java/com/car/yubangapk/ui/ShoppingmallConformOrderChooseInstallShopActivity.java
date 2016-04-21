@@ -28,6 +28,8 @@ import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2InstallShopBean;
 import com.car.yubangapk.json.bean.Json2InstallShopModelsBean;
+import com.car.yubangapk.json.bean.Json2ShopServiceBean;
+import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
 import com.car.yubangapk.network.myHttpReq.HttpReqInstallShopList;
 import com.car.yubangapk.network.myHttpReq.HttpReqInstallShopListInterface;
 import com.car.yubangapk.utils.L;
@@ -89,6 +91,11 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
     //适配器
     private InstallShopListAdapter mShopListAdapter;
 
+
+    private List<Json2ShoppingmallBottomPicsBean> mRepairServices;//上一个界面传来的  表示商城界面的6个repairService  代表6张图片
+    private List<Json2ShopServiceBean> mShopServices;//店铺的服务
+    String from;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +107,13 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
 
         findViews();
 
+        Bundle bundle = getIntent().getExtras();
+
+        getExtra(bundle);
+
+
+
+
         mProgress = new CustomProgressDialog(mContext);
 
         //首先获取经纬度
@@ -107,6 +121,24 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         locationLocatioin();
 
 
+
+    }
+
+    /**
+     * 获取上一个界面的信息
+     * @param bundle
+     */
+    private void getExtra(Bundle bundle) {
+
+        from = bundle.getString("from");
+        if (from.equals(Configs.FROM_SHOPPINGMALL))
+        {
+//            mRepairServices = (List<Json2ShoppingmallBottomPicsBean>) bundle.getSerializable("repairServices");
+        }
+        else
+        {
+            //mShopServices = (List<Json2ShopServiceBean>) bundle.getSerializable("shopServiceBean");
+        }
 
     }
 

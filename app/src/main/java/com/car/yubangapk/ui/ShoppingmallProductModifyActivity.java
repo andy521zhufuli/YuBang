@@ -68,6 +68,10 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
     private ShopServiceModifyAdapter   mShopServiceAdapter;
 
 
+    List<Json2ShoppingmallBottomPicsBean> mShopMallList;//保存商城穿过来的list
+    List<Json2ShopServiceBean>            mShopList;//保存店铺---
+
+    List<String> mRepairServiceIds = new ArrayList<>();
     private String mFrom;
 
 
@@ -101,11 +105,14 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
         if (Configs.FROM_SHOPPINGMALL.equals(mFrom))
         {
             list = (List<Json2ShoppingmallBottomPicsBean>) bundle.getSerializable("shoppingmallBottomPicBeanList");
+            mShopMallList = list;
+            //商城
             getAllRepareServiceByIdsNew(list);
         }
         else
         {
             shopServiceList = (List<Json2ShopServiceBean>) bundle.getSerializable("shopServiceBean");
+            mShopList = shopServiceList;
 
             getAllShopServiceByIds(shopServiceList);
         }
@@ -294,8 +301,6 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
 
             synchronized (this)
             {
-
-
                 Json2ProductPackageId json2ProductId = new Json2ProductPackageId(response);
                 final List<Json2ProductPackageIdBean> json2ProductIdBeanList = json2ProductId.getProductIds();
                 if (json2ProductId == null)
@@ -311,9 +316,13 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
                     }
                     else
                     {
+                        //拿到这个有产品的repairService   放在list里面 等待用户选择这个repairService对应的产品包  返回给产皮包界面
+                        mRepairServiceIds.add(mShopMallList.get(position).getId());
+
                         //就放到listview里面去显示
                         if (isFirstShowListview == false)
                         {
+
                             isFirstShowListview = true;
                             mJson2ProductPackageIdBeans = json2ProductIdBeanList;
                             mProductServiceModifyAdapter = new ProductServiceModifyAdapter(mJson2ProductPackageIdBeans);

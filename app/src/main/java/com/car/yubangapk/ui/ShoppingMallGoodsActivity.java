@@ -29,6 +29,7 @@ import com.car.yubangapk.json.formatJson.Json2ShopService;
 import com.car.yubangapk.json.formatJson.Json2ShoppingmallBottomPics;
 import com.car.yubangapk.network.myHttpReq.HttpReqProductPackageFromMallBannerShop;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
+import com.car.yubangapk.network.okhttp.callback.MyObjectStringCallback;
 import com.car.yubangapk.network.okhttp.callback.MyPPStringCallback;
 import com.car.yubangapk.network.okhttp.callback.MyStringCallback;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
@@ -118,7 +119,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             //从首页门店过来  就要获取产品包
             String serviceId = bundle.getString(Configs.serviceId);//服务id
             String carType = bundle.getString(Configs.mCarType);//车主车类型
-            //这个是从上一个界面传过来的 为了去修改界面  备用
+            //这个是从上一个界面传过来的 为了去 修改 界面  备用
             mResponse = bundle.getString("repairService");
 
             mRepairService = serviceId;
@@ -522,7 +523,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     .addParams("dataReqModel.args.needTotal", "needTotal")
                     .addParams("dataReqModel.args.productPackage", productPackageId)
                     .build()
-                    .executeProcudtPkg(new GetProductPackagesCallback(), ppList.get(index).getPackageName());
+                    .executeObject(new GetProductPackagesCallback(), ppList, index);
 
             L.i("FirstPageShopShowActivity", "获取产品包id url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
                     + "sqlName=" + "clientSearchProductPackageProduct"
@@ -531,19 +532,20 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             );
         }
     }
-    class GetProductPackagesCallback extends MyPPStringCallback {
+    class GetProductPackagesCallback extends MyObjectStringCallback {
 
         @Override
-        public void onError(Call call, String packageName, Exception e) {
+        public void onError(Call call, Object object, int position, Exception e) {
             toastMgr.builder.display("您当前版本太低,请升级版本", 1);
             //TODO 这里需要删除
             tv_modify_goods.setClickable(false);
         }
 
         @Override
-        public void onResponse(String response, String packageName) {
+        public void onResponse(String response, Object object, int position) {
             L.d(TAG, "产品包 json = " + response);
             mProgressDialog.dismiss();
+            List<Json2ProductPackageIdBean> ppList = (List<Json2ProductPackageIdBean>) object;
             synchronized (this)
             {
                 if (mFrom.equals(Configs.FROM_SHOPPINGMALL))
@@ -561,7 +563,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
                         for (Json2ProductPackageBean bean : json2ProductPackageBeanList)
                         {
-                            bean.setPackageName(packageName);
+                            bean.setPackageName(ppList.get(position).getPackageName());
+                            bean.setPackageName(ppList.get(position).getId());
                         }
 
                         if (json2ProductPackageBeanList.get(0).isHasData() == false)
@@ -783,6 +786,20 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 Intent intent = new Intent();
                 intent.setClass(ShoppingMallGoodsActivity.this, ShoppingMallConformOrderActivity.class);
                 Bundle bundle = new Bundle();
+                List<String> repairServices = new ArrayList<String>();
+                repairServices.add(mRepairService);
+                //就是商城首页 保养维护底下对应的6个图片的repairService
+                if (mFrom.equals(Configs.FROM_SHOPPINGMALL))
+                {
+                    bundle.putStringArrayList("repairServices", (ArrayList<String>) repairServices);
+                    bundle.putString("from", Configs.FROM_SHOPPINGMALL);
+                }
+                else
+                {
+                    bundle.putStringArrayList("shopServiceBean", (ArrayList<String>) repairServices);
+                    bundle.putString("from", Configs.FROM_SHOP);//门店
+                }
+
                 bundle.putSerializable("productPackageList", (Serializable) mProductPkgBeanListToConformOrderPage);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -816,6 +833,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
     /**
      * 顶部修改点击
+     *
      */
     private void modifyLayoutClicked(String response,String carType)
     {
@@ -1099,6 +1117,9 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             });
 
             L.d("会不会重新刷新");
+
+
+            countTotalPrice(mpplist);
 
             return view;
         }

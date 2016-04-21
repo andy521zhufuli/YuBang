@@ -37,6 +37,8 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GET_SHOP =  "/client/shop/getShop";
     public static String IP_ADDRESS_ACTION_GET_ADDRESS = "/client/address/address";
     public static String IP_ADDRESS_ACTION_GET_INSTALL_SHOP = "/client/shop/getServiceShop";
+
+    public static String IP_ADDRESS_ACTION_GET_COUPON = "/client/order/getCoupon";
     //--------------------------网络请求action-------------------------------------
 
     //Sputil

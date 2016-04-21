@@ -2,6 +2,7 @@ package com.car.yubangapk.network.okhttp.request;
 
 import com.car.yubangapk.network.okhttp.callback.Callback;
 import com.car.yubangapk.network.okhttp.callback.MyCallback;
+import com.car.yubangapk.network.okhttp.callback.MyObjectCallback;
 import com.car.yubangapk.network.okhttp.callback.MyProductPkgCallback;
 import com.car.yubangapk.network.okhttp.utils.Exceptions;
 
@@ -67,6 +68,11 @@ public abstract class OkHttpRequest
         return requestBody;
     }
 
+    protected RequestBody wrapMyObjRequestBody(RequestBody requestBody, final MyObjectCallback callback)
+    {
+        return requestBody;
+    }
+
     protected abstract Request buildRequest(RequestBody requestBody);
 
     public RequestCall build()
@@ -94,6 +100,14 @@ public abstract class OkHttpRequest
     {
         RequestBody requestBody = buildRequestBody();
         RequestBody wrappedRequestBody = wrapMyPPRequestBody(requestBody, callback);
+        Request request = buildRequest(wrappedRequestBody);
+        return request;
+    }
+
+    public Request generateMyObjRequest(MyObjectCallback callback)
+    {
+        RequestBody requestBody = buildRequestBody();
+        RequestBody wrappedRequestBody = wrapMyObjRequestBody(requestBody, callback);
         Request request = buildRequest(wrappedRequestBody);
         return request;
     }

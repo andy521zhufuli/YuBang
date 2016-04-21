@@ -20,7 +20,7 @@ public class ErrorCodes {
 
 
     public static final int ERROR_CODE_NO_INSTALL_SHOP = -2;//没有安装店铺  该区域
-
+    public static final int ERROR_CODE_NO_DATA = 1234;
 
 
 

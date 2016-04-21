@@ -8,10 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,20 +22,29 @@ import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.AddressBean;
+import com.car.yubangapk.json.bean.CouponsBean;
 import com.car.yubangapk.json.bean.Json2AddressBean;
+import com.car.yubangapk.json.bean.Json2CouponBean;
 import com.car.yubangapk.json.bean.Json2InstallShopModelsBean;
 import com.car.yubangapk.json.bean.Json2LoginBean;
 
 
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
+import com.car.yubangapk.json.bean.Json2ShopServiceBean;
+import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
 import com.car.yubangapk.network.myHttpReq.HttpReqAddress;
+import com.car.yubangapk.network.myHttpReq.HttpReqConformOrderCoupon;
+import com.car.yubangapk.network.myHttpReq.HttpReqConformOrderCouponInterface;
 import com.car.yubangapk.network.myHttpReq.httpReqAddressInterface;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.Warn.UpdateApp;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
+import com.car.yubangapk.view.AlertDialog;
 import com.car.yubangapk.view.WheelDatePicker.MyDatePicker;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,24 +53,29 @@ import java.util.List;
  * @author andyzhu
  * @version 1.0
  * @created 2016-02-29
+ * 只有一个入口
  */
 public class ShoppingMallConformOrderActivity extends BaseActivity implements View.OnClickListener{
 
     private Context mContext;
 
-    private ImageView      img_back;//返回
-    private RelativeLayout payment_way;//选择支付方式
-    private ImageView      arrow1;//选择支付方式的箭头
-    private LinearLayout   conform_order_choose_online;//在线支付
-    private ImageView      online_pay_imageview;//在线支付选择
-    private LinearLayout   conform_order_choose_offline;//线下支付
-    private ImageView      offline_pay_imageview;//在线支付选择
-    private RelativeLayout my_layout_mine_order;//优惠券
-    private LinearLayout   conform_order_choose_online_offline_payment;//隐藏的线上与到店支付的布局
-    private boolean        isOnlineOrOffline = false; //false 代表线下支付
+    private ImageView       img_back;//返回
+    private RelativeLayout  payment_way;//选择支付方式
+    private ImageView       arrow1;//选择支付方式的箭头
+    private LinearLayout    conform_order_choose_online;//在线支付
+    private ImageView       online_pay_imageview;//在线支付选择
+    private LinearLayout    conform_order_choose_offline;//线下支付
+    private ImageView       offline_pay_imageview;//在线支付选择
+    private RelativeLayout  my_layout_mine_order;//优惠券
+    private LinearLayout    conform_order_choose_online_offline_payment;//隐藏的线上与到店支付的布局
+    private boolean         isOnlineOrOffline = false; //false 代表线下支付
     private RelativeLayout  my_layout_order_coupon;//我的优惠券
     private RelativeLayout  conform_order_choose_time;//选择安装时间
     private TextView        conform_order_install_time;//安装时间显示
+
+
+    private ListView        youhui_list;//优惠券列表
+    private TextView        coupon_description;//是否使用优惠券描述
 
 
 
@@ -85,6 +102,12 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private List<Json2ProductPackageBean> mProductPackageListToOrderProductDetailPage;
 
 
+    private ArrayList<String>  mRepairServices;//上一个界面传来的  表示商城界面的6个repairService  代表6张图片
+    private ArrayList<String> mShopServices;//店铺的服务
+    private String mFrom;
+    private Json2InstallShopModelsBean mInstallShopBean = null;//获取到的安装店铺
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,15 +115,51 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         setContentView(R.layout.activity_shopping_mall_conform_order);
 
         mContext = this;
-
         findViews();
-
-
         Bundle bundle = getIntent().getExtras();
+        mFrom = bundle.getString("from");
+
         List<Json2ProductPackageBean> productPackageList = (List<Json2ProductPackageBean>) bundle.getSerializable("productPackageList");
         mProductPackageListToOrderProductDetailPage = productPackageList;
-        loadFisrtProductImage(productPackageList);
 
+        if (mFrom.equals(Configs.FROM_SHOPPINGMALL))
+        {
+            mRepairServices = (ArrayList<String>) bundle.getSerializable("repairServices");
+            if (mRepairServices == null)
+            {
+
+            }
+        }
+        else
+        {
+            mShopServices = (ArrayList<String>) bundle.getSerializable("shopServiceBean");
+            if (mShopServices == null)
+            {
+
+            }
+        }
+        //设置默认线下支付
+        getOfflinePayment();
+        //中间显示订单里面商品数量  以及第一个商品的图片
+        loadFisrtProductImage(mProductPackageListToOrderProductDetailPage);
+        //获取默认的地址
+        getDefaultAddress();
+    }
+
+
+    /**
+     * 默认是线下支付
+     */
+    private void getOfflinePayment()
+    {
+        offline_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_01));
+        online_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_02));
+    }
+
+    /**
+     * 获取默认地址
+     */
+    private void getDefaultAddress() {
         Json2LoginBean bean = Configs.getLoginedInfo(mContext);
         String userid = bean.getUserid();
         HttpReqAddress reqGetAddressConformOrder = new HttpReqAddress(userid,"3", null, null, null);
@@ -139,15 +198,15 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             }
         });
         reqGetAddressConformOrder.getAddressPeopleInfo();
-
-
     }
 
     /**
      * 根据产品包页面传来的商品  去显示第一个商品的图片
      * @param productPackageList
      */
-    private void loadFisrtProductImage(List<Json2ProductPackageBean> productPackageList) {
+    private void loadFisrtProductImage(List<Json2ProductPackageBean> productPackageList)
+    {
+
 
         if (productPackageList.size() >= 1)
         {
@@ -191,6 +250,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         online_pay_imageview = (ImageView) findViewById(R.id.online_pay_imageview);//在线支付选择
         conform_order_choose_offline = (LinearLayout) findViewById(R.id.conform_order_choose_offline);//线下支付
         offline_pay_imageview = (ImageView) findViewById(R.id.offline_pay_imageview);//在线支付选择
+        coupon_description = (TextView) findViewById(R.id.coupon_description);//是否使用优惠券描述
 
         conform_order_choose_online_offline_payment = (LinearLayout) findViewById(R.id.conform_order_choose_online_offline_payment);
         btn_pay = (RelativeLayout) findViewById(R.id.btn_pay);
@@ -216,6 +276,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
         my_layout_order_coupon = (RelativeLayout) findViewById(R.id.my_layout_order_coupon);;//我的优惠券
         textview_receiver_address_content = (TextView) findViewById(R.id.textview_receiver_address_content);//配送店铺
+
+        youhui_list = (ListView) findViewById(R.id.youhui_list);
 
         //注册监听器
 
@@ -249,65 +311,35 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             //选择支付方式
             case R.id.payment_way:
                 //显示与隐藏在线与到店支付
-                if (conform_order_choose_online_offline_payment.getVisibility() == View.VISIBLE)
-                {
-                    conform_order_choose_online_offline_payment.setVisibility(View.GONE);
-                    arrow1.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.personel_arrow_down));
-                }
-                else
-                {
-                    conform_order_choose_online_offline_payment.setVisibility(View.VISIBLE);
-                    arrow1.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.personel_arrow_up));
-                }
-
+                showPayment();
                 break;
             //x已经显示出来  选择线上支付
             case R.id.conform_order_choose_online:
-                if (isOnlineOrOffline == false)
-                {
-                    online_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_01));
-                }
-                else
-                {
-                    online_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_02));
-                }
-                isOnlineOrOffline = true;//线上支付
+                //目前只能线下  支付
+                toastMgr.builder.display("目前只支持到店支付,暂不支持线上支付",1);
                 break;
             case R.id.conform_order_choose_offline:
-                if (isOnlineOrOffline == true)
-                {
-                    offline_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_01));
-                }
-                else
-                {
-                    offline_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_02));
-                }
-                isOnlineOrOffline = false;
+                chooseOfflinePayment();
                 break;
             //我的优惠券
             case R.id.my_layout_order_coupon:
-                toastMgr.builder.display("没有可用优惠券", 0);
                 //请求网络, 看看是有有可用优惠券
-
+                checkCoupon(mProductPackageListToOrderProductDetailPage);
                 break;
             //提交订单 去支付
             case R.id.btn_pay:
-                Intent intent = new Intent();
-                intent.setClass(ShoppingMallConformOrderActivity.this, ShoppingMallChoosePaymentActivity.class);
-                startActivity(intent);
+                choosePayment();
                 break;
-            case R.id.name_phone:
+            case R.id.name_phone://地址
                 chooseAddress();
                 break;
-            case R.id.product_num_display:
+            case R.id.product_num_display://
                 productNumDetailShow();
                 break;
-
             case R.id.conform_order_choose_shop://选择店铺
                 chooseInstallShop();
                 break;
-
-            case R.id.conform_order_choose_time:
+            case R.id.conform_order_choose_time://选择安装时间
                 datePickerShow(conform_order_install_time);
                 break;
 
@@ -315,11 +347,135 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     }
 
     /**
+     * 检查是否有可用优惠券
+     * @param productDetail
+     */
+    private void checkCoupon(List<Json2ProductPackageBean> productDetail) {
+
+        if (mInstallShopBean == null)
+        {
+            AlertDialog alertDialog = new AlertDialog(mContext);
+            alertDialog.builder().setTitle("提示")
+                    .setMsg("您还没有选择安装门店")
+                    .setCancelable(true)
+                    .setPositiveButton("去选择", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            chooseInstallShop();
+                        }
+                    })
+                    .show();
+            return;
+        }
+        HttpReqConformOrderCoupon reqConformOrderCoupon = new HttpReqConformOrderCoupon();
+        reqConformOrderCoupon.setCallback(new Coupon());
+
+        String userid = Configs.getLoginedInfo(mContext).getUserid();
+        String cartype = Configs.getLoginedInfo(mContext).getCarType();
+
+
+        reqConformOrderCoupon.getUseableCoupon(userid, cartype, productDetail, mInstallShopBean);
+    }
+
+    class Coupon implements HttpReqConformOrderCouponInterface
+    {
+
+
+        @Override
+        public void onSuccess(Json2CouponBean json2CouponBean) {
+
+            Json2CouponBean json2CouponBean1 = json2CouponBean;
+            List<CouponsBean> couponsBeen = json2CouponBean1.getCoupons();
+            if (couponsBeen.size() >= 1 )
+            {
+                /*CouponListAdapter adapter = new CouponListAdapter(couponsBeen);
+                youhui_list.setAdapter(adapter);
+                youhui_list.setVisibility(View.VISIBLE);*/
+                toastMgr.builder.display("您有优惠券可用", 1);
+
+                Intent intent = new Intent();
+                intent.setClass(mContext, ConformOrderUseableCouponActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("coupons", (Serializable) couponsBeen);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,REQUEST_CODE_CHOOSE_COUPON );
+            }
+            else
+            {
+                toastMgr.builder.display("没有优惠券可用", 1);
+            }
+
+        }
+
+        @Override
+        public void onFail(int errorCode, String message) {
+            toastMgr.builder.display(message, 1);
+
+        }
+    }
+    /**
+     * 选择支付方式
+     */
+    private void choosePayment() {
+        Intent intent = new Intent();
+        intent.setClass(ShoppingMallConformOrderActivity.this, ShoppingMallChoosePaymentActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * 选择到店支付
+     */
+    private void chooseOfflinePayment() {
+        offline_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_01));
+        online_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_02));
+    }
+
+    /**
+     * 选择在线支付
+     */
+    private void chooseOnlinePayment() {
+        online_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_01));
+        offline_pay_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_02));
+    }
+    /**
+     * 显示与隐藏支付方式
+     */
+    private void showPayment() {
+        if (conform_order_choose_online_offline_payment.getVisibility() == View.VISIBLE)
+        {
+            conform_order_choose_online_offline_payment.setVisibility(View.GONE);
+            arrow1.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.personel_arrow_down));
+        }
+        else
+        {
+            conform_order_choose_online_offline_payment.setVisibility(View.VISIBLE);
+            arrow1.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.personel_arrow_up));
+        }
+    }
+
+    /**
      * 选择安装店铺
      */
     private void chooseInstallShop() {
+
+        Bundle bundle = new Bundle();
+        if (mFrom.equals(Configs.FROM_SHOPPINGMALL))
+        {
+            //这里面包含了所有的repairService
+            bundle.putString("from", mFrom);
+            bundle.putStringArrayList("repairServices",  mRepairServices);
+        }
+        else
+        {
+            //根据这个区获取门店的repairService
+            bundle.putString("from", mFrom);
+            bundle.putStringArrayList("shopServiceBean",  mShopServices);
+        }
+
         Intent intent = new Intent();
         intent.setClass(mContext, ShoppingmallConformOrderChooseInstallShopActivity.class);
+        intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE_CHOOSE_INSTALL_SHOP);
     }
 
@@ -363,8 +519,16 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 //是从选择安装门店进来的
                 Bundle bundle = data.getExtras();
                 Json2InstallShopModelsBean shopModel = (Json2InstallShopModelsBean) bundle.getSerializable("shopModel");
+                mInstallShopBean = shopModel;
                 //设置选择的店铺
                 setInstallShop(shopModel);
+            }
+            else if (requestCode == REQUEST_CODE_CHOOSE_COUPON)
+            {
+                //选择优惠券
+                Bundle bundle = data.getExtras();
+                CouponsBean coupon = (CouponsBean) bundle.getSerializable("coupon");
+                coupon_description.setText(coupon.getCouponName()+"优惠券");
             }
         }
         else
@@ -372,6 +536,90 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             toastMgr.builder.display("您没有选择",1);
         }
     }
+
+    /**
+     * 优惠券列表适配
+     */
+    private class CouponListAdapter extends BaseAdapter
+    {
+        List<CouponsBean> coupons;
+
+        public CouponListAdapter(List<CouponsBean> coupons)
+        {
+            this.coupons = coupons;
+            CouponsBean bean = new CouponsBean();
+            bean.setCouponName("不使用");
+            this.coupons.add(bean);
+        }
+
+        @Override
+        public int getCount() {
+            return coupons.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return coupons.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup viewGroup) {
+
+            final ViewHolder holder;
+            if (view == null)
+            {
+                holder = new ViewHolder();
+                view = View.inflate(mContext, R.layout.item_conform_order_coupon_list_item, null);
+                holder.conform_order_coupon_layout = (LinearLayout) view.findViewById(R.id.conform_order_coupon_layout);
+                holder.coupon_name = (TextView) view.findViewById(R.id.coupon_name);
+                holder.coupon_check_imageview = (ImageView) view.findViewById(R.id.coupon_check_imageview);
+                view.setTag(holder);
+            }
+            else
+            {
+                holder = (ViewHolder) view.getTag();
+            }
+
+            if (coupons.get(position).getCouponName().equals("不使用"))
+            {
+                holder.coupon_name.setText("不使用");
+            }
+            else
+            {
+                holder.coupon_name.setText(coupons.get(position).getRegulationReach()+"元");
+            }
+
+
+            holder.coupon_check_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_02));
+
+            holder.conform_order_coupon_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.coupon_check_imageview.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.button_l_01));
+                    youhui_list.setVisibility(View.GONE);
+                }
+            });
+
+
+
+            return view;
+        }
+
+        class ViewHolder
+        {
+            LinearLayout    conform_order_coupon_layout;
+            TextView        coupon_name;
+            ImageView       coupon_check_imageview;
+
+        }
+    }
+
+
 
     /**
      * 设置选择的店铺
@@ -472,21 +720,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         dialog.show();
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private static final int REQUEST_CODE_CHOOSE_ADDRESS = 0X01;//选择地址
     private static final int REQUEST_CODE_CHOOSE_INSTALL_SHOP = 0X10;//选择安装门店
+    private static final int REQUEST_CODE_CHOOSE_COUPON = 0X11;//选择安装门店
 
 }

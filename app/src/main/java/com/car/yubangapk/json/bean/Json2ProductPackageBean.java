@@ -45,8 +45,27 @@ public class Json2ProductPackageBean extends Base
     private String productName;
 
     private int productAmount;
+    String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     private String packageName;//为了适应项目 而自己加的字段  后台没有这个字段
+
+    public String getProductPackageId() {
+        return ProductPackageId;
+    }
+
+    public void setProductPackageId(String productPackageId) {
+        ProductPackageId = productPackageId;
+    }
+
+    private String ProductPackageId;//为了适应项目 而自己加的字段  后台没有这个字段  此商品对应的产品包id
 
     public String getPackageName() {
         return packageName;
