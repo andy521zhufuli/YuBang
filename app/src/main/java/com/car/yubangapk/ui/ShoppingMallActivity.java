@@ -26,6 +26,8 @@ import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
 import com.car.yubangapk.json.bean.ShoppingmallPicBean;
 import com.car.yubangapk.json.bean.ShoppingmallSpeciesePicBean;
 import com.car.yubangapk.json.formatJson.Json2ShoppingmallBottomPics;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetShoppingmallBanner;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetShoppingmallBannerInterface;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.MyStringCallback;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
@@ -110,40 +112,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         httpGetBannerPics();
         //去拿中间8个的图片
         httpGetMiddleSpeciesPics();
-//        OkHttpUtils.post()
-//                .url("http://192.168.1.7:8080/carService/getFile")
-//                .addParams("fileReq.pathCode","0")
-//                .addParams("fileReq.fileName","bde07f22-0380-4f2b-9ca4-8e094dfbce6b.png")
-//                .build()
-//                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), "bde07f22-0380-4f2b-9ca4-8e094dfbce6b.png") {
-//
-//                    @Override
-//                    public void inProgress(float progress, long total) {
-//                        Log.e(TAG, "onError :");
-//                    }
-//
-//                    @Override
-//                    public void onBefore(Request request) {
-//                        super.onBefore(request);
-//                    }
-//
-//                    @Override
-//                    public void inProgress(float progress) {
-//                        Log.e(TAG, "onError :");
-//                    }
-//
-//
-//                    @Override
-//                    public void onError(Call call, Exception e) {
-//                        Log.e(TAG, "onError :" + e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onResponse(File file) {
-//                        Log.e(TAG, "onResponse :" + file.getAbsolutePath());
-//                    }
-//                });
-//
     }
 
 
@@ -152,17 +120,44 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
      */
     private void httpGetBannerPics()
     {
-        /**
-         * 去拿轮播图片
-         */
-        OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
-                .addParams("sqlName", "clientSearchAd")
-                .addParams("dataReqModel.args.needTotal","needTotal")
-                .addParams("dataReqModel.args.position","2")//2代表banner广告
-                .build().execute(new MyBannerAdCallback());
-        L.i(TAG, "banner url = " + Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchAd&dataReqModel.args.needTotal=needTotal&dataReqModel.args.position=2" );
+        HttpReqGetShoppingmallBanner getShoppingmallBanner = new HttpReqGetShoppingmallBanner();
+        getShoppingmallBanner.setCallback(new HttpReqGetShoppingmallBannerInterface() {
+            @Override
+            public void onSuccess(List<BannerAd> bannerad) {
+                List<String> bannerAdUrl = new ArrayList<>();
+                String url;
+                int size = bannerad.size();
+                if (size > 0)
+                {
+                    //里面有数据
+                    for (int i= 0; i< size; i++)
+                    {
+                        BannerAd ad = bannerad.get(i);
+                        url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + ad.getPathCode() + "&fileReq.fileName=" + ad.getPhotoName();
+                        bannerAdUrl.add(url);
+                        L.d(TAG,url);
+                    }
+                }
+                else
+                {
+                    //里面没数据   就显示一张默认的图片
+                    url = "drawable://" + R.mipmap.banner03;
+                }
+                shoppingmall_flashview_banner.setImageUris(bannerAdUrl);
+                shoppingmall_flashview_banner.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
+            }
 
+            @Override
+            public void onFail(int errorCode, String message) {
+                List<String> bannerAdUrl = new ArrayList<>();
+                String url = "drawable://" + R.mipmap.banner03;
+                bannerAdUrl.add(url);
+                shoppingmall_flashview_banner.setImageUris(bannerAdUrl);
+                shoppingmall_flashview_banner.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
+                toastMgr.builder.display("网络未连接, 请检查您的网络设置.", 1);
+            }
+        });
+        getShoppingmallBanner.getBannerPics();
     }
 
     /**
@@ -275,85 +270,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     }
 
-    /**
-     * 轮播图片
-     */
-    public class MyBannerAdCallback extends StringCallback
-    {
-        @Override
-        public void onBefore(Request request)
-        {
-            super.onBefore(request);
-            L.i(TAG + "http MyStringCallback loading");
-        }
-
-        @Override
-        public void onAfter()
-        {
-            super.onAfter();
-            L.i(TAG + "http MyStringCallback onAfter");
-
-        }
-
-        @Override
-        public void onError(Call call, Exception e)
-        {
-
-            L.i(TAG + "http MyStringCallback error "  + e.getMessage());
-            List<String> bannerAdUrl = new ArrayList<>();
-            String url = "drawable://" + R.mipmap.banner03;
-            bannerAdUrl.add(url);
-            shoppingmall_flashview_banner.setImageUris(bannerAdUrl);
-            shoppingmall_flashview_banner.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
-            toastMgr.builder.display("网络未连接, 请检查您的网络设置.", 1);
-        }
-
-        @Override
-        public void onResponse(String response)
-        {
-            L.i(TAG + "http MyStringCallback onResponse " + response);
-            FormatJson formatJson = new FormatJson(response);
-            List<BannerAd> bannerad = formatJson.getBannerAdImageList();
-            //赋值给全局变量
-            mBannerAdList = bannerad;
-            if (bannerad == null)
-            {
-                //解析json错误  肯定是服务器返回给我的有错误
-                toastMgr.builder.display("服务器返回错误",0);
-                return;
-            }
-            List<String> bannerAdUrl = new ArrayList<>();
-            String url;
-            int size = bannerad.size();
-            if (size > 0)
-            {
-                //里面有数据
-                for (int i= 0; i< size; i++)
-                {
-                    BannerAd ad = bannerad.get(i);
-                    url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + ad.getPathCode() + "&fileReq.fileName=" + ad.getPhotoName();
-                    bannerAdUrl.add(url);
-                    L.d(TAG,url);
-                }
-
-            }
-            else
-            {
-                //里面没数据   就显示一张默认的图片
-                url = "drawable://" + R.mipmap.banner03;
-            }
-
-
-            shoppingmall_flashview_banner.setImageUris(bannerAdUrl);
-            shoppingmall_flashview_banner.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
-        }
-
-        @Override
-        public void inProgress(float progress)
-        {
-            L.i(TAG + "http MyStringCallback inProgress " + progress);
-        }
-    }
 
     /**
      * 中部图标 分类
