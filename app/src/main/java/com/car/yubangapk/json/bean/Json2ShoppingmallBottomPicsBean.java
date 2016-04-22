@@ -11,6 +11,7 @@ import com.car.yubangapk.json.Base;
  */
 public class Json2ShoppingmallBottomPicsBean extends Base{
 
+    //这个id 就是repairService
 //    {"total":0,"rows":[
 //        {"id":"e0635993-2f23-428c-9b42-5b53dd5a3734",
 //                "logicalService":"1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
@@ -48,7 +49,8 @@ public class Json2ShoppingmallBottomPicsBean extends Base{
 //                "serviceName":"齿轮油"},
 //        {"id":"38f28eb8-798d-492f-bf94-4a61153ee5da","logicalService":"1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
 //                "pathCode":"3","photoName":"cbb237d9-544d-49ff-88e4-6e69bb10b5e5.png","serviceCode":"6240130105",
-//                "repairServiceSort":5,"serviceName":"刹车油"},{"id":"6e85da78-7034-4da9-97d8-5959089f9cb5",
+//                "repairServiceSort":5,"serviceName":"刹车油"},
+//        {"id":"6e85da78-7034-4da9-97d8-5959089f9cb5",
 //            "logicalService":"1df3cd46-f2e5-40f1-b408-266a7d59a8b6","pathCode":"3","photoName":"432cec95-da04-4e7a-8cc4-fae008a1a1d8.png",
 //            "serviceCode":"6240130106","repairServiceSort":6,"serviceName":"助力转向油"},
 //        {"id":"d34affe5-b7b0-4edc-af5b-ca12d649c763","logicalService":"1df3cd46-f2e5-40f1-b408-266a7d59a8b6","pathCode":"",

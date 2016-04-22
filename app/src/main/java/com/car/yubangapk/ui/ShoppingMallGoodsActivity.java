@@ -27,7 +27,11 @@ import com.car.yubangapk.json.formatJson.Json2ProductPackage;
 import com.car.yubangapk.json.formatJson.Json2ProductPackageId;
 import com.car.yubangapk.json.formatJson.Json2ShopService;
 import com.car.yubangapk.json.formatJson.Json2ShoppingmallBottomPics;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetShoppingmallGoodsModifiableCountFromShoppingmall;
+import com.car.yubangapk.network.myHttpReq.HttpReqModifiableCountFromShopCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqModifiableCountFromShoppingmallCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqProductPackageFromMallBannerShop;
+import com.car.yubangapk.network.myHttpReq.HttpReqShoppingmallGoodsModifiableCountFromShop;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.MyObjectStringCallback;
 import com.car.yubangapk.network.okhttp.callback.MyPPStringCallback;
@@ -130,18 +134,17 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             if (Configs.FROM_SHOPPINGMALL.equals(mFrom))
             {
                 //从商城来  这里是去显示有多少个可修改  可供选择的项目 最顶部
-                httpGetLogicalService(serviceId, mFrom);
+                httpGetLogicalService(serviceId, mFrom, carType);
             }
             else
             {
                 //从店铺来  这里是去显示有多少个可修改  可供选择的项目 最顶部
                 mShopInfoID = bundle.getString("shopId");
-                httpGetLogicalService(serviceId, mFrom);
+                httpGetLogicalService(serviceId, mFrom, carType);
 
             }
 
             //都需要调用这句话, 来展示产品包
-
             HttpReqProductPackageFromMallBannerShop req = new HttpReqProductPackageFromMallBannerShop(serviceId, carType, mContext);
             req.setInterface(this);
             req.getProductPackageId();
@@ -218,290 +221,112 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
      * @param serviceId
      * @param mFrom
      */
-    private void httpGetLogicalService(String serviceId, String mFrom)
+    private void httpGetLogicalService(String serviceId, String mFrom, String carType)
     {
         if (mFrom.equals(Configs.FROM_SHOPPINGMALL))
         {
-            OkHttpUtils.post()
-                    .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
-                    .addParams("sqlName", "clientSearchRepairService")
-                    .addParams("dataReqModel.args.needTotal","needTotal")
-                    .addParams("dataReqModel.args.id",serviceId)
-                    .build()
-                    .executeMy(new LogicalServiceCallback(),0);
-            L.i(TAG, "service all kinds bottom " + 0  + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                    + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.id="+serviceId);
+            HttpReqGetShoppingmallGoodsModifiableCountFromShoppingmall req = new HttpReqGetShoppingmallGoodsModifiableCountFromShoppingmall();
+            req.setCallbac(new GetModifiableNumFromMall());
+            req.getModifiableCount(serviceId, mFrom, carType);
+
+//            OkHttpUtils.post()
+//                    .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
+//                    .addParams("sqlName", "clientSearchRepairService")
+//                    .addParams("dataReqModel.args.needTotal","needTotal")
+//                    .addParams("dataReqModel.args.id",serviceId)
+//                    .build()
+//                    .executeMy(new LogicalServiceCallback(),0);
+//            L.i(TAG, "service all kinds bottom " + 0  + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
+//                    + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.id="+serviceId);
         }
         else
         {
-            OkHttpUtils.post()
-                    .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
-                    .addParams("sqlName", "clientSearchRepairService")
-                    .addParams("dataReqModel.args.needTotal","needTotal")
-                    .addParams("dataReqModel.args.id",serviceId)
-                    .build()
-                    .executeMy(new LogicalServiceCallback(),0);
-            L.i(TAG, "service all kinds bottom " + 0  + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                    + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.id="+serviceId);
+
+            HttpReqShoppingmallGoodsModifiableCountFromShop req = new HttpReqShoppingmallGoodsModifiableCountFromShop();
+            req.setCallbac(new GetModifiableNumFromShop());
+            req.getModifiableCount(serviceId, mFrom, carType, mShopInfoID);
+
         }
 
 
 
     }
 
-    /**
-     * @function httpGetLogicalService 调用这个回调
-     *
-     */
-    public class LogicalServiceCallback extends MyStringCallback
+    class GetModifiableNumFromMall implements HttpReqModifiableCountFromShoppingmallCallback
     {
 
-
         @Override
-        public void onError(Call call, int position, Exception e) {
-            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置", 1);
-            //这时候点击任何一个都会提示不能点击  不能进入到下一个页面
+        public void onFail(int errorCode, String message) {
+            if (errorCode == ErrorCodes.ERROR_CODE_NETWORK)
+            {
+                toastMgr.builder.display(message, 1);
+            }
+            else if (errorCode == ErrorCodes.ERROR_CODE_NO_DATA)
+            {
+                toastMgr.builder.display(message, 1);
+            }
+            else if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
+            {
+                toastMgr.builder.display(message, 1);
+            }
+            else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
+            {
+                toastMgr.builder.display(message, 1);
+            }else if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
+            {
+                UpdateApp.gotoUpdateApp(mContext);
+            }
         }
 
         @Override
-        public void onResponse(String response, int position) {
-            L.i(TAG, "中部以下的图片json = " + response);
-            L.i(TAG, "中部以下的图片position = " + position);
-            Json2ShoppingmallBottomPics json2ShoppingmallBottomPics = new Json2ShoppingmallBottomPics(response);
-            List<Json2ShoppingmallBottomPicsBean> beans = json2ShoppingmallBottomPics.getShoppingmallBottomPics();
-            if (beans == null)
-            {
-                //提示更新app
-                toastMgr.builder.display("版本太低, 请更新app", 1);
-            }
-            else
-            {
-                for (Json2ShoppingmallBottomPicsBean bean : beans)
-                {
-                    if (bean.isHasData() == true)
-                    {
-                        if (mFrom.equals(Configs.FROM_SHOPPINGMALL))
-                        {
-                            //有数据  拿到了数据
-                            httpGetRepairServiceListByLogicalService(bean.getLogicalService());
-                        }
-                        else
-                        {
-                            httpGetShopServiceListByLogicalService(bean.getLogicalService(), mShopInfoID);
-                        }
-                    }
-                    else
-                    {
-                        toastMgr.builder.display("服务器异常,请返回重新加载!", 0);
-                        break;
-                    }
-                }
-            }
+        public void onSuccess(List<Json2ProductPackageIdBean> modifyableItemList, List<Json2ShoppingmallBottomPicsBean> modifyableItemShoppingmallBottomPicBeanList) {
+            mModifyableItemList = modifyableItemList;
+            mModifyableItemShoppingmallBottomPicBeanList = modifyableItemShoppingmallBottomPicBeanList;
+            modifyable_product_count.setText("1个项目需要保养(共" + mModifyableItemList.size() + "个项目)");
         }
     }
-    /**
-     * LogicalServiceCallback调用这个方法
-     *
-     *从店铺进来  去拿有多少个项目可以修改  最上面显示
-     * 这是第二步骤
-     * @param logicalService
-     */
-    private synchronized void httpGetRepairServiceListByLogicalService(String logicalService)
+
+
+    class GetModifiableNumFromShop implements HttpReqModifiableCountFromShopCallback
     {
-        OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
-                .addParams("sqlName", "clientSearchRepairService")
-                .addParams("dataReqModel.args.needTotal","needTotal")
-                .addParams("dataReqModel.args.logicalService",logicalService)
-                .build()
-                .executeMy(new GetRepairServiceListCallback(),0);
-        L.i(TAG, "logicalService list " + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+logicalService);
-    }
-
-    /**
-     * httpGetRepairServiceListByLogicalService 调用这个回调
-     */
-    class GetRepairServiceListCallback extends MyStringCallback
-    {
-        @Override
-        public void onError(Call call, int position, Exception e) {
-            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置", 1);
-            //这时候点击任何一个都会提示不能点击  不能进入到下一个页面
-        }
 
         @Override
-        public void onResponse(String response, int position) {
-            L.i(TAG, "中部以下的图片json = " + response);
-            L.i(TAG, "中部以下的图片position = " + position);
-            Json2ShoppingmallBottomPics json2ShoppingmallBottomPics = new Json2ShoppingmallBottomPics(response);
-            List<Json2ShoppingmallBottomPicsBean> beans = json2ShoppingmallBottomPics.getShoppingmallBottomPics();
-
-
-            mModifyableItemShoppingmallBottomPicBeanList = beans;
-
-            if (beans == null)
+        public void onFail(int errorCode, String message) {
+            if (errorCode == ErrorCodes.ERROR_CODE_NETWORK)
             {
-                //提示更新app
-                toastMgr.builder.display("版本太低, 请更新app", 1);
+                toastMgr.builder.display(message, 1);
             }
-            else
+            else if (errorCode == ErrorCodes.ERROR_CODE_NO_DATA)
             {
-                //有数据  拿到了数据
-                int size = beans.size();
-
-                for (int pos = 0; pos < size; pos++) {
-                    if (beans.get(pos).isHasData() == true)
-                    {
-                        String id = beans.get(pos).getId();
-                        httpGetProductPackageIds(id,mCarType, pos);
-                    }
-                    else
-                    {
-                        toastMgr.builder.display("服务器异常!", 0);
-                    }
-                }
+                toastMgr.builder.display(message, 1);
+            }
+            else if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
+            {
+                toastMgr.builder.display(message, 1);
+            }
+            else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
+            {
+                toastMgr.builder.display(message, 1);
+            }else if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
+            {
+                UpdateApp.gotoUpdateApp(mContext);
             }
         }
-    }
-    /**
-     * GetRepairServiceListCallback调用这个方法  这个是真正的把多少个可修改显示到顶部
-     * 这里是从商城进来 去拿产品包
-     *
-     * 根据参数去获取产品包id
-     *
-     * @param serviceId 门店id
-     * @param carType 车主车类型
-     */
-    private synchronized void  httpGetProductPackageIds(String serviceId, String carType, int position) {
-        OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
-                .addParams("sqlName", "clientSearchCarRepairServiceProductPackage")
-                .addParams("dataReqModel.args.needTotal", "needTotal")
-                .addParams("dataReqModel.args.carType", carType)
-                .addParams("dataReqModel.args.repairService",serviceId)
-                .build()
-                .executeMy(new GetProductPackageIdsCallback(), position);
-
-        L.i(TAG, "获取产皮包修改界面 id url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                + "sqlName=" + "clientSearchCarRepairServiceProductPackage"
-                + "&dataReqModel.args.carType=" + carType
-                + "&dataReqModel.args.needTotal=needTotal"
-                + "&dataReqModel.args.repairService=" + serviceId
-        );
-
-    }
-
-    /**
-     * httpGetProductPackageIds调用这个回调  通过这个回调真正的把多少个可修改显示在顶部
-     */
-    class GetProductPackageIdsCallback extends MyStringCallback {
-
 
         @Override
-        public void onError(Call call, int position, Exception e) {
-            toastMgr.builder.display("服务器错误", 1);
-
-            //这里应该在布局文件里面写多一个  就是提示用户 没有相关产品包
-        }
-
-        @Override
-        public void onResponse(String response, int position) {
-            L.d(TAG, "产品包id json = " + response);
-
-            synchronized (this)
-            {
-                Json2ProductPackageId json2ProductId = new Json2ProductPackageId(response);
-                final List<Json2ProductPackageIdBean> json2ProductIdBeanList = json2ProductId.getProductIds();
-                if (json2ProductId == null)
-                {
-                    toastMgr.builder.display("您当前版本太低,请升级版本", 1);
-                }
-                else
-                {
-                    for (Json2ProductPackageIdBean bean : json2ProductIdBeanList)
-                    {
-                        if (bean.isHasData() == false)
-                        {
-                        }
-                        else
-                        {
-                            mModifyableItemList.add(bean);
-                            modifyable_product_count.setText("1个项目需要保养(共" + mModifyableItemList.size() + "个项目)");
-                        }
-                    }
-                }
-            }
+        public void onSuccess(List<Json2ShopServiceBean> modifyableSHopItemList) {
+            mModifyableSHopItemList = modifyableSHopItemList;
+            modifyable_product_count.setText("1个项目需要保养(共" + mModifyableSHopItemList.size() + "个项目)");
         }
     }
+
+
+
+
+
+
     private List<Json2ProductPackageIdBean> mModifyableItemList = new ArrayList<>();
     private List<Json2ShopServiceBean> mModifyableSHopItemList = new ArrayList<>();
-
-    /**
-     * 这里是从门店进来 去拿多少个产品可以修改   最顶端显示  第一步
-     *
-     * 根据logicalService 和门店id  还有车型  去拿到  看看拿的的是什么
-     * @param logicalService
-     * @param mShopInfoID
-     */
-    private void httpGetShopServiceListByLogicalService(String logicalService, String mShopInfoID) {
-
-        OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
-                .addParams("sqlName", "clientSearchShopService")
-                .addParams("dataReqModel.args.needTotal", "needTotal")
-                .addParams("dataReqModel.args.shop",mShopInfoID)
-                .addParams("dataReqModel.args.carType",mCarType)
-                .addParams("dataReqModel.args.logicalService", logicalService)
-                .build()
-                .execute(new GetShopServiceList());
-
-        L.i("产品包", "通过logicalService获取的url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                + "sqlName=" + "clientSearchShopService"
-                + "&dataReqModel.args.shop=" + mShopInfoID
-                + "&dataReqModel.args.needTotal=needTotal"
-                + "&dataReqModel.args.carType=" + mCarType
-                + "&dataReqModel.args.logicalService=" + logicalService
-        );
-
-    }
-    class GetShopServiceList extends StringCallback
-    {
-        @Override
-        public void onError(Call call, Exception e) {
-            toastMgr.builder.display("网络错误, 请返回重新加载...", 1);
-        }
-        @Override
-        public void onResponse(String response) {
-            L.d(TAG,"通过logicalService获取的 json = " +  response);
-
-            Json2ShopService  shopBena = new Json2ShopService(response);
-            List<Json2ShopServiceBean> beans = shopBena.getShopShowData();
-            if (beans == null)
-            {
-                toastMgr.builder.display("请升级app", 1);
-                return;
-            }
-            else
-            {
-                for (Json2ShopServiceBean bean : beans)
-                {
-                    if (bean.isHasData() == true)
-                    {
-                        mModifyableSHopItemList.add(bean);
-                        modifyable_product_count.setText("1个项目需要保养(共" + mModifyableSHopItemList.size() + "个项目)");
-                    }
-                }
-            }
-        }
-    }
-
-
-
-
-
-
-
 
     /**
      * 根据从修改界面拿回来的数据, 去重新加载产品包  所有产品包
@@ -564,7 +389,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                         for (Json2ProductPackageBean bean : json2ProductPackageBeanList)
                         {
                             bean.setPackageName(ppList.get(position).getPackageName());
-                            bean.setPackageName(ppList.get(position).getId());
+                            bean.setProductPackageId(ppList.get(position).getId());
                         }
 
                         if (json2ProductPackageBeanList.get(0).isHasData() == false)
@@ -1185,6 +1010,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 Json2ChangeableProductBean bean = (Json2ChangeableProductBean) bundle.getSerializable("changedProductBean");
                 int _position = bundle.getInt("position");
 
+
+                //TODO 也是要改的
                 mJson2ProductPackageBeanList.get(_position).setCategory(bean.getCategory());
                 mJson2ProductPackageBeanList.get(_position).setPathCode(bean.getPathCode());
                 mJson2ProductPackageBeanList.get(_position).setCategoryName(bean.getCategoryName());

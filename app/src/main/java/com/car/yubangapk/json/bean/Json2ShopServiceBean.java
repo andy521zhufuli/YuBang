@@ -18,7 +18,7 @@ public class Json2ShopServiceBean extends Base{
 //        {"skipType":"1","id":"0c454072-12be-4e67-ba50-7e26aa80db90","serviceName":"齿轮油"},
 //        {"skipType":"1","id":"049cb409-340c-4fb0-8bdb-8cee4ed6ca1d","serviceName":"相位传感器"}]}
 
-    private String id;
+    private String id;//也是repairservice来的
     private String skipType;
     private String serviceName;
 

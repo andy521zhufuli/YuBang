@@ -219,6 +219,7 @@ public class HttpReqProductPackageFromMallBannerShop
                 }
                 else
                 {
+
                     if (json2ProductPackageBeanList.get(0).isHasData() == false)
                     {
                         //没有产品包
@@ -244,6 +245,7 @@ public class HttpReqProductPackageFromMallBannerShop
                             //设置产品包的名字
                             bean.setPackageName(ids.get(0).getPackageName());
                             bean.setProductPackageId(ids.get(0).getId());
+                            bean.setRepairService(mServiceId);
                         }
                         //
                         if (mCallback == null)

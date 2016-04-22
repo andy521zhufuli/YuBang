@@ -91,7 +91,9 @@
                 android:layout_below="@+id/imageview1"
                 android:background="@drawable/fill_order_list_item_bg"
                 android:visibility="visible" android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+
+                >
                 <RelativeLayout android:background="#fffffaf3"
                     android:id="@+id/name_phone"
                     android:clickable="true"
@@ -521,7 +523,8 @@
                         <TextView android:textSize="12.0sp"
                             android:textColor="@color/head_colors"
                             android:layout_gravity="center"
-                            android:id="@+id/tv_jg" android:paddingTop="4.0dip"
+
+                            android:id="@+id/product_total_price" android:paddingTop="4.0dip"
                             android:paddingRight="5.0dip" android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="商品总额"
@@ -540,7 +543,7 @@
 
                             <TextView android:textSize="10.0sp"
                                 android:textColor="#fff57c33"
-                                android:id="@+id/order_chepin_text" android:visibility="visible"
+                                android:id="@+id/product_install_price" android:visibility="visible"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:layout_marginLeft="10.0dip" android:text="还差11元包邮哦" />
                         </LinearLayout>
@@ -559,8 +562,10 @@
                                 android:text="运    费"
                                 />
                         </LinearLayout>
-                        <TextView android:textSize="12.0sp" android:textColor="@color/head_colors"
-                            android:layout_gravity="center" android:id="@+id/tv_yf" android:paddingTop="4.0dip"
+                        <TextView android:textSize="12.0sp"
+                            android:textColor="@color/head_colors"
+                            android:layout_gravity="center"
+                            android:id="@+id/product_dilivery_price" android:paddingTop="4.0dip"
                             android:paddingRight="5.0dip" android:layout_width="wrap_content"
                             android:text="123"
                             android:layout_height="wrap_content" />
@@ -572,8 +577,11 @@
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="优惠券" android:layout_weight="1.0" />
                         <TextView android:textSize="12.0sp" android:textColor="#ff419c0f"
-                            android:layout_gravity="center" android:id="@+id/tv_yhqjg" android:paddingRight="5.0dip"
-                            android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/product_coupon_price"
+                            android:paddingRight="5.0dip"
+                            android:visibility="visible"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="-0.0" />
                     </LinearLayout>
                     <LinearLayout android:orientation="horizontal" android:visibility="gone"

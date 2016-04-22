@@ -251,7 +251,7 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
                 //获取定位成功, 拿到需要的信息,去请求店铺列表
                 String userid = Configs.getLoginedInfo(mContext).getUserid();
                 String carType = Configs.getLoginedInfo(mContext).getCarType();
-                getInstallShop(mLongitude, mLatitude, carType, mProvince, mCity, mDistrict, "1");
+                getInstallShop(mLongitude, mLatitude, userid, carType, mProvince ,mCity, mDistrict, "1");
             }
 
             L.d(TAG + "当前经纬度", mLongitude +  "=="+ mLatitude + "");
@@ -263,12 +263,12 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
     /**
      * 去后台获取可安装店铺列表
      */
-    private void getInstallShop(double lon, double lat, String carType, String province, String city, String district, String shopStatus) {
+    private void getInstallShop(double lon, double lat, String userid, String carType, String province, String city, String district, String shopStatus) {
 
         mProgress.setMessage("正在获取附近门店...");
 
         HttpReqInstallShopList req = new HttpReqInstallShopList(new ShopListListener());
-        req.getInstallShop(lon, lat, carType, province, city, district, shopStatus);
+        req.getInstallShop(lon, lat, userid, carType, province, city, district, shopStatus);
 
     }
 

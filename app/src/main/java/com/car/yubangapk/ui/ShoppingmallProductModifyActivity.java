@@ -157,7 +157,7 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
             mSizeBean = size;
             for (int position = 0; position < size; position++)
             {
-                String id = beans.get(position).getId();
+                String id = beans.get(position).getId();//就是repairService
 
                 httpGetProductPackageId(id,mCarType, position);
             }
@@ -204,55 +204,7 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
 
     }
 
-    /**
-     * 绑定控件
-     */
-    private void findViews() {
 
-        img_back = (ImageView) findViewById(R.id.img_back);
-        header_name = (TextView) findViewById(R.id.header_name);//
-        product_service_modify = (ListView) findViewById(R.id.product_service_modify);//需要更改的服务的列表
-        info_check_sure_btn = (Button) findViewById(R.id.info_check_sure_btn);//确定按钮
-
-
-        header_name.setText("保养项目选择");
-        img_back.setOnClickListener(this);
-        info_check_sure_btn.setOnClickListener(this);
-
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        switch (view.getId())
-        {
-            case R.id.img_back:
-                setResult(Activity.RESULT_CANCELED);
-                finish();
-                break;
-
-            case R.id.info_check_sure_btn:
-                //mCheckedProductPackageIdBeans ;
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-
-                if(mFrom.equals(Configs.FROM_SHOPPINGMALL))
-                {
-                    bundle.putSerializable("bean", (Serializable) mCheckedProductPackageIdBeans);
-                }
-                else
-                {
-                    bundle.putSerializable("bean", (Serializable) mCheckedShopServiceBeans);
-                }
-
-
-                intent.putExtras(bundle);
-                setResult(Activity.RESULT_OK,intent);
-                finish();
-                break;
-        }
-
-    }
 
     @Override
     protected void onDestroy() {
@@ -349,7 +301,55 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
         }
     }
 
+    /**
+     * 绑定控件
+     */
+    private void findViews() {
 
+        img_back = (ImageView) findViewById(R.id.img_back);
+        header_name = (TextView) findViewById(R.id.header_name);//
+        product_service_modify = (ListView) findViewById(R.id.product_service_modify);//需要更改的服务的列表
+        info_check_sure_btn = (Button) findViewById(R.id.info_check_sure_btn);//确定按钮
+
+
+        header_name.setText("保养项目选择");
+        img_back.setOnClickListener(this);
+        info_check_sure_btn.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId())
+        {
+            case R.id.img_back:
+                setResult(Activity.RESULT_CANCELED);
+                finish();
+                break;
+
+            case R.id.info_check_sure_btn:
+                //mCheckedProductPackageIdBeans ;
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+
+                if(mFrom.equals(Configs.FROM_SHOPPINGMALL))
+                {
+                    bundle.putSerializable("bean", (Serializable) mCheckedProductPackageIdBeans);
+                }
+                else
+                {
+                    bundle.putSerializable("bean", (Serializable) mCheckedShopServiceBeans);
+                }
+
+
+                intent.putExtras(bundle);
+                setResult(Activity.RESULT_OK,intent);
+                finish();
+                break;
+        }
+
+    }
 
     private class ShopServiceModifyAdapter extends BaseAdapter
     {
@@ -612,6 +612,7 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
 
         }
     }
+
 
 
 

@@ -29,18 +29,20 @@ import com.car.yubangapk.json.bean.Json2InstallShopModelsBean;
 import com.car.yubangapk.json.bean.Json2LoginBean;
 
 
+import com.car.yubangapk.json.bean.Json2OrderPriceBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
-import com.car.yubangapk.json.bean.Json2ShopServiceBean;
-import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
 import com.car.yubangapk.network.myHttpReq.HttpReqAddress;
+import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqConformOrderCoupon;
 import com.car.yubangapk.network.myHttpReq.HttpReqConformOrderCouponInterface;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetOrderPrice;
 import com.car.yubangapk.network.myHttpReq.httpReqAddressInterface;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.Warn.UpdateApp;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.view.AlertDialog;
+import com.car.yubangapk.view.CustomProgressDialog;
 import com.car.yubangapk.view.WheelDatePicker.MyDatePicker;
 
 import java.io.Serializable;
@@ -94,6 +96,10 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private TextView        tv_price;//价格
 
 
+    private TextView        product_total_price;//总价
+    private TextView        product_install_price;//安装费
+    private TextView        product_dilivery_price;//运费
+    private TextView        product_coupon_price;//优惠券的减免金额
 
 
     private RelativeLayout btn_pay;//提交订单  去支付
@@ -110,6 +116,9 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private Json2InstallShopModelsBean mInstallShopBean = null;//获取到的安装店铺
 
 
+
+    CustomProgressDialog mProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +129,9 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         findViews();
         Bundle bundle = getIntent().getExtras();
         mFrom = bundle.getString("from");
+
+
+        mProgress = new CustomProgressDialog(mContext);
 
         List<Json2ProductPackageBean> productPackageList = (List<Json2ProductPackageBean>) bundle.getSerializable("productPackageList");
         mProductPackageListToOrderProductDetailPage = productPackageList;
@@ -283,7 +295,13 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
         youhui_list = (ListView) findViewById(R.id.youhui_list);
 
-        tv_price = (TextView) findViewById(R.id.tv_price);
+        tv_price                = (TextView) findViewById(R.id.tv_price);
+
+        product_total_price     = (TextView) findViewById(R.id.product_total_price);//总价
+        product_install_price   = (TextView) findViewById(R.id.product_install_price);//安装费
+        product_dilivery_price  = (TextView) findViewById(R.id.product_dilivery_price);//运费
+        product_coupon_price    = (TextView) findViewById(R.id.product_coupon_price);//优惠券的减免金额
+
 
 
 
@@ -550,6 +568,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 Bundle bundle = data.getExtras();
                 CouponsBean coupon = (CouponsBean) bundle.getSerializable("coupon");
 
+                mSelectedCoupon = coupon;
+
                 if (coupon.getCouponName().equals("不使用"))
                 {
                     coupon_description.setText(coupon.getCouponName()+"优惠券");
@@ -558,12 +578,75 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 {
                     coupon_description.setText("满" + coupon.getRegulationReach()+ "减" + coupon.getRegulationSubtract() + "优惠券");
                 }
+
+
+                //选择了优惠券 就去拿订单价格
+
+                String userid = Configs.getLoginedInfo(mContext).getUserid();
+                String cartype = Configs.getLoginedInfo(mContext).getCarType();
+                getOrderPrice(userid, cartype, mProductPackageListToOrderProductDetailPage, mInstallShopBean, mSelectedCoupon);
+
             }
         }
         else
         {
             toastMgr.builder.display("您没有选择",1);
         }
+    }
+
+    /**
+     * 去拿订单价格
+     * @param userid
+     * @param cartype
+     * @param ProductDetailPage
+     * @param nstallShopBean
+     * @param coupon
+     */
+    private void getOrderPrice(String userid, String cartype, List<Json2ProductPackageBean> ProductDetailPage, Json2InstallShopModelsBean nstallShopBean, CouponsBean coupon) {
+        mProgress = mProgress.show(mContext, "获取订单价格...", false, null);
+        HttpReqGetOrderPrice reqGetOrderPrice = new HttpReqGetOrderPrice();
+        reqGetOrderPrice.setCallback(new HttpReqCallback() {
+            @Override
+            public void onFail(int errorCode, String message) {
+                mProgress.dismiss();
+                if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
+                {
+                    UpdateApp.gotoUpdateApp(mContext);
+                }
+                else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
+                {
+                    toastMgr.builder.display(message, 1);
+                }
+                else
+                {
+                    toastMgr.builder.display(message, 1);
+                }
+            }
+
+            @Override
+            public void onSuccess(Object object) {
+                mProgress.dismiss();
+                Json2OrderPriceBean orderPrice = (Json2OrderPriceBean) object;
+                setOrderPrice(orderPrice);
+
+            }
+        });
+        reqGetOrderPrice.getOrderPrice(userid, cartype, ProductDetailPage, nstallShopBean, coupon);
+
+    }
+
+    /**
+     * 设置订单价格
+     * @param orderPrice
+     */
+    private void setOrderPrice(Json2OrderPriceBean orderPrice)
+    {
+        tv_price.setText(orderPrice.getTotalPrice()+"");
+        product_total_price.setText(orderPrice.getTotalPrice()+"");
+        product_install_price.setText(orderPrice.getInstallationCoast() + "");
+        product_dilivery_price.setText("免运费");
+        product_coupon_price.setText("-" + orderPrice.getCouponPrice());
+
     }
 
     /**
@@ -776,5 +859,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private static final int REQUEST_CODE_CHOOSE_ADDRESS = 0X01;//选择地址
     private static final int REQUEST_CODE_CHOOSE_INSTALL_SHOP = 0X10;//选择安装门店
     private static final int REQUEST_CODE_CHOOSE_COUPON = 0X11;//选择安装门店
+
+    private CouponsBean mSelectedCoupon = null;//选择优惠券之后   赋值全局变量
 
 }

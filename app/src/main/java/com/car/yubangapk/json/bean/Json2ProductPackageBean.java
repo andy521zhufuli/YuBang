@@ -56,6 +56,15 @@ public class Json2ProductPackageBean extends Base
     }
 
     private String packageName;//为了适应项目 而自己加的字段  后台没有这个字段
+    private String repairService;//为了适应项目 而自己加的字段  后台没有这个字段
+
+    public String getRepairService() {
+        return repairService;
+    }
+
+    public void setRepairService(String repairService) {
+        this.repairService = repairService;
+    }
 
     public String getProductPackageId() {
         return ProductPackageId;

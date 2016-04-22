@@ -13,7 +13,7 @@ public class Json2ProductPackageIdBean extends Base{
 
     //{"total":0,"rows":[{"packageName":"美孚速霸保养包","id":"42d3e125-e906-11e5-b9b6-28d244001fe5","packageCode":"PG0001"}]}
 
-    private String id;
+    private String id;    //产品包的id
     private String pathCode;
     private String packageName;
     private String packageCode;
