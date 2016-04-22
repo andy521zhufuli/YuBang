@@ -19,6 +19,7 @@ import com.car.yubangapk.banner.constants.EffectConstants;
 import com.car.yubangapk.banner.listener.FlashViewListener;
 import com.car.yubangapk.configs.BannerSkipType;
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.FormatJson;
 import com.car.yubangapk.json.bean.BannerAd;
 import com.car.yubangapk.json.bean.Json2LoginBean;
@@ -26,12 +27,15 @@ import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
 import com.car.yubangapk.json.bean.ShoppingmallPicBean;
 import com.car.yubangapk.json.bean.ShoppingmallSpeciesePicBean;
 import com.car.yubangapk.json.formatJson.Json2ShoppingmallBottomPics;
+import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetLogicalService;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetShoppingmallBanner;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetShoppingmallBannerInterface;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.MyStringCallback;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
+import com.car.yubangapk.utils.Warn.UpdateApp;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.view.AlertDialog;
@@ -125,6 +129,8 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(List<BannerAd> bannerad) {
                 List<String> bannerAdUrl = new ArrayList<>();
+                //赋值给全局变量
+                mBannerAdList = bannerad;
                 String url;
                 int size = bannerad.size();
                 if (size > 0)
@@ -161,21 +167,67 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     }
 
     /**
-     * 去拿中间分类的小图标以及信息
+     * 去拿中间分类的小图标以及信息  LogicalService
      */
     private void httpGetMiddleSpeciesPics()
     {
-        /**
-         * 去拿中间8个的图片
-         */
-        OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
-                .addParams("sqlName", "clientSearchLogicalService")
-                .addParams("dataReqModel.args.needTotal","needTotal")
-                .build()
-                .execute(new MallSpecieseCallback());
-        L.i(TAG, "Species url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?" + "sqlName=clientSearchLogicalService&dataReqModel.args.needTotal=clientSearchLogicalService");
+        HttpReqGetLogicalService getLogicalService = new HttpReqGetLogicalService();
+        getLogicalService.setCallback(new HttpReqCallback() {
+            @Override
+            public void onFail(int errorCode, String message) {
+                if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
+                {
+                    UpdateApp.gotoUpdateApp(mContext);
+                }
+                else if (errorCode == ErrorCodes.ERROR_CODE_NETWORK)
+                {
+                    toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置",1);
+                }
+            }
 
+            @Override
+            public void onSuccess(Object object) {
+                List<ShoppingmallSpeciesePicBean> picList;
+                picList = (List<ShoppingmallSpeciesePicBean>) object;
+                mShoppingmallSpeciesPicList = picList;
+                loadSpeciesImage(mShoppingmallSpeciesPicList);
+            }
+        });
+        getLogicalService.getLogicalService();
+    }
+
+
+    /**
+     * 中间部分图片加载
+     */
+    private void loadSpeciesImage(List<ShoppingmallSpeciesePicBean> picList)
+    {
+        int size = mMiddleSpeciesList.size();
+        for (int i = 0; i < size - 1; i++)
+        {
+            ShoppingmallSpeciesePicBean shoppingmallSpeciesePicBean = picList.get(i);
+            String pathcode = shoppingmallSpeciesePicBean.getPathCode();
+            String photoname = shoppingmallSpeciesePicBean.getPhotoName();
+            String id        = shoppingmallSpeciesePicBean.getId();
+
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
+            L.d(TAG,"商城中间图片加载url = " + url);
+            ImageLoaderTools.getInstance(mContext).displayImage(url, mMiddleSpeciesList.get(i));
+
+            //在此同时, 去拿对应的6个图片
+            /**
+             * 去拿中间以下6个的图片
+             */
+            OkHttpUtils.post()
+                    .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
+                    .addParams("sqlName", "clientSearchRepairService")
+                    .addParams("dataReqModel.args.needTotal","needTotal")
+                    .addParams("dataReqModel.args.logicalService",id)
+                    .build()
+                    .executeMy(new MallBottomCallback(),i);
+            L.i(TAG, "service all kinds bottom " + i  + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
+                    + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+id);
+        }
     }
 
 
@@ -271,73 +323,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    /**
-     * 中部图标 分类
-     */
-    public class MallSpecieseCallback extends StringCallback
-    {
 
-        @Override
-        public void onError(Call call, Exception e) {
-            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置",1);
-        }
-
-        @Override
-        public void onResponse(String response) {
-            L.d(TAG + "种类 json", response);
-            FormatJson formatJson = new FormatJson(response);
-            List<ShoppingmallSpeciesePicBean> picList;
-            picList = formatJson.getShoppingMallSpeciesePic();
-            if (picList == null)
-            {
-                toastMgr.builder.display("服务器错误,请稍后再试,", 1);
-                return;
-            }
-            mShoppingmallSpeciesPicList = picList;
-            //TODO
-            //中部分类图片加载
-            loadSpeciesImage();
-        }
-
-        @Override
-        public void inProgress(float progress) {
-            super.inProgress(progress);
-            L.d(TAG + "MallSpecieseCallback  progress" + "  " + progress * 100);
-        }
-    }
-
-    /**
-     * 中间部分图片加载
-     */
-    private void loadSpeciesImage()
-    {
-        int size = mMiddleSpeciesList.size();
-        for (int i = 0; i < size - 1; i++)
-        {
-            ShoppingmallSpeciesePicBean shoppingmallSpeciesePicBean = mShoppingmallSpeciesPicList.get(i);
-            String pathcode = shoppingmallSpeciesePicBean.getPathCode();
-            String photoname = shoppingmallSpeciesePicBean.getPhotoName();
-            String id        = shoppingmallSpeciesePicBean.getId();
-
-            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
-            L.d(TAG,"商城中间图片加载url = " + url);
-            ImageLoaderTools.getInstance(mContext).displayImage(url, mMiddleSpeciesList.get(i));
-
-            //在此同时, 去拿对应的6个图片
-            /**
-             * 去拿中间以下6个的图片
-             */
-            OkHttpUtils.post()
-                    .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
-                    .addParams("sqlName", "clientSearchRepairService")
-                    .addParams("dataReqModel.args.needTotal","needTotal")
-                    .addParams("dataReqModel.args.logicalService",id)
-                    .build()
-                    .executeMy(new MallBottomCallback(),i);
-            L.i(TAG, "service all kinds bottom " + i  + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                    + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+id);
-        }
-    }
     /**
      * 细节分类 没给7个图标 还不算广告
      * 中部以下的图标获取
