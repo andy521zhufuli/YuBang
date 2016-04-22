@@ -378,7 +378,6 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             // TODO Auto-generated method stub
-            toastMgr.builder.display("s", 0);
             phoneNumLength = s.toString().length();
             //发送验证码按钮设置成enabled
             if (phoneNumLength >= 11)

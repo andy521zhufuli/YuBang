@@ -184,10 +184,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
         findViews();
 
-
-
-        isLogined();
-
         currentPage = ALL_CAR_PAGE;
 
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
@@ -217,7 +213,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         {
             //没有 登录
             alertDialog.builder().setTitle("提示")
-                    .setMsg("您还没登录,请先登录!")
+                    .setMsg("您还没登录,请先登录!!")
                     .setCancelable(false)
                     .setPositiveButton("去登录", new View.OnClickListener() {
                         @Override
