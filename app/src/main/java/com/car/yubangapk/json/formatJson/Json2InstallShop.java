@@ -72,7 +72,18 @@ public class Json2InstallShop {
 
             installShopBean.setReturnCode(returnCode);
             installShopBean.setMessage(message);
+
+            if (returnCode == 100)
+            {
+                return installShopBean;
+            }
+
+
             JSONArray shopModels = total.getJSONArray("shopModels");
+
+
+
+
             int size = shopModels.length();
             if (size == 0)
             {
@@ -97,9 +108,7 @@ public class Json2InstallShop {
                     String          orderNum;
                     String          star;
                     int             order;
-
-
-
+                    int             own;
                     shopId          = shopModel.getString("shopId");
                     shopName        = shopModel.getString("shopName");
                     distance        = shopModel.getDouble("distance");
@@ -113,6 +122,8 @@ public class Json2InstallShop {
                     orderNum        = shopModel.getString("orderNum");
                     star            = shopModel.getString("star");
                     order           = shopModel.getInt("order");
+                    own             = shopModel.getInt("own");
+
 
                     model.setShopId(shopId);
                     model.setShopName(shopName);
@@ -127,12 +138,14 @@ public class Json2InstallShop {
                     model.setOrderNum(orderNum);
                     model.setStar(star);
                     model.setOrder(order);
+                    model.setOwn(own);
 
-
+                    model.setHasData(true);
 
 
                     shopModelsBeen.add(model);
                 }
+                installShopBean.setHasData(true);
                 installShopBean.setShopModels(shopModelsBeen);
             }
 

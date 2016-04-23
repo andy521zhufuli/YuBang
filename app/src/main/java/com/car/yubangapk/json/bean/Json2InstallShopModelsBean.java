@@ -39,6 +39,15 @@ public class Json2InstallShopModelsBean extends Base{
     private String          orderNum;
     private String          star;
     private int             order;
+    private int             own;
+
+    public int getOwn() {
+        return own;
+    }
+
+    public void setOwn(int own) {
+        this.own = own;
+    }
 
     public int getOrder() {
         return order;

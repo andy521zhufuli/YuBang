@@ -413,38 +413,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 intent.putExtra("shopBean", mShopBeanResponse);
                 //这里需要把要显示的店铺信息放到FirstPageMarkerClickedActivity里面去  让它解析  然后显示
                 startActivity(intent);
-                intent = null;
-//                if (bottom.getVisibility() == View.VISIBLE) {
-//                    bottom.setVisibility(View.INVISIBLE);
-//                } else
-//                    bottom.setVisibility(View.VISIBLE);
-//                final String info = (String) marker.getExtraInfo().get("info");
-//                InfoWindow infoWindow;
-//                //动态生成一个Button对象，用户在地图中显示InfoWindow
-//                final Button textInfo = new Button(getApplicationContext());
-//                textInfo.setBackgroundResource(R.mipmap.alipay_payment);
-//                textInfo.setPadding(10, 10, 10, 10);
-//                textInfo.setTextColor(Color.BLACK);
-//                textInfo.setTextSize(12);
-//                textInfo.setText(info);
-//                //得到点击的覆盖物的经纬度
-//                LatLng ll = marker.getPosition();
-//                textInfo.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//                //将marker所在的经纬度的信息转化成屏幕上的坐标
-//                Point p = mBaiduMap.getProjection().toScreenLocation(ll);
-//                p.y -= 90;
-//                LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
-//                //初始化infoWindow，最后那个参数表示显示的位置相对于覆盖物的竖直偏移量，这里也可以传入一个监听器
-//                infoWindow = new InfoWindow(textInfo, llInfo, 0);
-//                mBaiduMap.showInfoWindow(infoWindow);//显示此infoWindow
-//                //让地图以备点击的覆盖物为中心
-//                MapStatusUpdate status = MapStatusUpdateFactory.newLatLng(ll);
-//                mBaiduMap.setMapStatus(status);
                 return true;
             }
         });
