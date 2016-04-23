@@ -36,6 +36,7 @@ import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqConformOrderCoupon;
 import com.car.yubangapk.network.myHttpReq.HttpReqConformOrderCouponInterface;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetOrderPrice;
+import com.car.yubangapk.network.myHttpReq.HttpReqSubmitOrder;
 import com.car.yubangapk.network.myHttpReq.httpReqAddressInterface;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.Warn.UpdateApp;
@@ -355,7 +356,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 break;
             //提交订单 去支付
             case R.id.btn_pay:
-                choosePayment();
+                //choosePayment();
+                commitOrder();
                 break;
             case R.id.name_phone://地址
                 chooseAddress();
@@ -378,9 +380,86 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
      * 提交订单
      */
     private void commitOrder() {
+        String userid = Configs.getLoginedInfo(mContext).getUserid();
+        String cartype = Configs.getLoginedInfo(mContext).getCarType();
+        if (mInstallShopBean == null)
+        {
+            toastMgr.builder.display("您没有选择安装门店", 1);
 
+            return;
+        }
+        else if (mSelectedCoupon == null)
+        {
+            toastMgr.builder.display("您没有选择优惠券", 1);
+            return;
+        }
+        mProgress = mProgress.show(mContext, "订单提交中...", false, null);
+        submitOrder(userid, cartype, mProductPackageListToOrderProductDetailPage, mInstallShopBean, mSelectedCoupon);
 
+    }
 
+    private void submitOrder(String userid, String cartype, List<Json2ProductPackageBean> ProductDetailPage, Json2InstallShopModelsBean nstallShopBean, CouponsBean coupon)
+    {
+        HttpReqSubmitOrder reqGetOrderPrice = new HttpReqSubmitOrder();
+        reqGetOrderPrice.setCallback(new HttpReqCallback() {
+            @Override
+            public void onFail(int errorCode, String message) {
+                mProgress.dismiss();
+                if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
+                {
+                    UpdateApp.gotoUpdateApp(mContext);
+                }
+                else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
+                {
+                    toastMgr.builder.display(message, 1);
+                }
+                else
+                {
+                    toastMgr.builder.display(message, 1);
+                }
+            }
+
+            @Override
+            public void onSuccess(Object object) {
+                mProgress.dismiss();
+                //提交订单
+                Json2OrderPriceBean orderPrice = (Json2OrderPriceBean) object;
+                gotoCommitSuccess(orderPrice);
+
+            }
+        });
+        reqGetOrderPrice.getOrderPrice(userid, cartype, ProductDetailPage, nstallShopBean, coupon);
+    }
+
+    private void gotoCommitSuccess(final Json2OrderPriceBean submitOrder) {
+
+        final Intent intent = new Intent();
+        AlertDialog alertDialog = new AlertDialog(mContext);
+        alertDialog.builder().setTitle("提示")
+                .setMsg("下单成功!")
+                .setCancelable(false)
+                .setPositiveButton("去商城", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("otherActivity", "orderToShoppingmall");
+                        intent.setClass(mContext, MainActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+                    }
+                })
+                .setNegativeButton("去订单", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("otherActivity", "orderToMy");
+                        intent.setClass(mContext, MainActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                })
+                .show();
     }
 
     /**

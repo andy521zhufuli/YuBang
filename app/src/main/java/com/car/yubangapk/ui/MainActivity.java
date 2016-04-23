@@ -294,6 +294,16 @@ public class MainActivity extends TabActivity {
             //上传成功, 到首页去
             setDisplayShoppingPage();
         }
+        else if (activityToShow.equals("orderToShoppingmall"))
+        {
+            //去商城界面
+            setDisplayShoppingPage();
+        }
+        else if (activityToShow.equals("orderToMy"))
+        {
+            //去我的界面
+            setDisplayMyPage();
+        }
 //        else if (activityToShow.equals("LOGIN_SUCCESS"))
 //        {
 //            //这里不能判断 就正常启动行了

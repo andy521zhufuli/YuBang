@@ -26,6 +26,17 @@ public class Json2ProductPackageIdBean extends Base{
     private String serviceName;//不用
 
 
+    public String getRepairService() {
+        return repairService;
+    }
+
+    public void setRepairService(String repairService) {
+        this.repairService = repairService;
+    }
+
+    String repairService;//为了项目需要
+
+
 
     public String getPackageCode() {
         return packageCode;

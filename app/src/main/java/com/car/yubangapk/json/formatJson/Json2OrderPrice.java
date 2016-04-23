@@ -49,19 +49,19 @@ public class Json2OrderPrice {
 
 
 
-//            isJson = total.getBoolean("isJson");
-//            isReturnStr = total.getBoolean("isReturnStr");
-//            returnCode = total.getInt("returnCode");
-//            returneMsg = total.getString("returneMsg");
-//            message = total.getString("message");
+            isJson = total.getBoolean("isJson");
+            isReturnStr = total.getBoolean("isReturnStr");
+            returnCode = total.getInt("returnCode");
+            returneMsg = total.getString("returneMsg");
+            message = total.getString("message");
 
 
 
-//            orderPriceBean.setIsJson(isJson);
-//            orderPriceBean.setIsReturnStr(isReturnStr);
-//            orderPriceBean.setReturnCode(returnCode);
-//            orderPriceBean.setReturneMsg(returneMsg);
-//            orderPriceBean.setMessage(message);
+            orderPriceBean.setJson(isJson);
+            orderPriceBean.setReturnStr(isReturnStr);
+            orderPriceBean.setReturnCode(returnCode);
+            orderPriceBean.setReturneMsg(returneMsg);
+            orderPriceBean.setMessage(message);
             orderPriceBean.setTotalPrice(totalPrice);
             orderPriceBean.setCouponPrice(couponPrice);
             orderPriceBean.setInstallationCoast(installationCoast);

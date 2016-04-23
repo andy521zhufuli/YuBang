@@ -3,11 +3,9 @@ package com.car.yubangapk.network.myHttpReq;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.CouponsBean;
-import com.car.yubangapk.json.bean.Json2CouponBean;
 import com.car.yubangapk.json.bean.Json2InstallShopModelsBean;
 import com.car.yubangapk.json.bean.Json2OrderPriceBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
-import com.car.yubangapk.json.formatJson.Json2Coupon;
 import com.car.yubangapk.json.formatJson.Json2OrderPrice;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.builder.PostFormBuilder;
@@ -23,14 +21,12 @@ import okhttp3.Call;
 
 /**
  * Created by andy on 16/4/22.
- *
- * 选择优惠券之后  获取价格
  */
-public class HttpReqGetOrderPrice
+public class HttpReqSubmitOrder
 {
     HttpReqCallback mCallback;
 
-    public HttpReqGetOrderPrice()
+    public HttpReqSubmitOrder()
     {
 
     }
@@ -131,28 +127,29 @@ public class HttpReqGetOrderPrice
             L.i("订单价格, json = ", response);
             Json2OrderPrice json2OrderPrice = new Json2OrderPrice(response);
             Json2OrderPriceBean orderPrice = json2OrderPrice.getOrderPrice();
-//            Json2Coupon json2Coupon = new Json2Coupon(response);
-//            Json2CouponBean couponBean = json2Coupon.getCoupon();
-
-
-
             if (orderPrice == null)
             {
                 mCallback.onFail(ErrorCodes.ERROR_CODE_LOW_VERSION, ErrorCodes.LOW_VERSION_TO_UPGRADE_APP);
             }
             else
             {
-                if (orderPrice.isHasData() == false)
+                if (orderPrice.getReturnCode() == 0)
                 {
-                    mCallback.onFail(ErrorCodes.ERROR_CODE_SERVER_ERROR, ErrorCodes.SERVER_ERROR);
+                    if (orderPrice.isHasData() == false)
+                    {
+                        mCallback.onFail(ErrorCodes.ERROR_CODE_SERVER_ERROR, ErrorCodes.SERVER_ERROR);
+                    }
+                    else
+                    {
+                        mCallback.onSuccess(orderPrice);
+                    }
                 }
                 else
                 {
-                    mCallback.onSuccess(orderPrice);
+                    mCallback.onFail(ErrorCodes.ERROR_CODE_SERVER_ERROR, orderPrice.getMessage());
                 }
             }
 
         }
     }
-
 }

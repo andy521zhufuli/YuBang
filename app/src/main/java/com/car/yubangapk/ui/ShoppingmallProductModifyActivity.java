@@ -104,7 +104,7 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
         List<Json2ShopServiceBean>              shopServiceList;
         if (Configs.FROM_SHOPPINGMALL.equals(mFrom))
         {
-            list = (List<Json2ShoppingmallBottomPicsBean>) bundle.getSerializable("shoppingmallBottomPicBeanList");
+            list = (List<Json2ShoppingmallBottomPicsBean>) bundle.getSerializable("shoppingmallBottomPicBeanList");//这里面就是对应的repairService
             mShopMallList = list;
             //商城
             getAllRepareServiceByIdsNew(list);
@@ -269,6 +269,7 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
                     else
                     {
                         //拿到这个有产品的repairService   放在list里面 等待用户选择这个repairService对应的产品包  返回给产皮包界面
+                        mShopMallList.get(position);
                         mRepairServiceIds.add(mShopMallList.get(position).getId());
 
                         //就放到listview里面去显示
@@ -276,6 +277,13 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
                         {
 
                             isFirstShowListview = true;
+
+                            int length = json2ProductIdBeanList.size();
+                            for (int i = 0; i < length; i++)
+                            {
+                                json2ProductIdBeanList.get(i).setRepairService(mShopMallList.get(position).getId());
+                            }
+
                             mJson2ProductPackageIdBeans = json2ProductIdBeanList;
                             mProductServiceModifyAdapter = new ProductServiceModifyAdapter(mJson2ProductPackageIdBeans);
                             product_service_modify.setAdapter(mProductServiceModifyAdapter);
@@ -285,6 +293,7 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
                             int length = json2ProductIdBeanList.size();
                             for (int i = 0; i < length; i++)
                             {
+                                json2ProductIdBeanList.get(i).setRepairService(mShopMallList.get(position).getId());
                                 mJson2ProductPackageIdBeans.add(json2ProductIdBeanList.get(i));
                                 mProductServiceModifyAdapter.refresh(mJson2ProductPackageIdBeans);
                             }

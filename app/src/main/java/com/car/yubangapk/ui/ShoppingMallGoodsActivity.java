@@ -228,30 +228,14 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             HttpReqGetShoppingmallGoodsModifiableCountFromShoppingmall req = new HttpReqGetShoppingmallGoodsModifiableCountFromShoppingmall();
             req.setCallbac(new GetModifiableNumFromMall());
             req.getModifiableCount(serviceId, mFrom, carType);
-
-//            OkHttpUtils.post()
-//                    .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
-//                    .addParams("sqlName", "clientSearchRepairService")
-//                    .addParams("dataReqModel.args.needTotal","needTotal")
-//                    .addParams("dataReqModel.args.id",serviceId)
-//                    .build()
-//                    .executeMy(new LogicalServiceCallback(),0);
-//            L.i(TAG, "service all kinds bottom " + 0  + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-//                    + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.id="+serviceId);
         }
         else
         {
-
             HttpReqShoppingmallGoodsModifiableCountFromShop req = new HttpReqShoppingmallGoodsModifiableCountFromShop();
             req.setCallbac(new GetModifiableNumFromShop());
             req.getModifiableCount(serviceId, mFrom, carType, mShopInfoID);
-
         }
-
-
-
     }
-
     class GetModifiableNumFromMall implements HttpReqModifiableCountFromShoppingmallCallback
     {
 
@@ -285,8 +269,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             modifyable_product_count.setText("1个项目需要保养(共" + mModifyableItemList.size() + "个项目)");
         }
     }
-
-
     class GetModifiableNumFromShop implements HttpReqModifiableCountFromShopCallback
     {
 
@@ -319,9 +301,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             modifyable_product_count.setText("1个项目需要保养(共" + mModifyableSHopItemList.size() + "个项目)");
         }
     }
-
-
-
 
 
 
@@ -390,6 +369,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                         {
                             bean.setPackageName(ppList.get(position).getPackageName());
                             bean.setProductPackageId(ppList.get(position).getId());
+                            bean.setRepairService(ppList.get(position).getRepairService());
                         }
 
                         if (json2ProductPackageBeanList.get(0).isHasData() == false)
@@ -492,57 +472,58 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         int index = 0;
         for (index = 0; index < size; index++)
         {
-            String productPackageId = ppList.get(index).getId();
+            String repairservice = ppList.get(index).getId();
             OkHttpUtils.post()
                     .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
                     .addParams("sqlName", "clientSearchCarRepairServiceProductPackage")
                     .addParams("dataReqModel.args.needTotal", "needTotal")
                     .addParams("dataReqModel.args.carType", mCarType)
-                    .addParams("dataReqModel.args.repairService", productPackageId)
+                    .addParams("dataReqModel.args.repairService", repairservice)
                     .build()
-                    .executeProcudtPkg(new GetProductPackageIdFromShopModify(), ppList.get(index).getServiceName());
+                    .executeObject(new GetProductPackageIdFromShopModify(), ppList, index);
 
-            L.i("FirstPageShopShowActivity", "获取产品包id url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
+            L.i("c产品包", "获取产品包id url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
                     + "sqlName=" + "clientSearchCarRepairServiceProductPackage"
                     + "&dataReqModel.args.needTotal=needTotal"
-                    + "&dataReqModel.args.repairService=" + productPackageId
+                    + "&dataReqModel.args.repairService=" + repairservice
             );
         }
     }
-    private class GetProductPackageIdFromShopModify extends MyPPStringCallback
+    private class GetProductPackageIdFromShopModify extends MyObjectStringCallback
     {
-
         @Override
-        public void onError(Call call, String packageName, Exception e) {
+        public void onError(Call call, Object object, int position, Exception e) {
             toastMgr.builder.display("网络错误", 1);
         }
-
         @Override
-        public void onResponse(String response, String packageName) {
+        public void onResponse(String response, Object object, int position) {
             //从门店过来
-            Json2ProductPackageId jppid = new Json2ProductPackageId(response);
-            List<Json2ProductPackageIdBean> beans = jppid.getProductIds();
-            if (beans == null)
+            List<Json2ShopServiceBean> ppList = (List<Json2ShopServiceBean>) object;
+            synchronized (this)
             {
-                toastMgr.builder.display("您当前版本太低,请升级版本", 1);
-            }
-            else
-            {
-                for (Json2ProductPackageIdBean bean : beans)
+                Json2ProductPackageId jppid = new Json2ProductPackageId(response);
+                List<Json2ProductPackageIdBean> beans = jppid.getProductIds();
+                if (beans == null)
                 {
-                    if (bean.isHasData() == true)
+                    toastMgr.builder.display("您当前版本太低,请升级版本", 1);
+                }
+                else
+                {
+                    for (Json2ProductPackageIdBean bean : beans)
                     {
-                        httpGetProductPackageByIds(beans);
-                    }
-                    else
-                    {
+                        if (bean.isHasData() == true)
+                        {
+                            bean.setRepairService(ppList.get(position).getId());
+                            httpGetProductPackageByIds(beans);
+                        }
+                        else
+                        {
 
+                        }
                     }
                 }
-
-
-
             }
+
         }
     }
 
@@ -973,29 +954,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         }
     }
 
-    /**
-     * 方法废弃 暂时没用
-     */
-    class ProductPkgClick implements View.OnClickListener
-    {
-        private List<Json2ProductPackageBean> mpplist;
-        private ProductPackageAdapter.ViewHolder holder;
-
-
-        public ProductPkgClick(List<Json2ProductPackageBean> list, ProductPackageAdapter.ViewHolder hold)
-        {
-            this.mpplist = list;
-            this.holder = hold;
-        }
-
-        @Override
-        public void onClick(View view) {
-
-
-
-
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
