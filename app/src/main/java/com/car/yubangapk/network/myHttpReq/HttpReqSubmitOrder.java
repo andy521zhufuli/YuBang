@@ -3,6 +3,7 @@ package com.car.yubangapk.network.myHttpReq;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.CouponsBean;
+import com.car.yubangapk.json.bean.Json2DefaultAddressBean;
 import com.car.yubangapk.json.bean.Json2InstallShopModelsBean;
 import com.car.yubangapk.json.bean.Json2OrderPriceBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
@@ -37,7 +38,7 @@ public class HttpReqSubmitOrder
     }
 
 
-    public void getOrderPrice(String userid, String carType, List<Json2ProductPackageBean> productDetail, Json2InstallShopModelsBean mInstallShopBean, CouponsBean couponsBean)
+    public void getOrderPrice(String userid, String carType, List<Json2ProductPackageBean> productDetail, Json2InstallShopModelsBean mInstallShopBean, CouponsBean couponsBean, Json2DefaultAddressBean addressBean, String installtime)
     {
         String shopid = mInstallShopBean.getShopId();
 
@@ -102,14 +103,20 @@ public class HttpReqSubmitOrder
         if (name.equals("不使用"))
         {
             builder = builder.addParams("orderReq.couponId", "");
+            url += "&orderReq.couponId=" + "";
         }
         else
         {
             builder = builder.addParams("orderReq.couponId", couponsBean.getCouponId());
+            url += "&orderReq.couponId=" + couponsBean.getCouponId();
         }
 
+        builder = builder.addParams("orderReq.addressId", addressBean.getId());
+        url += "&orderReq.addressId=" + addressBean.getId();
+        builder = builder.addParams("orderReq.installTime", installtime);
+        url += "&orderReq.addressId=" + installtime;
         builder.build().execute(new GetOrderPrice());
-        L.i(HttpReqConformOrderCoupon.class.getName(), "获取订单价格url = " + url);
+        L.i(HttpReqConformOrderCoupon.class.getName(), "获取提交订单url = " + url);
     }
 
 
@@ -124,7 +131,7 @@ public class HttpReqSubmitOrder
         @Override
         public void onResponse(String response) {
 
-            L.i("订单价格, json = ", response);
+            L.i("提交订单, json = ", response);
             Json2OrderPrice json2OrderPrice = new Json2OrderPrice(response);
             Json2OrderPriceBean orderPrice = json2OrderPrice.getOrderPrice();
             if (orderPrice == null)
