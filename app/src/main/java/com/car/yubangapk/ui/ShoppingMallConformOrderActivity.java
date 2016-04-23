@@ -25,6 +25,7 @@ import com.car.yubangapk.json.bean.AddressBean;
 import com.car.yubangapk.json.bean.CouponsBean;
 import com.car.yubangapk.json.bean.Json2AddressBean;
 import com.car.yubangapk.json.bean.Json2CouponBean;
+import com.car.yubangapk.json.bean.Json2DefaultAddressBean;
 import com.car.yubangapk.json.bean.Json2InstallShopModelsBean;
 import com.car.yubangapk.json.bean.Json2LoginBean;
 
@@ -106,7 +107,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private RelativeLayout btn_pay;//提交订单  去支付
 
 
-    private Json2AddressBean mAddressBean;
+    private Json2DefaultAddressBean mAddressBean;
 
     private List<Json2ProductPackageBean> mProductPackageListToOrderProductDetailPage;
 
@@ -184,7 +185,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             @Override
             public void onGetAddressSucces(Json2AddressBean addressBean) {
                 Json2AddressBean json2AddressBean = addressBean;
-                mAddressBean = json2AddressBean;
+                mAddressBean = json2AddressBean.getDefaultAddress();
                 setTopAddressDetail(json2AddressBean.getDefaultAddress().getName(), json2AddressBean.getDefaultAddress().getPhone());
             }
 
@@ -212,6 +213,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 {
                     toastMgr.builder.display("服务器错误" ,1);
                 }
+                mAddressBean = null;
             }
         });
         reqGetAddressConformOrder.getAddressPeopleInfo();
@@ -393,12 +395,17 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             toastMgr.builder.display("您没有选择优惠券", 1);
             return;
         }
+        else if (mAddressBean == null)
+        {
+            toastMgr.builder.display("您没有选择联系方式", 1);
+            return;
+        }
         mProgress = mProgress.show(mContext, "订单提交中...", false, null);
-        submitOrder(userid, cartype, mProductPackageListToOrderProductDetailPage, mInstallShopBean, mSelectedCoupon);
+        submitOrder(userid, cartype, mProductPackageListToOrderProductDetailPage, mInstallShopBean, mSelectedCoupon, mAddressBean, conform_order_install_time.getText().toString());
 
     }
 
-    private void submitOrder(String userid, String cartype, List<Json2ProductPackageBean> ProductDetailPage, Json2InstallShopModelsBean nstallShopBean, CouponsBean coupon)
+    private void submitOrder(String userid, String cartype, List<Json2ProductPackageBean> ProductDetailPage, Json2InstallShopModelsBean nstallShopBean, CouponsBean coupon, Json2DefaultAddressBean addressBean, String installtime)
     {
         HttpReqSubmitOrder reqGetOrderPrice = new HttpReqSubmitOrder();
         reqGetOrderPrice.setCallback(new HttpReqCallback() {
@@ -428,7 +435,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
             }
         });
-        reqGetOrderPrice.getOrderPrice(userid, cartype, ProductDetailPage, nstallShopBean, coupon);
+        reqGetOrderPrice.getOrderPrice(userid, cartype, ProductDetailPage, nstallShopBean, coupon, addressBean, installtime);
     }
 
     private void gotoCommitSuccess(final Json2OrderPriceBean submitOrder) {
@@ -629,6 +636,15 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             {
                 Bundle bundle = data.getExtras();
                 AddressBean bean = (AddressBean) bundle.getSerializable("address");
+                //默认地址
+                mAddressBean = null;
+                mAddressBean = new Json2DefaultAddressBean();
+                mAddressBean.setIsDefaule(bean.getIsDefaule());
+                mAddressBean.setName(bean.getName());
+                mAddressBean.setId(bean.getId());
+                mAddressBean.setPhone(bean.getPhone());
+                mAddressBean.setCUserid(bean.getCUserid());
+                mAddressBean.setHasData(bean.isHasData());
 
                 setTopAddressDetail(bean.getName(), bean.getPhone());
             }
@@ -670,6 +686,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         else
         {
             toastMgr.builder.display("您没有选择",1);
+
         }
     }
 
