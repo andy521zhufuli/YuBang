@@ -22,6 +22,8 @@ public class ErrorCodes {
 
     public static final int ERROR_CODE_NO_INSTALL_SHOP = -2;//没有安装店铺  该区域
     public static final int ERROR_CODE_NO_DATA = 1234;
+    public static final int ERROR_CODE_JSON_DECODE = 1111;//json 解析出错
+    public static final String  _JSON_DECODE_ERROR = "json解析出错";//json 解析出错
 
 
 

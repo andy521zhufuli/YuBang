@@ -590,7 +590,6 @@ public class RegisterDetailsActivity extends BaseActivity {
 
     public void uploadFile(String path, String fileCode)
     {
-
         File file = new File(path);
 
         if (!file.exists())
@@ -615,11 +614,6 @@ public class RegisterDetailsActivity extends BaseActivity {
         Map<String, String> params = new HashMap<>();
         params.put("userReq.fileCode", fileCode);
         params.put("userReq.userid", userid);
-
-
-
-
-
         OkHttpUtils.post()//
                 .addFile("userReq.photo", file.getName(), file)//
                 .url(Configs.IP_ADDRESS + Configs.IP_ADDRESSS_ACTION_UP_LOAD_FILE)
@@ -627,8 +621,6 @@ public class RegisterDetailsActivity extends BaseActivity {
                 .build()//
                 .execute(new MyStringCallback());
     }
-
-
 
     /**
      * 上传照片

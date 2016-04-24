@@ -147,6 +147,7 @@ public class Json2InstallShop {
                     }
                     catch (JSONException e)
                     {
+                        e.printStackTrace();
                         continue;
                     }
 

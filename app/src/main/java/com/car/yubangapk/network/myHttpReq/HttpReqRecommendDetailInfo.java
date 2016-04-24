@@ -3,6 +3,7 @@ package com.car.yubangapk.network.myHttpReq;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2RecommendShopDetailInfoBean;
+import com.car.yubangapk.json.bean.RecommendPartnerShopBaseInfo;
 import com.car.yubangapk.json.formatJson.Json2RecommendShopDetailInfo;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.builder.PostFormBuilder;
@@ -22,16 +23,6 @@ public class HttpReqRecommendDetailInfo
 
     private String TAG = HttpReqAddress.class.getSimpleName();
 
-    String mUserid;
-    String mContactName;
-    String mContactPhone;
-    double mLongitude;
-    double mLatitude;
-    String mProvince;
-    String mCity;
-    String mDistrict;
-    String mAddress;
-    String mRecommendedId;
 
     private HttpReqCallback callback;
 
@@ -59,8 +50,19 @@ public class HttpReqRecommendDetailInfo
         this.callback = listener;
     }
 
-    public void putRecommendShopInfo(String userid, String contactName, String contactPhone, double lon, double lat, String province, String city, String district, String address, String shopName)
+    public void putRecommendShopInfo(RecommendPartnerShopBaseInfo shopBaseInfo)
     {
+        String userid  = shopBaseInfo.getUserid();
+        String contactName = shopBaseInfo.getContactName();
+        String contactPhone = shopBaseInfo.getContactPhone();
+        double lon = shopBaseInfo.getLon();
+        double lat = shopBaseInfo.getLat();
+        String province = shopBaseInfo.getProvince();
+        String city = shopBaseInfo.getCity();
+        String district = shopBaseInfo.getDistrict();
+        String address = shopBaseInfo.getAddress();
+        String shopName = shopBaseInfo.getShopName();
+
 
         province = String2UTF8.getUTF8String(province);
         city = String2UTF8.getUTF8String(city);

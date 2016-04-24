@@ -1,6 +1,7 @@
 package com.car.yubangapk.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.andy.android.yubang.R;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2RecommendShopDetailInfoBean;
+import com.car.yubangapk.json.bean.RecommendPartnerShopBaseInfo;
 import com.car.yubangapk.location.GetLocationData;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqRecommendDetailInfo;
@@ -127,13 +129,31 @@ public class DiscoverAddPartnerDetailInfoActivity extends BaseActivity implement
             toastMgr.builder.display("您未填店名!", 1);
             return;
         }
+        upLoadPartnerDetailFiles();
 
-        mProgress = mProgress.show(mContext, "正在上传信息...", false, null);
+    }
 
-
-        HttpReqRecommendDetailInfo putDetailInfo = new HttpReqRecommendDetailInfo();
-        putDetailInfo.setListener(new PutInfo());
-        putDetailInfo.putRecommendShopInfo(mUserid, mContactName, mContactPhone, mLongitude, mLatitude, mProvince, mCity, mDistrict, mAddress, shopName);
+    /**
+     * 上传合伙人店铺照片
+     */
+    private void upLoadPartnerDetailFiles() {
+        Intent intent = new Intent();
+        intent.setClass(this, DiscoverRecommendAddPartnerActivity.class);
+        RecommendPartnerShopBaseInfo info = new RecommendPartnerShopBaseInfo();
+        info.setUserid(mUserid);
+        info.setContactName(mContactName);
+        info.setContactPhone(mContactPhone);
+        info.setLon(mLongitude);
+        info.setLat(mLatitude);
+        info.setProvince(mProvince);
+        info.setCity(mCity);
+        info.setDistrict(mDistrict);
+        info.setAddress(mAddress);
+        info.setShopName(shopName);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("shopBaseInfo", info);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     class PutInfo implements HttpReqCallback

@@ -304,6 +304,12 @@ public class MainActivity extends TabActivity {
             //去我的界面
             setDisplayMyPage();
         }
+
+        else if (activityToShow.equals("addPartner"))
+        {
+            //去发现界面
+            setDisplayDiscoverPage();
+        }
 //        else if (activityToShow.equals("LOGIN_SUCCESS"))
 //        {
 //            //这里不能判断 就正常启动行了
