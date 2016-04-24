@@ -40,6 +40,9 @@ import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.view.AlertDialog;
 
+import org.w3c.dom.Text;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -746,7 +749,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
 
         //保养维护
-        shoppingmall_more_01 = (ImageView) findViewById(R.id.shoppingmall_more_01);//更多
+        shoppingmall_more_01 = (TextView) findViewById(R.id.shoppingmall_more_01);//更多
         main_product1_01     = (ImageView) findViewById(R.id.main_product1_01);//主打产品
         main_product1_02     = (ImageView) findViewById(R.id.main_product1_02);
         main_product1_03     = (ImageView) findViewById(R.id.main_product1_03);
@@ -854,6 +857,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             //保养维护
             case R.id.shoppingmall_more_01://更多
                 toastMgr.builder.display("更多精彩", 0);
+                repairServiceMoreClick(1);
                 break;
             //保养维护
             case R.id.main_product1_01:
@@ -1069,6 +1073,59 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         startActivity(intent1);
     }
 
+
+    /**
+     * 跳转到更多界面
+     * @param type 对应哪个repairservice点击
+     */
+    private void repairServiceMoreClick(int type)
+    {
+        if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
+        {
+            toastMgr.builder.display("服务器异常,没有数据", 1);
+            return;
+        }
+        Intent intent = new Intent();
+        intent.setClass(mContext, ShoppingmallCategoryMoreActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BUNDLE_DATA_NAME_MORE_ACTIVITY, (Serializable) mBAOYANGWEIHUList);
+        String repairService = null;
+        if (type == 1)
+        {
+            repairService = mBAOYANGWEIHUString;
+        }
+        else if (type == 2)
+        {
+            repairService = mDIANZIDIANLUString;
+        }
+        else if (type == 3)
+        {
+            repairService = mFADONGJIJIANString;
+        }
+        else if (type == 4)
+        {
+            repairService = mDAHUANGYOUString;
+        }
+        else if(type == 5)
+        {
+            repairService = mDIPANPEIJIANString;
+        }
+        else if (type == 6)
+        {
+            repairService = mCHEJIAPEIJIANString;
+        }
+
+        bundle.putString("repairService",repairService);
+        bundle.putString(Configs.FROM, Configs.FROM_SHOPPINGMALL);
+
+        String carType6 = Configs.getLoginedInfo(mContext).getCarType();
+        bundle.putString("mCarType", carType6);
+
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public static String BUNDLE_DATA_NAME_MORE_ACTIVITY = "repairServiceList";
 
     /**
      * 底下的repairService点击 跳转到产品包界面
@@ -1443,7 +1500,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView speciese_07;//托架配件
     private ImageView speciese_08;//更多
     //保养维护
-    private ImageView shoppingmall_more_01;//更多
+    private TextView shoppingmall_more_01;//更多
     private ImageView  main_product1_01;//主打产品
     private ImageView  main_product1_02;
     private ImageView  main_product1_03;
