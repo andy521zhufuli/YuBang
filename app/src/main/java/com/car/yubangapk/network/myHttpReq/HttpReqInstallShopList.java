@@ -18,6 +18,9 @@ import okhttp3.Call;
 
 /**
  * Created by andy on 16/4/20.
+ *
+ * 获取安装店铺
+ *
  */
 public class HttpReqInstallShopList
 {
@@ -123,12 +126,6 @@ public class HttpReqInstallShopList
                 }
 
             }
-
-
-
-
         }
     }
-
-
 }

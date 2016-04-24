@@ -418,7 +418,8 @@
         <activity android:name="com.car.yubangapk.ui.ShoppingmallConformOrderProductDetailActivity" />
         <activity android:name="com.car.yubangapk.ui.ShoppingmallConformOrderChooseInstallShopActivity" />
         <activity android:name="com.car.yubangapk.ui.ConformOrderUseableCouponActivity" />
-        <activity android:name="com.car.yubangapk.ui.ConformOrderProductDetailActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.ConformOrderProductDetailActivity" />
+        <activity android:name="com.car.yubangapk.ui.DiscoverAddPartnerDetailInfoActivity"></activity>
     </application>
 
 </manifest>

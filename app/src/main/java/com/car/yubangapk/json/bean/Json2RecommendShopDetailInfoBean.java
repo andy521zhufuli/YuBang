@@ -3,20 +3,28 @@ package com.car.yubangapk.json.bean;
 import com.car.yubangapk.json.Base;
 
 /**
- * VerifyCodeBean:返回验证码的json格式
+ * Created by andy on 16/4/23.
  *
- * @author andy
- * @version 1.0.6
- * @created 2016-04-02
+ * 发现--推荐合伙人---上传信息
+ *
  */
-public class GetVerifyCodeBean extends Base{
+public class Json2RecommendShopDetailInfoBean extends Base
+{
 
+    //{
+    // "isJson":true,
+    // "isReturnStr":false,
+    // "returnCode":0,
+    // "returneMsg":"SUCCESS",
+    // "message":""
+    // ,shopId:””}提示shopId需要保存后面还要用
 
     private boolean isJson;
     private boolean isReturnStr;
     private int returnCode;
     private String returneMsg;
     private String message;
+    private String shopId;
 
     public boolean isJson() {
         return isJson;
@@ -66,5 +74,11 @@ public class GetVerifyCodeBean extends Base{
         this.returneMsg = returneMsg;
     }
 
+    public String getShopId() {
+        return shopId;
+    }
 
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
 }

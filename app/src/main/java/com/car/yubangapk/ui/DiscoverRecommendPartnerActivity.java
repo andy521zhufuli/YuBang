@@ -24,8 +24,10 @@ import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2FirstPageShopBean;
 import com.car.yubangapk.json.bean.Json2InstallShopBean;
 import com.car.yubangapk.json.bean.Json2InstallShopModelsBean;
+import com.car.yubangapk.json.bean.Json2RecommendShopClickBean;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetRecommendPartnerShop;
+import com.car.yubangapk.network.myHttpReq.HttpReqRecommendShopClick;
 import com.car.yubangapk.utils.BDMapData;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.ViewGroupToBitmap;
@@ -49,6 +51,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.car.yubangapk.view.AlertDialog;
 import com.car.yubangapk.view.CustomProgressDialog;
 
 import java.util.ArrayList;
@@ -359,6 +362,11 @@ public class DiscoverRecommendPartnerActivity extends BaseActivity implements Vi
             ooA.animateType(MarkerOptions.MarkerAnimateType.drop);
             Marker mMarkerA = null;
             mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
+
+            //Bundle用于通信
+            Bundle bundle = new Bundle();
+            bundle.putString("shopid", shops.get(i).getShopId());
+            mMarkerA.setExtraInfo(bundle);//将bundle值传入marker中，给baiduMap设置监听时可以得到它
             mMakers.add(mMarkerA);//用来清除覆盖物
 
         }
@@ -405,42 +413,76 @@ public class DiscoverRecommendPartnerActivity extends BaseActivity implements Vi
         @Override
         public boolean onMarkerClick(Marker marker) {
 
-            InfoWindow infoWindow;
-            //动态生成一个Button对象，用户在地图中显示InfoWindow
-            final Button textInfo = new Button(getApplicationContext());
-            textInfo.setBackgroundColor(Color.parseColor("#ffffffff"));
-            textInfo.setPadding(10, 10, 10, 10);
-            textInfo.setTextColor(Color.BLACK);
-            textInfo.setTextSize(20);
-            int size = mShops.size();
-            textInfo.setText("附近有"+ size+ "个推荐店");
+            Bundle bundle = marker.getExtraInfo();
+            String shopid = bundle.getString("shopid");
+            String userid = Configs.getLoginedInfo(mContext).getUserid();
 
-            //得到点击的覆盖物的经纬度
-            LatLng ll = marker.getPosition();
-            textInfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            HttpReqRecommendShopClick reqRecommendShopClick = new HttpReqRecommendShopClick();
+            reqRecommendShopClick.setListener(new RecommendShopClickCallbck());
+            reqRecommendShopClick.getInstallShop(userid, shopid);
 
-                    //进入评论的界面
 
-                    Intent intent = new Intent();
-                    intent.setClass(DiscoverRecommendPartnerActivity.this, DiscoverRecommendPartnerCommentActivity.class);
-                    DiscoverRecommendPartnerActivity.this.startActivity(intent);
-                }
-            });
-            //将marker所在的经纬度的信息转化成屏幕上的坐标
-            Point p = mBaiduMap.getProjection().toScreenLocation(ll);
-            p.y -= 90;
-            LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
-            //初始化infoWindow，最后那个参数表示显示的位置相对于覆盖物的竖直偏移量，这里也可以传入一个监听器
-            infoWindow = new InfoWindow(textInfo, llInfo, 0);
-            mBaiduMap.showInfoWindow(infoWindow);//显示此infoWindow
-            //让地图以备点击的覆盖物为中心
-            MapStatusUpdate status = MapStatusUpdateFactory.newLatLng(ll);
-            mBaiduMap.setMapStatus(status);
+//            InfoWindow infoWindow;
+//            //动态生成一个Button对象，用户在地图中显示InfoWindow
+//            final Button textInfo = new Button(getApplicationContext());
+//            textInfo.setBackgroundColor(Color.parseColor("#ffffffff"));
+//            textInfo.setPadding(10, 10, 10, 10);
+//            textInfo.setTextColor(Color.BLACK);
+//            textInfo.setTextSize(20);
+//            int size = mShops.size();
+//            textInfo.setText("附近有"+ size+ "个推荐店");
+//
+//            //得到点击的覆盖物的经纬度
+//            LatLng ll = marker.getPosition();
+//
+//            //将marker所在的经纬度的信息转化成屏幕上的坐标
+//            Point p = mBaiduMap.getProjection().toScreenLocation(ll);
+//            p.y -= 90;
+//            LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
+//            //初始化infoWindow，最后那个参数表示显示的位置相对于覆盖物的竖直偏移量，这里也可以传入一个监听器
+//            infoWindow = new InfoWindow(textInfo, llInfo, 0);
+//            mBaiduMap.showInfoWindow(infoWindow);//显示此infoWindow
+//            //让地图以备点击的覆盖物为中心
+//            MapStatusUpdate status = MapStatusUpdateFactory.newLatLng(ll);
+//            mBaiduMap.setMapStatus(status);
             return true;
         }
     }
+    class RecommendShopClickCallbck implements HttpReqCallback
+    {
+
+        @Override
+        public void onFail(int errorCode, String message) {
+            if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
+            {
+                UpdateApp.gotoUpdateApp(mContext);
+            }
+            else if (errorCode == ErrorCodes.ERROR_CODE_NOT_LOGIN)
+            {
+                NotLogin.gotoLogin(DiscoverRecommendPartnerActivity.this);
+            }
+            else
+            {
+                toastMgr.builder.display(message, 1);
+            }
+        }
+
+        @Override
+        public void onSuccess(Object object) {
+            Json2RecommendShopClickBean shopBean = (Json2RecommendShopClickBean) object;
+            AlertDialog alertDialog = new AlertDialog(mContext);
+            alertDialog.builder().setMsg("恭喜,推荐成功")
+                    .setPositiveButton("确定", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .show();
+        }
+    }
+
+
 
     private void findViews() {
 
@@ -512,7 +554,7 @@ public class DiscoverRecommendPartnerActivity extends BaseActivity implements Vi
                 break;
             case R.id.discover_add_partner:
                 Intent intent = new Intent();
-                intent.setClass(DiscoverRecommendPartnerActivity.this, DiscoverRecommendAddPartnerActivity.class);
+                intent.setClass(DiscoverRecommendPartnerActivity.this, DiscoverAddPartnerDetailInfoActivity.class);
                 startActivity(intent);
                 break;
             case R.id.recommend_partner_location_btn:
@@ -525,6 +567,7 @@ public class DiscoverRecommendPartnerActivity extends BaseActivity implements Vi
     private void startLocationBtnClick() {
         mProgressDialog = mProgressDialog.show(mContext,"正在定位", false, null);
         isLocationBtnClicked = true;
+        clearOverlay();
         mLocationClient.start();
     }
 
