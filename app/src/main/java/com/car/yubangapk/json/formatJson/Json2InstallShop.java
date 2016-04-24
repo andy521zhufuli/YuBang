@@ -109,38 +109,47 @@ public class Json2InstallShop {
                     String          star;
                     int             order;
                     int             own;
-                    shopId          = shopModel.getString("shopId");
-                    shopName        = shopModel.getString("shopName");
-                    distance        = shopModel.getDouble("distance");
-                    shopAddress     = shopModel.getString("shopAddress");
-                    phoneNum        = shopModel.getString("phoneNum");
-                    pathCode        = shopModel.getString("pathCode");
-                    photoName       = shopModel.getString("photoName");
-                    lat             = shopModel.getDouble("lat");
-                    lon             = shopModel.getDouble("lon");
-                    assess          = shopModel.getString("assess");
-                    orderNum        = shopModel.getString("orderNum");
-                    star            = shopModel.getString("star");
-                    order           = shopModel.getInt("order");
-                    own             = shopModel.getInt("own");
+
+                    try
+                    {
+                        shopId          = shopModel.getString("shopId");
+                        shopName        = shopModel.getString("shopName");
+                        distance        = shopModel.getDouble("distance");
+                        shopAddress     = shopModel.getString("shopAddress");
+                        phoneNum        = shopModel.getString("phoneNum");
+                        pathCode        = shopModel.getString("pathCode");
+                        photoName       = shopModel.getString("photoName");
+                        lat             = shopModel.getDouble("lat");
+                        lon             = shopModel.getDouble("lon");
+                        assess          = shopModel.getString("assess");
+                        orderNum        = shopModel.getString("orderNum");
+                        star            = shopModel.getString("star");
+                        order           = shopModel.getInt("order");
+                        own             = shopModel.getInt("own");
 
 
-                    model.setShopId(shopId);
-                    model.setShopName(shopName);
-                    model.setDistance(distance);
-                    model.setShopAddress(shopAddress);
-                    model.setPhoneNum(phoneNum);
-                    model.setPathCode(pathCode);
-                    model.setPhotoName(photoName);
-                    model.setLat(lat);
-                    model.setLon(lon);
-                    model.setAssess(assess);
-                    model.setOrderNum(orderNum);
-                    model.setStar(star);
-                    model.setOrder(order);
-                    model.setOwn(own);
+                        model.setShopId(shopId);
+                        model.setShopName(shopName);
+                        model.setDistance(distance);
+                        model.setShopAddress(shopAddress);
+                        model.setPhoneNum(phoneNum);
+                        model.setPathCode(pathCode);
+                        model.setPhotoName(photoName);
+                        model.setLat(lat);
+                        model.setLon(lon);
+                        model.setAssess(assess);
+                        model.setOrderNum(orderNum);
+                        model.setStar(star);
+                        model.setOrder(order);
+                        model.setOwn(own);
 
-                    model.setHasData(true);
+                        model.setHasData(true);
+                    }
+                    catch (JSONException e)
+                    {
+                        continue;
+                    }
+
 
 
                     shopModelsBeen.add(model);
