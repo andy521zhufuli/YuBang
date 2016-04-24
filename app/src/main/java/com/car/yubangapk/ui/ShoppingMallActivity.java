@@ -20,8 +20,7 @@ import com.car.yubangapk.banner.listener.FlashViewListener;
 import com.car.yubangapk.configs.BannerSkipType;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
-import com.car.yubangapk.json.FormatJson;
-import com.car.yubangapk.json.bean.BannerAd;
+import com.car.yubangapk.json.bean.ShoppingmallAd;
 import com.car.yubangapk.json.bean.Json2LoginBean;
 import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
 import com.car.yubangapk.json.bean.ShoppingmallPicBean;
@@ -30,17 +29,14 @@ import com.car.yubangapk.json.formatJson.Json2ShoppingmallBottomPics;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetLogicalService;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetShoppingmallBanner;
-import com.car.yubangapk.network.myHttpReq.HttpReqGetShoppingmallBannerInterface;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetShoppingmallAdInterface;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.MyStringCallback;
-import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.Warn.UpdateApp;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.view.AlertDialog;
-
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,7 +45,6 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
-import okhttp3.Request;
 
 /**
  * ShoppingMallActivity: 商城界面
@@ -65,11 +60,14 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     //商城图片  中部分类
     List<ShoppingmallSpeciesePicBean> mShoppingmallSpeciesPicList = null;//种类
     List<ImageView>           mMiddleSpeciesList = null;
+    List<ImageView>           mRepirServiceAdImageViewList = null;
     //商城图片  底部6个大分类 大图片
     List<ShoppingmallPicBean>   mShoppingmallBottomPicList = null;//中部分类以下的
     Map<String,List<ImageView>> mShoppingmallBottomPicMap = null;
     List<ImageView>             mShoppingmallBottomImageviewList = null;
 
+
+    List<ShoppingmallAd>        mRepairServiceAdBeanList;//保存网上获取的repairservice的广告
 
     // 定义图片的资源
     private String[] strings = {"保养维护", "电子电路", "发动机件", "底盘配件", "车架配件", "拖架配件" };
@@ -119,6 +117,8 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         httpGetBannerPics();
         //去拿中间8个的图片
         httpGetMiddleSpeciesPics();
+        //repairService 图片获取
+        httpGetAdListPics();
     }
 
 
@@ -128,12 +128,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private void httpGetBannerPics()
     {
         HttpReqGetShoppingmallBanner getShoppingmallBanner = new HttpReqGetShoppingmallBanner();
-        getShoppingmallBanner.setCallback(new HttpReqGetShoppingmallBannerInterface() {
+        getShoppingmallBanner.setCallback(new HttpReqGetShoppingmallAdInterface() {
             @Override
-            public void onSuccess(List<BannerAd> bannerad) {
+            public void onSuccess(List<ShoppingmallAd> bannerad) {
                 List<String> bannerAdUrl = new ArrayList<>();
                 //赋值给全局变量
-                mBannerAdList = bannerad;
+                mShoppingmallAdList = bannerad;
                 String url;
                 int size = bannerad.size();
                 if (size > 0)
@@ -141,7 +141,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                     //里面有数据
                     for (int i= 0; i< size; i++)
                     {
-                        BannerAd ad = bannerad.get(i);
+                        ShoppingmallAd ad = bannerad.get(i);
                         url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + ad.getPathCode() + "&fileReq.fileName=" + ad.getPhotoName();
                         bannerAdUrl.add(url);
                         L.d(TAG,url);
@@ -166,8 +166,87 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 toastMgr.builder.display("网络未连接, 请检查您的网络设置.", 1);
             }
         });
-        getShoppingmallBanner.getBannerPics();
+        getShoppingmallBanner.getBannerPics("2");
     }
+
+
+    private void httpGetAdListPics()
+    {
+        HttpReqGetShoppingmallBanner getShoppingmallBanner = new HttpReqGetShoppingmallBanner();
+        getShoppingmallBanner.setCallback(new HttpReqGetShoppingmallAdInterface() {
+            @Override
+            public void onSuccess(List<ShoppingmallAd> bannerad) {
+
+
+                setRepairServiceAdPics(bannerad);
+
+                String url;
+                int size = bannerad.size();
+                if (size > 0)
+                {
+                    //里面有数据
+                    for (int i= 0; i< size; i++)
+                    {
+                        ShoppingmallAd ad = bannerad.get(i);
+                        url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + ad.getPathCode() + "&fileReq.fileName=" + ad.getPhotoName();
+                        L.d(TAG,url);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFail(int errorCode, String message) {
+                toastMgr.builder.display("网络未连接, 请检查您的网络设置.", 1);
+                if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
+                {
+                    toastMgr.builder.display("服务器返回错误,请稍后再试.", 1);
+                }
+                else if (errorCode == ErrorCodes.ERROR_CODE_NO_DATA)
+                {
+                    toastMgr.builder.display("服务器返回错误, 没有数据,请稍后再试.", 1);
+                }
+                else
+                {
+                    toastMgr.builder.display(message, 1);
+                }
+
+            }
+        });
+        getShoppingmallBanner.getBannerPics("1");
+    }
+
+    /**
+     * 给repairService底下的广告设置图片
+     * @param repairServiceAd
+     */
+    private void setRepairServiceAdPics(List<ShoppingmallAd> repairServiceAd) {
+
+        mRepairServiceAdBeanList = repairServiceAd;
+        mRepirServiceAdImageViewList = new ArrayList<>();
+        mRepirServiceAdImageViewList.add(main_product_ad_1);
+        mRepirServiceAdImageViewList.add(main_product_ad_2);
+        mRepirServiceAdImageViewList.add(main_product_ad_3);
+        mRepirServiceAdImageViewList.add(main_product_ad_4);
+        mRepirServiceAdImageViewList.add(main_product_ad_5);
+        mRepirServiceAdImageViewList.add(main_product_ad_6);
+        int size = mRepirServiceAdImageViewList.size();
+
+        String url = "";
+
+        if (size >= repairServiceAd.size())
+        {
+            size = repairServiceAd.size();//可能从服务器拿到的广告没有那么多
+        }
+
+        for (int index = 0; index < size; index++)
+        {
+            ShoppingmallAd ad = repairServiceAd.get(index);
+            url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + ad.getPathCode() + "&fileReq.fileName=" + ad.getPhotoName();
+            ImageLoaderTools.getInstance(mContext).displayImage(url, mRepirServiceAdImageViewList.get(index));
+        }
+    }
+
 
     /**
      * 去拿中间分类的小图标以及信息  LogicalService
@@ -245,19 +324,19 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             public void onClick(int position) {
                 Intent intent = new Intent();
                 toastMgr.builder.display("position"+position + "clicked" , 0);
-                if (mBannerAdList == null || mBannerAdList.size() == 0)
+                if (mShoppingmallAdList == null || mShoppingmallAdList.size() == 0)
                 {
                     toastMgr.builder.display("服务器错误,没有数据",1);
                 }
                 else
                 {
-                    BannerAd bannerAd = mBannerAdList.get(position);
-                    toastMgr.builder.display(bannerAd.getAdvertisementName() + "skipType" + bannerAd.getSkipType(), 0);
-                    String link = bannerAd.getLink();
+                    ShoppingmallAd shoppingmallAd = mShoppingmallAdList.get(position);
+                    toastMgr.builder.display(shoppingmallAd.getAdvertisementName() + "skipType" + shoppingmallAd.getSkipType(), 0);
+                    String link = shoppingmallAd.getLink();
 
 
 
-                    String skipType = bannerAd.getSkipType();
+                    String skipType = shoppingmallAd.getSkipType();
                     if (BannerSkipType.SKIP_TYPE_WEB.equals(skipType))
                     {
                         //网页
@@ -285,8 +364,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                         bundle.putString(Configs.mCarType, carType);
                         intent.putExtras(bundle);
                         startActivity(intent);
-
-
                     }
                     else if (BannerSkipType.SKIP_TYPE_LOGIC_SERVICE.equals(skipType))
                     {
@@ -799,6 +876,15 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product6_05     = (ImageView) findViewById(R.id.main_product6_05);
         main_product6_06     = (ImageView) findViewById(R.id.main_product6_06);
 
+        //广告
+        main_product_ad_1 = (ImageView) findViewById(R.id.main_product_ad_1);//
+        main_product_ad_2 = (ImageView) findViewById(R.id.main_product_ad_2);//
+        main_product_ad_3 = (ImageView) findViewById(R.id.main_product_ad_3);
+        main_product_ad_4 = (ImageView) findViewById(R.id.main_product_ad_4);
+        main_product_ad_5 = (ImageView) findViewById(R.id.main_product_ad_5);
+        main_product_ad_6 = (ImageView) findViewById(R.id.main_product_ad_6);
+
+
         shoppingmall01 = (LinearLayout) findViewById(R.id.shoppingmall01);
         shoppingmall02 = (LinearLayout) findViewById(R.id.shoppingmall02);
         shoppingmall03 = (LinearLayout) findViewById(R.id.shoppingmall03);
@@ -1009,7 +1095,90 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 repairServiceItemClick(6, 6);
                 break;
 
+            case R.id.main_product_ad_1:
+                repairServiceAdClick(1);
+                break;
+            case R.id.main_product_ad_2:
+                repairServiceAdClick(2);
+                break;
+            case R.id.main_product_ad_3:
+                repairServiceAdClick(3);
+                break;
+            case R.id.main_product_ad_4:
+                repairServiceAdClick(4);
+                break;
+            case R.id.main_product_ad_5:
+                repairServiceAdClick(5);
+                break;
+            case R.id.main_product_ad_6:
+                repairServiceAdClick(6);
+                break;
+
         }
+
+    }
+
+    /**
+     * 商城底部广告图片点击
+     * @param index
+     */
+    private void repairServiceAdClick(int index) {
+        int size = mRepairServiceAdBeanList.size();
+        if (index - 1 >= size)
+        {
+            toastMgr.builder.display("服务器错误, 没有数据", 1);
+            return;
+        }
+
+        String link = mRepairServiceAdBeanList.get(index - 1).getLink();
+        if (link == null || "".equals(link))
+        {
+            toastMgr.builder.display("服务器错误, 没有数据", 1);
+            return;
+        }
+        else
+        {
+            Intent intent = new Intent();
+            ShoppingmallAd shoppingmallAd = mRepairServiceAdBeanList.get(index - 1);
+
+            String skipType = shoppingmallAd.getSkipType();
+            if (BannerSkipType.SKIP_TYPE_WEB.equals(skipType))
+            {
+                //网页
+                intent.setClass(mContext, AdWebViewActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("link", link);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+            }
+            else if (BannerSkipType.SKIP_TYPE_PRODUCT_PACKAGE.equals(skipType))
+            {
+                //产品包
+                intent.setClass(mContext, ShoppingMallGoodsActivity.class);
+                Bundle bundle = new Bundle();
+                //传的就是repairService
+                bundle.putString(Configs.serviceId,link);
+                String carType = Configs.getLoginedInfo(mContext).getCarType();
+                if ("".equals(carType) || carType == null)
+                {
+                    bannerClickWarnNoCarType();
+                    return;
+                }
+                bundle.putString(Configs.FROM, Configs.FROM_SHOPPINGMALL);
+                bundle.putString(Configs.mCarType, carType);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+            else if (BannerSkipType.SKIP_TYPE_LOGIC_SERVICE.equals(skipType))
+            {
+                //逻辑服务
+                toastMgr.builder.display("没有相关商品", 1);
+            }
+
+        }
+
+
 
     }
 
@@ -1439,6 +1608,15 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product6_04.setOnClickListener(this);
         main_product6_05.setOnClickListener(this);
         main_product6_06.setOnClickListener(this);
+
+
+        //广告设置监听器
+        main_product_ad_1.setOnClickListener(this);
+        main_product_ad_2.setOnClickListener(this);
+        main_product_ad_3.setOnClickListener(this);
+        main_product_ad_4.setOnClickListener(this);
+        main_product_ad_5.setOnClickListener(this);
+        main_product_ad_6.setOnClickListener(this);
     }
 
     /*
@@ -1561,6 +1739,21 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private LinearLayout shoppingmall05;
     private LinearLayout shoppingmall06;
 
+    //底部广告
+    private ImageView main_product_ad_1;
+    private ImageView main_product_ad_2;
+    private ImageView main_product_ad_3;
+    private ImageView main_product_ad_4;
+    private ImageView main_product_ad_5;
+    private ImageView main_product_ad_6;
+
+
+
+
+
+
+
+
     private static int BAOYANGWEIHU  = 0;//保养维护
     private static int DIANZIDIANLU  = 1;//电子电路
     private static int FADONGJIJIAN  = 2;//发动机件
@@ -1593,6 +1786,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
 
     //banner广告点击
-    List<BannerAd> mBannerAdList = null;//全局的banner广告变量  保存广告相关信息
+    List<ShoppingmallAd> mShoppingmallAdList = null;//全局的banner广告变量  保存广告相关信息
 
 }

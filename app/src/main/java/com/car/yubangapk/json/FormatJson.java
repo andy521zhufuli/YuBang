@@ -6,7 +6,7 @@ package com.car.yubangapk.json;
 import android.content.Context;
 
 import com.car.yubangapk.configs.Configs;
-import com.car.yubangapk.json.bean.BannerAd;
+import com.car.yubangapk.json.bean.ShoppingmallAd;
 import com.car.yubangapk.json.bean.ShoppingmallPicBean;
 import com.car.yubangapk.json.bean.ShoppingmallSpeciesePicBean;
 import com.car.yubangapk.json.bean.SysConfig;
@@ -46,10 +46,10 @@ public class FormatJson
      * 返回商城首页bannner的广告链接
      * @return List<BannerAd>
      */
-    public List<BannerAd> getBannerAdImageList()
+    public List<ShoppingmallAd> getAdImageList()
     {
 
-        List<BannerAd> bannerList = new ArrayList<BannerAd>();
+        List<ShoppingmallAd> bannerList = new ArrayList<ShoppingmallAd>();
 
         JSONObject total = null;
 
@@ -74,7 +74,7 @@ public class FormatJson
                 link = row.getString("link");
                 photoName = row.getString("photoName");
                 skipType = row.getString("skipType");//跳转类型
-                BannerAd ad = new BannerAd();
+                ShoppingmallAd ad = new ShoppingmallAd();
                 ad.setPathCode(pathCode);
                 ad.setSort(sort);
                 ad.setAdvertisementName(advertisementName);

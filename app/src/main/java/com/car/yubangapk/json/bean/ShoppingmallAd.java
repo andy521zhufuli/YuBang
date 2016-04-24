@@ -2,20 +2,35 @@ package com.car.yubangapk.json.bean;
 
 /**
  * Created by andy on 16/3/29.
+ *
+ * 商城的广告  banner 和 每个分类下面的广告
+ *
  */
-public class BannerAd
+public class ShoppingmallAd
 {
+    String pathCode;
+    String sort;
+    String advertisementName;
+
+    String status;
+    String link;
+
+    String photoName;
+
+    String skipType;//跳转类型  0，link为网页链接  1，link为产品包id
+
+    //{advertisementName=“” , link=“” , sort=“” , status=“”, skipType=“”, photoName=“” , pathCode=“”}
+
 
     public String getPathCode() {
         return pathCode;
     }
 
+
+
     public void setPathCode(String pathCode) {
         this.pathCode = pathCode;
     }
-
-    String pathCode;
-    String sort;
 
     public String getSort() {
         return sort;
@@ -24,8 +39,6 @@ public class BannerAd
     public void setSort(String sort) {
         this.sort = sort;
     }
-
-    String advertisementName;
 
     public String getStatus() {
         return status;
@@ -44,8 +57,7 @@ public class BannerAd
         this.advertisementName = advertisementName;
     }
 
-    String status;
-    String link;
+
 
     public String getLink() {
         return link;
@@ -55,8 +67,6 @@ public class BannerAd
         this.link = link;
     }
 
-    String photoName;
-
     public String getPhotoName() {
         return photoName;
     }
@@ -64,8 +74,6 @@ public class BannerAd
     public void setPhotoName(String photoName) {
         this.photoName = photoName;
     }
-
-    String skipType;//跳转类型
 
     public String getSkipType() {
         return skipType;

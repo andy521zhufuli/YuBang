@@ -131,7 +131,7 @@
 
     </LinearLayout>
     <ImageView
-        android:id="@+id/main_product_ad_2"
+        android:id="@+id/main_product_ad_5"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:src="@mipmap/shoppingmall_ad_01"

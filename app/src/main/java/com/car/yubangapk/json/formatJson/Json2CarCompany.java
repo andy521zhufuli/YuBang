@@ -1,6 +1,5 @@
 package com.car.yubangapk.json.formatJson;
 
-import com.car.yubangapk.json.bean.BannerAd;
 import com.car.yubangapk.json.bean.Json2CarCompanyBean;
 
 import org.json.JSONArray;
