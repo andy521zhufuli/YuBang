@@ -16,7 +16,7 @@ import com.andy.android.yubang.R;
  * @created 2016-02-22
  */
 
-public class UpdateAppActivity extends AppCompatActivity {
+public class UpdateAppActivity extends BaseActivity {
 
 
     private Context mContext;
@@ -31,10 +31,6 @@ public class UpdateAppActivity extends AppCompatActivity {
         mContext = this;
 
         findViews();
-
-
-
-
     }
 
     /**
