@@ -126,6 +126,14 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 		}
 	}
 
+	public boolean isHeaderShown() {
+		return getHeaderLayout().isShown();
+	}
+
+	public boolean isFooterShown() {
+		return getFooterLayout().isShown();
+	}
+
 	public final void onScrollStateChanged(final AbsListView view, final int state) {
 		/**
 		 * Check that the scrolling has stopped, and that the last item is

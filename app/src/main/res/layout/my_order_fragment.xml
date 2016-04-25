@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeToLoadLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    >
+
+    <include
+        android:id="@id/swipe_refresh_header"
+        layout="@layout/layout_twitter_header" />
+
+    <!-- 这个在京东里面 有滑动删除的东西  以后可以借鉴-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <ListView
+            android:id="@id/android:list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:cacheColorHint="@color/transparent"
+            android:fadingEdge="none"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:listSelector="@color/transparent" >
+        </ListView>
+        <!-- 提示没有订单-->
+        <RelativeLayout
+            android:id="@+id/layout_null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="48dp"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/jshop_favo_empty_img" />
+
+            <TextView
+                android:id="@+id/btn_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_disc"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/item_margin_large"
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="8dp"
+                android:text="去首页逛逛"
+                android:textSize="@dimen/small_medium_text_size" />
+
+            <TextView
+                android:id="@+id/tv_disc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18dp"
+                android:text="您还没有关注过任何商品！何不去逛逛~"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/medium_text_size" />
+        </RelativeLayout>
+    </LinearLayout>
+    <include
+        android:id="@id/swipe_load_more_footer"
+        layout="@layout/layout_classic_footer" />
+
+</LinearLayout>

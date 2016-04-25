@@ -257,5 +257,7 @@
     <color name="umeng_socialize_text_ucenter">#ff595959</color>
     <color name="umeng_socialize_ucenter_bg">#ffeeeeee</color>
 
+    <color name="darkgrey">#A9A9A9</color><!--暗灰色 -->
+
 
 </resources>

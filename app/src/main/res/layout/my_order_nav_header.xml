@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <HorizontalScrollView
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:scrollbars="none"
+        android:layout_below="@+id/layout_category_topbar"
+        android:background="@drawable/bg_item_bottom"
+        >
+
+
+        <LinearLayout
+            android:id="@+id/linearLayoutMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <!-- 全部订单-->
+            <RelativeLayout
+                android:id="@+id/my_order_layout_0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/order0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="全部订单"
+                    android:textSize="@dimen/small_middle_text_size"
+                    android:textColor="@color/red" />
+
+                <View
+                    android:id="@+id/indicator0"
+                    android:layout_width="100dp"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/red" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="@dimen/divider_height"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/hintColor" />
+
+            <!-- 实物订单-->
+            <RelativeLayout
+                android:id="@+id/my_order_layout_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/order1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="等待买家付款"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/small_middle_text_size"
+                    android:textColor="@color/dark" />
+
+                <View
+                    android:id="@+id/indicator1"
+                    android:layout_width="100dp"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/red"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="@dimen/divider_height"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/hintColor" />
+
+            <!-- 物流订单-->
+            <RelativeLayout
+                android:id="@+id/my_order_layout_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/order2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/dark"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/small_middle_text_size"
+                    android:text="等待店家确认" />
+
+                <View
+                    android:id="@+id/indicator2"
+                    android:layout_width="100dp"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/red"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+            <View
+                android:layout_width="@dimen/divider_height"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/hintColor" />
+            <!-- 已取消订单-->
+            <RelativeLayout
+                android:id="@+id/my_order_layout_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/order3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/dark"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/small_middle_text_size"
+                    android:text="等待店家安装" />
+
+                <View
+                    android:id="@+id/indicator3"
+                    android:layout_width="100dp"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/red"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="@dimen/divider_height"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/hintColor" />
+            <!-- 已取消订单-->
+            <RelativeLayout
+                android:id="@+id/my_order_layout_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/order4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/dark"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/small_middle_text_size"
+                    android:text="等待买家确认" />
+
+                <View
+                    android:id="@+id/indicator4"
+                    android:layout_width="100dp"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/red"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="@dimen/divider_height"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/hintColor" />
+            <!-- 已取消订单-->
+            <RelativeLayout
+                android:id="@+id/my_order_layout_5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/order5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/dark"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/small_middle_text_size"
+                    android:text="交易成功" />
+
+                <View
+                    android:id="@+id/indicator5"
+                    android:layout_width="100dp"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/red"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="@dimen/divider_height"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/hintColor" />
+            <!-- 已取消订单-->
+            <RelativeLayout
+                android:id="@+id/my_order_layout_6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/order6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/dark"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/small_middle_text_size"
+                    android:text="交易失败" />
+
+                <View
+                    android:id="@+id/indicator6"
+                    android:layout_width="100dp"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/red"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+
+</LinearLayout>

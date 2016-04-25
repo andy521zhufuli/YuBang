@@ -174,7 +174,7 @@ public class MyActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(MyActivity.this, MyPrivilegeActivity.class);
+                intent.setClass(MyActivity.this, ListViewRefreshAcivity.class);
                 startActivity(intent);
             }
         });
