@@ -129,6 +129,19 @@
     <dimen name="drop_down_list_footer_progress_bar_height">36dp</dimen>
     <dimen name="drop_down_list_footer_button_margin_left">8dp</dimen>
     <dimen name="drop_down_list_footer_button_height">48dp</dimen>
+    <!--优惠券-->
+    <dimen name="my_coupon_center_margin_top">10.0dip</dimen>
+    <dimen name="my_coupon_condition_text">12.0sp</dimen>
+    <dimen name="my_coupon_free_shipping_text">26.0sp</dimen>
+    <dimen name="my_coupon_time_text">9.0sp</dimen>
+    <dimen name="my_coupon_value_margin_top_height">36.0dip</dimen>
+    <dimen name="my_coupon_value_text">38.0sp</dimen>
+    <dimen name="coupon_next_margin_left">-2.0dip</dimen>
+    <dimen name="coupon_next_margin_right">4.0dip</dimen>
+    <dimen name="coupon_product_icon_height">128.0dip</dimen>
+    <dimen name="coupon_product_icon_width">128.0dip</dimen>
+    <dimen name="coupon_quota_width">125.0dip</dimen>
+    <dimen name="coupon_take_width">38.0dip</dimen>
 
 
 </resources>
