@@ -257,4 +257,5 @@ public class MyRecommendedPartnerFirstFragmentActivityFragment extends Fragment 
         L.e("TAG ", " 1 onStop");
     }
 
+
 }
