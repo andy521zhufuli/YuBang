@@ -258,6 +258,6 @@
     <color name="umeng_socialize_ucenter_bg">#ffeeeeee</color>
 
     <color name="darkgrey">#A9A9A9</color><!--暗灰色 -->
-
+    <color name="order_divider">#ffd8d8d8</color>
 
 </resources>

@@ -10,15 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.andy.android.yubang.R;
+import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2MyOrderBean;
 import com.car.yubangapk.json.bean.MyOrderBean;
-import com.car.yubangapk.network.myHttpReq.HttpGetOrders;
+import com.car.yubangapk.network.myHttpReq.HttpGetMyOrders;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.swipetoloadlayout.SwipeToLoadLayout;
 import com.car.yubangapk.utils.L;
@@ -34,7 +36,7 @@ public class MyOrdersFragment2 extends Fragment {
 	TextView tv;
 	String text;
 
-    HttpGetOrders mGetOrders;
+    HttpGetMyOrders mGetOrders;
 
 
 	private OrderListAdapter mAdapter;
@@ -65,7 +67,7 @@ public class MyOrdersFragment2 extends Fragment {
 
 	public MyOrdersFragment2(String type){
         this.mType = type;
-        mGetOrders = new HttpGetOrders();
+        mGetOrders = new HttpGetMyOrders();
         mGetOrders.setCallback(new GetOrders());
 
 	}
@@ -75,12 +77,14 @@ public class MyOrdersFragment2 extends Fragment {
 		super.onAttach(context);
         this.mContext = context;
         mUserId = Configs.getLoginedInfo(mContext).getUserid();
+        L.e("TAG " + mType, "onAttach");
 	}
 
 	@Override
 	public void onCreate( Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        L.e("TAG " + mType, "onCreate");
 
 
     }
@@ -89,6 +93,7 @@ public class MyOrdersFragment2 extends Fragment {
 	public View onCreateView(LayoutInflater inflater,
 			 ViewGroup container,  Bundle savedInstanceState) {
 
+        L.e("TAG " + mType, "onCreateView");
         View view = inflater.inflate(R.layout.lay4,container,false);
 
         my_order_listview = (PullToRefreshListView) view.findViewById(R.id.pull_refresh_list);
@@ -111,10 +116,61 @@ public class MyOrdersFragment2 extends Fragment {
                         new GetDataTask().execute();
                     }
                 });
-        firstGetOrder();//进来 首次加载订单 加载全部订单
+
 		return view;
 	}
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        L.e("TAG " + mType, "onActivityCreated");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        L.e("TAG " + mType, "onStart 是不是此时才可见");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        L.e("TAG-- " + mType, "onResume 是不是此时才可见");
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser)
+        {
+            L.e("TAG " + mType, "setUserVisibleHint ");
+            //当前对用户是可见的
+            if (isFirstVisibleToUser)
+            {
+
+                L.e("TAG " + mType, "这里是第一次可见 ");
+                isFirstVisibleToUser = false;
+
+                //这里是第一次可见 就调用此一次加载
+                firstGetOrder();//进来 首次加载订单 加载全部订单
+            }
+            else
+            {
+                //不是第一次可见  已经过时返回来之后
+                L.e("TAG " + mType, "不是第一次可见  已经过时返回来之后 ");
+            }
+
+        }
+        else
+        {
+            //当前对用户不可见
+            L.e("TAG " + mType, "当前对用户不可见 ");
+        }
+    }
+
+
+    private boolean isFirstVisibleToUser = true;
 
     private void firstGetOrder()
     {
@@ -207,12 +263,14 @@ public class MyOrdersFragment2 extends Fragment {
             final ViewHolder holder;
             if (view == null) {
                 holder = new ViewHolder();
-                view = inflater.inflate(R.layout.item_order_list_item, null);
-                holder.order_item_Text = (TextView) view.findViewById(R.id.order_item_Text);
-                holder.order_item_totalPrice = (TextView) view.findViewById(R.id.order_item_totalPrice);
-                holder.order_item_subtime = (TextView) view.findViewById(R.id.order_item_subtime);
+                view = inflater.inflate(R.layout.item_order, null);
+                holder.order_item_number = (TextView) view.findViewById(R.id.order_item_number);
+                holder.order_item_total_price = (TextView) view.findViewById(R.id.order_item_total_price);
+                holder.order_item_subtime_time = (TextView) view.findViewById(R.id.order_item_subtime_time);
                 holder.order_item_name = (TextView) view.findViewById(R.id.order_item_name);
                 holder.order_item_status = (TextView) view.findViewById(R.id.order_item_status);
+                holder.order_item_amount = (TextView) view.findViewById(R.id.order_item_amount);
+                holder.order_item_image = (ImageView) view.findViewById(R.id.order_item_image);
                 view.setTag(holder);
             }
             else
@@ -220,23 +278,26 @@ public class MyOrdersFragment2 extends Fragment {
                 holder = (ViewHolder) view.getTag();
             }
 
-            holder.order_item_Text.setText(myOrderBeans.get(position).getOrderNumber());
-            holder.order_item_totalPrice.setText(myOrderBeans.get(position).getOrderMoney());
+            holder.order_item_number.setText(myOrderBeans.get(position).getOrderNumber());
+            holder.order_item_total_price.setText(myOrderBeans.get(position).getOrderMoney());
             holder.order_item_status.setText(myOrderBeans.get(position).getOrderStatusName());
             holder.order_item_name.setText(myOrderBeans.get(position).getOrderName());
-            holder.order_item_subtime.setText(myOrderBeans.get(position).getOrderTime());
-
+            holder.order_item_subtime_time.setText(myOrderBeans.get(position).getOrderTime());
+            holder.order_item_amount.setText("x" + myOrderBeans.get(position).getProductNum());
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + myOrderBeans.get(position).getPathCode() + "&fileReq.fileName=" + myOrderBeans.get(position).getPhoto();
+            ImageLoaderTools.getInstance(mContext).displayImage(url, holder.order_item_image);
             return view;
         }
 
         class ViewHolder
         {
-            TextView        order_item_Text;//订单号
-            TextView        order_item_totalPrice;//定案金额
-            TextView        order_item_subtime;//下单时间
+            TextView        order_item_number;//订单号
+            TextView        order_item_total_price;//定案金额
+            TextView        order_item_subtime_time;//下单时间
             TextView        order_item_name;//名单种类
             TextView        order_item_status;//状态
-
+            TextView        order_item_amount;//数量
+            ImageView       order_item_image;//照片
         }
     }
 

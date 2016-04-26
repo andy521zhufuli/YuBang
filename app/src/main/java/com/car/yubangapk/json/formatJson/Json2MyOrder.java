@@ -47,11 +47,14 @@ public class Json2MyOrder
             JSONArray rows = jsonObject.getJSONArray("rows");
             int size = rows.length();
             String id;
-            String orderMoney;
-            String orderTime;
+            String pathCode;
             String orderStatusName;
-            String orderName;
+            String productNum;
             String orderNumber;
+            String orderName;
+            String orderTime;
+            String orderMoney;
+            String photo;
 
 
             List<MyOrderBean> orderBeansList = new ArrayList<>();
@@ -65,6 +68,10 @@ public class Json2MyOrder
                 orderStatusName = row.getString("orderStatusName");
                 orderName = row.getString("orderName");
                 orderNumber = row.getString("orderNumber");
+                pathCode = row.getString("pathCode");
+                productNum = row.getString("productNum");
+                photo = row.getString("photo");
+
 
                 MyOrderBean orderBean = new MyOrderBean();
                 orderBean.setId(id);
@@ -73,6 +80,10 @@ public class Json2MyOrder
                 orderBean.setOrderStatusName(orderStatusName);
                 orderBean.setOrderName(orderName);
                 orderBean.setOrderNumber(orderNumber);
+                orderBean.setPathCode(pathCode);
+                orderBean.setProductNum(productNum);
+                orderBean.setPhoto(photo);
+
                 orderBean.setHasData(true);
 
                 orderBeansList.add(orderBean);

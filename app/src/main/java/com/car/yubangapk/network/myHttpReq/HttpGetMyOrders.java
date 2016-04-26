@@ -18,7 +18,7 @@ import okhttp3.Call;
  * 去拿订单
  *
  */
-public class HttpGetOrders
+public class HttpGetMyOrders
 {
     private String TAG = HttpReqAddress.class.getSimpleName();
 
@@ -46,7 +46,7 @@ public class HttpGetOrders
      * @param
      * @param
      */
-    public HttpGetOrders()
+    public HttpGetMyOrders()
     {
 
     }
