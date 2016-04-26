@@ -60,6 +60,13 @@ public class MyRecommendedPartnerSecondFragmentActivityFragment extends Fragment
         L.i("MyRecommendedPartnerSecondFragmentActivityFragment", " ---> onResume");
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        L.i("MyRecommendedPartnerSecondFragmentActivityFragment", " ---> onPause");
+    }
+
     @Override
     public void onStop() {
         super.onStop();

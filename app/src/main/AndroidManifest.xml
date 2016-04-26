@@ -186,12 +186,6 @@
             android:screenOrientation="portrait" />
 
         <!--  -->
-        <activity
-            android:name="com.car.yubangapk.ui.MyRecommendedPartnerFirstFragmentActivity"
-            android:label="@string/title_activity_my_recommended_partner_first_fragment" />
-        <activity
-            android:name="com.car.yubangapk.ui.MyRecommendedPartnerSecondFragmentActivity"
-            android:label="@string/title_activity_my_recommended_partner_second_fragment" />
 
         <!-- 设置 -->
         <activity

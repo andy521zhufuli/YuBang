@@ -20,7 +20,7 @@ import okhttp3.Call;
  */
 public class HttpGetMyOrders
 {
-    private String TAG = HttpReqAddress.class.getSimpleName();
+    private String TAG = HttpGetMyOrders.class.getSimpleName();
 
     private String mUserId;
     private String mPage;

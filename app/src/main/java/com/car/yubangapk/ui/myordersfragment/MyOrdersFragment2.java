@@ -1,4 +1,4 @@
-package com.car.yubangapk.ui.fragment;
+package com.car.yubangapk.ui.myordersfragment;
 
 
 import android.content.Context;
@@ -117,6 +117,12 @@ public class MyOrdersFragment2 extends Fragment {
                     }
                 });
 
+        if (isFirstVisibleToUser == false)
+        {
+            //这里是被销毁了 重新createView  再去拿数据  显示
+            firstGetOrder();
+        }
+
 		return view;
 	}
 
@@ -138,6 +144,24 @@ public class MyOrdersFragment2 extends Fragment {
         L.e("TAG-- " + mType, "onResume 是不是此时才可见");
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        L.e("TAG-- " + mType, "onPause ");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        L.e("TAG-- " + mType, "onDestroyView ");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        L.e("TAG-- " + mType, "onDestroy ");
+    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

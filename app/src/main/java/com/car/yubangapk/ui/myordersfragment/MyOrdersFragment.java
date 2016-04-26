@@ -1,33 +1,24 @@
-package com.car.yubangapk.ui.fragment;
+package com.car.yubangapk.ui.myordersfragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.andy.android.yubang.R;
-import com.car.yubangapk.json.bean.AddressBean;
-import com.car.yubangapk.swipetoloadlayout.OnLoadMoreListener;
-import com.car.yubangapk.swipetoloadlayout.OnRefreshListener;
 import com.car.yubangapk.swipetoloadlayout.SwipeToLoadLayout;
 import com.car.yubangapk.utils.toastMgr;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MyOrdersFragment extends ListFragment {
 	TextView tv;

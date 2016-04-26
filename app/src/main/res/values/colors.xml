@@ -259,5 +259,11 @@
 
     <color name="darkgrey">#A9A9A9</color><!--暗灰色 -->
     <color name="order_divider">#ffd8d8d8</color>
+    <color name="black1">#ff333333</color>
+    <color name="black2">#ff666666</color>
+    <color name="black3">#ff999999</color>
+    <color name="black4">#ffcccccc</color>
+    <color name="black5">#ff5d5e5a</color>
+    <color name="black6">#fff5f5f5</color>
 
 </resources>

@@ -12,10 +12,7 @@ import com.andy.android.yubang.R;
 import com.car.yubangapk.adapter.PagerAdapter;
 import com.car.yubangapk.adapter.ScrollTabsAdapter;
 import com.car.yubangapk.adapter.TabAdapter;
-import com.car.yubangapk.swipetoloadlayout.OnLoadMoreListener;
-import com.car.yubangapk.swipetoloadlayout.OnRefreshListener;
-import com.car.yubangapk.ui.fragment.MyOrdersFragment;
-import com.car.yubangapk.ui.fragment.MyOrdersFragment2;
+import com.car.yubangapk.ui.myordersfragment.MyOrdersFragment2;
 import com.car.yubangapk.view.ScrollTabView;
 
 /**
