@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2MyRecommendPartnersBean;
 import com.car.yubangapk.json.bean.MyOrderBean;
 import com.car.yubangapk.json.bean.MyRecommendPartnersBean;
@@ -28,6 +29,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.List;
 
+import cn.trinea.android.common.service.impl.RemoveTypeBitmapLarge;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -36,13 +39,22 @@ public class MyRecommendedPartnerFirstFragmentActivityFragment extends Fragment 
     PullToRefreshListView listview;
     private Context mContext;
     private LinearLayout nothing_layout;//什么都没有
+    private TextView    text_empty;//什么都没有的内容原因
     String mUserId;
 
     RecommendPartnerListAdapter mAdapter;
 
     HttpReqGetMyRecommendPartners mGetMyRecommendPartners;
 
+
+    String mType;
+
     public MyRecommendedPartnerFirstFragmentActivityFragment() {
+    }
+
+
+    public MyRecommendedPartnerFirstFragmentActivityFragment(String type) {
+        this.mType = type;
     }
 
     @Override
@@ -63,10 +75,11 @@ public class MyRecommendedPartnerFirstFragmentActivityFragment extends Fragment 
         View view = inflater.inflate(R.layout.fragment_my_recommended_partner_first, container, false);
         listview = (PullToRefreshListView) view.findViewById(R.id.my_recommended_partner_pull_refresh_list);
         nothing_layout = (LinearLayout) view.findViewById(R.id.nothing_layout);
+        text_empty  = (TextView) view.findViewById(R.id.text_empty);
         listview.onRefreshComplete();
         listview.setOnRefreshListener(this);
-        listview.setRefreshing(true);
-        mGetMyRecommendPartners.getRecommendPartners(mUserId, "1", "10", null);
+
+        firstLoad();
 
         return view;
     }
@@ -81,20 +94,31 @@ public class MyRecommendedPartnerFirstFragmentActivityFragment extends Fragment 
         }
     }
 
+    private void firstLoad()
+    {
+        judgeUserid();
+        mGetMyRecommendPartners.getRecommendPartners(mUserId, "1", "1", getRequestStatus());
+    }
+
     @Override
     public void onPullDownToRefresh(PullToRefreshBase refreshView) {
-        //每次下拉就去拿第一页
-        judgeUserid();
-        mGetMyRecommendPartners.getRecommendPartners(mUserId, "1", "10", null);
+
     }
 
 
 
     @Override
-    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+    public void onPullUpToRefresh(PullToRefreshBase refreshView)
+    {
+        mIsPullUpToLoading =true;
+        mGetMyRecommendPartners.getRecommendPartners(mUserId, mCurrentPage + 1 + "", "1", getRequestStatus());
 
     }
 
+    private boolean mIsPullUpToLoading = false;
+    private int mCurrentPage = 1;
+
+    private List<MyRecommendPartnersBean> mMyRecommPartnerList;
     class GetRecommendsHttp implements HttpReqCallback
     {
 
@@ -103,6 +127,32 @@ public class MyRecommendedPartnerFirstFragmentActivityFragment extends Fragment 
             if (errorCode == 100) {
                 NotLogin.gotoLogin(getActivity());
             }
+            else if (ErrorCodes.ERROR_CODE_NETWORK == errorCode)
+            {
+                nothing_layout.setVisibility(View.VISIBLE);
+                listview.setVisibility(View.GONE);
+                text_empty.setText("网络错误");
+            }
+            else if (ErrorCodes.ERROR_CODE_SERVER_ERROR == errorCode)
+            {
+                nothing_layout.setVisibility(View.VISIBLE);
+                listview.setVisibility(View.GONE);
+                text_empty.setText("什么都没有呢~");
+            }
+            else if (ErrorCodes.ERROR_CODE_NO_DATA == errorCode)
+            {
+                if (mIsPullUpToLoading == true)
+                {
+                    toastMgr.builder.display("没有更多",1);
+                }
+                else
+                {
+//                    nothing_layout.setVisibility(View.VISIBLE);
+//                    listview.setVisibility(View.GONE);
+//                    text_empty.setText("什么都没有呢~");
+                }
+
+            }
             else
             {
                 nothing_layout.setVisibility(View.VISIBLE);
@@ -110,16 +160,34 @@ public class MyRecommendedPartnerFirstFragmentActivityFragment extends Fragment 
                 toastMgr.builder.display(message, 1);
             }
 
+            mIsPullUpToLoading = false;
+            listview.onRefreshComplete();
+
 
         }
 
         @Override
         public void onSuccess(Object object) {
-            nothing_layout.setVisibility(View.GONE);
-            listview.setVisibility(View.VISIBLE);
             Json2MyRecommendPartnersBean recommendPartnersBean = (Json2MyRecommendPartnersBean) object;
-            mAdapter = new RecommendPartnerListAdapter(recommendPartnersBean.getRows(), recommendPartnersBean.getRows().size());
-            listview.setAdapter(mAdapter);
+            if (mIsPullUpToLoading == false)
+            {
+                mMyRecommPartnerList = recommendPartnersBean.getRows();
+                mAdapter = new RecommendPartnerListAdapter(mMyRecommPartnerList, mMyRecommPartnerList.size());
+                listview.setAdapter(mAdapter);
+            }
+            else
+            {
+                List<MyRecommendPartnersBean> list = recommendPartnersBean.getRows();
+                for (MyRecommendPartnersBean bean : list)
+                {
+                    mMyRecommPartnerList.add(bean);
+                }
+                mAdapter.refresh(mMyRecommPartnerList, mMyRecommPartnerList.size());
+                mIsPullUpToLoading = false;
+                mCurrentPage++;
+            }
+            listview.onRefreshComplete();
+
         }
     }
 
@@ -201,6 +269,27 @@ public class MyRecommendedPartnerFirstFragmentActivityFragment extends Fragment 
             ImageView       my_recommended_partners_shop_image;//照片
         }
     }
+
+    private String mRequestStatus;
+    private String getRequestStatus()
+    {
+
+        if (mType.equals(MyRecommendedPartnerActivity.ALL_PARTNERS))
+        {
+            mRequestStatus = null;
+        }
+        else if (mType.equals(MyRecommendedPartnerActivity.PENDING_APPROVAL))
+        {
+            mRequestStatus = "2";
+        }
+        else if (mType.equals(MyRecommendedPartnerActivity.NOT_APPROVAL))
+        {
+            mRequestStatus = "6";
+        }
+        return mRequestStatus;
+    }
+
+
 
 
     @Override

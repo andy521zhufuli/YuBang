@@ -34,6 +34,7 @@ public class HttpReqGetMyRecommendPartners
     private static final String ARGS_sqlname = "sqlName";// = clientUserRecShop
     private static final String ARGS_page = "page";//第几页
     private static final String ARGS_rows = "rows";//一页几条记录数
+    private static final String ARGS_STATUS = "dataReqModel.args.partnerStatus";
     private static final String ARGS_recommend_id = "dataReqModel.args.shopReferee";//用户id
     private static final String ARGS_userid = "dataReqModel.userid";
 
@@ -81,6 +82,7 @@ public class HttpReqGetMyRecommendPartners
                             + ARGS_sqlname + "=" + "clientUserRecShop"
                             + "&" + ARGS_page + "=" + Ppage
                             + "&" + ARGS_rows + "=" + rows
+                            + "&" + ARGS_recommend_id + "=" + userid
                             + "&" + ARGS_userid + "=" + userid
             );
         }
@@ -91,6 +93,7 @@ public class HttpReqGetMyRecommendPartners
                     .addParams(ARGS_sqlname, "clientUserRecShop")
                     .addParams(ARGS_page, Ppage)
                     .addParams(ARGS_rows, rows)
+                    .addParams(ARGS_STATUS, orderStatus)
                     .addParams(ARGS_recommend_id, userid)
                     .addParams(ARGS_userid, userid)
 
@@ -100,8 +103,9 @@ public class HttpReqGetMyRecommendPartners
             L.i(TAG, "获取订单 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
                             + ARGS_sqlname + "=" + "clientUserRecShop"
                             + "&" + ARGS_page + "=" + Ppage
-                            + "&" + ARGS_rows + "=" + Ppage
-                            + "&" + ARGS_recommend_id + "=" + Ppage
+                            + "&" + ARGS_rows + "=" + rows
+                            + "&" + ARGS_recommend_id + "=" + userid
+                            + "&" + ARGS_STATUS + "=" + orderStatus
                             + "&" + ARGS_userid + "=" + userid
             );
         }
@@ -131,7 +135,7 @@ public class HttpReqGetMyRecommendPartners
 
             if (recommendPartnersBean == null)
             {
-                callback.onFail(ErrorCodes.ERROR_CODE_SERVER_ERROR, ErrorCodes.SERVER_ERROR);
+                callback.onFail(ErrorCodes.ERROR_CODE_NETWORK, ErrorCodes.NETWORK_ERROR);
             }
             else
             {
@@ -143,6 +147,10 @@ public class HttpReqGetMyRecommendPartners
                 else if (recommendPartnersBean.isHasData() == false)
                 {
                     callback.onFail(ErrorCodes.ERROR_CODE_SERVER_ERROR, ErrorCodes.SERVER_ERROR);
+                }
+                else if (recommendPartnersBean.getRows().size() == 0)
+                {
+                    callback.onFail(ErrorCodes.ERROR_CODE_NO_DATA, "没有数据");
                 }
                 else
                 {

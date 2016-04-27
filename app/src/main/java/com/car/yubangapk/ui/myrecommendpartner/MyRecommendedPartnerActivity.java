@@ -44,7 +44,7 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
     private View            indicator3;
 
     private ListView        my_recommended_partner_listview;//列表
-    private ProgressBar     my_recommended_partner_progressbar;//进度条
+
 
 
     private FrameLayout     my_recommended_partner_framlayout;//framlayout
@@ -65,7 +65,6 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
 
         findViews();
 
-        my_recommended_partner_progressbar.setVisibility(View.GONE);
 
         select(0);
 
@@ -85,9 +84,6 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
         indicator2 = findViewById(R.id.indicator2);
         indicator3 = findViewById(R.id.indicator3);
 
-        my_recommended_partner_listview = (ListView) findViewById(R.id.my_recommended_partner_listview);;//列表
-
-        my_recommended_partner_progressbar = (ProgressBar) findViewById(R.id.my_recommended_partner_progressbar);;//进度条
 
         my_recommended_partner_framlayout = (FrameLayout) findViewById(R.id.my_recommended_partner_framlayout);
 
@@ -169,7 +165,7 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
             case 0:
                 if (firstFragment == null)
                 {
-                    firstFragment = new MyRecommendedPartnerFirstFragmentActivityFragment();
+                    firstFragment = new MyRecommendedPartnerFirstFragmentActivityFragment(ALL_PARTNERS);
                     transaction.add(R.id.my_recommended_partner_framlayout, firstFragment);
                 } else
                 {
@@ -179,7 +175,7 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
             case 1:
                 if (secondFragment == null)
                 {
-                    secondFragment = new MyRecommendedPartnerSecondFragmentActivityFragment();
+                    secondFragment = new MyRecommendedPartnerFirstFragmentActivityFragment(PENDING_APPROVAL);
                     transaction.add(R.id.my_recommended_partner_framlayout, secondFragment);
                 } else
                 {
@@ -189,7 +185,7 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
             case 2:
                 if (threeFragment == null)
                 {
-                    threeFragment = new MyRecommendedPartnerThirdFragmentActivityFragment();
+                    threeFragment = new MyRecommendedPartnerFirstFragmentActivityFragment(NOT_APPROVAL);
                     transaction.add(R.id.my_recommended_partner_framlayout, threeFragment);
                 } else
                 {
@@ -221,5 +217,8 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
         }
     }
 
+    public static final String ALL_PARTNERS = "全部";
+    public static final String PENDING_APPROVAL = "待审核";
+    public static final String NOT_APPROVAL = "未审核";
 
 }
