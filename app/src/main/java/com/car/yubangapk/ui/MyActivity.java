@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.ui.myordersfragment.MyOrdersActivity;
+import com.car.yubangapk.ui.myrecommendpartner.MyRecommendedPartnerActivity;
 import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;

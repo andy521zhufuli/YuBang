@@ -175,13 +175,13 @@
 
         <!-- 我的订单 -->
         <activity
-            android:name="com.car.yubangapk.ui.MyOrdersActivity"
+            android:name="com.car.yubangapk.ui.myordersfragment.MyOrdersActivity"
             android:label="@string/title_activity_my_orders"
             android:screenOrientation="portrait" />
 
         <!-- 我的界面==>推荐合伙人 -->
         <activity
-            android:name="com.car.yubangapk.ui.MyRecommendedPartnerActivity"
+            android:name="com.car.yubangapk.ui.myrecommendpartner.MyRecommendedPartnerActivity"
             android:label="@string/title_activity_my_recommended_partner"
             android:screenOrientation="portrait" />
 

@@ -18,6 +18,27 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true"
-        ptr:ptrMode="both" >
+        ptr:ptrMode="pullFromEnd"
+        >
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
+
+    <LinearLayout
+        android:id="@+id/nothing_layout"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <ImageView android:id="@id/image" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginBottom="15.0dip"
+            android:src="@drawable/nothing_image" />
+        <TextView android:textSize="@dimen/text_14"
+            android:textColor="@color/black3"
+            android:gravity="center"
+            android:id="@+id/text_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="什么都没有呢" />
+    </LinearLayout>
+
 </LinearLayout>

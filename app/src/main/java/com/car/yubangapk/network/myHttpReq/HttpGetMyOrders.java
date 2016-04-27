@@ -88,8 +88,8 @@ public class HttpGetMyOrders
                     .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_USER_ORDER)
                     .addParams(ARGS1, "clientUserOrder")
                     .addParams(ARGS2, Ppage)
-                    .addParams(ARGS3, Ppage)
-                    .addParams(ARGS4, Ppage)
+                    .addParams(ARGS3, rows)
+                    .addParams(ARGS4, orderStatus)
                     .addParams(ARGS5, userid)
 
                     .build()
@@ -142,6 +142,10 @@ public class HttpGetMyOrders
                 else if (orderBean.isHasData() == false)
                 {
                     callback.onFail(ErrorCodes.ERROR_CODE_SERVER_ERROR, ErrorCodes.SERVER_ERROR);
+                }
+                else if (orderBean.getRows().size() == 0)
+                {
+                    callback.onFail(ErrorCodes.ERROR_CODE_NO_DATA, "没有数据");
                 }
                 else
                 {

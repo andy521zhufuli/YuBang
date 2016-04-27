@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ import com.car.yubangapk.swipetoloadlayout.SwipeToLoadLayout;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -42,10 +44,16 @@ public class MyOrdersFragment2 extends Fragment {
 	private OrderListAdapter mAdapter;
     SwipeToLoadLayout swipeToLoadLayout;
     PullToRefreshListView my_order_listview;
+    private LinearLayout    nothing_layout;//什么都没有
+    private TextView        text_empty;//文本显示
 
     List<MyOrderBean> mMyOrderList = new ArrayList<>();
 
+
     private String mType;
+    private boolean mIsPullUp = false;//是不是上啦加载
+    private int     mCurrentPage = 1;
+
 
 
     String ALL_ORDER = "全部订单";
@@ -94,12 +102,13 @@ public class MyOrdersFragment2 extends Fragment {
 			 ViewGroup container,  Bundle savedInstanceState) {
 
         L.e("TAG " + mType, "onCreateView");
-        View view = inflater.inflate(R.layout.lay4,container,false);
+        View view = inflater.inflate(R.layout.lay4, container, false);
 
         my_order_listview = (PullToRefreshListView) view.findViewById(R.id.pull_refresh_list);
+        nothing_layout = (LinearLayout) view.findViewById(R.id.nothing_layout);
+        text_empty = (TextView) view.findViewById(R.id.text_empty);
 
-
-
+        initIndicator();
         my_order_listview
                 .setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
                     @Override
@@ -107,13 +116,17 @@ public class MyOrdersFragment2 extends Fragment {
                         L.e("TAG", "onPullDownToRefresh");
                         //这里写下拉刷新的任务
                         new GetDataTask().execute();
+                        toastMgr.builder.display("下拉",1);
                     }
 
                     @Override
                     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                         L.e("TAG", "onPullUpToRefresh");
                         //这里写上拉加载更多的任务
-                        new GetDataTask().execute();
+//                        new GetDataTask().execute();
+                        pullUpToLoad();
+                        toastMgr.builder.display("上拉", 1);
+                        mIsPullUp = true;
                     }
                 });
 
@@ -125,6 +138,21 @@ public class MyOrdersFragment2 extends Fragment {
 
 		return view;
 	}
+
+    private void initIndicator()
+    {
+        ILoadingLayout startLabels = my_order_listview
+                .getLoadingLayoutProxy(true, false);
+        startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
+        startLabels.setRefreshingLabel("正在刷新...");// 刷新时
+        startLabels.setReleaseLabel("松开刷新...");// 下来达到一定距离时，显示的提示
+
+        ILoadingLayout endLabels = my_order_listview.getLoadingLayoutProxy(
+                false, true);
+        endLabels.setPullLabel("上拉加载更多...");// 刚下拉时，显示的提示
+        endLabels.setRefreshingLabel("好嘞，正在加载...");// 刷新时
+        endLabels.setReleaseLabel("松开加载更多...");// 下来达到一定距离时，显示的提示
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -199,8 +227,15 @@ public class MyOrdersFragment2 extends Fragment {
     private void firstGetOrder()
     {
         judgeUserid();
-        mGetOrders.getOrders(mUserId, "1", "10", null);
+        mGetOrders.getOrders(mUserId, "1", "1", getRequestType());
     }
+
+
+    private void pullUpToLoad()
+    {
+        mGetOrders.getOrders(mUserId, mCurrentPage+1 + "", "1", getRequestType());
+    }
+
 
     private void judgeUserid() {
         if (mUserId == null || mUserId.equals(""))
@@ -221,19 +256,61 @@ public class MyOrdersFragment2 extends Fragment {
             else if (errorCode == ErrorCodes.ERROR_CODE_NETWORK)
             {
                 toastMgr.builder.display(message, 1);
+                nothing_layout.setVisibility(View.VISIBLE);
+                my_order_listview.setVisibility(View.GONE);
+                text_empty.setText("网络错误");
+            }
+            else if (errorCode == ErrorCodes.ERROR_CODE_NO_DATA)
+            {
+                if (mIsPullUp == true)
+                {
+                    toastMgr.builder.display("没有更多数据.",1);
+                }
+                else
+                {
+
+                }
+            }
+            else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
+            {
+
+                nothing_layout.setVisibility(View.VISIBLE);
+                my_order_listview.setVisibility(View.GONE);
+                text_empty.setText("什么都没有呢");
             }
             else
             {
-                toastMgr.builder.display(message,1);
+                toastMgr.builder.display(message, 1);
             }
+            mIsPullUp = false;
+            my_order_listview.onRefreshComplete();
         }
 
         @Override
         public void onSuccess(Object object) {
             Json2MyOrderBean orderBean = (Json2MyOrderBean) object;
-            mMyOrderList = orderBean.getRows();
-            mAdapter = new OrderListAdapter(getActivity(),mMyOrderList, mMyOrderList.size());
-            my_order_listview.setAdapter(mAdapter);
+
+            if (mIsPullUp == false)
+            {
+                mMyOrderList = orderBean.getRows();
+                mAdapter = new OrderListAdapter(getActivity(),mMyOrderList, mMyOrderList.size());
+                my_order_listview.setAdapter(mAdapter);
+                mCurrentPage = 1;
+                my_order_listview.onRefreshComplete();
+            }
+            else
+            {
+                //说明是加载  并且拿到数据了
+                List<MyOrderBean> list = orderBean.getRows();
+                for (MyOrderBean bean : list)
+                {
+                    mMyOrderList.add(bean);
+                }
+                mAdapter.refresh(mMyOrderList, mMyOrderList.size());
+                mIsPullUp = false;
+                mCurrentPage++;
+                my_order_listview.onRefreshComplete();
+            }
 
         }
     }
@@ -349,5 +426,41 @@ public class MyOrdersFragment2 extends Fragment {
             // Call onRefreshComplete when the list has been refreshed.
             my_order_listview.onRefreshComplete();
         }
+    }
+
+
+    private String mRequestStatus;
+    private String getRequestType()
+    {
+
+        if(mType.equals(MyOrdersActivity.ALL_ORDER))
+        {
+            mRequestStatus = null;
+        }
+        else if (mType.equals(MyOrdersActivity.WAIT_BUYER))
+        {
+            mRequestStatus = "1";
+        }
+        else if (mType.equals(MyOrdersActivity.WAIT_SHOP_CONFIRM))
+        {
+            mRequestStatus = "2";
+        }
+        else if (mType.equals(MyOrdersActivity.WAIT_SHOP_INSTALL))
+        {
+            mRequestStatus = "3";
+        }
+        else if (mType.equals(MyOrdersActivity.WAIT_BUYER_CONFIRM))
+        {
+            mRequestStatus = "4";
+        }
+        else if (mType.equals(MyOrdersActivity.DEAL_SUCCESS))
+        {
+            mRequestStatus = "5";
+        }
+        else if (mType.equals(MyOrdersActivity.DEAL_FAIL))
+        {
+            mRequestStatus = "6";
+        }
+        return mRequestStatus;
     }
 }

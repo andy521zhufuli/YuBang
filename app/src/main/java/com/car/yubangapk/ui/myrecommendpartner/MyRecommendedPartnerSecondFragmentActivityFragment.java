@@ -1,4 +1,4 @@
-package com.car.yubangapk.ui;
+package com.car.yubangapk.ui.myrecommendpartner;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

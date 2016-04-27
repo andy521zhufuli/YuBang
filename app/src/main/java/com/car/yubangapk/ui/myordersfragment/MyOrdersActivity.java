@@ -1,4 +1,4 @@
-package com.car.yubangapk.ui;
+package com.car.yubangapk.ui.myordersfragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -67,13 +67,13 @@ public class MyOrdersActivity extends FragmentActivity{
     void initTabs()
     {
         tabsAdapter = new ScrollTabsAdapter(this);
-        tabsAdapter.add("全部订单");
-        tabsAdapter.add("待买家付款");
-        tabsAdapter.add("待店家确认");
-        tabsAdapter.add("待店家安装");
-        tabsAdapter.add("待买家确认");
-        tabsAdapter.add("交易成功");
-        tabsAdapter.add("交易失败");
+        tabsAdapter.add(ALL_ORDER);
+        tabsAdapter.add(WAIT_BUYER);
+        tabsAdapter.add(WAIT_SHOP_CONFIRM);
+        tabsAdapter.add(WAIT_SHOP_INSTALL);
+        tabsAdapter.add(WAIT_BUYER_CONFIRM);
+        tabsAdapter.add(DEAL_SUCCESS);
+        tabsAdapter.add(DEAL_FAIL);
         my_order_tab.setAdapter(tabsAdapter);
     }
 
@@ -81,29 +81,37 @@ public class MyOrdersActivity extends FragmentActivity{
 
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
-        MyOrdersFragment2 f1 = new MyOrdersFragment2("全部订单");
+        MyOrdersFragment2 f1 = new MyOrdersFragment2(ALL_ORDER);
         pagerAdapter.addFragment(f1);
 
-        MyOrdersFragment2 f2 = new MyOrdersFragment2("待买家付款");
+        MyOrdersFragment2 f2 = new MyOrdersFragment2(WAIT_BUYER);
         pagerAdapter.addFragment(f2);
 
-        MyOrdersFragment2 f3 = new MyOrdersFragment2("待店家确认");
+        MyOrdersFragment2 f3 = new MyOrdersFragment2(WAIT_SHOP_CONFIRM);
         pagerAdapter.addFragment(f3);
 
-        MyOrdersFragment2 f4 = new MyOrdersFragment2("待店家安装");
+        MyOrdersFragment2 f4 = new MyOrdersFragment2(WAIT_SHOP_INSTALL);
         pagerAdapter.addFragment(f4);
 
-        MyOrdersFragment2 f5 = new MyOrdersFragment2("待买家确认");
+        MyOrdersFragment2 f5 = new MyOrdersFragment2(WAIT_BUYER_CONFIRM);
         pagerAdapter.addFragment(f5);
 
-        MyOrdersFragment2 f6 = new MyOrdersFragment2("交易成功");
+        MyOrdersFragment2 f6 = new MyOrdersFragment2(DEAL_SUCCESS);
         pagerAdapter.addFragment(f6);
-        MyOrdersFragment2 f7 = new MyOrdersFragment2("交易失败");
+        MyOrdersFragment2 f7 = new MyOrdersFragment2(DEAL_FAIL);
         pagerAdapter.addFragment(f7);
 
         my_orders_viewpager.setAdapter(pagerAdapter);
 
         my_order_tab.setViewPager(my_orders_viewpager);
     }
+
+    public static final String ALL_ORDER = "全部订单";
+    public static final String WAIT_BUYER = "待买家付款";
+    public static final String WAIT_SHOP_CONFIRM = "待店家确认";
+    public static final String WAIT_SHOP_INSTALL = "待店家安装";
+    public static final String WAIT_BUYER_CONFIRM = "待买家确认";
+    public static final String DEAL_SUCCESS = "交易成功";
+    public static final String DEAL_FAIL = "交易失败";
 
 }

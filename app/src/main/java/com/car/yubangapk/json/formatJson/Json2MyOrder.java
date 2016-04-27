@@ -58,6 +58,7 @@ public class Json2MyOrder
 
 
             List<MyOrderBean> orderBeansList = new ArrayList<>();
+
             for (int i = 0; i < size; i++)
             {
 
@@ -88,7 +89,11 @@ public class Json2MyOrder
 
                 orderBeansList.add(orderBean);
             }
+
+
             order.setHasData(true);
+
+
             order.setRows(orderBeansList);
         } catch (JSONException e) {
             e.printStackTrace();
