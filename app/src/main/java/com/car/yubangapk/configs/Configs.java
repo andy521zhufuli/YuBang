@@ -44,6 +44,7 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GET_RECOMMEDN_SHOP_PUT_DETAIL_INFO = "/client/shop/recommendShop";
     public static String IP_ADDRESS_ACTION_GET_RECOMMEDN_SHOP_UPLOAD_SHOP_PHOTO = "/client/shop/uploadShopPhoto";
     public static String IP_ADDRESS_ACTION_GET_USER_ORDER = "/client/order/getUserOrder";
+    public static String IP_ADDRESS_ACTION_GET_USER_INFO = "/client/user/getUserInfo";
 
 
 

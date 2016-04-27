@@ -150,7 +150,7 @@ public class MyOrdersFragment2 extends Fragment {
         ILoadingLayout endLabels = my_order_listview.getLoadingLayoutProxy(
                 false, true);
         endLabels.setPullLabel("上拉加载更多...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("好嘞，正在加载...");// 刷新时
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
         endLabels.setReleaseLabel("松开加载更多...");// 下来达到一定距离时，显示的提示
     }
 

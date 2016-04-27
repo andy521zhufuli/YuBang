@@ -26,9 +26,5 @@ public class ErrorCodes {
     public static final String  _JSON_DECODE_ERROR = "json解析出错";//json 解析出错
 
 
-
-
-
-
-
+    public static final String NOT_LOGIN = "用户未登录";
 }

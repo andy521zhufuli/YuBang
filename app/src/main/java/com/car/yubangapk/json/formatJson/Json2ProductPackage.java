@@ -3,6 +3,7 @@ package com.car.yubangapk.json.formatJson;
 
 import com.car.yubangapk.json.bean.Json2CarBrandBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
+import com.car.yubangapk.utils.L;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -95,13 +96,22 @@ public class Json2ProductPackage {
 
             for (int i = 0; i < size; i++)
             {
+
                 JSONObject row =  rows.getJSONObject(i);
                 categoryName = row.getString("categoryName");
                 retailPrice = row.getDouble("retailPrice");
                 pathCode = row.getString("pathCode");
                 productName = row.getString("productName");
                 productAmount = row.getInt("productAmount");
-                photoName = row.getString("photoName");
+                try
+                {
+                    photoName = row.getString("photoName");
+
+                }
+                catch (JSONException e)
+                {
+                    photoName = "0";
+                }
                 productShow = row.getString("productShow");
                 category = row.getString("category");
                 productCode = row.getString("productCode");
@@ -118,15 +128,21 @@ public class Json2ProductPackage {
                 json2ProductPackageBean.setCategory(category);
                 json2ProductPackageBean.setProductCode(productCode);
                 json2ProductPackageBean.setId(id);
-
                 json2ProductPackageBean.setHasData(true);
 
                 carBrandBeans.add(json2ProductPackageBean);
+
+
+
+
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            L.d("return null");
             return null;//返回空  服务器错误
         }
+        L.d("return not null");
         return carBrandBeans;
     }
 }

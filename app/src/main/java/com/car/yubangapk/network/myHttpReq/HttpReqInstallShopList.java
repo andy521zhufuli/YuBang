@@ -25,7 +25,7 @@ import okhttp3.Call;
 public class HttpReqInstallShopList
 {
 
-    private String TAG = HttpReqAddress.class.getSimpleName();
+    private String TAG = HttpReqInstallShopList.class.getSimpleName();
 
     private String mUserId;
     private String mReqMethod;

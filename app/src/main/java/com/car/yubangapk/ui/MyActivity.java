@@ -8,15 +8,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.configs.ErrorCodes;
+import com.car.yubangapk.json.bean.Json2MyUserInfoBean;
+import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetUserInfo;
 import com.car.yubangapk.ui.myordersfragment.MyOrdersActivity;
 import com.car.yubangapk.ui.myrecommendpartner.MyRecommendedPartnerActivity;
 import com.car.yubangapk.utils.SPUtils;
+import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
+import com.car.yubangapk.view.CustomProgressDialog;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * FirstPageActivity: 首页界面
@@ -33,8 +44,15 @@ public class MyActivity extends BaseActivity {
      * 未登录的时候显示的东西
      */
     private Button personal_login_button;//登陆注册按钮
-    private RelativeLayout  layout_not_logined;//还没登陆
-    private RelativeLayout  layout_logined;//已经登陆
+    private RelativeLayout layout_not_logined;//还没登陆
+    private RelativeLayout layout_logined;//已经登陆
+
+
+
+    private CircleImageView user_icon;//
+    private TextView        tv_user_name;//
+    private TextView        tv_car_type;//
+    private TextView        tv_phone_num;//
     /**
      * 登陆完了之后显示的
      */
@@ -52,6 +70,8 @@ public class MyActivity extends BaseActivity {
     private LinearLayout my_layout_mine_setting;        //设置
 
 
+    private CustomProgressDialog mProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,13 +84,68 @@ public class MyActivity extends BaseActivity {
 
         String from = getIntent().getStringExtra("from");
 
-        if (from != null)
-        {
+        mProgress = new CustomProgressDialog(mContext);
+
+        if (from != null) {
             //就是说明从登陆过来的
             layout_not_logined.setVisibility(View.GONE);//还没登陆
             layout_logined.setVisibility(View.VISIBLE);//已经登陆
+            //就去后台拿数据
+
+        }
+        String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+        if (loinged.equals(Configs.LOGINED))
+        {
+            layout_not_logined.setVisibility(View.VISIBLE);//还没登陆
+            layout_logined.setVisibility(View.GONE);//已经登陆
+            getUserInfo();
+        }
+        else
+        {
+            getUserInfo();
         }
 
+    }
+
+    private void getUserInfo() {
+        mProgress = mProgress.show(mContext, "加载中...", false, null);
+        String userid = Configs.getLoginedInfo(mContext).getUserid();
+        HttpReqGetUserInfo getUserInfo = new HttpReqGetUserInfo();
+        getUserInfo.setListener(new GetInfo());
+        getUserInfo.getUserInfo(userid);
+    }
+
+    class GetInfo implements HttpReqCallback
+    {
+        @Override
+        public void onFail(int errorCode, String message) {
+            mProgress.dismiss();
+            if (errorCode == ErrorCodes.ERROR_CODE_NOT_LOGIN)
+            {
+                layout_not_logined.setVisibility(View.VISIBLE);//还没登陆
+                layout_logined.setVisibility(View.GONE);//已经登陆
+            }
+            else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
+            {
+                toastMgr.builder.display(message, 1);
+            }
+            else
+            {
+                toastMgr.builder.display(message, 1);
+            }
+        }
+
+        @Override
+        public void onSuccess(Object object) {
+            mProgress.dismiss();
+            Json2MyUserInfoBean userInfoBean = (Json2MyUserInfoBean) object;
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + userInfoBean.getPathCode() + "&fileReq.fileName=" + userInfoBean.getPhotoName();
+            ImageLoaderTools.getInstance(mContext).displayImage(url, user_icon);
+            tv_user_name.setText(userInfoBean.getUserName());
+            tv_car_type.setText(userInfoBean.getCar());
+            tv_phone_num.setText(userInfoBean.getPhoneNum());
+
+        }
     }
 
     @Override
@@ -78,12 +153,10 @@ public class MyActivity extends BaseActivity {
         super.onResume();
         String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
 
-        toastMgr.builder.display("logined?  = " + loinged, 1);
 
         if (loinged.equals(Configs.LOGINED))
         {
-
-            //就是说明从登陆过来的
+            //就是说明已经登录了
             layout_not_logined.setVisibility(View.GONE);//还没登陆
             layout_logined.setVisibility(View.VISIBLE);//已经登陆
         }
@@ -117,6 +190,13 @@ public class MyActivity extends BaseActivity {
 
         layout_not_logined = (RelativeLayout) findViewById(R.id.layout_not_logined);;//还没登陆
         layout_logined = (RelativeLayout) findViewById(R.id.layout_logined);//已经登陆
+
+
+        user_icon = (CircleImageView) findViewById(R.id.user_icon);//头像;//
+        tv_user_name = (TextView) findViewById(R.id.tv_user_name);//用户名;//
+        tv_car_type = (TextView) findViewById(R.id.tv_car_type);//车型;//
+        tv_phone_num = (TextView) findViewById(R.id.tv_phone_num);//电话;//
+
 
         /**
          * 设置监听器
@@ -235,4 +315,6 @@ public class MyActivity extends BaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

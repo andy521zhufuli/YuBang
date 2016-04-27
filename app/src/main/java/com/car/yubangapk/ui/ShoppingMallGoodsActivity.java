@@ -204,8 +204,10 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             //其实服务器错误
             toastMgr.builder.display("服务器错误", 1);
         }
+        else {
 
-        toastMgr.builder.display("errorcode = " + errorCode , 1);
+            toastMgr.builder.display("errorcode = " + errorCode, 1);
+        }
     }
 
 
@@ -241,6 +243,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
         @Override
         public void onFail(int errorCode, String message) {
+            mProgressDialog.dismiss();
             if (errorCode == ErrorCodes.ERROR_CODE_NETWORK)
             {
                 toastMgr.builder.display(message, 1);
@@ -264,6 +267,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
         @Override
         public void onSuccess(List<Json2ProductPackageIdBean> modifyableItemList, List<Json2ShoppingmallBottomPicsBean> modifyableItemShoppingmallBottomPicBeanList) {
+            mProgressDialog.dismiss();
             mModifyableItemList = modifyableItemList;
             mModifyableItemShoppingmallBottomPicBeanList = modifyableItemShoppingmallBottomPicBeanList;
             modifyable_product_count.setText("1个项目需要保养(共" + mModifyableItemList.size() + "个项目)");
@@ -342,6 +346,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         public void onError(Call call, Object object, int position, Exception e) {
             toastMgr.builder.display("您当前版本太低,请升级版本", 1);
             //TODO 这里需要删除
+            mProgressDialog.dismiss();
             tv_modify_goods.setClickable(false);
         }
 

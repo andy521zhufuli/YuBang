@@ -32,7 +32,6 @@ public class Json2MyOrder
     {
         Json2MyOrderBean order = new Json2MyOrderBean();
 
-
         JSONObject jsonObject = null;
 
         try {

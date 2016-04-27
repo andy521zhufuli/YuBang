@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/img_back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:paddingLeft="6dp"
@@ -48,6 +48,7 @@
                 >
 
                 <TextView
+                    android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -57,20 +58,19 @@
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/black_overlay"
                     android:textSize="@dimen/small_medium_text_size" />
-                <TextView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/my_personal_item_head_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
-                    android:singleLine="true"
-                    android:text="头像"
                     android:layout_marginRight="20dp"
+                    android:src="@mipmap/ic_launcher"
                     android:layout_toLeftOf="@+id/my_personal_item_arrow1"
                     android:textColor="@color/black_overlay"
-                    android:textSize="@dimen/small_medium_text_size"/>
+                    />
 
                 <ImageView
+                    android:layout_centerInParent="true"
                     android:id="@+id/my_personal_item_arrow1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -124,7 +124,6 @@
                 style="@style/MineItemStyleRelativeLayout"
                 android:background="@drawable/bg_item_top"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

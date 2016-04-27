@@ -97,7 +97,16 @@ public class Json2ChangeableProduct {
                 pathCode = row.getString("pathCode");
                 productName = row.getString("productName");
 
-                photoName = row.getString("photoName");
+                try
+                {
+                    photoName = row.getString("photoName");
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                    photoName = "0";
+                }
+
                 productShow = row.getString("productShow");
                 category = row.getString("category");
                 productCode = row.getString("productCode");

@@ -54,7 +54,7 @@
             >
 
             <ImageView
-                android:id="@+id/tv_uid"
+                android:id="@+id/tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -68,7 +68,7 @@
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_uid"
+                android:layout_toRightOf="@+id/tv_user_name"
                 android:hint="请选择您的车辆信息"
                 android:singleLine="true"
                 android:layout_marginLeft="20dp"

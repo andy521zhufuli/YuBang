@@ -1091,7 +1091,8 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         isLogined();
     }
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
         mMapView.onPause();
