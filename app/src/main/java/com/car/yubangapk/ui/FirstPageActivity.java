@@ -189,14 +189,8 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
         //进度框
         mProgressDialog = new CustomProgressDialog(mContext);
-
-
         //去拿首页上面导航的5getab
         httpGetFirstPageTopTab();
-
-
-
-
     }
 
 
@@ -338,8 +332,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
 
     }
 
-
-
     class GetTabsCallBack extends StringCallback{
 
         @Override
@@ -378,9 +370,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                 }
 
             }
-
-
-
         }
     }
 
@@ -592,9 +581,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
             );
         }
 
-
-
-
     }
 
     class GetShopCallback extends StringCallback
@@ -648,8 +634,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                                 })
                                 .show();
                     }
-
-
                 }
                 else
                 {
@@ -765,83 +749,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
             first_page_progressbar.setVisibility(View.GONE);
 
         }
-
-//        LatLng llA = new LatLng(latitude + 0.024, longitude + 0.024);
-//        LatLng llB = new LatLng(latitude - 0.0024, longitude + 0.024);
-//        LatLng llC = new LatLng(latitude + 0.0024, longitude - 0.024);
-//        LatLng llD = new LatLng(latitude - 0.024, longitude - 0.024);
-//
-//        ViewGroupToBitmap vb = new ViewGroupToBitmap();
-//
-//        LayoutInflater inflater = LayoutInflater.from(this);
-//        //首页地图覆盖物 view转变
-//        View view = inflater.inflate(R.layout.view_to_marker2, null);
-//        //修车店标号
-//        TextView shop_num = (TextView) view.findViewById(R.id.marker_shop_num);
-//        shop_num.setText("1");
-//        //修车店名称
-//        TextView textView = (TextView) view.findViewById(R.id.marker_info);
-//        textView.setText("高德汇001");
-//
-//        LinearLayout imageView = (LinearLayout) view.findViewById(R.id.marker_ll_image);
-//        switch (nowPage)
-//        {
-//            case ALL_CAR_PAGE:
-//                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_1));
-//                break;
-//            case BAO_YANG_PAGE:
-//                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_2));
-//                break;
-//            case DIAN_LU_PAGE:
-//                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_3));
-//                break;
-//            case PEI_JIAN_PAGE:
-//                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_4));
-//                break;
-//            case YOU_LU_PAGE:
-//                imageView.setBackground(getResources().getDrawable(R.mipmap.marker_one_5));
-//                break;
-//        }
-//
-//
-//        bdA = BitmapDescriptorFactory.fromBitmap(vb.getViewBitmap(view));
-//
-//        //第一个覆盖物
-//        MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdA)
-//                .zIndex(9).draggable(true);
-//        // 掉下动画
-//        ooA.animateType(MarkerOptions.MarkerAnimateType.drop);
-//        mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
-//
-//        //第二个覆盖物
-//        MarkerOptions ooB = new MarkerOptions().position(llB).icon(bdA)
-//                .zIndex(5);
-//        // 掉下动画
-//        ooB.animateType(MarkerOptions.MarkerAnimateType.drop);
-//        mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
-//
-//        //第三个覆盖物
-//        MarkerOptions ooC = new MarkerOptions().position(llC).icon(bdA)
-//                .perspective(false).zIndex(7);
-//        // 生长动画
-//        ooC.animateType(MarkerOptions.MarkerAnimateType.drop);
-//        mMarkerC = (Marker) (mBaiduMap.addOverlay(ooC));
-//
-//        //第四个覆盖物
-//        MarkerOptions ooD = new MarkerOptions().position(llD).icon(bdA)
-//                .zIndex(0);
-//        // 生长动画
-//        ooD.animateType(MarkerOptions.MarkerAnimateType.drop);
-//        mMarkerD = (Marker) (mBaiduMap.addOverlay(ooD));
-//
-//        LatLng loc = new LatLng(latitude, longitude);
-//        MapStatusUpdate u = MapStatusUpdateFactory
-//                .newLatLng(loc);
-//        mBaiduMap.setMapStatus(u);
-//
-//        first_page_progressbar.setVisibility(View.GONE);
-
-
     }
 
 
@@ -1097,101 +1004,6 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
         mMapView.onPause();
     }
-
-
-
-
-    /**
-     * MyLocationListener: 百度地图定位的监听器类
-     * 1.首页要展示地图
-     *
-     * @author andyzhu
-     * @version 1.0
-     * @created 2016-03-01
-     */
-    public class MyLocationListener1 implements BDLocationListener {
-
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            //Receive Location
-            if (location == null || mBaiduMap == null)
-            {
-                return;
-            }
-            latitude = location.getLatitude();//得到纬度
-            longitude = location.getLongitude();//得到经度
-            StringBuffer sb = new StringBuffer(256);
-            sb.append("time : ");
-            sb.append(location.getTime());
-            sb.append("\nerror code : ");
-            sb.append(location.getLocType());
-            sb.append("\nlatitude : ");
-            sb.append(location.getLatitude());
-            sb.append("\nlontitude : ");
-            sb.append(location.getLongitude());
-            sb.append("\nradius : ");
-            sb.append(location.getRadius());
-            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
-                sb.append("\nspeed : ");
-                sb.append(location.getSpeed());// 单位：公里每小时
-                sb.append("\nsatellite : ");
-                sb.append(location.getSatelliteNumber());
-                sb.append("\nheight : ");
-                sb.append(location.getAltitude());// 单位：米
-                sb.append("\ndirection : ");
-                sb.append(location.getDirection());// 单位度
-                sb.append("\naddr : ");
-                sb.append(location.getAddrStr());
-                sb.append("\ndescribe : ");
-                sb.append("gps定位成功");
-                //定位成功 就关闭定位
-                mLocationClient.stop();
-
-                showLoc(location);
-            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
-                sb.append("\naddr : ");
-                sb.append(location.getAddrStr());
-                //运营商信息
-                sb.append("\noperationers : ");
-                sb.append(location.getOperators());
-                sb.append("\ndescribe : ");
-                sb.append("网络定位成功");
-                //定位成功  就关闭定位
-                mLocationClient.stop();
-//                showLoc(location);
-                initMapDataList();
-                addOverlay();
-            } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
-                sb.append("\ndescribe : ");
-                sb.append("离线定位成功，离线定位结果也是有效的");
-            } else if (location.getLocType() == BDLocation.TypeServerError) {
-                sb.append("\ndescribe : ");
-                sb.append("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
-            } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
-                sb.append("\ndescribe : ");
-                sb.append("网络不同导致定位失败，请检查网络是否通畅");
-                //提示用户检查网络
-            } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
-                sb.append("\ndescribe : ");
-                sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
-            }
-            sb.append("\nlocationdescribe : ");
-            sb.append(location.getLocationDescribe());// 位置语义化信息
-            List<Poi> list = location.getPoiList();// POI数据
-            if (list != null) {
-                sb.append("\npoilist size = : ");
-                sb.append(list.size());
-                for (Poi p : list) {
-                    sb.append("\npoi= : ");
-                    sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
-                }
-            }
-            L.i("BaiduLocationApiDem", sb.toString());
-        }
-    }
-
-
-
 
     /**
      * Get XML String of utf-8

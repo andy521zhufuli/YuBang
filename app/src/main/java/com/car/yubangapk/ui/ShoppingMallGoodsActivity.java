@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.car.yubangapk.ui.shoppingmallgoodsutil.Category;
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
@@ -25,8 +26,6 @@ import com.car.yubangapk.json.bean.Json2ShopServiceBean;
 import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
 import com.car.yubangapk.json.formatJson.Json2ProductPackage;
 import com.car.yubangapk.json.formatJson.Json2ProductPackageId;
-import com.car.yubangapk.json.formatJson.Json2ShopService;
-import com.car.yubangapk.json.formatJson.Json2ShoppingmallBottomPics;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetShoppingmallGoodsModifiableCountFromShoppingmall;
 import com.car.yubangapk.network.myHttpReq.HttpReqModifiableCountFromShopCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqModifiableCountFromShoppingmallCallback;
@@ -34,9 +33,7 @@ import com.car.yubangapk.network.myHttpReq.HttpReqProductPackageFromMallBannerSh
 import com.car.yubangapk.network.myHttpReq.HttpReqShoppingmallGoodsModifiableCountFromShop;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.MyObjectStringCallback;
-import com.car.yubangapk.network.okhttp.callback.MyPPStringCallback;
-import com.car.yubangapk.network.okhttp.callback.MyStringCallback;
-import com.car.yubangapk.network.okhttp.callback.StringCallback;
+import com.car.yubangapk.ui.shoppingmallgoodsutil.GoodsCategoryHelper;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.Warn.NoProductPackage;
 import com.car.yubangapk.utils.Warn.UpdateApp;
@@ -86,6 +83,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     String mCarType;
 
     private ProductPackageAdapter goodsAdapter;
+    private ProductPackageAdapter1 goodsAdapter1;
+
     private List<Json2ProductPackageBean> mJson2ProductPackageBeanList;//商城过来  保存的数据
     private List<Json2ShopServiceBean>    mJson2ShopServiceBeanList;
     private String mResponse;
@@ -166,10 +165,20 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     @Override
     public void onGetPPkgSucces(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
 
-        goodsAdapter = new ProductPackageAdapter(json2ProductPackageBeanList,FROM_SHOPPINGMALL);
+
+
+
+        List<Category> data = getListViewData(json2ProductPackageBeanList);
+
+        goodsAdapter1 = new ProductPackageAdapter1(data,FROM_SHOPPINGMALL, mContext);
         mJson2ProductPackageBeanList = json2ProductPackageBeanList;
-        shoppingmall_goods_listview.setAdapter(goodsAdapter);
+        shoppingmall_goods_listview.setAdapter(goodsAdapter1);
         mProgressDialog.dismiss();
+    }
+
+    private List<Category> getListViewData(List<Json2ProductPackageBean> json2ProductPackageBeanList)
+    {
+        return GoodsCategoryHelper.productsToCategoryList(json2ProductPackageBeanList);
     }
 
 
@@ -318,154 +327,119 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
      */
     private void httpGetProductPackageByIds(List<Json2ProductPackageIdBean> ppList)
     {
-
-        int size = ppList.size();
-        int index = 0;
-
-        for (index = 0; index < size; index++)
-        {
-            String productPackageId = ppList.get(index).getId();
-            OkHttpUtils.post()
-                    .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
-                    .addParams("sqlName", "clientSearchProductPackageProduct")
-                    .addParams("dataReqModel.args.needTotal", "needTotal")
-                    .addParams("dataReqModel.args.productPackage", productPackageId)
-                    .build()
-                    .executeObject(new GetProductPackagesCallback(), ppList, index);
-
-            L.i("FirstPageShopShowActivity", "获取产品包id url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                    + "sqlName=" + "clientSearchProductPackageProduct"
-                    + "&dataReqModel.args.needTotal=needTotal"
-                    + "&dataReqModel.args.productPackage=" + productPackageId
-            );
-        }
+        HttpReqProductPackageFromMallBannerShop req = new HttpReqProductPackageFromMallBannerShop();
+        req.setInterface(new GetPPIdsCallbac());
+        req.httpGetProductPackageByIds(ppList);
     }
-    class GetProductPackagesCallback extends MyObjectStringCallback {
+
+    class GetPPIdsCallbac implements HttpReqProductPackageFromMallBannerShop.GetProductPackageContent
+    {
 
         @Override
-        public void onError(Call call, Object object, int position, Exception e) {
-            toastMgr.builder.display("您当前版本太低,请升级版本", 1);
-            //TODO 这里需要删除
-            mProgressDialog.dismiss();
-            tv_modify_goods.setClickable(false);
-        }
-
-        @Override
-        public void onResponse(String response, Object object, int position) {
-            L.d(TAG, "产品包 json = " + response);
-            mProgressDialog.dismiss();
-            List<Json2ProductPackageIdBean> ppList = (List<Json2ProductPackageIdBean>) object;
-            synchronized (this)
+        public void onGetPPkgSucces(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
+            if (json2ProductPackageBeanList.get(0).isHasData() == false)
             {
-                if (mFrom.equals(Configs.FROM_SHOPPINGMALL))
+
+                //所有的id都遍历了 但是还是没有产品包
+                //没有产品包
+                toastMgr.builder.display("对不起, 没有相关产品包", 1);
+                AlertDialog alertDialog = new AlertDialog(mContext);
+                alertDialog.builder().setTitle("提示")
+                        .setCancelable(false)
+                        .setMsg("当前产品包没有相关产品")
+                        .setPositiveButton("确定", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        })
+                        .show();
+
+                return;
+            }
+            else
+            {
+                if (GET_IDS_TIMES == 0)
                 {
-                    //从商城过来
-                    Json2ProductPackage json2ProductPackage = new Json2ProductPackage(response);
-                    final List<Json2ProductPackageBean> json2ProductPackageBeanList = json2ProductPackage.getProductPackage();
+                    //清楚现有的产皮包
+                    mJson2ProductPackageBeanList.clear();
+                }
 
-                    if (json2ProductPackageBeanList == null)
+                if (mGetModifyProductPkgCount == 1)//只选了一个产品包  那就直接显示出来
+                {
+                    int size1 = json2ProductPackageBeanList.size();
+                    for (int i= 0; i < size1; i++)
                     {
-                        toastMgr.builder.display("您当前版本太低,请升级版本", 1);
+                        mJson2ProductPackageBeanList.add(json2ProductPackageBeanList.get(i));
                     }
-                    else
-                    {
-
-                        for (Json2ProductPackageBean bean : json2ProductPackageBeanList)
-                        {
-                            bean.setPackageName(ppList.get(position).getPackageName());
-                            bean.setProductPackageId(ppList.get(position).getId());
-                            bean.setRepairService(ppList.get(position).getRepairService());
-                        }
-
-                        if (json2ProductPackageBeanList.get(0).isHasData() == false)
-                        {
-                            if (GET_IDS_TIMES == mGetModifyProductPkgCount)
-                            {
-                                //所有的id都遍历了 但是还是没有产品包
-                                //没有产品包
-                                toastMgr.builder.display("对不起, 没有相关产品包",1);
-                                AlertDialog alertDialog = new AlertDialog(mContext);
-                                alertDialog.builder().setTitle("提示")
-                                        .setCancelable(false)
-                                        .setMsg("没有相关产品包")
-                                        .setPositiveButton("确定", new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-
-                                            }
-                                        })
-                                        .show();
-                            }
-
-                        }
-                        else
-                        {
-                            if (GET_IDS_TIMES == 0)
-                            {
-                                //清楚现有的产皮包
-                                mJson2ProductPackageBeanList.clear();
-                            }
-
-                            if (mGetModifyProductPkgCount == 1)//只选了一个产品包  那就直接显示出来
-                            {
-                                int size1 = json2ProductPackageBeanList.size();
-                                for (int i= 0; i < size1; i++)
-                                {
-                                    mJson2ProductPackageBeanList.add(json2ProductPackageBeanList.get(i));
-                                }
-                                //goodsAdapter = new ProductPackageAdapter(json2ProductPackageBeanList);
-                                //mJson2ProductPackageBeanList = json2ProductPackageBeanList;
-                                goodsAdapter.refresh(mJson2ProductPackageBeanList);
-                                countTotalPrice(mJson2ProductPackageBeanList);
-                                GET_IDS_TIMES = 0;
-                                return;
-                            }
-                            else
-                            {
-                                if (GET_IDS_TIMES  == mGetModifyProductPkgCount - 1)
-                                {
-
-                                    int size1 = json2ProductPackageBeanList.size();
-                                    for (int i= 0; i < size1; i++)
-                                    {
-                                        mJson2ProductPackageBeanList.add(json2ProductPackageBeanList.get(i));
-                                    }
-
-                                    //所有的都遍历完了 就可以去显示了  listview显示
-                                    //goodsAdapter = new ProductPackageAdapter(json2ProductPackageBeanList);
-                                    //mJson2ProductPackageBeanList = json2ProductPackageBeanList;
-
-                                    goodsAdapter.refresh(mJson2ProductPackageBeanList);
-                                    countTotalPrice(mJson2ProductPackageBeanList);
-                                    GET_IDS_TIMES = 0;
-                                    return;
-                                }
-                                else
-                                {
-                                    //这里不知道显示的对不对
-                                    int size1 = json2ProductPackageBeanList.size();
-                                    for (int i= 0; i < size1; i++)
-                                    {
-                                        mJson2ProductPackageBeanList.add(json2ProductPackageBeanList.get(i));
-                                    }
-
-                                }
-                            }
-
-
-
-                        }
-                    }
+                    List<Category> cLst = getListViewData(mJson2ProductPackageBeanList);
+                    goodsAdapter1.refresh(getListViewData(mJson2ProductPackageBeanList));
+//                  goodsAdapter.refresh(mJson2ProductPackageBeanList);
+                    countTotalPrice(categoryToJsonProductPackageGoods(cLst));
+                    GET_IDS_TIMES = 0;
+                    return;
                 }
                 else
                 {
-                }
-                GET_IDS_TIMES++;
+                    if (GET_IDS_TIMES  == mGetModifyProductPkgCount - 1)
+                    {
 
+                        int size1 = json2ProductPackageBeanList.size();
+                        for (int i= 0; i < size1; i++)
+                        {
+                            mJson2ProductPackageBeanList.add(json2ProductPackageBeanList.get(i));
+                        }
+
+                        List<Category> cLst = getListViewData(mJson2ProductPackageBeanList);
+                        goodsAdapter1.refresh(getListViewData(mJson2ProductPackageBeanList));
+
+//                        goodsAdapter.refresh(mJson2ProductPackageBeanList);
+                        countTotalPrice(mJson2ProductPackageBeanList);
+                        GET_IDS_TIMES = 0;
+                        return;
+                    }
+                    else
+                    {
+                        //这里不知道显示的对不对
+                        int size1 = json2ProductPackageBeanList.size();
+                        for (int i= 0; i < size1; i++)
+                        {
+                            mJson2ProductPackageBeanList.add(json2ProductPackageBeanList.get(i));
+                        }
+                    }
+                }
             }
+            GET_IDS_TIMES++;
+        }
+
+        @Override
+        public void onGetPPkgFail(int errorCode) {
+
+            mProgressDialog.dismiss();
+            if (errorCode == ErrorCodes.ERROR_CODE_NO_PRODUCT_PKG)
+            {
+                //所有的id都遍历了 但是还是没有产品包
+                //没有产品包
+                toastMgr.builder.display("对不起, 没有相关产品包", 1);
+                AlertDialog alertDialog = new AlertDialog(mContext);
+                alertDialog.builder().setTitle("提示")
+                        .setCancelable(false)
+                        .setMsg("当前产品包没有相关产品")
+                        .setPositiveButton("确定", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        })
+                        .show();
+            }else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
+            {
+                toastMgr.builder.display("服务器错误", 1);
+            }
+
+//            tv_modify_goods.setClickable(false);
         }
     }
-
 
     /**
      * 从修改界面返回来, 确定是门店里面服务的数据
@@ -960,6 +934,245 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     }
 
 
+
+    public class ProductPackageAdapter1 extends BaseAdapter{
+
+        List<Category> mpplist;
+        int from;
+        Context mPContext;
+
+        private static final int TYPE_CATEGORY_ITEM = 0;
+        private static final int TYPE_ITEM = 1;
+
+        public ProductPackageAdapter1(List<Category> json2ProductPackageBeanList) {
+        }
+
+        public ProductPackageAdapter1(List<Category> json2ProductPackageBeanList, int _from, Context context) {
+            this.mpplist = json2ProductPackageBeanList;
+            this.from = _from;
+            this.mPContext = context;
+
+
+
+            mProductPkgBeanListToConformOrderPage = categoryToJsonProductPackageGoods(json2ProductPackageBeanList);
+        }
+
+
+        public void refresh(List<Category> json2ProductPackageBeanList) {
+            mpplist = json2ProductPackageBeanList;
+            mProductPkgBeanListToConformOrderPage = categoryToJsonProductPackageGoods(json2ProductPackageBeanList);
+            notifyDataSetChanged();
+            L.d("refresh");
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            // 异常情况处理
+            if (null == mpplist || position <  0|| position > getCount()) {
+                L.d("item view type = " + TYPE_ITEM + "TYPE_ITEM");
+                return TYPE_ITEM;
+            }
+
+
+            int categroyFirstIndex = 0;
+
+            for (Category category : mpplist) {
+                int size = category.getItemCount();
+                // 在当前分类中的索引值
+                int categoryIndex = position - categroyFirstIndex;
+                if (categoryIndex == 0) {
+                    L.d("item view type = " + TYPE_CATEGORY_ITEM + "TYPE_CATEGORY_ITEM");
+                    return TYPE_CATEGORY_ITEM;
+                }
+
+                categroyFirstIndex += size;
+            }
+
+            L.d("item view type = " + TYPE_ITEM + "TYPE_ITEM");
+
+            return TYPE_ITEM;
+        }
+
+        @Override
+        public int getCount() {
+            int count = 0;
+            if (null != mpplist) {
+                //  所有分类中item的总和是ListVIew  Item的总个数
+                for (Category category : mpplist) {
+                    count += category.getItemCount();
+                }
+            }
+            L.d("count = " + count);
+            return count;
+        }
+
+
+        @Override
+        public Object getItem(int position) {
+            // 异常情况处理
+            if (null == mpplist || position <  0|| position > getCount()) {
+                return null;
+            }
+
+            // 同一分类内，第一个元素的索引值
+            int categroyFirstIndex = 0;
+
+            for (Category category : mpplist) {
+                int size = category.getItemCount();
+                // 在当前分类中的索引值
+                int categoryIndex = position - categroyFirstIndex;
+                // item在当前分类内
+                if (categoryIndex < size) {
+                    return  category.getItem( categoryIndex );
+                }
+
+                // 索引移动到当前分类结尾，即下一个分类第一个元素索引
+                categroyFirstIndex += size;
+            }
+
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup parent) {
+            /**
+             * 1.手工创建对象 2.加载xml文件
+             */
+
+            final ViewHolder holder;
+            if (view == null)
+            {
+                holder =  new ViewHolder();
+                view = View.inflate(mContext, R.layout.item_test_listview_data, null);
+                productitem_changge_before = (LinearLayout) view.findViewById(R.id.productitem_changge_before);
+                productitem_changge_after  = (LinearLayout) view.findViewById(R.id.productitem_changge_after);
+
+
+                holder.produte_pic = (ImageView) view.findViewById(R.id.produte_pic);
+                holder.productitem_changge_before = (LinearLayout) view.findViewById(R.id.productitem_changge_before);
+                holder.maintenance_produte_name = (TextView) view.findViewById(R.id.maintenance_produte_name);
+                holder.maintenance_img_1 = (TextView) view.findViewById(R.id.maintenance_hecheng_1);
+                holder.produte_price = (TextView) view.findViewById(R.id.produte_price);
+                holder.produte_count = (TextView) view.findViewById(R.id.produte_count);
+                holder.maintenance_hecheng_1 = (TextView) view.findViewById(R.id.maintenance_hecheng_1);
+
+                holder.productitem_changge_after = (LinearLayout) view.findViewById(R.id.productitem_changge_after);
+                holder.jiancount = (Button) view.findViewById(R.id.jiancount);
+                holder.jiacount = (Button) view.findViewById(R.id.jiacount);
+                holder.count_tx = (TextView) view.findViewById(R.id.count_tx);
+                holder.delete_bt = (RelativeLayout) view.findViewById(R.id.delete_bt);
+                holder.change_bt = (RelativeLayout) view.findViewById(R.id.change_bt);
+
+
+                holder.product_service_left_image = (ImageView) view.findViewById(R.id.product_service_left_image);;//保养服务分类图片
+                holder.product_service_name = (TextView) view.findViewById(R.id.product_service_name);;//保养服务分类名字
+                holder.product_service_title_layout = (LinearLayout) view.findViewById(R.id.product_service_title_layout);;//分类布局
+
+                view.setTag(holder);
+            }
+            else
+            {
+                holder = (ViewHolder) view.getTag();
+            }
+            int itemViewType = getItemViewType(position);
+            if(itemViewType == TYPE_CATEGORY_ITEM)
+            {
+                holder.product_service_title_layout.setVisibility(View.VISIBLE);
+                String packageName = ((Json2ProductPackageBean)getItem(position)).getPackageName();
+                holder.product_service_name.setText(packageName);
+
+                Json2ProductPackageBean jjj = (Json2ProductPackageBean) getItem(position);
+
+                String productName = ((Json2ProductPackageBean)getItem(position)).getProductName();
+                holder.maintenance_produte_name.setText(productName);
+                double price = ((Json2ProductPackageBean)getItem(position)).getRetailPrice();
+                holder.produte_price.setText(price + "");
+
+                String show = ((Json2ProductPackageBean)getItem(position)).getProductShow();
+                holder.maintenance_hecheng_1.setText(show);
+
+                holder.produte_count.setText(((Json2ProductPackageBean)getItem(position)).getProductAmount() + "");
+                holder.produte_price.setText(((Json2ProductPackageBean)getItem(position)).getRetailPrice() + "");
+                holder.produte_price.setText(((Json2ProductPackageBean)getItem(position)).getRetailPrice() + "");
+                holder.count_tx.setText(((Json2ProductPackageBean)getItem(position)).getProductAmount() + "");
+
+            }
+            else
+            {
+                holder.product_service_title_layout.setVisibility(View.GONE);
+                Json2ProductPackageBean jjj = (Json2ProductPackageBean) getItem(position);
+
+                String productName = ((Json2ProductPackageBean)getItem(position)).getProductName();
+                holder.maintenance_produte_name.setText(productName);
+                double price = ((Json2ProductPackageBean)getItem(position)).getRetailPrice();
+                holder.produte_price.setText(price + "");
+
+                String show = ((Json2ProductPackageBean)getItem(position)).getProductShow();
+                holder.maintenance_hecheng_1.setText(show);
+
+                holder.produte_count.setText(((Json2ProductPackageBean)getItem(position)).getProductAmount() + "");
+                holder.produte_price.setText(((Json2ProductPackageBean)getItem(position)).getRetailPrice() + "");
+                holder.produte_price.setText(((Json2ProductPackageBean)getItem(position)).getRetailPrice() + "");
+                holder.count_tx.setText(((Json2ProductPackageBean)getItem(position)).getProductAmount() + "");
+            }
+
+            String pathcode = ((Json2ProductPackageBean)getItem(position)).getPathCode();
+            String photoname = ((Json2ProductPackageBean)getItem(position)).getPhotoName();
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
+            ImageLoaderTools.getInstance(mPContext).displayImage(url, holder.produte_pic);
+            countTotalPrice(categoryToJsonProductPackageGoods(mpplist));
+            return view;
+        }
+
+
+
+
+
+        class ViewHolder
+        {
+            ImageView       produte_pic;//左侧图片
+
+            LinearLayout    productitem_changge_before;//商品名字  价格等等
+            TextView        maintenance_produte_name;//产品名字
+            TextView        maintenance_img_1;//半合成
+            TextView        produte_price;//产品价格
+            TextView        produte_count;//产品数量
+            TextView        maintenance_hecheng_1;//半合成
+
+            LinearLayout    productitem_changge_after;//商品数量删除 加减 更换
+            Button          jiancount;//减商品数量
+            Button          jiacount;//加商品数量
+            TextView        count_tx;//商品数量  加减中间的
+            RelativeLayout  delete_bt;//商品删除
+            RelativeLayout  change_bt;//商品更换
+
+            ImageView       product_service_left_image;//保养服务分类图片
+            TextView        product_service_name;//保养服务分类名字
+            LinearLayout    product_service_title_layout;//分类布局
+        }
+    }
+
+
+    /**
+     * 产品包分类 到 产品包列表  方便计算价格
+     * @param listData
+     * @return
+     */
+    private List<Json2ProductPackageBean> categoryToJsonProductPackageGoods(List<Category> listData)
+    {
+        return GoodsCategoryHelper.categoryListToProducts(listData);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1042,7 +1255,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
      */
     private void countTotalPrice(List<Json2ProductPackageBean> beans)
     {
-        int size = beans.size();
         double l_total_size = 0;
         for (Json2ProductPackageBean bean : beans)
         {

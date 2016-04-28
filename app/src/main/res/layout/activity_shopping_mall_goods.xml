@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="产皮包"
+            android:text="产品包"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="@dimen/medium_text_size" />
     </RelativeLayout>

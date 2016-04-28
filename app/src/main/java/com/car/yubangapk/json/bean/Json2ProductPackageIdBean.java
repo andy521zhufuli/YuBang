@@ -24,6 +24,11 @@ public class Json2ProductPackageIdBean extends Base{
     private String skipType;//不用
     private String photoName;//不用
     private String serviceName;//不用
+    String repairService;//为了项目需要
+
+    public String getPackageCode() {
+        return packageCode;
+    }
 
 
     public String getRepairService() {
@@ -34,13 +39,6 @@ public class Json2ProductPackageIdBean extends Base{
         this.repairService = repairService;
     }
 
-    String repairService;//为了项目需要
-
-
-
-    public String getPackageCode() {
-        return packageCode;
-    }
 
     public void setPackageCode(String packageCode) {
         this.packageCode = packageCode;

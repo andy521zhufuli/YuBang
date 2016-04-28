@@ -76,6 +76,8 @@ public class Json2FirstPageShop {
                 JSONObject row = (JSONObject) rows.get(i);
 
 
+                //容灾  当有任何一个字段没有的时候   我就忽略这个店铺
+
                 id = row.getString("id");
                 shopAddress = row.getString("shopAddress");
                 phoneNum = row.getString("phoneNum");

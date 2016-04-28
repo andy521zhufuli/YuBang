@@ -836,7 +836,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
      */
     private void countTotalPrice(List<Json2ProductPackageBean> beans)
     {
-        int size = beans.size();
+
         double l_total_size = 0;
         for (Json2ProductPackageBean bean : beans)
         {
