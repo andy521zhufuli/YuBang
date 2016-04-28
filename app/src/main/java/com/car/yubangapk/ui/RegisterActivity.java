@@ -241,9 +241,6 @@ public class RegisterActivity extends BaseActivity {
                 + "?smsReqModel.phoneNum=18620647064" + "&smsReqModel.type=" + SMS_MODEL_TYPE
                 + "smsReqModel.actionCode" + MsgType.SEND_MESSAGE
                 );
-
-
-
     }
 
     class GetVerifyCodeCallback extends StringCallback{

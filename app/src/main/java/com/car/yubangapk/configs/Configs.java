@@ -18,8 +18,8 @@ public class Configs {
     public static String SMS_APPSECRET = "7f3dedcb36d92deebcb373af921d635a";
 
     //网络请求地址
-    //public static String IP_ADDRESS = "http://203.195.206.146/carService";
-    public static String IP_ADDRESS = "http://192.168.1.7:8080/carService";
+    public static String IP_ADDRESS = "http://203.195.206.146/carService";
+    //public static String IP_ADDRESS = "http://192.168.1.7:8080/carService";
 
     //--------------------------网络请求action-------------------------------------
     //action
@@ -45,6 +45,8 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GET_RECOMMEDN_SHOP_UPLOAD_SHOP_PHOTO = "/client/shop/uploadShopPhoto";
     public static String IP_ADDRESS_ACTION_GET_USER_ORDER = "/client/order/getUserOrder";
     public static String IP_ADDRESS_ACTION_GET_USER_INFO = "/client/user/getUserInfo";
+    public static String IP_ADDRESS_ACTION_ALTER_USER_INFO = "/client/user/alterUserInfo";
+
 
 
 

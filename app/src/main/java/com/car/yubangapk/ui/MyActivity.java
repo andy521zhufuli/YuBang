@@ -1,5 +1,6 @@
 package com.car.yubangapk.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -139,6 +140,7 @@ public class MyActivity extends BaseActivity {
         public void onSuccess(Object object) {
             mProgress.dismiss();
             Json2MyUserInfoBean userInfoBean = (Json2MyUserInfoBean) object;
+            mUserInfo = userInfoBean;
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + userInfoBean.getPathCode() + "&fileReq.fileName=" + userInfoBean.getPhotoName();
             ImageLoaderTools.getInstance(mContext).displayImage(url, user_icon);
             tv_user_name.setText(userInfoBean.getUserName());
@@ -147,6 +149,8 @@ public class MyActivity extends BaseActivity {
 
         }
     }
+
+    private Json2MyUserInfoBean mUserInfo;
 
     @Override
     protected void onResume() {
@@ -207,7 +211,11 @@ public class MyActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MyActivity.this, MyPersonalInfoActivity.class);
-                startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userInfo", mUserInfo);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, REQUEST_USER_INFO);
             }
         });
         //登陆注册
@@ -294,27 +302,24 @@ public class MyActivity extends BaseActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_my, menu);
-        return true;
-    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+        {
+            Bundle bundle = data.getExtras();
+            boolean altered = bundle.getBoolean("alter");
+            if (altered == true)
+            {
+                getUserInfo();
+            }
+            else {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            }
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
+    private int REQUEST_USER_INFO = 0X11;
 
 }
