@@ -70,8 +70,6 @@ public class Json2MyUserInfo
                 String returneMsg;
                 String message;
 
-
-
                 isJson = total1.getBoolean("isJson");
                 isReturnStr = total1.getBoolean("isReturnStr");
                 returnCode = total1.getInt("returnCode");

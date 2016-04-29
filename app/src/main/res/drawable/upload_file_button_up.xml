@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#ffffffff" />
-    <corners android:topLeftRadius="4.0dip"
-        android:topRightRadius="4.0dip"
-        android:bottomLeftRadius="0.100000024dip"
-        android:bottomRightRadius="0.100000024dip" />
-</shape>
+
+
+
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<item>
+    <shape
+        android:shape="rectangle">
+        <solid android:color="#FFFFFF" />
+        <corners android:radius="4dp"/>
+    </shape>
+</item>
+
+    <!-- 距离下面有4个dp-->
+<item android:top="4dp"
+    >
+    <shape
+        android:shape="rectangle">
+        <solid android:color="#FFFFFF" />
+    </shape>
+</item>
+
+</layer-list>

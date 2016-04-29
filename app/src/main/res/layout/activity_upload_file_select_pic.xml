@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center_horizontal" >
+    android:gravity="center_horizontal"
+    >
 
     <LinearLayout
         android:id="@+id/pop_layout_select_pic"
@@ -39,7 +40,7 @@
             android:layout_marginLeft="10.0dip"
             android:layout_marginRight="10.0dip"
             android:gravity="center"
-            android:background="@drawable/shape_popup_top"
+            android:background="@drawable/shape_popup_bottom2"
             android:orientation="horizontal"
             android:text="从相册"
             android:textColor="#ff006cff"

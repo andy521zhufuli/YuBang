@@ -116,6 +116,9 @@ public class MyActivity extends BaseActivity {
         getUserInfo.getUserInfo(userid);
     }
 
+
+    private int GET_USER_INFO_STATUS = 0;//0 代表成功, 100代表未登录, 200 代表 服务器错误, 300 其他错误
+
     class GetInfo implements HttpReqCallback
     {
         @Override
@@ -125,19 +128,23 @@ public class MyActivity extends BaseActivity {
             {
                 layout_not_logined.setVisibility(View.VISIBLE);//还没登陆
                 layout_logined.setVisibility(View.GONE);//已经登陆
+                GET_USER_INFO_STATUS = 100;
             }
             else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
             {
                 toastMgr.builder.display(message, 1);
+                GET_USER_INFO_STATUS = 200;
             }
             else
             {
                 toastMgr.builder.display(message, 1);
+                GET_USER_INFO_STATUS = 300;
             }
         }
 
         @Override
         public void onSuccess(Object object) {
+            GET_USER_INFO_STATUS = 0;
             mProgress.dismiss();
             Json2MyUserInfoBean userInfoBean = (Json2MyUserInfoBean) object;
             mUserInfo = userInfoBean;
@@ -214,6 +221,11 @@ public class MyActivity extends BaseActivity {
                 if (mUserInfo == null || mUserInfo.isHasData() == false)
                 {
                     toastMgr.builder.display("信息有误,或者网络不可用!", 1);
+                    return;
+                }
+                if (GET_USER_INFO_STATUS != 0)
+                {
+                    toastMgr.builder.display("获取用户信息出错!", 1);
                     return;
                 }
 
