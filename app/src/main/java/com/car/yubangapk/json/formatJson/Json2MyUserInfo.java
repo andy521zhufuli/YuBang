@@ -55,6 +55,7 @@ public class Json2MyUserInfo
             userInfoBean.setCar(car);
             userInfoBean.setPhotoName(photoName);
             userInfoBean.setPathCode(pathCode);
+            userInfoBean.setHasData(true);
 
 
         } catch (JSONException e) {

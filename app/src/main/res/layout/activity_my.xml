@@ -270,7 +270,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/item_margin_top"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
                 <!-- 我的特权-->
                 <LinearLayout
                     android:id="@+id/my_layout_mine_privilege"
@@ -347,7 +349,8 @@
                         android:layout_marginLeft="20.0dip"
                         android:layout_marginRight="15.0dip"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/android_personel_quickly_order" />
+
+                        />
 
                     <TextView
                         android:layout_width="0.0dip"

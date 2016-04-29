@@ -391,7 +391,7 @@
                             android:layout_marginLeft="20.0dip"
                             android:layout_marginRight="15.0dip"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/android_personel_quickly_order"
+                            android:src="@mipmap/my_qianbao"
                             />
 
                         <TextView
@@ -400,7 +400,7 @@
                             android:layout_weight="1.0"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="到店支付"
+                            android:text="在线支付"
                             android:textColor="@color/black"
                             android:textSize="@dimen/small_medium_text_size" />
 
@@ -423,7 +423,7 @@
                             android:layout_marginLeft="20.0dip"
                             android:layout_marginRight="15.0dip"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/android_personel_quickly_order"
+                            android:src="@mipmap/my_qianbao"
                             />
 
                         <TextView
@@ -432,7 +432,7 @@
                             android:layout_weight="1.0"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="在线支付"
+                            android:text="到店支付"
                             android:textColor="@color/black"
                             android:textSize="@dimen/small_medium_text_size" />
 

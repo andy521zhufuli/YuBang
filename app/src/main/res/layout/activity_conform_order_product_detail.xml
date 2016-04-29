@@ -46,7 +46,7 @@
             android:layout_marginRight="10.0dip"
             android:scaleType="fitXY"
             android:visibility="invisible"
-            android:src="@mipmap/android_personel_quickly_order"
+            android:src="@mipmap/my_tequan"
             />
 
         <TextView

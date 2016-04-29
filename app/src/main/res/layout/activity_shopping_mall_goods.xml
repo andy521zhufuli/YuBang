@@ -141,9 +141,9 @@
 
             <ImageView
                 android:id="@+id/image_service"
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/android_personel_quickly_order"
+                android:src="@mipmap/my_dingdan"
                 android:layout_marginLeft="15dp"
                 android:layout_alignParentLeft="true"
                 />

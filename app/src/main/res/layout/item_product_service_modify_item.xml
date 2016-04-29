@@ -15,7 +15,7 @@
             android:layout_marginLeft="20.0dip"
             android:layout_marginRight="15.0dip"
             android:scaleType="fitXY"
-            android:src="@mipmap/android_personel_quickly_order"
+            android:src="@mipmap/my_qianbao"
             />
 
         <TextView
