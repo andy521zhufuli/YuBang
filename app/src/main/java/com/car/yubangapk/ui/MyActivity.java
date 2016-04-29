@@ -28,6 +28,7 @@ import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.view.CustomProgressDialog;
 
+import cn.trinea.android.common.service.impl.RemoveTypeBitmapLarge;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -92,18 +93,17 @@ public class MyActivity extends BaseActivity {
             layout_not_logined.setVisibility(View.GONE);//还没登陆
             layout_logined.setVisibility(View.VISIBLE);//已经登陆
             //就去后台拿数据
-
         }
         String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
         if (loinged.equals(Configs.LOGINED))
         {
             layout_not_logined.setVisibility(View.VISIBLE);//还没登陆
             layout_logined.setVisibility(View.GONE);//已经登陆
-            getUserInfo();
+
         }
         else
         {
-            getUserInfo();
+
         }
 
     }
@@ -163,6 +163,7 @@ public class MyActivity extends BaseActivity {
             //就是说明已经登录了
             layout_not_logined.setVisibility(View.GONE);//还没登陆
             layout_logined.setVisibility(View.VISIBLE);//已经登陆
+            getUserInfo();
         }
         else if (loinged.equals(Configs.NOTLOGINED))
         {
@@ -209,6 +210,13 @@ public class MyActivity extends BaseActivity {
         layout_logined.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (mUserInfo == null || mUserInfo.isHasData() == false)
+                {
+                    toastMgr.builder.display("信息有误,或者网络不可用!", 1);
+                    return;
+                }
+
                 Intent intent = new Intent();
                 intent.setClass(MyActivity.this, MyPersonalInfoActivity.class);
 
@@ -225,8 +233,6 @@ public class MyActivity extends BaseActivity {
 
 
                 Intent intent = new Intent();
-//                intent.setClass(MyActivity.this, RegisterDetailChooseCarInfoActivity.class);
-//                intent.setClass(MyActivity.this, RegisterDetailsActivity.class);
                 intent.setClass(MyActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
@@ -235,6 +241,12 @@ public class MyActivity extends BaseActivity {
         my_layout_partner_i_recommended.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+                if (!loinged.equals(Configs.LOGINED))
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.setClass(MyActivity.this, MyRecommendedPartnerActivity.class);
 //                intent.setClass(MyActivity.this, RegisterDetailsActivity.class);
@@ -245,6 +257,12 @@ public class MyActivity extends BaseActivity {
         my_layout_mine_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+                if (!loinged.equals(Configs.LOGINED))
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.setClass(MyActivity.this, MyWwalletActivity.class);
                 startActivity(intent);
@@ -254,6 +272,12 @@ public class MyActivity extends BaseActivity {
         my_layout_mine_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+                if (!loinged.equals(Configs.LOGINED))
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.setClass(MyActivity.this, MyOrdersActivity.class);
                 startActivity(intent);
@@ -263,6 +287,12 @@ public class MyActivity extends BaseActivity {
         my_layout_mine_privilege.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+                if (!loinged.equals(Configs.LOGINED))
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.setClass(MyActivity.this, ListViewRefreshAcivity.class);
                 startActivity(intent);
@@ -272,6 +302,12 @@ public class MyActivity extends BaseActivity {
         my_layout_mine_publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+                if (!loinged.equals(Configs.LOGINED))
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
                 toastMgr.builder.display("not finish", 0);
             }
         });
@@ -279,6 +315,12 @@ public class MyActivity extends BaseActivity {
         my_layout_mine_member.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+                if (!loinged.equals(Configs.LOGINED))
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
                 toastMgr.builder.display("删除 不需要做", 0);
             }
         });
@@ -286,6 +328,12 @@ public class MyActivity extends BaseActivity {
         my_layout_i_want_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+                if (!loinged.equals(Configs.LOGINED))
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.setClass(MyActivity.this, MyQRCodeActivity.class);
                 startActivity(intent);
@@ -295,6 +343,12 @@ public class MyActivity extends BaseActivity {
         my_layout_mine_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+                if (!loinged.equals(Configs.LOGINED))
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.setClass(MyActivity.this, SettingActivity.class);
                 startActivity(intent);

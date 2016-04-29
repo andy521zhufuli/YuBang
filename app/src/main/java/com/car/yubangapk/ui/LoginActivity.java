@@ -328,10 +328,6 @@ public class LoginActivity extends BaseActivity {
                     finish();
                 }
 
-
-
-
-
             }
             else if (returnCode == -2)
             {

@@ -263,7 +263,6 @@ public class MainActivity extends TabActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        toastMgr.builder.display("onNewIntent called ", 0);
         setIntent(intent);
         Bundle bundle = intent.getExtras();
         if (bundle == null)

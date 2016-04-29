@@ -102,7 +102,7 @@
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="15.0dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/android_personel_quickly_order"
+                android:src="@mipmap/discover_tuijian"
                 />
 
             <TextView
@@ -218,7 +218,7 @@
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="15.0dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/android_personel_quickly_order"
+                android:src="@mipmap/discover_fujin"
                 />
 
             <TextView
@@ -277,7 +277,7 @@
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="15.0dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/android_personel_quickly_order"
+                android:src="@mipmap/discover_wuliu"
                 />
 
             <TextView
@@ -321,7 +321,7 @@
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="15.0dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/android_personel_quickly_order"
+                android:src="@mipmap/discover_baoxian"
                 />
 
             <TextView
@@ -364,7 +364,7 @@
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="15.0dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/android_personel_quickly_order"
+                android:src="@mipmap/discover_youka"
                 />
 
             <TextView
