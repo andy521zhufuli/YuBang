@@ -1,1 +1,1 @@
-include ':app', ':library', ':stickylibrary'
+include ':app', ':library'

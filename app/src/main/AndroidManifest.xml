@@ -263,9 +263,7 @@
             android:name="com.car.yubangapk.ui.DiscoverRecommendPartnerCommentActivity"
             android:label="@string/title_activity_discover_recommend_partner_comment"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.car.yubangapk.ui.ExpandableListTestActivity"
-            android:screenOrientation="portrait" />
+
 
         <!-- 百度定位的service -->
         <service

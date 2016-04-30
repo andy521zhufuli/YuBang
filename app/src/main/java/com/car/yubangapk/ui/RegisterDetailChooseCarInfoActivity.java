@@ -7,14 +7,11 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.car.yubangapk.adapter.TestBaseAdapter;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2CarBrandBean;
 import com.car.yubangapk.json.bean.Json2CarCompanyBean;
@@ -32,8 +29,7 @@ import com.car.yubangapk.view.sortListview.PinyinComparator;
 import com.car.yubangapk.view.sortListview.SideBar;
 import com.car.yubangapk.view.sortListview.SortAdapter;
 import com.car.yubangapk.view.sortListview.SortModel;
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.ValueAnimator;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +37,6 @@ import java.util.List;
 import java.util.WeakHashMap;
 
 import okhttp3.Call;
-import se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView;
 
 /**
  * RegisterDetailChooseCarInfoActivity: 注册详情  选择车辆信息 提交验证资料  选择车辆生产厂商
@@ -76,11 +71,6 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
      * 根据拼音来排列ListView里面的数据类
      */
     private PinyinComparator pinyinComparator;
-
-
-    private ExpandableStickyListHeadersListView mListView;
-    TestBaseAdapter mTestBaseAdapter;
-    WeakHashMap<View,Integer> mOriginalViewHeightPool = new WeakHashMap<View, Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -343,64 +333,5 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
         adapter.updateListView(filterDateList);
     }
 
-
-    //animation executor
-    class AnimationExecutor implements ExpandableStickyListHeadersListView.IAnimationExecutor {
-
-        @Override
-        public void executeAnim(final View target, final int animType) {
-            if(ExpandableStickyListHeadersListView.ANIMATION_EXPAND == animType&&target.getVisibility() == View.VISIBLE){
-                return;
-            }
-            if(ExpandableStickyListHeadersListView.ANIMATION_COLLAPSE == animType&&target.getVisibility() != View.VISIBLE){
-                return;
-            }
-            if(mOriginalViewHeightPool.get(target)==null){
-                mOriginalViewHeightPool.put(target,target.getHeight());
-            }
-            final int viewHeight = mOriginalViewHeightPool.get(target);
-            float animStartY = animType == ExpandableStickyListHeadersListView.ANIMATION_EXPAND ? 0f : viewHeight;
-            float animEndY = animType == ExpandableStickyListHeadersListView.ANIMATION_EXPAND ? viewHeight : 0f;
-            final ViewGroup.LayoutParams lp = target.getLayoutParams();
-            ValueAnimator animator = ValueAnimator.ofFloat(animStartY, animEndY);
-            animator.setDuration(200);
-            target.setVisibility(View.VISIBLE);
-            animator.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    if (animType == ExpandableStickyListHeadersListView.ANIMATION_EXPAND) {
-                        target.setVisibility(View.VISIBLE);
-                    } else {
-                        target.setVisibility(View.GONE);
-                    }
-                    target.getLayoutParams().height = viewHeight;
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-
-                }
-            });
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                    lp.height = ((Float) valueAnimator.getAnimatedValue()).intValue();
-                    target.setLayoutParams(lp);
-                    target.requestLayout();
-                }
-            });
-            animator.start();
-
-        }
-    }
 
 }
