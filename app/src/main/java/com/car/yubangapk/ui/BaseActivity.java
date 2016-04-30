@@ -87,12 +87,15 @@ public class BaseActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(this.getTitle().toString());
         MobclickAgent.onResume(this);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(this.getTitle().toString());
         MobclickAgent.onPause(this);
     }
 }

@@ -107,7 +107,7 @@ public class HttpReqProductPackageFromMallBannerShop
                 + "sqlName=" + "clientSearchCarRepairServiceProductPackage"
                 + "&dataReqModel.args.carType=" + mCarType
                 + "&dataReqModel.args.needTotal=needTotal"
-                + "&dataReqModel.args.repairService=" + mCarType
+                + "&dataReqModel.args.repairService=" + mServiceId
         );
     }
 
