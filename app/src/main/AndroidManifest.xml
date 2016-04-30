@@ -415,6 +415,10 @@
         <activity android:name="com.car.yubangapk.ui.ShoppingmallCategoryMoreActivity" />
         <activity android:name="com.car.yubangapk.ui.AlterUserPwdActivity" />
         <activity android:name="com.car.yubangapk.ui.AlterUserBaseInfoActivity"></activity>
+
+
+        <meta-data android:value="572040a367e58e024800337b" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
     </application>
 
 </manifest>

@@ -52,7 +52,7 @@
                 android:layout_marginLeft="14dp"
                 android:background="@mipmap/login_user_icon_bg_new"
                 android:padding="3dp"
-                android:src="@mipmap/login_dog" />
+                android:src="@mipmap/ic_launcher" />
         </RelativeLayout>
 
         <!-- 登陆注册-->

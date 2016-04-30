@@ -120,6 +120,7 @@
     <orderEntry type="library" exported="" name="baidumapapi_base_v3_7_1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Moments-2.7.0" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-ShortMessage-2.7.0" level="project" />
+    <orderEntry type="library" exported="" name="umeng-analytics-v5.6.7" level="project" />
     <orderEntry type="library" exported="" name="baidumapapi_map_v3_7_1" level="project" />
     <orderEntry type="library" exported="" name="MobTools-2016.0303.1229" level="project" />
     <orderEntry type="module" module-name="library" exported="" />

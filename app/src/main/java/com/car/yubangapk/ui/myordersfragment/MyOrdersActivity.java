@@ -14,6 +14,7 @@ import com.car.yubangapk.adapter.ScrollTabsAdapter;
 import com.car.yubangapk.adapter.TabAdapter;
 import com.car.yubangapk.ui.myordersfragment.MyOrdersFragment2;
 import com.car.yubangapk.view.ScrollTabView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * MyOrdersActivity: 我的订单
@@ -114,4 +115,15 @@ public class MyOrdersActivity extends FragmentActivity{
     public static final String DEAL_SUCCESS = "交易成功";
     public static final String DEAL_FAIL = "交易失败";
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

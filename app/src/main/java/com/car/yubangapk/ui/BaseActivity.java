@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.car.yubangapk.app.AppManager;
 import com.car.yubangapk.json.bean.SysConfig;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 应用程序Activity的基类
@@ -80,5 +81,18 @@ public class BaseActivity extends Activity {
     public SysConfig getSystemConfig()
     {
         return null;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
