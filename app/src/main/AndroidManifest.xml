@@ -264,7 +264,6 @@
             android:label="@string/title_activity_discover_recommend_partner_comment"
             android:screenOrientation="portrait" />
 
-
         <!-- 百度定位的service -->
         <service
             android:name="com.baidu.location.f"
@@ -414,11 +413,17 @@
         <activity android:name="com.car.yubangapk.ui.DiscoverAddPartnerDetailInfoActivity" />
         <activity android:name="com.car.yubangapk.ui.ShoppingmallCategoryMoreActivity" />
         <activity android:name="com.car.yubangapk.ui.AlterUserPwdActivity" />
-        <activity android:name="com.car.yubangapk.ui.AlterUserBaseInfoActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.AlterUserBaseInfoActivity" />
 
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="572040a367e58e024800337b" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
 
-        <meta-data android:value="572040a367e58e024800337b" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+        <activity android:name="com.car.yubangapk.ui.NofityClick2ShowActivity" />
+        <activity android:name="com.car.yubangapk.ui.NofityBtnClick2ShowActivity"></activity>
     </application>
 
 </manifest>
