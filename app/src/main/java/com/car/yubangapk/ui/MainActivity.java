@@ -14,6 +14,7 @@ import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * MainActivity: index界面 显示导航 添加到index里面来   即主界面
@@ -330,7 +331,15 @@ public class MainActivity extends TabActivity {
         AppManager.getAppManager().finishActivity(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 
-
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }
