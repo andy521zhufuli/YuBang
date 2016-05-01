@@ -1,5 +1,7 @@
 package com.car.yubangapk.json.bean;
 
+import com.car.yubangapk.json.Base;
+
 /**
  * Json2FirstPageShopBean:店铺信息 bean
  *
@@ -7,7 +9,7 @@ package com.car.yubangapk.json.bean;
  * @version 1.0.6
  * @created 2016-04-05
  */
-public class Json2FirstPageShopBean
+public class Json2FirstPageShopBean extends Base
 {
     //{"total":0,"rows":[
     // {"shopLatitude":23.125221,

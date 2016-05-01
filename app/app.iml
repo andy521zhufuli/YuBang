@@ -92,7 +92,6 @@
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.7.0" level="project" />
     <orderEntry type="library" exported="" name="okio-1.6.0" level="project" />
     <orderEntry type="library" exported="" name="nineoldandroids-2.4.0" level="project" />
-    <orderEntry type="library" exported="" name="baidumapapi_radar_v3_7_1" level="project" />
     <orderEntry type="library" exported="" name="Xg_sdk_v2.42_20160111_1539" level="project" />
     <orderEntry type="library" exported="" name="android-viewbadger" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.1.1" level="project" />
@@ -104,11 +103,9 @@
     <orderEntry type="library" exported="" name="wup-1.0.0.E-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="baidumapapi_util_v3_7_1" level="project" />
-    <orderEntry type="library" exported="" name="baidumapapi_search_v3_7_1" level="project" />
     <orderEntry type="library" exported="" name="MobCommons-2016.0303.1229" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QQ-2.7.0" level="project" />
-    <orderEntry type="library" exported="" name="baidumapapi_cloud_v3_7_1" level="project" />
     <orderEntry type="library" exported="" name="circleimageview-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="jg_filter_sdk_1.1" level="project" />
     <orderEntry type="library" exported="" name="SMSSDK-2.0.2-" level="project" />

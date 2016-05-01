@@ -1,9 +1,14 @@
 package com.car.yubangapk.json.formatJson;
 
 
+import android.provider.Settings;
+
+import com.car.yubangapk.json.JSONUtils;
 import com.car.yubangapk.json.bean.Json2CarYearBean;
 import com.car.yubangapk.json.bean.Json2FirstPageShopBean;
 import com.car.yubangapk.json.bean.Json2FirstPageTabsBean;
+import com.car.yubangapk.json.bean.SysConfig;
+import com.car.yubangapk.utils.L;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +45,9 @@ public class Json2FirstPageShop {
     }
 
     public List<Json2FirstPageShopBean> getFirstPageShop() {
+
+        long startTime = System.currentTimeMillis();
+
 
         List<Json2FirstPageShopBean> json2FirstPageShopBeanList = new ArrayList<Json2FirstPageShopBean>();
 
@@ -79,18 +87,33 @@ public class Json2FirstPageShop {
                 //容灾  当有任何一个字段没有的时候   我就忽略这个店铺
 
                 id = row.getString("id");
-                shopAddress = row.getString("shopAddress");
-                phoneNum = row.getString("phoneNum");
-                shopPhoto = row.getString("shopPhoto");
-                pathCode = row.getString("pathCode");
-                shopName = row.getString("shopName");
-                company = row.getString("company");
-                shopLatitude = row.getDouble("shopLatitude");
-                shopLongitude = row.getDouble("shopLongitude");
-                star = row.getString("star");
-                order = row.getInt("order");
-                distance = row.getDouble("distance");
-                orderNum = row.getLong("orderNum");
+                shopAddress     = row.getString("shopAddress");
+                phoneNum        = row.getString("phoneNum");
+                shopPhoto       = row.getString("shopPhoto");
+                pathCode        = row.getString("pathCode");
+                shopName        = row.getString("shopName");
+                company         = row.getString("company");
+                shopLatitude    = row.getDouble("shopLatitude");
+                shopLongitude   = row.getDouble("shopLongitude");
+                star            = row.getString("star");
+                order           = row.getInt("order");
+                distance        = row.getDouble("distance");
+                orderNum        = row.getLong("orderNum");
+
+
+//                shopAddress     = JSONUtils.getString(row, "shopAddress", "");
+//                phoneNum        = JSONUtils.getString(row, "phoneNum", "");
+//                shopPhoto       = JSONUtils.getString(row,"shopPhoto", "");
+//                pathCode        = JSONUtils.getString(row,"pathCode", "");
+//                shopName        = JSONUtils.getString(row, "shopName", "");
+//                company         = JSONUtils.getString(row, "company", "");
+//                shopLatitude    = JSONUtils.getDouble(row, "shopLatitude", 0);
+//                shopLongitude   = JSONUtils.getDouble(row, "shopLongitude", 0);
+//                star            = JSONUtils.getString(row, "star", "0");
+//                order           = JSONUtils.getInt(row, "order", 0);
+//                distance        = JSONUtils.getDouble(row, "distance", 0);
+//                orderNum        = JSONUtils.getLong(row, "orderNum", 0);
+
 
                 pageShopBean.setId(id);
                 pageShopBean.setShopAddress(shopAddress);
@@ -107,6 +130,8 @@ public class Json2FirstPageShop {
                 pageShopBean.setOrderNum(orderNum);
                 json2FirstPageShopBeanList.add(pageShopBean);
             }
+            long stopTime = System.currentTimeMillis();
+            L.d("json解析时间差 = " + (stopTime - startTime));
         } catch (JSONException e) {
 
             e.printStackTrace();
