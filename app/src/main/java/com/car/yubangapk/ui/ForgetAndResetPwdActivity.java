@@ -5,8 +5,15 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.json.Base;
+import com.car.yubangapk.network.myHttpReq.alterUserInfo.HttpReqAlterUserInfo;
+import com.car.yubangapk.utils.TimerCount;
 import com.car.yubangapk.view.AlertDialog;
 import com.andy.android.yubang.R;
 
@@ -17,14 +24,24 @@ import com.andy.android.yubang.R;
  * @version 1.0
  * @created 2016-02-25
  */
-public class ForgetAndResetPwdActivity extends AppCompatActivity {
+public class ForgetAndResetPwdActivity extends BaseActivity {
+
+    private static final String TAG = ForgetAndResetPwdActivity.class.getSimpleName();
 
     private Context mContext;
-    private ImageView img_back;//返回
+    private ImageView       img_back;//返回
+    private EditText        forget_pwd_photo_edit;
+    private EditText        forge_pwd_edit_pwd;
+    private EditText        forget_pwd_verify_code_edittext;
+    private Button          forget_pwd_btn_send_verify_code;
+    private Button          forget_pwd_btn_reset_pwd;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_forget_and_reset_pwd);
 
         mContext = this;
@@ -36,6 +53,31 @@ public class ForgetAndResetPwdActivity extends AppCompatActivity {
     private void findViews() {
         //返回按钮
         img_back = (ImageView) findViewById(R.id.img_back);
+        forget_pwd_photo_edit = (EditText) findViewById(R.id.forget_pwd_photo_edit);
+        forge_pwd_edit_pwd = (EditText) findViewById(R.id.forge_pwd_edit_pwd);
+        forget_pwd_verify_code_edittext = (EditText) findViewById(R.id.forget_pwd_verify_code_edittext);
+        forget_pwd_btn_send_verify_code = (Button) findViewById(R.id.forget_pwd_btn_send_verify_code);
+        forget_pwd_btn_reset_pwd = (Button) findViewById(R.id.forget_pwd_btn_reset_pwd);
+
+
+        //点击发送验证码
+        forget_pwd_btn_send_verify_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getVerifyCode();
+            }
+        });
+
+        //根据得到的验证码  去重置密码
+        forget_pwd_btn_reset_pwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +111,13 @@ public class ForgetAndResetPwdActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+
+    private void getVerifyCode()
+    {
+        TimerCount timerCount = new TimerCount(60000, 1000, forget_pwd_btn_send_verify_code);
+        timerCount.start();
     }
 
 }

@@ -77,8 +77,8 @@ public class LoginActivity extends BaseActivity {
         tv_forget_psw       = (TextView) findViewById(R.id.tv_forget_psw);
         btn_login           = (Button) findViewById(R.id.btn_login);
         tv_quick_sign_up    = (TextView) findViewById(R.id.tv_quick_sign_up);//
-        edit_uid            = (EditText) findViewById(R.id.edit_uid);//用户名  手机号
-        edit_psw            = (EditText) findViewById(R.id.edit_psw);//密码
+        edit_uid            = (EditText) findViewById(R.id.forget_pwd_photo_edit);//用户名  手机号
+        edit_psw            = (EditText) findViewById(R.id.forge_pwd_edit_pwd);//密码
 
         img_back            = (ImageView) findViewById(R.id.img_back);//返回
 

@@ -1,7 +1,11 @@
 package com.car.yubangapk.json.formatJson;
 
+import android.util.Log;
+
+import com.car.yubangapk.json.JSONUtils;
 import com.car.yubangapk.json.bean.Json2ProductPackageIdBean;
 import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
+import com.car.yubangapk.utils.L;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +45,8 @@ public class Json2ShoppingmallBottomPics {
 
         List<Json2ShoppingmallBottomPicsBean> json2ProductIdBeanList = new ArrayList<Json2ShoppingmallBottomPicsBean>();
 
+        Long startTime = System.currentTimeMillis();
+
         JSONObject total = null;
         try {
             total = new JSONObject(json);
@@ -66,14 +72,15 @@ public class Json2ShoppingmallBottomPics {
             {
                 Json2ShoppingmallBottomPicsBean pageTabsBean = new Json2ShoppingmallBottomPicsBean();
                 JSONObject object = rows.getJSONObject(i);
-                id = object.getString("id");
-                logicalService = object.getString("logicalService");
-                pathCode = object.getString("pathCode");
 
-                photoName = object.getString("photoName");
-                serviceCode = object.getString("serviceCode");
-                repairServiceSort = object.getInt("repairServiceSort");
-                serviceName = object.getString("serviceName");
+
+                id = JSONUtils.getString(object, "id", "0");
+                logicalService = JSONUtils.getString(object, "logicalService", "");
+                pathCode = JSONUtils.getString(object, "pathCode", "");
+                photoName = JSONUtils.getString(object, "photoName", "");
+                serviceCode = JSONUtils.getString(object, "serviceCode", "");
+                repairServiceSort = JSONUtils.getInt(object, "repairServiceSort", 0);
+                serviceName = JSONUtils.getString(object, "serviceName", "");
 
                 pageTabsBean.setId(id);
                 pageTabsBean.setLogicalService(logicalService);
@@ -85,7 +92,11 @@ public class Json2ShoppingmallBottomPics {
                 pageTabsBean.setHasData(true);
 
                 json2ProductIdBeanList.add(pageTabsBean);
+
             }
+            Long stopTime = System.currentTimeMillis();
+            long useTime = stopTime- startTime;
+            L.d("json 实用时间 = " + useTime);
 
         } catch (JSONException e) {
             e.printStackTrace();

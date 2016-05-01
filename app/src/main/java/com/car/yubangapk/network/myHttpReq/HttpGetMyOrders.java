@@ -98,8 +98,8 @@ public class HttpGetMyOrders
             L.i(TAG, "获取订单 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_USER_ORDER + "?"
                             + ARGS1 + "=" + "clientUserOrder"
                             + "&" + ARGS2 + "=" + Ppage
-                            + "&" + ARGS3 + "=" + Ppage
-                            + "&" + ARGS4 + "=" + Ppage
+                            + "&" + ARGS3 + "=" + rows
+                            + "&" + ARGS4 + "=" + orderStatus
                             + "&" + ARGS5 + "=" + userid
             );
         }
@@ -125,7 +125,7 @@ public class HttpGetMyOrders
             Json2MyOrder myOrder = new Json2MyOrder(response);
             Json2MyOrderBean orderBean = myOrder.getMyorder();
 
-            L.d(TAG, "address json = " + response);
+            L.d(TAG, "获取订单 json = " + response);
 
 
             if (orderBean == null)

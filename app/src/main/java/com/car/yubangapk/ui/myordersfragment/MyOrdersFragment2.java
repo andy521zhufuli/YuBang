@@ -30,6 +30,7 @@ import com.car.yubangapk.utils.toastMgr;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,16 +54,6 @@ public class MyOrdersFragment2 extends Fragment {
     private String mType;
     private boolean mIsPullUp = false;//是不是上啦加载
     private int     mCurrentPage = 1;
-
-
-
-    String ALL_ORDER = "全部订单";
-    String WAIT_BUYER = "待买家付款";
-    String WAIT_SHOP_CONFIRM = "待店家确认";
-    String WAIT_SHOP_INSTALL = "待店家安装";
-    String WAIT_BUYER_CONFIRM = "待买家确认";
-    String DEAL_SUCCESS = "交易成功";
-    String DEAL_FAIL = "交易失败";
 
     String mUserId ;
 
@@ -116,7 +107,6 @@ public class MyOrdersFragment2 extends Fragment {
                         L.e("TAG", "onPullDownToRefresh");
                         //这里写下拉刷新的任务
                         new GetDataTask().execute();
-                        toastMgr.builder.display("下拉",1);
                     }
 
                     @Override
@@ -125,7 +115,6 @@ public class MyOrdersFragment2 extends Fragment {
                         //这里写上拉加载更多的任务
 //                        new GetDataTask().execute();
                         pullUpToLoad();
-                        toastMgr.builder.display("上拉", 1);
                         mIsPullUp = true;
                     }
                 });
@@ -170,6 +159,7 @@ public class MyOrdersFragment2 extends Fragment {
     public void onResume() {
         super.onResume();
         L.e("TAG-- " + mType, "onResume 是不是此时才可见");
+        MobclickAgent.onPageStart("myOrderFragment" + mType);
     }
 
 
@@ -177,12 +167,14 @@ public class MyOrdersFragment2 extends Fragment {
     public void onPause() {
         super.onPause();
         L.e("TAG-- " + mType, "onPause ");
+        MobclickAgent.onPageEnd("myOrderFragment" + mType);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         L.e("TAG-- " + mType, "onDestroyView ");
+        isFirstVisibleToUser = false;
     }
 
     @Override
@@ -202,7 +194,7 @@ public class MyOrdersFragment2 extends Fragment {
             {
 
                 L.e("TAG " + mType, "这里是第一次可见 ");
-                isFirstVisibleToUser = false;
+                isFirstVisibleToUser = true;
 
                 //这里是第一次可见 就调用此一次加载
                 firstGetOrder();//进来 首次加载订单 加载全部订单
@@ -437,11 +429,11 @@ public class MyOrdersFragment2 extends Fragment {
         {
             mRequestStatus = null;
         }
-        else if (mType.equals(MyOrdersActivity.WAIT_BUYER))
+        else if (mType.equals(MyOrdersActivity.WAIT_SIGN))
         {
             mRequestStatus = "1";
         }
-        else if (mType.equals(MyOrdersActivity.WAIT_SHOP_CONFIRM))
+        else if (mType.equals(MyOrdersActivity.WAIT_BUYER))
         {
             mRequestStatus = "2";
         }
@@ -449,17 +441,21 @@ public class MyOrdersFragment2 extends Fragment {
         {
             mRequestStatus = "3";
         }
-        else if (mType.equals(MyOrdersActivity.WAIT_BUYER_CONFIRM))
+        else if (mType.equals(MyOrdersActivity.INSTALLED))
         {
             mRequestStatus = "4";
         }
-        else if (mType.equals(MyOrdersActivity.DEAL_SUCCESS))
+        else if (mType.equals(MyOrdersActivity.WAIT_EVALUATE))
         {
             mRequestStatus = "5";
         }
-        else if (mType.equals(MyOrdersActivity.DEAL_FAIL))
+        else if (mType.equals(MyOrdersActivity.DEAL_SUCCESS))
         {
             mRequestStatus = "6";
+        }
+        else if (mType.equals(MyOrdersActivity.DEAL_FAIL))
+        {
+            mRequestStatus = "7";
         }
         return mRequestStatus;
     }

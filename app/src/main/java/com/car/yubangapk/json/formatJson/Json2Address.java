@@ -1,6 +1,7 @@
 package com.car.yubangapk.json.formatJson;
 
 import com.baidu.platform.comapi.map.C;
+import com.car.yubangapk.json.JSONUtils;
 import com.car.yubangapk.json.bean.AddressBean;
 import com.car.yubangapk.json.bean.Json2AddressBean;
 import com.car.yubangapk.json.bean.Json2DefaultAddressBean;
@@ -32,25 +33,6 @@ public class Json2Address
 
     }
 
-    private Object getString(String jsonobject , Object object)
-    {
-
-        if (object instanceof JSONArray)
-        {
-
-        }
-
-//        try
-//        {
-//
-//
-//        }
-//        catch (JSONException e)
-//        {
-//
-//        }
-        return null;
-    }
 
     public Json2Address(String json)
     {
@@ -72,13 +54,14 @@ public class Json2Address
         try {
             jsonObject = new JSONObject(json);
 
+
             returnCode = jsonObject.getInt("returnCode");
 
-            isJson = jsonObject.getBoolean("isJson");
 
-            isReturnStr = jsonObject.getBoolean("isReturnStr");
+            isJson = JSONUtils.getBoolean(jsonObject, "isJson", false);
+            isReturnStr = JSONUtils.getBoolean(jsonObject, "isReturnStr", false);
+            returneMsg = JSONUtils.getString(jsonObject, "returneMsg", "");
 
-            returneMsg = jsonObject.getString("returneMsg");
 
             json2AddressBean.setReturnCode(returnCode);
             json2AddressBean.setJson(isJson);
@@ -109,11 +92,16 @@ public class Json2Address
                 AddressBean address = new AddressBean();
                 JSONObject add = (JSONObject) addresses.get(i);
 
-                address.setId(add.getString("id"));
-                address.setName(add.getString("name"));
-                address.setCUserid(add.getString("CUserid"));
-                address.setIsDefaule(add.getInt("isDefaule"));
-                address.setPhone(add.getString("phone"));
+                String id       = JSONUtils.getString(add, "id", "");
+                String name     = JSONUtils.getString(add,"name", "");
+                String CUserid  = JSONUtils.getString(add, "CUserid", "");
+                int isDefaule   = JSONUtils.getInt(add, "isDefaule", 0);
+                String phone    = JSONUtils.getString(add, "phone", "");
+                address.setId(id);
+                address.setName(name);
+                address.setCUserid(CUserid);
+                address.setIsDefaule(isDefaule);
+                address.setPhone(phone);
                 addressesList.add(address);
             }
             json2AddressBean.setAddresses(addressesList);
@@ -121,11 +109,12 @@ public class Json2Address
 
             JSONObject defaultAddress = jsonObject.getJSONObject("defaultAddress");
             Json2DefaultAddressBean defaultAddressBean = new Json2DefaultAddressBean();
-            String id = defaultAddress.getString("id");
-            String CUserid = defaultAddress.getString("CUserid");
-            String name = defaultAddress.getString("name");
-            String phone = defaultAddress.getString("phone");
-            int    isDefaule = defaultAddress.getInt("isDefaule");
+            String id           = JSONUtils.getString(defaultAddress, "id", "");
+            String name         = JSONUtils.getString(defaultAddress,"name", "");
+            String CUserid      = JSONUtils.getString(defaultAddress, "CUserid", "");
+            int    isDefaule    = JSONUtils.getInt(defaultAddress, "isDefaule", 0);
+            String phone        = JSONUtils.getString(defaultAddress, "phone", "");
+
             defaultAddressBean.setId(id);
             defaultAddressBean.setCUserid(CUserid);
             defaultAddressBean.setName(name);
@@ -139,7 +128,6 @@ public class Json2Address
 
         } catch (JSONException e) {
             e.printStackTrace();
-
             return  null;
         }
         return json2AddressBean;

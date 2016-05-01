@@ -418,9 +418,12 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="572040a367e58e024800337b" />
+        <!--<meta-data-->
+            <!--android:name="UMENG_CHANNEL"-->
+            <!--android:value="Channel ID" />-->
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Channel ID" />
+            android:value="other" />
 
         <activity android:name="com.car.yubangapk.ui.NofityClick2ShowActivity" />
         <activity android:name="com.car.yubangapk.ui.NofityBtnClick2ShowActivity"></activity>

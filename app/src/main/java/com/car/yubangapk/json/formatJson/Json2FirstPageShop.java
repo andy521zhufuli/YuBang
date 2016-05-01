@@ -86,33 +86,33 @@ public class Json2FirstPageShop {
 
                 //容灾  当有任何一个字段没有的时候   我就忽略这个店铺
 
-                id = row.getString("id");
-                shopAddress     = row.getString("shopAddress");
-                phoneNum        = row.getString("phoneNum");
-                shopPhoto       = row.getString("shopPhoto");
-                pathCode        = row.getString("pathCode");
-                shopName        = row.getString("shopName");
-                company         = row.getString("company");
-                shopLatitude    = row.getDouble("shopLatitude");
-                shopLongitude   = row.getDouble("shopLongitude");
-                star            = row.getString("star");
-                order           = row.getInt("order");
-                distance        = row.getDouble("distance");
-                orderNum        = row.getLong("orderNum");
+//                id = row.getString("id");
+//                shopAddress     = row.getString("shopAddress");
+//                phoneNum        = row.getString("phoneNum");
+//                shopPhoto       = row.getString("shopPhoto");
+//                pathCode        = row.getString("pathCode");
+//                shopName        = row.getString("shopName");
+//                company         = row.getString("company");
+//                shopLatitude    = row.getDouble("shopLatitude");
+//                shopLongitude   = row.getDouble("shopLongitude");
+//                star            = row.getString("star");
+//                order           = row.getInt("order");
+//                distance        = row.getDouble("distance");
+//                orderNum        = row.getLong("orderNum");
 
-
-//                shopAddress     = JSONUtils.getString(row, "shopAddress", "");
-//                phoneNum        = JSONUtils.getString(row, "phoneNum", "");
-//                shopPhoto       = JSONUtils.getString(row,"shopPhoto", "");
-//                pathCode        = JSONUtils.getString(row,"pathCode", "");
-//                shopName        = JSONUtils.getString(row, "shopName", "");
-//                company         = JSONUtils.getString(row, "company", "");
-//                shopLatitude    = JSONUtils.getDouble(row, "shopLatitude", 0);
-//                shopLongitude   = JSONUtils.getDouble(row, "shopLongitude", 0);
-//                star            = JSONUtils.getString(row, "star", "0");
-//                order           = JSONUtils.getInt(row, "order", 0);
-//                distance        = JSONUtils.getDouble(row, "distance", 0);
-//                orderNum        = JSONUtils.getLong(row, "orderNum", 0);
+                id              = JSONUtils.getString(row, "id", "");
+                shopAddress     = JSONUtils.getString(row, "shopAddress", "");
+                phoneNum        = JSONUtils.getString(row, "phoneNum", "");
+                shopPhoto       = JSONUtils.getString(row,"shopPhoto", "");
+                pathCode        = JSONUtils.getString(row,"pathCode", "");
+                shopName        = JSONUtils.getString(row, "shopName", "");
+                company         = JSONUtils.getString(row, "company", "");
+                shopLatitude    = JSONUtils.getDouble(row, "shopLatitude", 0);
+                shopLongitude   = JSONUtils.getDouble(row, "shopLongitude", 0);
+                star            = JSONUtils.getString(row, "star", "0");
+                order           = JSONUtils.getInt(row, "order", 0);
+                distance        = JSONUtils.getDouble(row, "distance", 0);
+                orderNum        = JSONUtils.getLong(row, "orderNum", 0);
 
 
                 pageShopBean.setId(id);

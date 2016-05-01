@@ -612,12 +612,12 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                     if (CURRENT_GET_SHOP_TIME == 1)
                     {
                         //去请求市
-                        httpSearchShop(mProvince, mCity, mDistrict, json2FirstPageShopBeanList.get(0).getId(), longitude, latitude, CURRENT_GET_SHOP_TIME+1);
+                        httpSearchShop(mProvince, mCity, mDistrict, mPageTabsBeanList.get(0).getId(), longitude, latitude, CURRENT_GET_SHOP_TIME+1);
                     }
                     else if (CURRENT_GET_SHOP_TIME == 2)
                     {
                         //去请求省
-                        httpSearchShop(mProvince, mCity, mDistrict, json2FirstPageShopBeanList.get(0).getId(), longitude, latitude, CURRENT_GET_SHOP_TIME+1);
+                        httpSearchShop(mProvince, mCity, mDistrict, mPageTabsBeanList.get(0).getId(), longitude, latitude, CURRENT_GET_SHOP_TIME+1);
                         first_page_progressbar.setVisibility(View.GONE);
                     }
                     else
