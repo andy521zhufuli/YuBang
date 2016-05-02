@@ -37,7 +37,7 @@ public class HttpReqAlterUserInfo extends StringCallback
     String ACTION_CODE = "userReq.actionType";  //这个0 为修改   1为获取验证码
     //returnCode说明0成功，-2参数错误，-3用户不存在，-4修改密码参数错误，-5手机号已存在，-6密码或验证码错误
 
-
+    String TAG = HttpReqAlterUserInfo.class.getSimpleName();
     HttpReqAlterUserInfoCallback mCallback;
 
 
@@ -60,35 +60,46 @@ public class HttpReqAlterUserInfo extends StringCallback
 
 
         PostFormBuilder builder = OkHttpUtils.post().url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_ALTER_USER_INFO);
+
+        String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_ALTER_USER_INFO;
         builder = builder.addParams(USERID, userid);
         if (userName != null)
         {
             builder = builder.addParams(USERNAME, userName);
+            url += "&" + USERNAME + "=" + userName;
         }
         if (phoneNum != null)
         {
             builder = builder.addParams(PHONENUM, phoneNum);
+            url += "&" + PHONENUM + "=" + phoneNum;
         }
 
         if (password != null)
         {
             builder = builder.addParams(PASSWORD, password);
+            url += "&" + PASSWORD + "=" + password;
         }
 
 
         if (old_password != null)
         {
             builder = builder.addParams(OLD_PASSWORD, old_password);
+            url += "&" + OLD_PASSWORD + "=" + old_password;
         }
 
         if (verifyCode != null)
         {
             builder = builder.addParams(VERIFY_CODE, verifyCode);
+            url += "&" + VERIFY_CODE + "=" + verifyCode;
         }
 
         builder = builder.addParams(ACTION_CODE, actionType);
+        url += "&" + ACTION_CODE + "=" + actionType;
 
         builder.build().execute(new ALterUserInfoCallback());
+
+
+        L.i(TAG, "获取验证码 url = " + url);
     }
 
 
@@ -171,7 +182,7 @@ public class HttpReqAlterUserInfo extends StringCallback
             }
             else if (bean.getReturnCode() == 0)
             {
-                mCallback.onSuccess(bean);
+                mCallback.onSuccess(bean, 0);
             }
         }
     }
@@ -231,7 +242,7 @@ public class HttpReqAlterUserInfo extends StringCallback
                 }
                 else if (codeBean.getReturnCode() == 0)
                 {
-                    mCallback.onSuccess(codeBean);
+                    mCallback.onSuccess(codeBean, 0);
                 }
                 else
                 {

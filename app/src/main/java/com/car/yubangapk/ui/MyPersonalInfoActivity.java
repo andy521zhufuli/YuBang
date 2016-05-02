@@ -284,7 +284,7 @@ public class MyPersonalInfoActivity extends BaseActivity{
             }
 
             @Override
-            public void onSuccess(Object object) {
+            public void onSuccess(Object object, int type) {
                 Json2LoginBean loginBean = (Json2LoginBean) object;
                 //保存登陆信息
                 Configs.putLoginedInfo(mContext,loginBean);
@@ -306,7 +306,7 @@ public class MyPersonalInfoActivity extends BaseActivity{
             }
 
             @Override
-            public void onSuccess(Object object) {
+            public void onSuccess(Object object, int type) {
                 Json2LoginBean loginBean = (Json2LoginBean) object;
                 //保存登陆信息
                 Configs.putLoginedInfo(mContext,loginBean);

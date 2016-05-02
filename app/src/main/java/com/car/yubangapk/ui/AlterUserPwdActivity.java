@@ -89,7 +89,7 @@ public class AlterUserPwdActivity extends BaseActivity implements View.OnClickLi
         }
 
         @Override
-        public void onSuccess(Object object) {
+        public void onSuccess(Object object, int type) {
             if (actionType == 0)
             {
                 GetVerifyCodeBean bean = (GetVerifyCodeBean) object;

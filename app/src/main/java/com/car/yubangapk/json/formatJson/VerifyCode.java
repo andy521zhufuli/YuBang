@@ -18,10 +18,6 @@ public class VerifyCode {
 
     private String json;
 
-    public VerifyCode()
-    {
-
-    }
     public VerifyCode(String json)
     {
         this.json = json;
@@ -31,7 +27,7 @@ public class VerifyCode {
      * {"isJson":true,"isReturnStr":false,"returnCode":-1,"returneMsg":"SUCCESS","message":"参数错误"}
      * {"isJson":true,"isReturnStr":false,"returnCode":0,"returneMsg":"SUCCESS","message":"发送成功"}
      * json转成类
-     * @return List<ShoppingmallPicBean>
+     * @return
      */
     public GetVerifyCodeBean getVerifyCodeObj()
     {

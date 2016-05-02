@@ -46,6 +46,8 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GET_USER_ORDER = "/client/order/getUserOrder";
     public static String IP_ADDRESS_ACTION_GET_USER_INFO = "/client/user/getUserInfo";
     public static String IP_ADDRESS_ACTION_ALTER_USER_INFO = "/client/user/alterUserInfo";
+    public static String IP_ADDRESS_ACTION_FORGET_PWD = "/client/user/forgetPassWorld";
+
 
 
 

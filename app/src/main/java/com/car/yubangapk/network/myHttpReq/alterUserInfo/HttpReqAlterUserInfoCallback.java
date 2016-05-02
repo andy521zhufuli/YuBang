@@ -6,5 +6,5 @@ package com.car.yubangapk.network.myHttpReq.alterUserInfo;
 public interface HttpReqAlterUserInfoCallback
 {
     void onFail(int errorCode, String message);
-    void onSuccess(Object object);
+    void onSuccess(Object object, int type);
 }

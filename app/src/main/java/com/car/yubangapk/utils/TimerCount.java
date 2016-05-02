@@ -33,7 +33,7 @@ public class TimerCount extends CountDownTimer{
     @Override
     public void onTick(long millisUntilFinished) {
         btn.setClickable(false);
-        btn.setText(millisUntilFinished / 1000 + "秒后重新获取");
+        btn.setText(millisUntilFinished / 1000 + "");
     }
 
     @Override
