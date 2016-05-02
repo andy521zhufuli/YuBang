@@ -48,7 +48,10 @@ import com.car.yubangapk.view.CustomProgressDialog;
 import com.car.yubangapk.view.WheelDatePicker.MyDatePicker;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 /**
@@ -156,12 +159,22 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
             }
         }
+
+
+        setCurrentDataToInstallTime();
         //设置默认线下支付
         getOfflinePayment();
         //中间显示订单里面商品数量  以及第一个商品的图片
         loadFisrtProductImage(mProductPackageListToOrderProductDetailPage);
         //获取默认的地址
         getDefaultAddress();
+    }
+
+    private void setCurrentDataToInstallTime() {
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String time = format.format(date);
+        conform_order_install_time.setText(time);
     }
 
 
@@ -354,6 +367,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             //我的优惠券
             case R.id.my_layout_order_coupon:
                 //请求网络, 看看是有有可用优惠券
+                isTishiCoupons = false;
                 checkCoupon(mProductPackageListToOrderProductDetailPage);
                 break;
             //提交订单 去支付
@@ -390,11 +404,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
             return;
         }
-        else if (mSelectedCoupon == null)
-        {
-            toastMgr.builder.display("您没有选择优惠券", 1);
-            return;
-        }
+
         else if (mAddressBean == null)
         {
             toastMgr.builder.display("您没有选择联系方式", 1);
@@ -474,7 +484,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
      * @param productDetail
      */
     private void checkCoupon(List<Json2ProductPackageBean> productDetail) {
-
+        mProgress = mProgress.show(mContext, "查询优惠券中...", false, null);
         if (mInstallShopBean == null)
         {
             AlertDialog alertDialog = new AlertDialog(mContext);
@@ -495,10 +505,13 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
         String userid = Configs.getLoginedInfo(mContext).getUserid();
         String cartype = Configs.getLoginedInfo(mContext).getCarType();
-
-
         reqConformOrderCoupon.getUseableCoupon(userid, cartype, productDetail, mInstallShopBean);
     }
+
+
+
+    boolean isTishiCoupons = true;//在安装店铺选择完了之后, 就拿优惠券, 立刻提示用户有几张优惠券可用
+                                    //false 的话 就是用户点击的查询优惠券, 才会为false  不是提示用户几张,, 而是去到优惠券列表
 
     class Coupon implements HttpReqConformOrderCouponInterface
     {
@@ -507,34 +520,44 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         @Override
         public void onSuccess(Json2CouponBean json2CouponBean) {
 
+            mProgress.dismiss();
+
             Json2CouponBean json2CouponBean1 = json2CouponBean;
             List<CouponsBean> couponsBeen = json2CouponBean1.getCoupons();
-            if (couponsBeen.size() >= 1 )
+            if (isTishiCoupons == true)
             {
-                /*CouponListAdapter adapter = new CouponListAdapter(couponsBeen);
-                youhui_list.setAdapter(adapter);
-                youhui_list.setVisibility(View.VISIBLE);*/
-                toastMgr.builder.display("您有优惠券可用", 1);
-
-                Intent intent = new Intent();
-                intent.setClass(mContext, ConformOrderUseableCouponActivity.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("coupons", (Serializable) couponsBeen);
-                intent.putExtras(bundle);
-                startActivityForResult(intent,REQUEST_CODE_CHOOSE_COUPON );
+                int size = couponsBeen.size();
+                coupon_description.setText("您有" + size + "张优惠券可用");
             }
             else
             {
-                toastMgr.builder.display("没有优惠券可用", 1);
-            }
+                if (couponsBeen.size() >= 1 )
+                {
+                /*CouponListAdapter adapter = new CouponListAdapter(couponsBeen);
+                youhui_list.setAdapter(adapter);
+                youhui_list.setVisibility(View.VISIBLE);*/
+                    toastMgr.builder.display("您有优惠券可用", 1);
 
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, ConformOrderUseableCouponActivity.class);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("coupons", (Serializable) couponsBeen);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent,REQUEST_CODE_CHOOSE_COUPON );
+                }
+                else
+                {
+                    toastMgr.builder.display("没有优惠券可用", 1);
+                }
+            }
         }
 
         @Override
         public void onFail(int errorCode, String message) {
+            mProgress.dismiss();
             toastMgr.builder.display(message, 1);
-
+            coupon_description.setText("无可用优惠券");
         }
     }
     /**
@@ -861,6 +884,10 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
         textview_receiver_address_content.setText("在" + shopModel.getShopAddress() + shopModel.getShopName() + "安装");
 
+        //mInstallShopBean
+        //在设置选择的店铺的时候, 提示用户正在查询优惠券
+        isTishiCoupons = true;
+        checkCoupon(mProductPackageListToOrderProductDetailPage);
 
     }
 
@@ -869,23 +896,6 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     int dateDay;
     protected void datePickerShow(final TextView textView)
     {
-//      DatePickerDialog picker = new DatePickerDialog(this,
-//          new OnDateSetListener() {
-//              @Override
-//              public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                  if (monthOfYear < 9 && dayOfMonth < 10) {
-//                      textView.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
-//                  } else if (monthOfYear >= 9 && dayOfMonth < 10) {
-//                      textView.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
-//                  } else if (monthOfYear < 9 && dayOfMonth >= 10) {
-//                      textView.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
-//                  } else {
-//                      textView.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-//                  }
-//              }
-//          }, cd.get(Calendar.YEAR), cd.get(Calendar.MONTH), cd.get(Calendar.DAY_OF_MONTH));
-//      picker.show();
-
         final Dialog dialog = new Dialog(this, R.style.ActionSheetDialogStyle);
         dialog.setContentView(R.layout.wheel_date_picker_dialog);
 

@@ -99,17 +99,26 @@ public class HttpReqSubmitOrder
             }
             keysize++;
         }
-        String name = couponsBean.getCouponName();
-        if (name.equals("不使用"))
+        if (couponsBean == null)
         {
             builder = builder.addParams("orderReq.couponId", "");
             url += "&orderReq.couponId=" + "";
         }
         else
         {
-            builder = builder.addParams("orderReq.couponId", couponsBean.getCouponId());
-            url += "&orderReq.couponId=" + couponsBean.getCouponId();
+            String name = couponsBean.getCouponName();
+            if (name.equals("不使用"))
+            {
+                builder = builder.addParams("orderReq.couponId", "");
+                url += "&orderReq.couponId=" + "";
+            }
+            else
+            {
+                builder = builder.addParams("orderReq.couponId", couponsBean.getCouponId());
+                url += "&orderReq.couponId=" + couponsBean.getCouponId();
+            }
         }
+
 
         builder = builder.addParams("orderReq.addressId", addressBean.getId());
         url += "&orderReq.addressId=" + addressBean.getId();

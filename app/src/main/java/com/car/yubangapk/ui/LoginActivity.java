@@ -167,6 +167,7 @@ public class LoginActivity extends BaseActivity {
         public void onError(Call call, Exception e) {
             toastMgr.builder.display("登陆失败, 网络错误", 1);
             mProgressDialog.dismiss();
+            SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
         }
 
         @Override
@@ -331,10 +332,8 @@ public class LoginActivity extends BaseActivity {
             }
             else if (returnCode == -2)
             {
-                //审核不通过, 不可以登陆 重新上传
                 toastMgr.builder.display("您还没注册", 1);
-
-
+                SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
                 AlertDialog alertDialog = new AlertDialog(mContext);
                 alertDialog.builder().setCancelable(false)
                         .setTitle("提示")
@@ -359,6 +358,7 @@ public class LoginActivity extends BaseActivity {
             }
             else
             {
+                SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
                 toastMgr.builder.display(json2LoginBean.getMessage(), 1);
             }
 

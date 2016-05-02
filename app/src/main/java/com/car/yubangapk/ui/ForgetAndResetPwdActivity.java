@@ -23,6 +23,7 @@ import com.car.yubangapk.utils.Validator;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.AlertDialog;
 import com.andy.android.yubang.R;
+import com.car.yubangapk.view.CustomProgressDialog;
 
 /**
  * ForgetAndResetPwdActivity: 忘记密码  但是要重置密码
@@ -45,6 +46,9 @@ public class ForgetAndResetPwdActivity extends BaseActivity implements HttpReqAl
 
     HttpReqForgetPwd forgetPwd;
 
+
+    CustomProgressDialog mProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,8 @@ public class ForgetAndResetPwdActivity extends BaseActivity implements HttpReqAl
 
         mContext = this;
         findViews();
+
+        mProgress = new CustomProgressDialog(mContext);
 
     }
 
@@ -124,6 +130,7 @@ public class ForgetAndResetPwdActivity extends BaseActivity implements HttpReqAl
 
     private void getVerifyCode()
     {
+
         TimerCount timerCount = new TimerCount(60000, 1000, forget_pwd_btn_send_verify_code);
         timerCount.start();
 
@@ -138,6 +145,7 @@ public class ForgetAndResetPwdActivity extends BaseActivity implements HttpReqAl
             toastMgr.builder.display("请输入正确手机号码", 1);
             return;
         }
+        mProgress = mProgress.show(mContext, "正在发送验证码", false, null);
         forgetPwd = new  HttpReqForgetPwd();
         forgetPwd.setCallback(this);
         forgetPwd.getVerifyCode(phone);
@@ -165,6 +173,7 @@ public class ForgetAndResetPwdActivity extends BaseActivity implements HttpReqAl
             toastMgr.builder.display("请输入验证码", 1);
             return;
         }
+        mProgress = mProgress.show(mContext, "正在加载...", false, null);
         forgetPwd.resetPwd(phone, code, newPwd);
 
     }
@@ -172,10 +181,12 @@ public class ForgetAndResetPwdActivity extends BaseActivity implements HttpReqAl
     @Override
     public void onFail(int errorCode, String message) {
         toastMgr.builder.display(message, 1);
+        mProgress.dismiss();
     }
 
     @Override
     public void onSuccess(Object object, int type) {
+        mProgress.dismiss();
         //我还要先知道是不是验证码获取成功了
         if (type == 1)
         {
