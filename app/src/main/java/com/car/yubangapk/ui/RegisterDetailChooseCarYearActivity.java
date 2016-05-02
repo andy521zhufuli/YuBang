@@ -82,7 +82,18 @@ public class RegisterDetailChooseCarYearActivity extends BaseActivity implements
                 SPUtils.put(mContext, "yearId", yearId);
                 SPUtils.put(mContext,"chooseedYear",mJson2CarYearBeanList.get(position).getCarProduceYear());
                 Intent intent = new Intent();
-                intent.setClass(mContext, RegisterDetailsActivity.class);
+
+                String from = (String) SPUtils.get(mContext, "chooseCarFrom", "");
+                if ("".equals(from))
+                {
+                    intent.setClass(mContext, RegisterDetailsActivity.class);
+                }
+                else
+                {
+                    intent.setClass(mContext, MyPersonalInfoActivity.class);
+                }
+
+
                 Bundle bundle = new Bundle();
                 String carCompany   = (String) SPUtils.get(mContext, Configs.carCompany,"");
                 String carBrand     = (String) SPUtils.get(mContext, Configs.carBrand,"");

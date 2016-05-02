@@ -321,10 +321,14 @@ public class RegisterDetailsActivity extends BaseActivity {
 
     }
 
+    /**
+     * 选择完车型, 又回来这个界面
+     * @param intent
+     */
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        toastMgr.builder.display("onnewINtent", 1);
+        setIntent(intent);
         Bundle bundle = intent.getExtras();
         if (bundle == null)
         {

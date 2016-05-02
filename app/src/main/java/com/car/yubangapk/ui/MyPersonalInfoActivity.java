@@ -15,12 +15,16 @@ import android.widget.TextView;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.configs.ErrorCodes;
+import com.car.yubangapk.json.bean.BaseJsonCommonBean;
 import com.car.yubangapk.json.bean.Json2LoginBean;
 import com.car.yubangapk.json.bean.Json2MyUserInfoBean;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqUploadCarType;
 import com.car.yubangapk.network.myHttpReq.alterUserInfo.HttpReqAlterUserInfo;
 import com.car.yubangapk.network.myHttpReq.alterUserInfo.HttpReqAlterUserInfoCallback;
 import com.car.yubangapk.network.myHttpReq.alterUserInfo.HttpReqUploadUserPic;
+import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.CustomProgressDialog;
 
@@ -111,7 +115,7 @@ public class MyPersonalInfoActivity extends BaseActivity{
         my_personal_item_phonenum_layout = (RelativeLayout) findViewById(R.id.my_personal_item_phonenum_layout);//手机号码
         my_personal_item_phone_num = (TextView) findViewById(R.id.my_personal_item_phone_num);//
 
-        my_personal_item_level_layout = (RelativeLayout) findViewById(R.id.my_personal_item_level_layout);//等级
+        my_personal_item_level_layout = (RelativeLayout) findViewById(R.id.my_personal_item_level_layout);//车型
         my_personal_item_level = (TextView) findViewById(R.id.my_personal_item_level);//
 
         my_personal_item_industry_layout = (RelativeLayout) findViewById(R.id.my_personal_item_industry_layout);//行业
@@ -161,21 +165,6 @@ public class MyPersonalInfoActivity extends BaseActivity{
             }
         });//昵称
 
-
-        my_personal_item_sex_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });//性别
-        my_personal_item_age_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });//年龄
-
-
         my_personal_item_phonenum_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,25 +182,16 @@ public class MyPersonalInfoActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(mContext, AlterUserBaseInfoActivity.class);
+                //TODO
+                intent.setClass(mContext, RegisterDetailChooseCarInfoActivity.class);
+                SPUtils.put(mContext, "chooseCarFrom", "modifyCarType");
                 Bundle bundle = new Bundle();
                 bundle.putString("TYPE", "car");
                 intent.putExtras(bundle);
-                startActivityForResult(intent,REQUEST_ALTER_USER_CAT_TYPE);
+                startActivity(intent);
             }
         });//车型
-        my_personal_item_industry_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });//行业
-        my_personal_item_occupation_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });//职业
         my_personal_item_real_name_certification_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,7 +199,7 @@ public class MyPersonalInfoActivity extends BaseActivity{
                 intent.setClass(mContext, AlterUserPwdActivity.class);
                 startActivity(intent);
             }
-        });//
+        });//修改密码
     }
 
 
@@ -235,8 +215,6 @@ public class MyPersonalInfoActivity extends BaseActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
         {
-
-
             if (requestCode == REQUEST_ALTER_USER_PIC)
             {
             //拿到图片的路径  解析成bitmap
@@ -252,23 +230,25 @@ public class MyPersonalInfoActivity extends BaseActivity{
                 //拿到新的用户名, 去上传用户名
                 Bundle bundle = data.getExtras();
                 String info = bundle.getString("message");
+                my_personal_item_name.setText(info);
                 alterUserName(info);
 
             }
-            else if (requestCode == REQUEST_ALTER_USER_CAT_TYPE)
+            else if (requestCode == REQUEST_ALTER_USER_PHONE_NUN)
             {
                 Bundle bundle = data.getExtras();
                 String info = bundle.getString("message");
+                my_personal_item_phone_num.setText(info);
                 alterPhoneNum(info);
             }
-            else if (requestCode == REQUEST_ALTER_USER_PHONE_NUN)
+            else if (requestCode == REQUEST_ALTER_USER_CAT_TYPE)
             {
 
             }
         }
         else
         {
-            toastMgr.builder.display("您又有修改",1);
+            toastMgr.builder.display("您没有修改",1);
         }
     }
 
@@ -285,9 +265,7 @@ public class MyPersonalInfoActivity extends BaseActivity{
 
             @Override
             public void onSuccess(Object object, int type) {
-                Json2LoginBean loginBean = (Json2LoginBean) object;
-                //保存登陆信息
-                Configs.putLoginedInfo(mContext,loginBean);
+                BaseJsonCommonBean loginBean = (BaseJsonCommonBean) object;
                 isUserDataModified = true;
             }
         });
@@ -307,9 +285,7 @@ public class MyPersonalInfoActivity extends BaseActivity{
 
             @Override
             public void onSuccess(Object object, int type) {
-                Json2LoginBean loginBean = (Json2LoginBean) object;
-                //保存登陆信息
-                Configs.putLoginedInfo(mContext,loginBean);
+
                 isUserDataModified = true;
             }
         });
@@ -398,5 +374,69 @@ public class MyPersonalInfoActivity extends BaseActivity{
         super.onDestroy();
 
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        Bundle bundle = intent.getExtras();
+        if (bundle == null)
+        {
+
+            return;
+        }
+        else
+        {
+            //表示选择车型成功, 就要上传给服务器
+            String carCompany;
+            String carBrand;
+            String carSeries;
+            String produceYear;
+            String carCapacity;
+            String userid;
+            carCompany = bundle.getString(Configs.carCompany, "");
+            carBrand = bundle.getString(Configs.carBrand, "");
+            carSeries = bundle.getString(Configs.carSeries, "");
+            produceYear = bundle.getString(Configs.produceYear, "");
+            carCapacity = bundle.getString(Configs.carCapacity, "");
+//            userid      = (String) SPUtils.get(mContext,Configs.userid,"");
+            userid = Configs.getLoginedInfo(mContext).getUserid();
+
+            String chooseedType = "";
+            chooseedType = (String) SPUtils.get(mContext,"chooseedCompany","");
+            chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedBrand","");
+            chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedChildBrand","");
+            chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedCapacity","");
+            chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedYear","");
+            mChoosedCarType = chooseedType;
+            //上传
+            HttpReqUploadCarType uploadCarType = new HttpReqUploadCarType(mContext);
+            uploadCarType.setCallback(new UploadCarTypeCallback());
+            uploadCarType.upLoadCarType(carCompany, carBrand, carSeries, produceYear, carCapacity, userid);
+        }
+    }
+
+    String mChoosedCarType = "";
+
+    class UploadCarTypeCallback implements HttpReqUploadCarType.HttpReqUploadCarTypeCallback
+    {
+
+        @Override
+        public void onUploadCarTypeFail(int errorCode, String message) {
+            if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
+            {
+                toastMgr.builder.display(message, 1);
+            }
+            isUserDataModified = false;
+        }
+
+        @Override
+        public void onUploadCarTypeSuccess(Object object) {
+            isUserDataModified = false;
+            my_personal_item_level.setText(mChoosedCarType);
+            //已经将返回的信息保存了
+        }
+    }
+
 
 }

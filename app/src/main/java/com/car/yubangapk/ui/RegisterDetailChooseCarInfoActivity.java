@@ -34,7 +34,6 @@ import com.car.yubangapk.view.sortListview.SortModel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.WeakHashMap;
 
 import okhttp3.Call;
 
@@ -230,9 +229,6 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
      * @param mJson2CarCompanyList
      */
     private void initViews1(List<Json2CarCompanyBean> mJson2CarCompanyList) {
-
-
-
         int size =  this.mJson2CarCompanyList.size();
 
         List<String> companyName = new ArrayList<>();
@@ -242,8 +238,6 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
             String name = this.mJson2CarCompanyList.get(i).getCompanyName();
             names[i] = name;
         }
-
-//        SourceDateList = filledData(getResources().getStringArray(R.array.date));
         SourceDateList = filledData(names);
 
         // 根据a-z进行排序源数据
@@ -251,12 +245,10 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
         adapter = new SortAdapter(this, SourceDateList);
         sortListView.setAdapter(adapter);
 
-
         mClearEditText = (ClearEditText) findViewById(R.id.filter_edit);
 
         //根据输入框输入值的改变来过滤搜索
         mClearEditText.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
@@ -266,9 +258,7 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -327,7 +317,6 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
                 }
             }
         }
-
         // 根据a-z进行排序
         Collections.sort(filterDateList, pinyinComparator);
         adapter.updateListView(filterDateList);

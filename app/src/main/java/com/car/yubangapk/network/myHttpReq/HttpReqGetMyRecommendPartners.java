@@ -20,7 +20,7 @@ import okhttp3.Call;
  */
 public class HttpReqGetMyRecommendPartners
 {
-    private String TAG = HttpReqAddress.class.getSimpleName();
+    private String TAG = HttpReqGetMyRecommendPartners.class.getSimpleName();
 
     private String mUserId;
     private String mPage;
@@ -78,7 +78,7 @@ public class HttpReqGetMyRecommendPartners
                     .build()
                     .execute(new GetAddressCallBack());
 
-            L.i(TAG, "获取订单 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
+            L.i(TAG, "我推荐的合伙人 全部 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
                             + ARGS_sqlname + "=" + "clientUserRecShop"
                             + "&" + ARGS_page + "=" + Ppage
                             + "&" + ARGS_rows + "=" + rows
@@ -100,7 +100,7 @@ public class HttpReqGetMyRecommendPartners
                     .build()
                     .execute(new GetAddressCallBack());
 
-            L.i(TAG, "获取订单 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
+            L.i(TAG, "我推荐的合伙人 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
                             + ARGS_sqlname + "=" + "clientUserRecShop"
                             + "&" + ARGS_page + "=" + Ppage
                             + "&" + ARGS_rows + "=" + rows

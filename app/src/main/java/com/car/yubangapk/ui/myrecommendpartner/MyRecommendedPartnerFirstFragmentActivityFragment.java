@@ -280,7 +280,7 @@ public class MyRecommendedPartnerFirstFragmentActivityFragment extends Fragment 
         }
         else if (mType.equals(MyRecommendedPartnerActivity.PENDING_APPROVAL))
         {
-            mRequestStatus = "2";
+            mRequestStatus = "1";
         }
         else if (mType.equals(MyRecommendedPartnerActivity.NOT_APPROVAL))
         {

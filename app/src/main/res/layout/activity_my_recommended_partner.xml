@@ -40,7 +40,7 @@
         android:background="@drawable/bg_item_bottom"
         >
 
-        <!-- 已审核-->
+        <!-- 全部-->
         <RelativeLayout
             android:id="@+id/my_recommended_partner_layout_1"
             android:layout_width="0dp"
@@ -93,7 +93,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/dark"
                 android:textSize="@dimen/small_middle_text_size"
-                android:text="待审核" />
+                android:text="已审核" />
 
             <View
                 android:id="@+id/indicator2"

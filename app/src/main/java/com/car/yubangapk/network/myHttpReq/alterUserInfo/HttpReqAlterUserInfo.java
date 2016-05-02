@@ -2,9 +2,11 @@ package com.car.yubangapk.network.myHttpReq.alterUserInfo;
 
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
+import com.car.yubangapk.json.bean.BaseJsonCommonBean;
 import com.car.yubangapk.json.bean.GetVerifyCodeBean;
 import com.car.yubangapk.json.bean.Json2LoginBean;
 import com.car.yubangapk.json.bean.VerifyCodeBean;
+import com.car.yubangapk.json.formatJson.FormatBaseJsonCommonCode;
 import com.car.yubangapk.json.formatJson.Json2Login;
 import com.car.yubangapk.json.formatJson.VerifyCode;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
@@ -99,10 +101,17 @@ public class HttpReqAlterUserInfo extends StringCallback
         builder.build().execute(new ALterUserInfoCallback());
 
 
-        L.i(TAG, "获取验证码 url = " + url);
+        L.i(TAG, "修改密码 url = " + url);
     }
 
 
+    /**
+     * 修改手机号码, 用户名
+     * @param userid
+     * @param userName
+     * @param phoneNum
+     * @param actionType
+     */
     public void alterUserBaseInfo(String userid, String userName, String phoneNum, String actionType)
     {
         PostFormBuilder builder = OkHttpUtils.post().url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_ALTER_USER_INFO);
@@ -122,7 +131,7 @@ public class HttpReqAlterUserInfo extends StringCallback
 
         builder = builder.addParams(ACTION_CODE, actionType);
         url += "&" + ACTION_CODE + "=" + actionType;
-        L.d("修改用户名, 手机号 url = " + url);
+        L.d("修改用户名. 手机号码 url = " + url);
         builder.build().execute(this);
     }
 
@@ -135,8 +144,8 @@ public class HttpReqAlterUserInfo extends StringCallback
     @Override
     public void onResponse(String response) {
         L.d("修改用户名, 手机号 json = " + response);
-        Json2Login login = new Json2Login(response);
-        Json2LoginBean bean = login.getLoginObj();
+        FormatBaseJsonCommonCode login = new FormatBaseJsonCommonCode(response);
+        BaseJsonCommonBean bean = login.getBaseCommon();
 
         if (bean == null)
         {
@@ -199,7 +208,7 @@ public class HttpReqAlterUserInfo extends StringCallback
 
         @Override
         public void onResponse(String response) {
-            L.d("修改用户信息 json = ", response);
+            L.d("修改密码 json = ", response);
             VerifyCode verifyCode = new VerifyCode(response);
             GetVerifyCodeBean codeBean = verifyCode.getVerifyCodeObj();
             if (codeBean == null)

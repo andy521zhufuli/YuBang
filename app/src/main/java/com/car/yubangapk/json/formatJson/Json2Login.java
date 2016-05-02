@@ -1,5 +1,7 @@
 package com.car.yubangapk.json.formatJson;
 
+import com.car.yubangapk.configs.ErrorCodes;
+import com.car.yubangapk.json.JSONUtils;
 import com.car.yubangapk.json.bean.Json2LoginBean;
 
 import org.json.JSONException;
@@ -51,15 +53,15 @@ public class Json2Login {
             String name;
             String status;
 
-            isJson = total.getBoolean("isJson");
-            isReturnStr = total.getBoolean("isReturnStr");
-            returnCode = total.getInt("returnCode");
-            returneMsg = total.getString("returneMsg");
-            message = total.getString("message");
-            userid = total.getString("userid");
-            carType = total.getString("carType");
-            name = total.getString("name");
-            status = total.getString("status");
+            isJson = JSONUtils.getBoolean(total, "isJson", false);
+            isReturnStr = JSONUtils.getBoolean(total, "isReturnStr", false);
+            returnCode = JSONUtils.getInt(total, "returnCode", ErrorCodes.ERROR_CODE_SERVER_ERROR);
+            returneMsg = JSONUtils.getString(total, "returneMsg", "");
+            message = JSONUtils.getString(total, "message", "");
+            userid = JSONUtils.getString(total, "userid", "");
+            carType = JSONUtils.getString(total, "carType", "");
+            name = JSONUtils.getString(total, "name", "");
+            status = JSONUtils.getString(total, "status", "");
 
 
             loginBean.setIsJson(isJson);

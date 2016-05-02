@@ -74,9 +74,9 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
     private void findViews() {
 
         img_back = (ImageView) findViewById(R.id.img_back);//返回
-        my_recommended_partner_layout_1 = (RelativeLayout) findViewById(R.id.my_recommended_partner_layout_1);//已审核
-        my_recommended_partner_layout_2 = (RelativeLayout) findViewById(R.id.my_recommended_partner_layout_2);//未审核
-        my_recommended_partner_layout_3 = (RelativeLayout) findViewById(R.id.my_recommended_partner_layout_3);//以入伙
+        my_recommended_partner_layout_1 = (RelativeLayout) findViewById(R.id.my_recommended_partner_layout_1);//全部
+        my_recommended_partner_layout_2 = (RelativeLayout) findViewById(R.id.my_recommended_partner_layout_2);//已审核
+        my_recommended_partner_layout_3 = (RelativeLayout) findViewById(R.id.my_recommended_partner_layout_3);//未审核
         tv1 = (TextView) findViewById(R.id.tv1);
         tv2 = (TextView) findViewById(R.id.tv2);
         tv3 = (TextView) findViewById(R.id.tv3);
@@ -218,7 +218,7 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
     }
 
     public static final String ALL_PARTNERS = "全部";
-    public static final String PENDING_APPROVAL = "待审核";
+    public static final String PENDING_APPROVAL = "已审核";
     public static final String NOT_APPROVAL = "未审核";
 
 }
