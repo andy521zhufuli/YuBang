@@ -169,12 +169,16 @@ public class MyPersonalInfoActivity extends BaseActivity{
         my_personal_item_phonenum_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(mContext, AlterUserBaseInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("TYPE", "phonenum");
-                intent.putExtras(bundle);
-                startActivityForResult(intent,REQUEST_ALTER_USER_PHONE_NUN);
+                /**
+                 * 手机号码不可修改
+                 */
+                toastMgr.builder.display("手机号码不可修改", 1);
+//                Intent intent = new Intent();
+//                intent.setClass(mContext, AlterUserBaseInfoActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("TYPE", "phonenum");
+//                intent.putExtras(bundle);
+//                startActivityForResult(intent,REQUEST_ALTER_USER_PHONE_NUN);
             }
         });//手机号码
 
