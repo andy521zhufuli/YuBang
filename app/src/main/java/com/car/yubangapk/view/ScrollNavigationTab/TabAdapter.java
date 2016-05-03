@@ -6,6 +6,7 @@ import java.util.List;
 import android.view.View;
 
 public abstract class TabAdapter {
+
 	List<String> tabsList=new ArrayList<String>();
 	
 	public abstract  View getView(int position);

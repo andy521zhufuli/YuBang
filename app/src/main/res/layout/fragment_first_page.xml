@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.car.yubangapk.ui.firstpagefragment.FirstPageNewActivity"
+    >
+
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/first_page_mapview"
+        android:layout_below="@+id/first_page_tabs"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+    </com.baidu.mapapi.map.MapView>
+
+
+    <Button
+        android:id="@+id/first_page_location_btn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/first_page_location_selector"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        />
+
+</RelativeLayout>

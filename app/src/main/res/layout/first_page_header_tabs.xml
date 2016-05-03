@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/my_order_layout_1"
+	android:layout_width="wrap_content"
+	android:layout_height="54dp"
+    android:clickable="true"
+    >
+
+	<TextView
+		android:id="@+id/tab_name"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="等"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+		android:textSize="@dimen/small_middle_text_size"
+		android:textColor="@color/dark" />
+
+	<View
+		android:id="@+id/indicator1"
+		android:layout_width="100dp"
+		android:layout_height="2dp"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:background="@color/red"
+		android:visibility="invisible" />
+    <View
+        android:layout_width="@dimen/divider_height"
+        android:layout_height="18dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/hintColor" />
+
+</RelativeLayout>
+

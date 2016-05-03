@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.car.yubangapk.ui.FirstPageActivity">
+
+
+
+    <RelativeLayout
+        android:id="@+id/layout_login_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/head_bg_color"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/yubang"
+
+            />
+
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+
+        <ImageView
+            android:id="@+id/search_image_new"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/search"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:scaleType="fitXY"
+            />
+    </RelativeLayout>
+
+
+    <com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.ScrollTabView1
+        android:layout_below="@+id/layout_login_topbar"
+        android:layout_marginTop="1px"
+        android:id="@+id/first_page_nav_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_item_bottom"
+        />
+
+
+    
+
+
+
+
+
+
+
+
+</RelativeLayout>

@@ -169,32 +169,6 @@
                 android:textSize="@dimen/small_text_size" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layout_recom_apps"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/item_height"
-            android:layout_marginTop="@dimen/item_margin_top"
-            android:background="@drawable/bg_item_top"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="0.0dip"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_weight="1.0"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="应用推荐"
-                android:textColor="@color/text"
-                android:textSize="@dimen/small_text_size" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/item_margin_right"
-                android:src="@mipmap/personel_arrow_right" />
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_about"

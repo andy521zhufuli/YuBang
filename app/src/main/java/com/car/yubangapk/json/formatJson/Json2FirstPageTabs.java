@@ -63,6 +63,7 @@ public class Json2FirstPageTabs {
             String skipType;
             String photoName;
             String serviceName;
+            String tabDisplayName;
 
             int size = total.length();
 
@@ -84,7 +85,7 @@ public class Json2FirstPageTabs {
                 skipType = object.getString("skipType");
                 photoName = object.getString("photoName");
                 serviceName = object.getString("serviceName");
-
+                tabDisplayName = object.getString("tabDisplayName");
 
                 pageTabsBean.setId(id);
                 pageTabsBean.setPathCode(pathCode);
@@ -92,19 +93,9 @@ public class Json2FirstPageTabs {
                 pageTabsBean.setSkipType(skipType);
                 pageTabsBean.setPhotoName(photoName);
                 pageTabsBean.setServiceName(serviceName);
+                pageTabsBean.setTabDisplayName(tabDisplayName);
                 pageTabsBean.setHasData(true);
-                char[] name = serviceName.toCharArray();
-                if (name.length < 2)
-                {
-                    //name的长度小于2
-                    return null;
-                }
-                String usefullname = "";
-                for (int j = 0; i < 2; i++)
-                {
-                    usefullname += name[i];
-                }
-                pageTabsBean.setUsefullServiceName(usefullname);
+
                 json2FirstPageTabsBeanList.add(pageTabsBean);
             }
 

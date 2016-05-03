@@ -107,13 +107,6 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
         Json2FirstPageShop json2FirstPageShop = new Json2FirstPageShop(shopBean);
         mShopBeanList = json2FirstPageShop.getFirstPageShop();
 
-
-
-
-
-
-
-
         findViews();
 
         //显示店铺信息  顶部图片之类

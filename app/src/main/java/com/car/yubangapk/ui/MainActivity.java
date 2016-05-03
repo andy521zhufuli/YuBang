@@ -10,6 +10,7 @@ import android.widget.TabHost;
 
 import com.car.yubangapk.app.AppManager;
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.ui.firstpagefragment.FirstPageNewActivity;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
@@ -67,7 +68,7 @@ public class MainActivity extends TabActivity {
         // 首页
         mTabHost.addTab(mTabHost.newTabSpec("FirstPage")
                 .setIndicator("FirstPage")
-                .setContent(new Intent(this, FirstPageActivity.class)));
+                .setContent(new Intent(this, FirstPageNewActivity.class)));
         //商城
         mTabHost.addTab(mTabHost.newTabSpec("ShoppingMall").setIndicator("ShoppingMall")
                 .setContent(new Intent(this, ShoppingMallActivity.class)));
