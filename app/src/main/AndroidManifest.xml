@@ -146,6 +146,7 @@
         <activity
             android:name="com.car.yubangapk.ui.MyPersonalInfoActivity"
             android:label="@string/title_activity_my_personal_info"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!-- 我的钱包 -->
@@ -418,12 +419,12 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="572040a367e58e024800337b" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="Channel ID" />
         <!--<meta-data-->
             <!--android:name="UMENG_CHANNEL"-->
-            <!--android:value="other" />-->
+            <!--android:value="Channel ID" />-->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="other" />
 
         <activity android:name="com.car.yubangapk.ui.NofityClick2ShowActivity" />
         <activity android:name="com.car.yubangapk.ui.NofityBtnClick2ShowActivity"></activity>

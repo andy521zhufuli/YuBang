@@ -25,6 +25,7 @@ import com.car.yubangapk.network.myHttpReq.alterUserInfo.HttpReqAlterUserInfo;
 import com.car.yubangapk.network.myHttpReq.alterUserInfo.HttpReqAlterUserInfoCallback;
 import com.car.yubangapk.network.myHttpReq.alterUserInfo.HttpReqUploadUserPic;
 import com.car.yubangapk.utils.SPUtils;
+import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.CustomProgressDialog;
 
@@ -424,6 +425,14 @@ public class MyPersonalInfoActivity extends BaseActivity{
         @Override
         public void onUploadCarTypeFail(int errorCode, String message) {
             if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
+            {
+                toastMgr.builder.display(message, 1);
+            }
+            else if (errorCode == ErrorCodes.ERROR_CODE_NOT_LOGIN)
+            {
+                NotLogin.gotoLogin(MyPersonalInfoActivity.this);
+            }
+            else
             {
                 toastMgr.builder.display(message, 1);
             }
