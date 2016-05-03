@@ -1,4 +1,4 @@
-package com.car.yubangapk.adapter;
+package com.car.yubangapk.view.ScrollNavigationTab;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,6 @@ public class PagerAdapter extends FragmentPagerAdapter{
 	public void addFragment(Fragment fg){
 		mFragments.add(fg);
 		this.notifyDataSetChanged();
-
 	}
 	
 	@Override

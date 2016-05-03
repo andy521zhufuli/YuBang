@@ -163,7 +163,6 @@ public class ShoppingmallProductChangeActivity extends BaseActivity implements V
                                 }
                             })
                             .show();
-
                 }
                 else
                 {

@@ -1,4 +1,4 @@
-package com.car.yubangapk.adapter;
+package com.car.yubangapk.view.ScrollNavigationTab;
 
 import android.app.Activity;
 import android.content.Context;

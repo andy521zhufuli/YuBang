@@ -32,7 +32,7 @@
             android:textSize="@dimen/medium_text_size" />
     </RelativeLayout>
 
-    <com.car.yubangapk.view.ScrollTabView
+    <com.car.yubangapk.view.ScrollNavigationTab.ScrollTabView
         android:id="@+id/my_order_tab"
         android:layout_width="fill_parent"
         android:layout_height="48dp"/>

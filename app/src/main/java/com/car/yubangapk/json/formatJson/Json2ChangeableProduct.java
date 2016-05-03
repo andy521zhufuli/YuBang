@@ -1,6 +1,7 @@
 package com.car.yubangapk.json.formatJson;
 
 
+import com.car.yubangapk.json.JSONUtils;
 import com.car.yubangapk.json.bean.Json2ChangeableProductBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
 
@@ -19,37 +20,7 @@ import java.util.List;
  * @created 2016-04-10
  */
 public class Json2ChangeableProduct {
-
-
-
-
-
     String json;
-
-    public Json2ChangeableProduct()
-    {
-
-    }
-
-    private Object getString(String jsonobject , Object object)
-    {
-
-        if (object instanceof JSONArray)
-        {
-
-        }
-
-//        try
-//        {
-//
-//
-//        }
-//        catch (JSONException e)
-//        {
-//
-//        }
-        return null;
-    }
 
     public Json2ChangeableProduct(String json)
     {
@@ -59,7 +30,7 @@ public class Json2ChangeableProduct {
 
     /**
      *
-     * @return List<BannerAd>
+     * @return List<>
      */
     public List<Json2ChangeableProductBean> getChangeableProduct() {
 
@@ -93,7 +64,7 @@ public class Json2ChangeableProduct {
             {
                 JSONObject row =  rows.getJSONObject(i);
                 categoryName = row.getString("categoryName");
-                retailPrice = row.getDouble("retailPrice");
+                retailPrice = JSONUtils.getDouble(row, "retailPrice", 0);
                 pathCode = row.getString("pathCode");
                 productName = row.getString("productName");
 

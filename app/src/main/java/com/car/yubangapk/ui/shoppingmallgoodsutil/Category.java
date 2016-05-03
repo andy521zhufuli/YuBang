@@ -44,7 +44,7 @@ public class Category {
         if (pPosition == 0) {
             return mCategoryItem.get(0);
         } else {
-            return mCategoryItem.get(pPosition - 1);
+            return mCategoryItem.get(pPosition);
         }
     }
 

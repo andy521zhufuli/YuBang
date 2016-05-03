@@ -9,11 +9,10 @@ import android.widget.ImageView;
 
 
 import com.andy.android.yubang.R;
-import com.car.yubangapk.adapter.PagerAdapter;
-import com.car.yubangapk.adapter.ScrollTabsAdapter;
-import com.car.yubangapk.adapter.TabAdapter;
-import com.car.yubangapk.ui.myordersfragment.MyOrdersFragment2;
-import com.car.yubangapk.view.ScrollTabView;
+import com.car.yubangapk.view.ScrollNavigationTab.PagerAdapter;
+import com.car.yubangapk.view.ScrollNavigationTab.ScrollTabsAdapter;
+import com.car.yubangapk.view.ScrollNavigationTab.TabAdapter;
+import com.car.yubangapk.view.ScrollNavigationTab.ScrollTabView;
 import com.umeng.analytics.MobclickAgent;
 
 /**

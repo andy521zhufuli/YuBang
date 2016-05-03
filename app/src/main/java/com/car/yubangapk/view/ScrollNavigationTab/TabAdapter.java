@@ -1,4 +1,4 @@
-package com.car.yubangapk.adapter;
+package com.car.yubangapk.view.ScrollNavigationTab;
 
 import java.util.ArrayList;
 import java.util.List;

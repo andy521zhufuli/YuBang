@@ -46,16 +46,6 @@ public class GoodsCategoryHelper
             }
             listData.add(category);
         }
-        //测试
-        Category category = new Category();
-        category.setmCategoryName("保养包1");
-        for (Json2ProductPackageBean bean : goodsList)
-        {
-            category.addItem(bean);
-        }
-        listData.add(category);
-
-
         return listData;
     }
 
