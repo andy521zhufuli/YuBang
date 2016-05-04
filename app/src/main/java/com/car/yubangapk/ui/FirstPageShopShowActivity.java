@@ -63,6 +63,7 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
     private ShopServiceListViewAdapter shopServiceAdapter;
     String shopBean;
     private List<Json2FirstPageShopBean> mShopBeanList;//店铺信息
+
     private List<Json2ShopServiceBean> mShopService;//店铺服务
     private Json2FirstPageShopBean mShopBean;
     int item;
@@ -99,22 +100,12 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
         mProgressDialog = new CustomProgressDialog(mContext);
 
         Intent intent = getIntent();
-        shopBean = intent.getStringExtra("shopBean");
-        //item = -1 代表最上面一个点击
-        item = intent.getIntExtra("item", -2);
-
-
-        Json2FirstPageShop json2FirstPageShop = new Json2FirstPageShop(shopBean);
-        mShopBeanList = json2FirstPageShop.getFirstPageShop();
+        mShopBean = (Json2FirstPageShopBean) intent.getSerializableExtra("shopBean");
 
         findViews();
 
         //显示店铺信息  顶部图片之类
-        showShopInfo(mShopBean, item);
-
-        //item点击事件
-        listviewShopServiceClicked();
-
+        showShopInfo(mShopBean);
 
         String carType = Configs.getLoginedInfo(mContext).getCarType();
         mCarType = carType;
@@ -142,10 +133,8 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
         }
         else
         {
-            httpGetShopService(json2FirstPageShop.getFirstPageShop().get(0).getId(), Configs.getLoginedInfo(mContext).getCarType());
+            httpGetShopService(mShopBean.getId(), Configs.getLoginedInfo(mContext).getCarType());
         }
-
-
 
     }
 
@@ -153,44 +142,21 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
      * 显示店铺信息 item为上次点击的是哪一个  第一个  还是listview中的
      * @param mShopBean
      */
-    private void showShopInfo(Json2FirstPageShopBean mShopBean, int _item)
+    private void showShopInfo(Json2FirstPageShopBean mShopBean)
     {
-
-        if (_item == -1)//上一页的第一个
-        {
-            mShopBean = mShopBeanList.get(0);
-            shopInfoId              = mShopBeanList.get(0).getId();
-            shopInfoShopAddress     = mShopBeanList.get(0).getShopAddress();
-            shopInfoPhoneNum        = mShopBeanList.get(0).getPhoneNum();
-            shopInfoShopPhoto       = mShopBeanList.get(0).getShopPhoto();
-            shopInfoPathCode        = mShopBeanList.get(0).getPathCode();
-            shopInfoShopName        = mShopBeanList.get(0).getShopName();
-            shopInfoCompany         = mShopBeanList.get(0).getCompany();
-            shopInfoShopLatitude    = mShopBeanList.get(0).getShopLatitude();
-            shopInfoShopLongitude   = mShopBeanList.get(0).getShopLongitude();
-            shopInfoStar            = mShopBeanList.get(0).getStar();
-            shopInfoOrder           = mShopBeanList.get(0).getOrder();
-            shopInfoDistance        = mShopBeanList.get(0).getDistance();
-            orderNum                = mShopBeanList.get(0).getOrderNum();
-        }
-        else if (_item >= 0)//listview中的item
-        {
-            _item = _item + 1;
-            mShopBean = mShopBeanList.get(_item);
-            shopInfoId              = mShopBeanList.get(_item).getId();
-            shopInfoShopAddress     = mShopBeanList.get(_item).getShopAddress();
-            shopInfoPhoneNum        = mShopBeanList.get(_item).getPhoneNum();
-            shopInfoShopPhoto       = mShopBeanList.get(_item).getShopPhoto();
-            shopInfoPathCode        = mShopBeanList.get(_item).getPathCode();
-            shopInfoShopName        = mShopBeanList.get(_item).getShopName();
-            shopInfoCompany         = mShopBeanList.get(_item).getCompany();
-            shopInfoShopLatitude    = mShopBeanList.get(_item).getShopLatitude();
-            shopInfoShopLongitude   = mShopBeanList.get(_item).getShopLongitude();
-            shopInfoStar            = mShopBeanList.get(_item).getStar();
-            shopInfoOrder           = mShopBeanList.get(_item).getOrder();
-            shopInfoDistance        = mShopBeanList.get(_item).getDistance();
-            orderNum                = mShopBeanList.get(_item).getOrderNum();
-        }
+        shopInfoId              = mShopBean.getId();
+        shopInfoShopAddress     = mShopBean.getShopAddress();
+        shopInfoPhoneNum        = mShopBean.getPhoneNum();
+        shopInfoShopPhoto       = mShopBean.getShopPhoto();
+        shopInfoPathCode        = mShopBean.getPathCode();
+        shopInfoShopName        = mShopBean.getShopName();
+        shopInfoCompany         = mShopBean.getCompany();
+        shopInfoShopLatitude    = mShopBean.getShopLatitude();
+        shopInfoShopLongitude   = mShopBean.getShopLongitude();
+        shopInfoStar            = mShopBean.getStar();
+        shopInfoOrder           = mShopBean.getOrder();
+        shopInfoDistance        = mShopBean.getDistance();
+        orderNum                = mShopBean.getOrderNum();
 
         float star = Float.parseFloat(shopInfoStar);
         if (star >= (float)5.0)
@@ -205,7 +171,6 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
         show_shop_distance.setText(shopInfoDistance + "米");
         shop_ratingBar_detai.setRating(star);
         show_shop_dan.setText(orderNum + "单");
-
     }
 
     private void findViews() {
@@ -214,16 +179,6 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
 
         photo_show = (LinearLayout) findViewById(R.id.photo_show);//点击门店
         shop_show_service_listview = (ListView) findViewById(R.id.shop_show_service_listview);//
-//        shop_show_service_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                toastMgr.builder.display("轮胎服务", 0);
-//                //这里应该跳到对应的商品里面
-//                //TODO 这里应该跳到对应的商品里面
-//                gotoShoppingmallGoodsActivity(position);
-//
-//            }
-//        });
 
         show_shop_photo         = (ImageView) findViewById(R.id.show_shop_photo);//店铺照片
         show_shop_name          = (TextView) findViewById(R.id.show_shop_name);//店铺名字
@@ -251,15 +206,6 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
         show_shop_nav.setOnClickListener(this);
         first_page_shop_show_sales_activity.setOnClickListener(this);
         first_page_shop_show_customers_comments.setOnClickListener(this);
-
-    }
-
-
-    /**
-     * 注册item点击事件
-     */
-    private void listviewShopServiceClicked()
-    {
 
     }
 

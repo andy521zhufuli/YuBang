@@ -3,6 +3,7 @@ package com.car.yubangapk.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -48,6 +49,7 @@ import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.String2UTF8;
 import com.car.yubangapk.utils.ViewGroupToBitmap;
 import com.car.yubangapk.utils.toastMgr;
+import com.car.yubangapk.view.ActionSheetDialogList;
 import com.car.yubangapk.view.AlertDialog;
 import com.car.yubangapk.view.CustomProgressDialog;
 import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.ScrollTabView1;
@@ -383,12 +385,43 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+                final ActionSheetDialogList dialogList = new ActionSheetDialogList(mContext);
+                dialogList.builder().setTitle("请选择您要的操作")
+                        .setCancelable(false)
+                        .setCanceledOnTouchOutside(true)
+                        .setOnItemClickListener(new ActionSheetDialogList.OnSheetItemClickListener() {
+                            @Override
+                            public void onItemClick(Json2FirstPageShopBean shop, int which, int position) {
 
-                Intent intent = new Intent();
-                intent.setClass(FirstPagenew2Activity.this, FirstPageMarkerClickedActivity.class);
-                intent.putExtra("shopBean", mShopBeanResponse);
-                //这里需要把要显示的店铺信息放到FirstPageMarkerClickedActivity里面去  让它解析  然后显示
-                startActivity(intent);
+                                if (which == SHOP_PHOTO_CLICK)
+                                {
+                                    Intent intent = new Intent();
+                                    intent.setClass(mContext, FirstPageShopShowActivity.class);
+                                    intent.putExtra("shopBean",shop);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    dialogList.dismiss();
+                                    String phone = shop.getPhoneNum();
+                                    makePhoneCall(phone);
+                                }
+
+
+                            }
+                        })
+                        .setSheetItemList(mJson2FirstPageShopBeanList)
+                        .show();
+
+
+//                Intent intent = new Intent();
+//
+//
+//
+//
+//                intent.setClass(FirstPagenew2Activity.this, FirstPageMarkerClickedActivity.class);
+//                intent.putExtra("shopBean", mShopBeanResponse);
+//                //这里需要把要显示的店铺信息放到FirstPageMarkerClickedActivity里面去  让它解析  然后显示
+//                startActivity(intent);
                 return true;
             }
         });
@@ -396,6 +429,30 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
         mLocationClient.start();
     }
 
+
+    private void makePhoneCall(final String phoneNUm)
+    {
+        new AlertDialog(mContext).builder()
+                .setTitle("打电话给店主吗").setMsg("确定退出吗?").setCancelable(false)
+                .setPositiveButton("现在打", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse("tel:" + phoneNUm));
+                        mContext.startActivity(intent);
+                    }
+                })
+                .setNegativeButton("考虑下", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                })
+                .show();
+    }
+
+
+    int SHOP_PHOTO_CLICK = 1;
+    int SHOP_MAKE_CALL   = 2;
 
     /**
      * s设置顶部tab的名字

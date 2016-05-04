@@ -36,9 +36,9 @@ public class ScrollTabsAdapter1 extends TabAdapter1
 		RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.my_order_layout_1);
 		TextView tab_name = (TextView) view.findViewById(R.id.tab_name);
 		View indicator1 = view.findViewById(R.id.indicator1);
-		tab_name.setWidth(dm.widthPixels / 3);
+		tab_name.setWidth(dm.widthPixels / 5);
 		tab_name.setText(tabsList.get(position).getTabDisplayName());
-		indicator1.setMinimumWidth(dm.widthPixels / 3);
+		indicator1.setMinimumWidth(dm.widthPixels / 5);
 		return view;
 	}
 
