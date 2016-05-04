@@ -68,7 +68,7 @@ public class MainActivity extends TabActivity {
         // 首页
         mTabHost.addTab(mTabHost.newTabSpec("FirstPage")
                 .setIndicator("FirstPage")
-                .setContent(new Intent(this, FirstPageNewActivity.class)));
+                .setContent(new Intent(this, FirstPagenew2Activity.class)));
         //商城
         mTabHost.addTab(mTabHost.newTabSpec("ShoppingMall").setIndicator("ShoppingMall")
                 .setContent(new Intent(this, ShoppingMallActivity.class)));

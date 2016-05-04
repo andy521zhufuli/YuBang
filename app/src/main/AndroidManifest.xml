@@ -429,6 +429,8 @@
         <activity android:name="com.car.yubangapk.ui.NofityClick2ShowActivity" />
         <activity android:name="com.car.yubangapk.ui.NofityBtnClick2ShowActivity"></activity>
         <activity android:name="com.car.yubangapk.ui.firstpagefragment.FirstPageNewActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.FirstPagenew2Activity"></activity>
+
     </application>
 
 </manifest>

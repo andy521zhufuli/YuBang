@@ -15,6 +15,11 @@ public abstract class TabAdapter1 {
 	public int getCount(){
 		return tabsList.size();
 	}
+
+	public List<Json2FirstPageTabsBean> getTabsList()
+	{
+		return tabsList;
+	}
 	
 	public void add(Json2FirstPageTabsBean name){
 		tabsList.add(name);

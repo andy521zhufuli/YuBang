@@ -1,5 +1,6 @@
 package com.car.yubangapk.json.formatJson;
 
+import com.car.yubangapk.json.JSONUtils;
 import com.car.yubangapk.json.bean.Json2MyOrderBean;
 import com.car.yubangapk.json.bean.MyOrderBean;
 
@@ -36,6 +37,9 @@ public class Json2MyOrder
 
         try {
             jsonObject = new JSONObject(json);
+            int returnCode = JSONUtils.getInt(jsonObject, "returnCode", 0);
+
+
             int total = jsonObject.getInt("total");
             if (total == 0)
             {
@@ -62,15 +66,15 @@ public class Json2MyOrder
             {
 
                 JSONObject row = (JSONObject) rows.get(i);
-                id = row.getString("id");
-                orderMoney = row.getString("orderMoney");
-                orderTime = row.getString("orderTime");
-                orderStatusName = row.getString("orderStatusName");
-                orderName = row.getString("orderName");
-                orderNumber = row.getString("orderNumber");
-                pathCode = row.getString("pathCode");
-                productNum = row.getString("productNum");
-                photo = row.getString("photo");
+                id = JSONUtils.getString(row, "id", "");
+                orderMoney = JSONUtils.getString(row, "orderMoney", "");
+                orderTime = JSONUtils.getString(row, "orderTime", "");
+                orderStatusName = JSONUtils.getString(row, "orderStatusName", "");
+                orderName = JSONUtils.getString(row, "orderName", "");
+                orderNumber = JSONUtils.getString(row, "orderNumber", "");
+                pathCode = JSONUtils.getString(row, "pathCode", "");
+                productNum = JSONUtils.getString(row, "productNum", "");
+                photo = JSONUtils.getString(row, "photo", "");
 
 
                 MyOrderBean orderBean = new MyOrderBean();
@@ -89,7 +93,7 @@ public class Json2MyOrder
                 orderBeansList.add(orderBean);
             }
 
-
+            order.setReturnCode(returnCode);
             order.setHasData(true);
 
 
@@ -108,11 +112,11 @@ public class Json2MyOrder
 
 
 
-                isJson = total1.getBoolean("isJson");
-                isReturnStr = total1.getBoolean("isReturnStr");
-                returnCode = total1.getInt("returnCode");
-                returneMsg = total1.getString("returneMsg");
-                message = total1.getString("message");
+                isJson          = total1.getBoolean("isJson");
+                isReturnStr     = total1.getBoolean("isReturnStr");
+                returnCode      = total1.getInt("returnCode");
+                returneMsg      = total1.getString("returneMsg");
+                message         = total1.getString("message");
 
                 order.setReturnCode(returnCode);
                 return  order;

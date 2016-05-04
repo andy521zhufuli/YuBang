@@ -20,25 +20,7 @@ import android.widget.TextView;
 import android.widget.ZoomControls;
 
 import com.andy.android.yubang.R;
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.BMapManager;
-import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationConfiguration;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.model.LatLng;
-import com.car.yubangapk.app.AppManager;
+
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2FirstPageShopBean;
 import com.car.yubangapk.json.bean.Json2FirstPageTabsBean;
@@ -65,6 +47,7 @@ import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.FragmentAdapter
 import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.ScrollTabView1;
 import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.ScrollTabsAdapter1;
 import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.TabAdapter1;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -85,91 +68,29 @@ public class FirstPageNewActivity extends FragmentActivity implements View.OnCli
 
     private Context mContext;
     private final static String TAG = "FirstPageActivity";
-    private BMapManager mBMapManager;
-
     private ImageView first_page_search;//搜索
 
-    private List<BDMapData> bdMapClientList;
-    //当前定位结果的经纬度
-    private double latitude;
-    private double longitude;
-
-    private String mCountry;    //国家
-    private String mProvince;   //省
-    private String mCity;       //市
-    private String mCityCode;   //市代码
-    private String mDistrict;   //区
-    private String mStreet;     //街道
-
-    /**
-     * MapView 是地图主控件
-     */
-
-    private Button          first_page_location_btn;//定位按钮
-
-
-
-    boolean isFirstLoc = true; // 是否首次定位
-    private MyLocationConfiguration.LocationMode mCurrentMode;
-
-
-
-
-    // 初始化全局 bitmap 信息，不用时及时 recycle
-    BitmapDescriptor bdA;
-
-    //当前界面
-    private int currentPage;
-    private static final int ALL_CAR_PAGE   = 1;
-    private static final int BAO_YANG_PAGE  = 2;
-    private static final int DIAN_LU_PAGE   = 3;
-    private static final int PEI_JIAN_PAGE  = 4;
-    private static final int YOU_LU_PAGE    = 5;
-
-
     List<Json2FirstPageTabsBean> mPageTabsBeanList;
-    private static int FITST_GET_SHOP = 1;//第一次去拿店铺
-    private static int SECOND_GET_SHOP = 2;//如果没有区里面没有店铺信息  就去拿市里的
-    private static int THIRD_GET_SHOP = 3;//如果没有市里面没有店铺信息  就去拿省里的
-    private int CURRENT_GET_SHOP_TIME = 1;
 
+    private ScrollTabView1      first_page_nav_tabs;//顶部
+    private TabAdapter1         tabsAdapter;//顶部导航的适配器
+    private LinearLayout        nothing_layout;//网络错误显示
+    private TextView            text_empty;//显示网络错误
 
-    private String mShopBeanResponse;
+    private CustomProgressDialog mProgress;
 
-
-    private CustomProgressDialog mProgressDialog;
-    //保存拿来的店铺信息
-    private List<Json2FirstPageShopBean> mJson2FirstPageShopBeanList;
-
-
-
-
-    private ScrollTabView1 first_page_nav_tabs;//顶部
-    private TabAdapter1 tabsAdapter;//
-    private Fragment firstFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page_new);
-
         mContext = this;
-
         findViews();
-
-        currentPage = ALL_CAR_PAGE;
-
-        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
-        //进度框
-        mProgressDialog = new CustomProgressDialog(mContext);
+        mProgress = new CustomProgressDialog(mContext);
         //去拿首页上面导航的5getab
         httpGetFirstPageTopTab();
     }
-
-
-
-
 
     /**
      * 关联
@@ -179,15 +100,24 @@ public class FirstPageNewActivity extends FragmentActivity implements View.OnCli
         //搜索
         first_page_search = (ImageView) findViewById(R.id.search_image_new);
         first_page_nav_tabs = (ScrollTabView1) findViewById(R.id.first_page_nav_tabs);
+        nothing_layout = (LinearLayout) findViewById(R.id.nothing_layout);//网络错误显示
+        text_empty = (TextView) findViewById(R.id.text_empty);//显示网络错误
+
         /**
          * 设置监听器
          */
         first_page_search.setOnClickListener(this);
 
+        text_empty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                httpGetFirstPageTopTab();
+            }
+        });
+
         first_page_nav_tabs.setOnItemClickListener(new ScrollTabView1.OnItemClickListener() {
             @Override
-            public void onTabItemClick(View view, int pos) {
-                FragmentAdapter fragmentAdapter = first_page_nav_tabs.getFragments();
+            public void onTabItemClick(TabAdapter1 tabAdapter1, int pos) {
 
             }
         });
@@ -215,7 +145,9 @@ public class FirstPageNewActivity extends FragmentActivity implements View.OnCli
      */
     private void httpGetFirstPageTopTab()
     {
-
+        mProgress = mProgress.show(mContext, "正在加载...", false, null);
+        //请求的时候设置为不可见, 当网络出错的时候才可见
+        nothing_layout.setVisibility(View.GONE);
         OkHttpUtils.post()
                 .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_FIRST_PAGE_TAB)
                 .addParams("sqlName",  "clientSearchLogicalService")
@@ -233,12 +165,15 @@ public class FirstPageNewActivity extends FragmentActivity implements View.OnCli
         public void onError(Call call, Exception e) {
 
             toastMgr.builder.display("网络错误,请连接网络后重试!", 1);
-            //网络错误  就不要加载地图了
-            //initMAp();
+            //地图也不给看  不会去加载
+            mProgress.dismiss();
+            nothing_layout.setVisibility(View.VISIBLE);
+            text_empty.setText("网络错误, 请连接网络后点击加载!");
         }
 
         @Override
         public void onResponse(String response) {
+            mProgress.dismiss();
             L.d(TAG, "获取首页tab json = " + response);
             Json2FirstPageTabs pageTabs = new Json2FirstPageTabs(response);
             List<Json2FirstPageTabsBean> pageTabsBeanList = pageTabs.getFirstPageTabs();
@@ -275,106 +210,27 @@ public class FirstPageNewActivity extends FragmentActivity implements View.OnCli
         for (Json2FirstPageTabsBean bean : pageTabsBeanList)
         {
             tabsAdapter.add(bean);
-            fragmentAdapter.addFragment(new  FirstPageFragment(bean.getTabDisplayName()));
         }
         first_page_nav_tabs.setFragments(fragmentAdapter);
         first_page_nav_tabs.setAdapter(tabsAdapter);
     }
 
-
-
-
-    /**实现切换不同的Fragment
-     * @param i 点击的第几个按钮
-     */
-//    private void select(int i)
-//    {
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        hideFragment(transaction);
-//
-//        switch (i)
-//        {
-//            case 0:
-//                if (firstFragment == null)
-//                {
-//                    firstFragment = new MyRecommendedPartnerFirstFragmentActivityFragment(ALL_PARTNERS);
-//                    transaction.add(R.id.my_recommended_partner_framlayout, firstFragment);
-//                } else
-//                {
-//                    transaction.show(firstFragment);
-//                }
-//                break;
-//            case 1:
-//                if (secondFragment == null)
-//                {
-//                    secondFragment = new MyRecommendedPartnerFirstFragmentActivityFragment(PENDING_APPROVAL);
-//                    transaction.add(R.id.my_recommended_partner_framlayout, secondFragment);
-//                } else
-//                {
-//                    transaction.show(secondFragment);
-//                }
-//                break;
-//            case 2:
-//                if (threeFragment == null)
-//                {
-//                    threeFragment = new MyRecommendedPartnerFirstFragmentActivityFragment(NOT_APPROVAL);
-//                    transaction.add(R.id.my_recommended_partner_framlayout, threeFragment);
-//                } else
-//                {
-//                    transaction.show(threeFragment);
-//                }
-//                break;
-//        }
-//        transaction.commit();
-//    }
-//
-//    /**
-//     * 用于每一显示不同的Fragment时候隐藏之前的所有可能显示的Fragment
-//     * @param transaction
-//     *          事物
-//     */
-//    private void hideFragment(FragmentTransaction transaction)
-//    {
-//        if (firstFragment != null)
-//        {
-//            transaction.hide(firstFragment);
-//        }
-//        if (secondFragment != null)
-//        {
-//            transaction.hide(secondFragment);
-//        }
-//        if (threeFragment != null)
-//        {
-//            transaction.hide(threeFragment);
-//        }
-//    }
-
-
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
-        toastMgr.builder.display("onresume", 1);
-
-
+        MobclickAgent.onResume(this);
     }
     @Override
     protected void onPause()
     {
         super.onPause();
-        //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
+        MobclickAgent.onPause(this);
     }
 
     /**

@@ -80,7 +80,6 @@ public class MyRecommendedPartnerFirstFragmentActivityFragment extends Fragment 
         listview.setOnRefreshListener(this);
 
         firstLoad();
-
         return view;
     }
 
