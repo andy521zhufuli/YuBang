@@ -28,6 +28,7 @@ import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2InstallShopBean;
 import com.car.yubangapk.json.bean.Json2InstallShopModelsBean;
+import com.car.yubangapk.json.bean.Json2ProductPackageBean;
 import com.car.yubangapk.json.bean.Json2ShopServiceBean;
 import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
 import com.car.yubangapk.network.myHttpReq.HttpReqInstallShopList;
@@ -36,8 +37,11 @@ import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.CustomProgressDialog;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -86,6 +90,7 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
     private CustomProgressDialog mProgress;
 
     private List<Json2InstallShopModelsBean> mInstallShopModelsList;
+    private List<String> mRepairServiceList;
 
 
     //适配器
@@ -124,6 +129,7 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
 
     }
 
+    private List<Json2ProductPackageBean> mProductPackageListConformOrder;
     /**
      * 获取上一个界面的信息
      * @param bundle
@@ -131,6 +137,13 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
     private void getExtra(Bundle bundle) {
 
         from = bundle.getString("from");
+
+        mProductPackageListConformOrder = (List<Json2ProductPackageBean>) bundle.getSerializable("productPackageList");
+
+
+        mRepairServiceList = getAllRepairService();
+
+
         if (from.equals(Configs.FROM_SHOPPINGMALL))
         {
 //            mRepairServices = (List<Json2ShoppingmallBottomPicsBean>) bundle.getSerializable("repairServices");
@@ -243,15 +256,11 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
                     .longitude(location.getLongitude()).build();
             if (isFirstLoc) {
                 isFirstLoc = false;
-//                LatLng ll = new LatLng(location.getLatitude(),
-//                        location.getLongitude());
-//                MapStatus.Builder builder = new MapStatus.Builder();
-//                builder.target(ll).zoom(12.0f);
-
                 //获取定位成功, 拿到需要的信息,去请求店铺列表
                 String userid = Configs.getLoginedInfo(mContext).getUserid();
                 String carType = Configs.getLoginedInfo(mContext).getCarType();
-                getInstallShop(mLongitude, mLatitude, userid, carType, mProvince ,mCity, mDistrict, "1");
+
+                getInstallShop(mLongitude, mLatitude, userid, carType, mProvince ,mCity, mDistrict, "1", mRepairServiceList);
             }
 
             L.d(TAG + "当前经纬度", mLongitude +  "=="+ mLatitude + "");
@@ -260,15 +269,35 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         }
     }
 
+    private List<String> getAllRepairService()
+    {
+        int  size = mProductPackageListConformOrder.size();
+        List<String> repairServiceList = new ArrayList<>();
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        for (int i = 0; i < size; i++)
+        {
+            String repairService  = mProductPackageListConformOrder.get(i).getRepairService();
+            map.put(repairService, i + "");
+        }
+
+        Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, String> entry = it.next();
+            repairServiceList.add(entry.getKey());
+        }
+        return repairServiceList;
+    }
+
+
     /**
      * 去后台获取可安装店铺列表
      */
-    private void getInstallShop(double lon, double lat, String userid, String carType, String province, String city, String district, String shopStatus) {
+    private void getInstallShop(double lon, double lat, String userid, String carType, String province, String city, String district, String shopStatus, List<String> list) {
 
         mProgress.setMessage("正在获取附近门店...");
 
         HttpReqInstallShopList req = new HttpReqInstallShopList(new ShopListListener());
-        req.getInstallShop(lon, lat, userid, carType, province, city, district, shopStatus);
+        req.getInstallShop(lon, lat, userid, carType, province, city, district, shopStatus, list);
 
     }
 
@@ -297,6 +326,12 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         @Override
         public void onGetInstallShopFail(int errorCode, String message) {
             mProgress.dismiss();
+
+            toastMgr.builder.display(message, 1);
+
+            choose_install_shop_nearest_shop.setVisibility(View.INVISIBLE);
+
+
         }
     }
 

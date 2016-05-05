@@ -484,7 +484,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
      * @param productDetail
      */
     private void checkCoupon(List<Json2ProductPackageBean> productDetail) {
-        mProgress = mProgress.show(mContext, "查询优惠券中...", false, null);
+
         if (mInstallShopBean == null)
         {
             AlertDialog alertDialog = new AlertDialog(mContext);
@@ -500,6 +500,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                     .show();
             return;
         }
+        mProgress = mProgress.show(mContext, "查询优惠券中...", false, null);
         HttpReqConformOrderCoupon reqConformOrderCoupon = new HttpReqConformOrderCoupon();
         reqConformOrderCoupon.setCallback(new Coupon());
 
@@ -606,6 +607,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private void chooseInstallShop() {
 
         Bundle bundle = new Bundle();
+        //其实是用不到的  废弃了
         if (mFrom.equals(Configs.FROM_SHOPPINGMALL))
         {
             //这里面包含了所有的repairService
@@ -618,6 +620,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             bundle.putString("from", mFrom);
             bundle.putStringArrayList("shopServiceBean",  mShopServices);
         }
+        //这里才是要用到的
+        bundle.putSerializable("productPackageList", (Serializable) mProductPackageListToOrderProductDetailPage);
 
         Intent intent = new Intent();
         intent.setClass(mContext, ShoppingmallConformOrderChooseInstallShopActivity.class);

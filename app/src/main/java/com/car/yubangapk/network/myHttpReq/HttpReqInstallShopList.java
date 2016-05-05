@@ -55,7 +55,7 @@ public class HttpReqInstallShopList
         this.callback = listener;
     }
 
-    public void getInstallShop(double lon, double lat,String userid, String carType, String province, String city, String district, String shopStatus)
+    public void getInstallShop(double lon, double lat,String userid, String carType, String province, String city, String district, String shopStatus, List<String> list)
     {
 
         province = String2UTF8.getUTF8String(province);
@@ -70,9 +70,18 @@ public class HttpReqInstallShopList
                 .addParams(ARGS_CITY, city)
                 .addParams(ARGS_DISTRICT, district)
                 .addParams(ARGS_SHOP_STATUS, shopStatus)
-                .addParams(ARGS_USERID, userid)
-                .addParams("shopReq.repairServiceId[0]", "e0635993-2f23-428c-9b42-5b53dd5a3734")
-                ;
+                .addParams(ARGS_USERID, userid);
+
+        int size = list.size();
+        String url = "";
+        for (int i = 0; i <size; i++)
+        {
+            String repairService = list.get(i);
+            builder = builder.addParams("shopReq.repairServiceId[" + i + "]",repairService);
+            url += "&" + "shopReq.repairServiceId[" + i + "]" + repairService;
+        }
+
+
         //TODO 这里要改  一定要改  暂时还没改 问题很严重
 
         //这里是一个循环
@@ -90,7 +99,7 @@ public class HttpReqInstallShopList
                 + "&" + ARGS_DISTRICT + "=" + district
                 + "&" + ARGS_SHOP_STATUS + "=" + shopStatus
                 + "&" + ARGS_USERID + "=" + userid
-                + "&" + "shopReq.repairServiceId[0]" + "e0635993-2f23-428c-9b42-5b53dd5a3734"
+                + url
         );
     }
 

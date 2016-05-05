@@ -13,6 +13,7 @@
         android:layout_height="70dp"
         android:background="@drawable/bg_item_bottom"
         android:layout_marginTop="5dp"
+        android:layout_gravity="center_vertical"
         >
 
         <TextView
@@ -29,7 +30,7 @@
 
         <LinearLayout
             android:id="@+id/item_clicked_shop_ll"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="25dp"
             android:layout_toRightOf="@+id/item_clicked_shop_num"
@@ -39,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:src="@mipmap/mendian"
+                android:layout_gravity="center_horizontal"
                 />
 
             <TextView
@@ -63,18 +65,20 @@
             >
 
             <LinearLayout
+                android:id="@+id/make_phone"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:orientation="horizontal"
+                android:layout_weight="1"
+                android:clickable="true"
                 >
                 <!-- 评分-->
                 <TextView
                     android:id="@+id/item_clicked_shop_pingfen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4.88"
+                    android:text="5级"
                     android:textStyle="bold"
-                    android:textColor="@color/pd_red"
                     android:paddingRight="5dp"
                     />
                 <!-- 电话-->
@@ -89,13 +93,6 @@
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/item_clicked_shop_level"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:text="5级"
-                />
             <!-- 多少单-->
             <TextView
                 android:id="@+id/item_clicked_shop_dan_num"

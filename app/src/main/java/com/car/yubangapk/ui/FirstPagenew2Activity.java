@@ -407,13 +407,14 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
                                 {
                                     Intent intent = new Intent();
                                     intent.setClass(mContext, FirstPageShopShowActivity.class);
-                                    intent.putExtra("shopBean",shop);
+                                    intent.putExtra("shopBean", shop);
                                     startActivity(intent);
                                     dialogList.dismiss();
                                 }
                                 else {
                                     dialogList.dismiss();
                                     String phone = shop.getPhoneNum();
+                                    toastMgr.builder.display("call",1);
                                     makePhoneCall(phone);
                                 }
                             }

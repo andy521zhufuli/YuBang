@@ -127,7 +127,7 @@ public class HttpReqConformOrderCoupon
                 if (json2CouponBean.isHasData() == false)
                 {
                     //没有数据
-                    mCallback.onFail(ErrorCodes.ERROR_CODE_NO_DATA, "没有数据");
+                    mCallback.onFail(ErrorCodes.ERROR_CODE_NO_DATA, "没有可用优惠券");
                 }
                 else if (json2CouponBean.getReturnCode() != 0)
                 {

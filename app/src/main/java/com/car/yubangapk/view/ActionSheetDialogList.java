@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -165,11 +166,14 @@ public class ActionSheetDialogList {
 
                 holder.item_clicked_shop_call_phone = (ImageView) view.findViewById(R.id.item_clicked_shop_photo);//电话
 
-                holder.item_clicked_shop_level = (TextView) view.findViewById(R.id.item_clicked_shop_level);//等级
+
 
                 holder.item_clicked_shop_dan_num = (TextView) view.findViewById(R.id.item_clicked_shop_dan_num);//接单数
 
                 holder.clicked_shop_distance = (TextView) view.findViewById(R.id.clicked_shop_distance);//距离
+
+                holder.clicked_shop = (RelativeLayout) view.findViewById(R.id.clicked_shop);//
+                holder.make_phone = (LinearLayout) view.findViewById(R.id.make_phone);//
 				view.setTag(holder);
 			}
 			else
@@ -183,15 +187,13 @@ public class ActionSheetDialogList {
             ImageLoaderTools.getInstance(context).displayImage(url, holder.item_clicked_shop_photo);
 
             holder.item_clicked_shop_name.setText(shopList.get(position).getShopName());
-            holder.item_clicked_shop_pingfen.setText(shopList.get(position).getStar());
-            holder.item_clicked_shop_level.setText(shopList.get(position).getStar());
+            holder.item_clicked_shop_pingfen.setText(shopList.get(position).getStar() + "级");
 
             //打电话
             holder.item_clicked_shop_call_phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (mSheetItemClick != null)
-                    {
+                    if (mSheetItemClick != null) {
                         mSheetItemClick.onItemClick(shopList.get(position), SHOP_MAKE_CALL, position);
                     }
                 }
@@ -212,7 +214,23 @@ public class ActionSheetDialogList {
 
                 }
             });
-
+            holder.clicked_shop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mSheetItemClick != null)
+                    {
+                        mSheetItemClick.onItemClick(shopList.get(position), SHOP_PHOTO_CLICK, position);
+                    }
+                }
+            });
+            holder.make_phone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mSheetItemClick != null) {
+                        mSheetItemClick.onItemClick(shopList.get(position), SHOP_MAKE_CALL, position);
+                    }
+                }
+            });
             return view;
 		}
 
@@ -223,9 +241,11 @@ public class ActionSheetDialogList {
 			TextView        item_clicked_shop_name;//店铺名字
             TextView        item_clicked_shop_pingfen;//评分
             ImageView       item_clicked_shop_call_phone;//电话
-            TextView        item_clicked_shop_level;//等级
+
             TextView        item_clicked_shop_dan_num;//接单数
             TextView        clicked_shop_distance;//距离
+            LinearLayout    make_phone;//打电话
+            RelativeLayout clicked_shop;//item
 
 		}
 	}
