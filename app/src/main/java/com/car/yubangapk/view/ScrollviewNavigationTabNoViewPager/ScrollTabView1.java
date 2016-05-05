@@ -47,22 +47,20 @@ public class ScrollTabView1 extends HorizontalScrollView {
 
     public ScrollTabView1(Context context) {
         this(context, null);
-        // TODO Auto-generated constructor stub
+
     }
 
     public ScrollTabView1(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        // TODO Auto-generated constructor stub
+
     }
 
     public ScrollTabView1(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        // TODO Auto-generated constructor stub
-        mContext = context;
 
+        mContext = context;
         container = new LinearLayout(mContext);
         container.setOrientation(LinearLayout.HORIZONTAL);
-
         addView(container);
     }
 

@@ -104,18 +104,18 @@ public class RegisterDetailChooseCarChildBrandActivity extends BaseActivity impl
     /**
      * 去拿车的子品牌信息
      */
-    private void getCarChildBrandInfo(String yearId)
+    private void getCarChildBrandInfo(String fatherBrandId)
     {
         OkHttpUtils.post()
                 .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
                 .addParams("sqlName", "clientGetCarSeries")
                 .addParams("dataReqModel.args.needTotal","needTotal")
-                .addParams("dataReqModel.args.brand", yearId)
+                .addParams("dataReqModel.args.brand", fatherBrandId)
                 .build()
                 .execute(new GetCarBrandCallback());
         L.i(TAG, "车辆year url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
                 + "sqlName=clientGetCarSeries&dataReqModel.args.needTotal=needTotal"
-                + "&dataReqModel.args.brand=" + yearId);
+                + "&dataReqModel.args.brand=" + fatherBrandId);
     }
     class GetCarBrandCallback extends StringCallback
     {

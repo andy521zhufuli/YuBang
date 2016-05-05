@@ -90,20 +90,17 @@
                 <RatingBar android:id="@+id/shop_ratingBar_detai"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15.0dip"
                     android:layout_marginTop="8.0dip"
                     android:numStars="5"
                     android:isIndicator="true"
                     style="@style/roomRatingBar" />
 
                 <TextView android:textSize="@dimen/text_15"
-
-                    android:text="123"
+                    android:text="123单"
                     android:textColor="#fff37c3e"
                     android:id="@+id/show_shop_dan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15.0dip"
                     android:layout_marginTop="5.0dip"
                     android:layout_marginBottom="5.0dip" />
             </LinearLayout>

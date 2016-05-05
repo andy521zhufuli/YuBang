@@ -375,7 +375,6 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
             child.setVisibility(View.INVISIBLE);
         }
 
-
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
         //初始化定位参数
         initLocation();
@@ -385,6 +384,18 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+
+                Json2FirstPageShopBean bean1 = (Json2FirstPageShopBean) marker.getExtraInfo().getSerializable("marker");
+
+                List<Json2FirstPageShopBean> list = new ArrayList<Json2FirstPageShopBean>();
+                for (Json2FirstPageShopBean bean : mJson2FirstPageShopBeanList)
+                {
+                    if (bean.getOrder() != bean1.getOrder())
+                    {list.add(bean);}
+                }
+                list.add(0, bean1);
+
+
                 final ActionSheetDialogList dialogList = new ActionSheetDialogList(mContext);
                 dialogList.builder().setTitle("请选择您要的操作")
                         .setCancelable(false)
@@ -392,40 +403,26 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
                         .setOnItemClickListener(new ActionSheetDialogList.OnSheetItemClickListener() {
                             @Override
                             public void onItemClick(Json2FirstPageShopBean shop, int which, int position) {
-
                                 if (which == SHOP_PHOTO_CLICK)
                                 {
                                     Intent intent = new Intent();
                                     intent.setClass(mContext, FirstPageShopShowActivity.class);
                                     intent.putExtra("shopBean",shop);
                                     startActivity(intent);
+                                    dialogList.dismiss();
                                 }
                                 else {
                                     dialogList.dismiss();
                                     String phone = shop.getPhoneNum();
                                     makePhoneCall(phone);
                                 }
-
-
                             }
                         })
-                        .setSheetItemList(mJson2FirstPageShopBeanList)
+                        .setSheetItemList(list)
                         .show();
-
-
-//                Intent intent = new Intent();
-//
-//
-//
-//
-//                intent.setClass(FirstPagenew2Activity.this, FirstPageMarkerClickedActivity.class);
-//                intent.putExtra("shopBean", mShopBeanResponse);
-//                //这里需要把要显示的店铺信息放到FirstPageMarkerClickedActivity里面去  让它解析  然后显示
-//                startActivity(intent);
                 return true;
             }
         });
-
         mLocationClient.start();
     }
 
@@ -444,7 +441,9 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
                 })
                 .setNegativeButton("考虑下", new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v)
+                    {
+
                     }
                 })
                 .show();
@@ -487,7 +486,6 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
         option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
         mLocationClient.setLocOption(option);
     }
-
 
     /**
      * 定位SDK监听函数
@@ -766,6 +764,9 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
             // 掉下动画
             ooA.animateType(MarkerOptions.MarkerAnimateType.drop);
             mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("marker", jsonPageShopBeanList.get(i));
+            mMarkerA.setExtraInfo(bundle);
 
             LatLng loc = new LatLng(latitude, longitude);
             MapStatusUpdate u = MapStatusUpdateFactory

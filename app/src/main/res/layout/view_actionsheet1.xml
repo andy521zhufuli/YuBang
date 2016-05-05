@@ -20,24 +20,17 @@
         android:textColor="@color/actionsheet_gray"
         android:textSize="13sp"
         android:visibility="gone" />
-
-
-
         <LinearLayout
             android:id="@+id/lLayout_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical" >
-
             <ListView
                 android:id="@+id/sheet_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
             </ListView>
-
-
         </LinearLayout>
 
 

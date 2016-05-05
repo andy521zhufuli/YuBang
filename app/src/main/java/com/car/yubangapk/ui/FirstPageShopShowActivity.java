@@ -59,9 +59,9 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
     private TextView       show_shop_dan;//订单数目
 
     private ImageView      img_back;
-   private ListView       shop_show_service_listview;//店铺服务的listview
+    private ListView       shop_show_service_listview;//店铺服务的listview
     private ShopServiceListViewAdapter shopServiceAdapter;
-    String shopBean;
+
     private List<Json2FirstPageShopBean> mShopBeanList;//店铺信息
 
     private List<Json2ShopServiceBean> mShopService;//店铺服务
@@ -117,16 +117,19 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
                     .setCancelable(false)
                     .setTitle("提示")
                     .setMsg("您还没有添加车型,请添加车型")
-                    .setPositiveButton("去添加", new View.OnClickListener() {
+                    .setPositiveButton("去添加", new View.OnClickListener()
+                    {
                         @Override
-                        public void onClick(View view) {
+                        public void onClick(View view)
+                        {
 
                         }
                     })
-                    .setNegativeButton("先逛逛", new View.OnClickListener() {
+                    .setNegativeButton("先逛逛", new View.OnClickListener()
+                    {
                         @Override
-                        public void onClick(View view) {
-
+                        public void onClick(View view)
+                        {
                         }
                     })
                     .show();
@@ -196,7 +199,6 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
 //        first_page_shop_show_baoyang_service = (LinearLayout) findViewById(R.id.first_page_shop_show_baoyang_service);//保养服务
         first_page_shop_show_sales_activity = (LinearLayout) findViewById(R.id.first_page_shop_show_sales_activity);//优惠活动
         first_page_shop_show_customers_comments = (LinearLayout) findViewById(R.id.first_page_shop_show_customers_comments);//客户评价
-
         /**
          * 注册监听器
          */
@@ -206,7 +208,6 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
         show_shop_nav.setOnClickListener(this);
         first_page_shop_show_sales_activity.setOnClickListener(this);
         first_page_shop_show_customers_comments.setOnClickListener(this);
-
     }
 
     /**
@@ -215,12 +216,10 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
      */
     private void gotoShoppingmallGoodsActivity(int position)
     {
-
-
         if (mCarType == null || mCarType.equals(""))
         {
             //这里会不会有个坑, 就是用户如果删除了应用, 重新安装登陆(已经注册已经有了车型)
-            //这样会不会提示用户没有选择车型//TODO 大问题
+            //这样会不会提示用户没有选择车型
             AlertDialog alertDialog = new AlertDialog(mContext);
             alertDialog.builder()
                     .setTitle("提示").setMsg("您没有添加车型").setCancelable(false)
