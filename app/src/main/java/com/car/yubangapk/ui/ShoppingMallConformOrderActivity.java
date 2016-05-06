@@ -384,7 +384,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     /**
      * 提交订单
      */
-    private void commitOrder() {
+    private void commitOrder()
+    {
         String userid = Configs.getLoginedInfo(mContext).getUserid();
         String cartype = Configs.getLoginedInfo(mContext).getCarType();
         if (mInstallShopBean == null)
@@ -399,8 +400,15 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             toastMgr.builder.display("您没有选择联系方式", 1);
             return;
         }
+        if (mOrderInstallCost == null)
+        {
+            toastMgr.builder.display("未正确获取安装费", 1);
+            return;
+        }
         mProgress = mProgress.show(mContext, "订单提交中...", false, null);
-        submitOrder(userid, cartype, mProductPackageListToOrderProductDetailPage, mInstallShopBean, mSelectedCoupon, mAddressBean, conform_order_install_time.getText().toString());
+        submitOrder(userid, cartype, mProductPackageListToOrderProductDetailPage, mInstallShopBean,
+                mSelectedCoupon, mAddressBean,
+                conform_order_install_time.getText().toString());
 
     }
 
@@ -414,8 +422,12 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
      * @param addressBean
      * @param installtime
      */
-    private void submitOrder(String userid, String cartype, List<Json2ProductPackageBean> ProductDetailPage, Json2InstallShopModelsBean nstallShopBean, CouponsBean coupon, Json2DefaultAddressBean addressBean, String installtime)
+    private void submitOrder(String userid, String cartype, List<Json2ProductPackageBean> ProductDetailPage,
+                             Json2InstallShopModelsBean nstallShopBean, CouponsBean coupon,
+                             Json2DefaultAddressBean addressBean, String installtime)
     {
+
+
         HttpReqSubmitOrder reqGetOrderPrice = new HttpReqSubmitOrder();
         reqGetOrderPrice.setCallback(new HttpReqCallback() {
             @Override
@@ -444,7 +456,15 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
             }
         });
-        reqGetOrderPrice.getOrderPrice(userid, cartype, ProductDetailPage, nstallShopBean, coupon, addressBean, installtime, true);
+
+
+
+        reqGetOrderPrice.getOrderPrice(userid, cartype, ProductDetailPage, nstallShopBean, coupon, addressBean, installtime,
+                mOrderInstallCost,
+                mOrderTotalPrice,
+                mOrderCoouponPrice,
+                mOrderPayPrice,
+                true);
     }
 
     /**
@@ -459,34 +479,6 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         String cartype = Configs.getLoginedInfo(mContext).getCarType();
         getOrderPrice(userid, cartype, mProductPackageListToOrderProductDetailPage, mInstallShopBean, mSelectedCoupon);
 
-//        String userid = Configs.getLoginedInfo(mContext).getUserid();
-//        String cartype = Configs.getLoginedInfo(mContext).getCarType();
-//        HttpReqSubmitOrder reqGetOrderPrice = new HttpReqSubmitOrder();
-//        reqGetOrderPrice.setCallback(new HttpReqCallback() {
-//            @Override
-//            public void onFail(int errorCode, String message) {
-//                mProgress.dismiss();
-//                if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION) {
-//                    UpdateApp.gotoUpdateApp(mContext);
-//                } else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR) {
-//                    toastMgr.builder.display(message, 1);
-//                } else {
-//                    toastMgr.builder.display(message, 1);
-//                }
-//            }
-//
-//            @Override
-//            public void onSuccess(Object object) {
-//                mProgress.dismiss();
-//                //提交订单
-//                Json2OrderPriceBean orderPrice = (Json2OrderPriceBean) object;
-//
-//                product_install_price.setText("￥" + orderPrice.getInstallationCoast());
-//                //gotoCommitSuccess(orderPrice);
-//
-//            }
-//        });
-//        reqGetOrderPrice.getOrderPrice(userid, cartype, mProductPackageListToOrderProductDetailPage, mInstallShopBean, mSelectedCoupon, null, null, false);
     }
 
     /**
@@ -799,12 +791,22 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                 mProgress.dismiss();
                 Json2OrderPriceBean orderPrice = (Json2OrderPriceBean) object;
                 setOrderPrice(orderPrice);
+                mOrderInstallCost = orderPrice.getInstallationCoast() + "";
+                mOrderTotalPrice   = orderPrice.getTotalPrice() + "";
+                mOrderCoouponPrice = orderPrice.getCouponPrice() + "";
+                mOrderPayPrice     = orderPrice.getPayPrice() + "";
 
             }
         });
         reqGetOrderPrice.getOrderPrice(userid, cartype, ProductDetailPage, nstallShopBean, coupon);
 
     }
+
+
+    private String mOrderInstallCost = null;
+    String mOrderTotalPrice = null;
+    String mOrderCoouponPrice = null;
+    String mOrderPayPrice = null;
 
     /**
      * 设置订单价格

@@ -57,7 +57,12 @@ public class HttpReqSubmitOrder
      * @param isSubmitOrder true 代表提交订单, false 代表获取订单价格
      */
     public void getOrderPrice(String userid, String carType, List<Json2ProductPackageBean> productDetail, Json2InstallShopModelsBean mInstallShopBean,
-                              CouponsBean couponsBean, Json2DefaultAddressBean addressBean, String installtime, boolean isSubmitOrder)
+                              CouponsBean couponsBean, Json2DefaultAddressBean addressBean, String installtime,
+                              String installCost,
+                              String totalPrice,
+                              String couponPrice,
+                              String payPrice,
+                              boolean isSubmitOrder)
     {
         String shopid = mInstallShopBean.getShopId();
 
@@ -76,7 +81,7 @@ public class HttpReqSubmitOrder
         builder = builder.addParams("orderReq.shopId", shopid);
         builder = builder.addParams("orderReq.carType", carType);
 
-        String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_ORDER_PRICE + "?orderReq.userid=" + userid;
+        String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_SUBMIT_ORDER + "?orderReq.userid=" + userid;
         url += "&orderReq.shopId=" + shopid;
         url += "&orderReq.carType=" + carType;
 
@@ -162,9 +167,23 @@ public class HttpReqSubmitOrder
             url += "&orderReq.installTime=" + installtime;
         }
 
+        //安装费
+        builder = builder.addParams("orderReq.installationCost", installCost);
+        url += "&orderReq.installationCost=" + installCost;
+        //订单总价
+        builder = builder.addParams("orderReq.totalPrice", totalPrice);
+        url += "&orderReq.totalPrice=" + totalPrice;
+        //优惠金额
+        builder = builder.addParams("orderReq.coupon", couponPrice);
+        url += "&orderReq.totalPrice=" + couponPrice;
+        //支付金额
+        builder = builder.addParams("orderReq.payPrice", payPrice);
+        url += "&orderReq.totalPrice=" + payPrice;
+
+
 
         builder.build().execute(new GetOrderPrice());
-        L.i(HttpReqConformOrderCoupon.class.getName(), "获取提交订单url = " + url);
+        L.i(HttpReqConformOrderCoupon.class.getName(), "提交订单url = " + url);
     }
 
 
