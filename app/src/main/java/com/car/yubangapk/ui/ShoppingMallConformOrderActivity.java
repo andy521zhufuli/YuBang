@@ -120,8 +120,6 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
     private String mFrom;
     private Json2InstallShopModelsBean mInstallShopBean = null;//获取到的安装店铺
 
-
-
     CustomProgressDialog mProgress;
 
     @Override
@@ -204,27 +202,18 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
             @Override
             public void onGetAddressFail(int errorCode) {
-                if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
-                {
+                if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION) {
                     UpdateApp.gotoUpdateApp(mContext);
-                }
-                else if (errorCode == ErrorCodes.ERROR_CODE_NETWORK)
-                {
-                    toastMgr.builder.display("网络错误" ,1);
-                }
-                else if (errorCode == ErrorCodes.ERROR_CODE_NO_ADDRESS)
-                {
-                    toastMgr.builder.display("没有收货信息信息" ,1);
-                }
-                else if (errorCode == ErrorCodes.ERROR_CODE_NOT_LOGIN)
-                {
-                    toastMgr.builder.display("没有登录" ,1);
+                } else if (errorCode == ErrorCodes.ERROR_CODE_NETWORK) {
+                    toastMgr.builder.display("网络错误", 1);
+                } else if (errorCode == ErrorCodes.ERROR_CODE_NO_ADDRESS) {
+                    toastMgr.builder.display("没有收货信息信息", 1);
+                } else if (errorCode == ErrorCodes.ERROR_CODE_NOT_LOGIN) {
+                    toastMgr.builder.display("没有登录", 1);
                     NotLogin.gotoLogin(ShoppingMallConformOrderActivity.this);
 
-                }
-                else if (errorCode == ErrorCodes.ERROR_CODE_SERVER)
-                {
-                    toastMgr.builder.display("服务器错误" ,1);
+                } else if (errorCode == ErrorCodes.ERROR_CODE_SERVER) {
+                    toastMgr.builder.display("服务器错误", 1);
                 }
                 mAddressBean = null;
             }
@@ -415,6 +404,16 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
     }
 
+    /**
+     * 提交订单
+     * @param userid
+     * @param cartype
+     * @param ProductDetailPage
+     * @param nstallShopBean
+     * @param coupon
+     * @param addressBean
+     * @param installtime
+     */
     private void submitOrder(String userid, String cartype, List<Json2ProductPackageBean> ProductDetailPage, Json2InstallShopModelsBean nstallShopBean, CouponsBean coupon, Json2DefaultAddressBean addressBean, String installtime)
     {
         HttpReqSubmitOrder reqGetOrderPrice = new HttpReqSubmitOrder();
@@ -445,9 +444,54 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
             }
         });
-        reqGetOrderPrice.getOrderPrice(userid, cartype, ProductDetailPage, nstallShopBean, coupon, addressBean, installtime);
+        reqGetOrderPrice.getOrderPrice(userid, cartype, ProductDetailPage, nstallShopBean, coupon, addressBean, installtime, true);
     }
 
+    /**
+     * 获取订单价格, 在获取优惠券之后执行,
+     */
+    private void getOrderPrice()
+    {
+
+        //选择了优惠券 就去拿订单价格
+
+        String userid = Configs.getLoginedInfo(mContext).getUserid();
+        String cartype = Configs.getLoginedInfo(mContext).getCarType();
+        getOrderPrice(userid, cartype, mProductPackageListToOrderProductDetailPage, mInstallShopBean, mSelectedCoupon);
+
+//        String userid = Configs.getLoginedInfo(mContext).getUserid();
+//        String cartype = Configs.getLoginedInfo(mContext).getCarType();
+//        HttpReqSubmitOrder reqGetOrderPrice = new HttpReqSubmitOrder();
+//        reqGetOrderPrice.setCallback(new HttpReqCallback() {
+//            @Override
+//            public void onFail(int errorCode, String message) {
+//                mProgress.dismiss();
+//                if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION) {
+//                    UpdateApp.gotoUpdateApp(mContext);
+//                } else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR) {
+//                    toastMgr.builder.display(message, 1);
+//                } else {
+//                    toastMgr.builder.display(message, 1);
+//                }
+//            }
+//
+//            @Override
+//            public void onSuccess(Object object) {
+//                mProgress.dismiss();
+//                //提交订单
+//                Json2OrderPriceBean orderPrice = (Json2OrderPriceBean) object;
+//
+//                product_install_price.setText("￥" + orderPrice.getInstallationCoast());
+//                //gotoCommitSuccess(orderPrice);
+//
+//            }
+//        });
+//        reqGetOrderPrice.getOrderPrice(userid, cartype, mProductPackageListToOrderProductDetailPage, mInstallShopBean, mSelectedCoupon, null, null, false);
+    }
+
+    /**
+     * 下单成功之后的提示界面
+     */
     private void gotoCommitSuccess(final Json2OrderPriceBean submitOrder) {
 
         final Intent intent = new Intent();
@@ -552,6 +596,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                     toastMgr.builder.display("没有优惠券可用", 1);
                 }
             }
+            //无论获取优惠券成功还是失败  都要获取订单介个
+            getOrderPrice();
         }
 
         @Override
@@ -559,6 +605,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             mProgress.dismiss();
             toastMgr.builder.display(message, 1);
             coupon_description.setText("无可用优惠券");
+            //无论获取优惠券成功还是失败  都要获取订单价格
+            getOrderPrice();
         }
     }
     /**
@@ -764,9 +812,11 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
      */
     private void setOrderPrice(Json2OrderPriceBean orderPrice)
     {
-        tv_price.setText(orderPrice.getTotalPrice()+"");
-        product_total_price.setText(orderPrice.getTotalPrice()+"");
-        product_install_price.setText(orderPrice.getInstallationCoast() + "");
+
+
+        tv_price.setText("￥" + orderPrice.getPayPrice()+"");
+        product_total_price.setText("￥:" +orderPrice.getTotalPrice()+"");
+        product_install_price.setText("￥:" + orderPrice.getInstallationCoast() + "");
         product_dilivery_price.setText("免运费");
         product_coupon_price.setText("-" + orderPrice.getCouponPrice());
 
@@ -871,12 +921,14 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             double price = bean.getRetailPrice();
             l_total_size  = l_total_size + ((double)num) * price;
         }
+
         setTotalPrice(l_total_size);
     }
 
 
     private void setTotalPrice(double price)
     {
+        product_total_price.setText("￥" + price + "");
         tv_price.setText("￥" + price + "");
     }
 
@@ -891,6 +943,7 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         //mInstallShopBean
         //在设置选择的店铺的时候, 提示用户正在查询优惠券
         isTishiCoupons = true;
+        //去拿优惠券
         checkCoupon(mProductPackageListToOrderProductDetailPage);
 
     }

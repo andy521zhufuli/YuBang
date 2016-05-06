@@ -624,7 +624,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         {
             warnNoModifyItem();
             return;
-        }
+    }
 
         if(mFrom.equals(Configs.FROM_SHOPPINGMALL))
         {
@@ -791,14 +791,14 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             }
 
             holder.maintenance_produte_name.setText(mpplist.get(position).getProductName());
-            holder.produte_price.setText(mpplist.get(position).getRetailPrice() + "");
+            holder.produte_price.setText("￥" + mpplist.get(position).getRetailPrice() + "");
 
             holder.maintenance_hecheng_1.setText(mpplist.get(position).getProductShow());
 
-            holder.produte_count.setText(mpplist.get(position).getProductAmount() + "");
-            holder.produte_price.setText(mpplist.get(position).getRetailPrice() + "");
-            holder.produte_price.setText(mpplist.get(position).getRetailPrice() + "");
-            holder.count_tx.setText(mpplist.get(position).getProductAmount() + "");
+            holder.produte_count.setText("x" + mpplist.get(position).getProductAmount() + "");
+            holder.produte_price.setText("￥" + mpplist.get(position).getRetailPrice() + "");
+            holder.produte_price.setText("￥" + mpplist.get(position).getRetailPrice() + "");
+            holder.count_tx.setText("x" + mpplist.get(position).getProductAmount() + "");
 
             holder.product_service_name.setText(mpplist.get(position).getPackageName());
 
@@ -811,8 +811,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     int num1 = Integer.parseInt(num);
                     num1++;
                     mJson2ProductPackageBeanList.get(position).setProductAmount(num1);
-                    holder.produte_count.setText("" + num1);
-                    holder.count_tx.setText("" + num1);
+                    holder.produte_count.setText("x" + num1);
+                    holder.count_tx.setText("x" + num1);
 
                     countTotalPrice(mJson2ProductPackageBeanList);
                 }
@@ -847,8 +847,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     }
                     num2--;
                     mJson2ProductPackageBeanList.get(position).setProductAmount(num2);
-                    holder.produte_count.setText("" + num2);
-                    holder.count_tx.setText("" + num2);
+                    holder.produte_count.setText("x" + num2);
+                    holder.count_tx.setText("x" + num2);
 
                     countTotalPrice(mJson2ProductPackageBeanList);
 
@@ -1087,15 +1087,15 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             String productName = ((Json2ProductPackageBean)getItem(position)).getProductName();
             holder.maintenance_produte_name.setText(productName);
             double price = ((Json2ProductPackageBean)getItem(position)).getRetailPrice();
-            holder.produte_price.setText(price + "");
+            holder.produte_price.setText("￥" + price + "");
 
             String show = ((Json2ProductPackageBean)getItem(position)).getProductShow();
             holder.maintenance_hecheng_1.setText(show);
 
-            holder.produte_count.setText(((Json2ProductPackageBean)getItem(position)).getProductAmount() + "");
-            holder.produte_price.setText(((Json2ProductPackageBean)getItem(position)).getRetailPrice() + "");
-            holder.produte_price.setText(((Json2ProductPackageBean)getItem(position)).getRetailPrice() + "");
-            holder.count_tx.setText(((Json2ProductPackageBean)getItem(position)).getProductAmount() + "");
+            holder.produte_count.setText("x" + ((Json2ProductPackageBean)getItem(position)).getProductAmount() + "");
+            holder.produte_price.setText("￥" + ((Json2ProductPackageBean)getItem(position)).getRetailPrice() + "");
+            holder.produte_price.setText("￥" + ((Json2ProductPackageBean)getItem(position)).getRetailPrice() + "");
+            holder.count_tx.setText("x" + ((Json2ProductPackageBean)getItem(position)).getProductAmount() + "");
             //以上是设置分类的显示 每个item的显示
 
             //这里是显示增加和删除
@@ -1119,8 +1119,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     int num1 = Integer.parseInt(num);
                     num1++;
                     mJson2ProductPackageBeanList.get(position).setProductAmount(num1);
-                    holder.produte_count.setText("" + num1);
-                    holder.count_tx.setText("" + num1);
+                    holder.produte_count.setText("x" + num1);
+                    holder.count_tx.setText("x" + num1);
 
                     countTotalPrice(mJson2ProductPackageBeanList);
                 }
@@ -1155,8 +1155,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                     }
                     num2--;
                     mJson2ProductPackageBeanList.get(position).setProductAmount(num2);
-                    holder.produte_count.setText("" + num2);
-                    holder.count_tx.setText("" + num2);
+                    holder.produte_count.setText("x" + num2);
+                    holder.count_tx.setText("x" + num2);
 
                     countTotalPrice(mJson2ProductPackageBeanList);
 

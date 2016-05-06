@@ -39,7 +39,8 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GET_INSTALL_SHOP = "/client/shop/getServiceShop";
     public static String IP_ADDRESS_ACTION_GET_SERVICE_SHOP = "/client/shop/getServiceShop";//推荐合伙人
     public static String IP_ADDRESS_ACTION_GET_COUPON = "/client/order/getCoupon";
-    public static String IP_ADDRESS_ACTION_GET_ORDER_PRICE = "/client/order/getOrderPrice";
+    public static String IP_ADDRESS_ACTION_GET_ORDER_PRICE = "/client/order/getOrderPrice";//获取订单价格  安装费
+    public static String IP_ADDRESS_ACTION_SUBMIT_ORDER = "/client/order/submitOrder";//提交订单
     public static String IP_ADDRESS_ACTION_GET_RECOMMEDN_SHOP_CLICK = "/client/point/pointRecShop";
     public static String IP_ADDRESS_ACTION_GET_RECOMMEDN_SHOP_PUT_DETAIL_INFO = "/client/shop/recommendShop";
     public static String IP_ADDRESS_ACTION_GET_RECOMMEDN_SHOP_UPLOAD_SHOP_PHOTO = "/client/shop/uploadShopPhoto";

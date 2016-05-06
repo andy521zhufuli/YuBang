@@ -22,10 +22,17 @@ import okhttp3.Call;
 
 /**
  * Created by andy on 16/4/22.
+ *
+ * 获取订单价格   跟提交订单
+ *
  */
 public class HttpReqSubmitOrder
 {
+
+
     HttpReqCallback mCallback;
+
+    boolean mIsSubmitOrder = false;
 
     public HttpReqSubmitOrder()
     {
@@ -38,14 +45,36 @@ public class HttpReqSubmitOrder
     }
 
 
-    public void getOrderPrice(String userid, String carType, List<Json2ProductPackageBean> productDetail, Json2InstallShopModelsBean mInstallShopBean, CouponsBean couponsBean, Json2DefaultAddressBean addressBean, String installtime)
+    /**
+     *
+     * @param userid
+     * @param carType
+     * @param productDetail
+     * @param mInstallShopBean
+     * @param couponsBean
+     * @param addressBean  isSubmitOrder=true的时候时候才要传
+     * @param installtime  isSubmitOrder=ture的时候才要穿
+     * @param isSubmitOrder true 代表提交订单, false 代表获取订单价格
+     */
+    public void getOrderPrice(String userid, String carType, List<Json2ProductPackageBean> productDetail, Json2InstallShopModelsBean mInstallShopBean,
+                              CouponsBean couponsBean, Json2DefaultAddressBean addressBean, String installtime, boolean isSubmitOrder)
     {
         String shopid = mInstallShopBean.getShopId();
 
-        PostFormBuilder builder = OkHttpUtils.post().url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_ORDER_PRICE)
-                .addParams("orderReq.userid", userid)
-                .addParams("orderReq.shopId", shopid)
-                .addParams("orderReq.carType", carType);
+        PostFormBuilder builder;
+        if (isSubmitOrder == true)
+        {
+            builder = OkHttpUtils.post().url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_SUBMIT_ORDER);
+        }
+        else
+        {
+            builder = OkHttpUtils.post().url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_ORDER_PRICE);
+        }
+
+
+        builder = builder.addParams("orderReq.userid", userid);
+        builder = builder.addParams("orderReq.shopId", shopid);
+        builder = builder.addParams("orderReq.carType", carType);
 
         String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_ORDER_PRICE + "?orderReq.userid=" + userid;
         url += "&orderReq.shopId=" + shopid;
@@ -120,13 +149,26 @@ public class HttpReqSubmitOrder
         }
 
 
-        builder = builder.addParams("orderReq.addressId", addressBean.getId());
-        url += "&orderReq.addressId=" + addressBean.getId();
-        builder = builder.addParams("orderReq.installTime", installtime);
-        url += "&orderReq.addressId=" + installtime;
+        if (isSubmitOrder== false)
+        {
+            //获取订单价格, 这两个参数就不需要传递
+        }
+        else
+        {
+            //提交订单
+            builder = builder.addParams("orderReq.addressId", addressBean.getId());
+            url += "&orderReq.addressId=" + addressBean.getId();
+            builder = builder.addParams("orderReq.installTime", installtime);
+            url += "&orderReq.installTime=" + installtime;
+        }
+
+
         builder.build().execute(new GetOrderPrice());
         L.i(HttpReqConformOrderCoupon.class.getName(), "获取提交订单url = " + url);
     }
+
+
+
 
 
     class GetOrderPrice extends StringCallback
@@ -139,8 +181,15 @@ public class HttpReqSubmitOrder
 
         @Override
         public void onResponse(String response) {
-
             L.i("提交订单, json = ", response);
+            if (mIsSubmitOrder == false)
+            {
+                //获取订单价格
+            }
+            else
+            {
+                //提交订单
+            }
             Json2OrderPrice json2OrderPrice = new Json2OrderPrice(response);
             Json2OrderPriceBean orderPrice = json2OrderPrice.getOrderPrice();
             if (orderPrice == null)

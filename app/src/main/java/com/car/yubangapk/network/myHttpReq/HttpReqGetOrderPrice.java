@@ -102,15 +102,33 @@ public class HttpReqGetOrderPrice
             }
             keysize++;
         }
-        String name = couponsBean.getCouponName();
-        if (name.equals("不使用"))
+
+        /**
+         * 优惠券可能为空, 因为可能是选择了安装门店之后, 就立即获取订单价格
+         *
+         * 因为获取订单价格有两个入口
+         * 1.选择安装门店之后, 立即获取订单价格
+         * 2.点击使用优惠券之后, 再一次去拿订单价格
+         *
+         */
+        if (couponsBean == null)
         {
             builder = builder.addParams("orderReq.couponId", "");
         }
         else
         {
-            builder = builder.addParams("orderReq.couponId", couponsBean.getCouponId());
+            String name = couponsBean.getCouponName();
+            if (name.equals("不使用"))
+            {
+                builder = builder.addParams("orderReq.couponId", "");
+            }
+            else
+            {
+                builder = builder.addParams("orderReq.couponId", couponsBean.getCouponId());
+            }
         }
+
+
 
         builder.build().execute(new GetOrderPrice());
         L.i(HttpReqConformOrderCoupon.class.getName(), "获取订单价格url = " + url);

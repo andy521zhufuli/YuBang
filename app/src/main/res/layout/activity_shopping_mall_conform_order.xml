@@ -80,19 +80,20 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            >
             <!-- 顶部一条横线-->
             <ImageView
                 android:id="@+id/imageview1"
                 android:layout_width="fill_parent" android:layout_height="wrap_content"
                 android:src="@mipmap/fill_order_receiver_divider"
                 android:scaleType="fitXY" />
-            <RelativeLayout android:id="@+id/layout_receiver_info"
+            <RelativeLayout
+                android:id="@+id/layout_receiver_info"
                 android:layout_below="@+id/imageview1"
                 android:background="@drawable/fill_order_list_item_bg"
-                android:visibility="visible" android:layout_width="fill_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-
                 >
                 <RelativeLayout android:background="#fffffaf3"
                     android:id="@+id/name_phone"
@@ -523,11 +524,10 @@
                         <TextView android:textSize="12.0sp"
                             android:textColor="@color/head_colors"
                             android:layout_gravity="center"
-
                             android:id="@+id/product_total_price" android:paddingTop="4.0dip"
                             android:paddingRight="5.0dip" android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="商品总额"
+                            android:text="￥:"
                             />
                     </LinearLayout>
                     <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/anzhuanfei_wrap"
@@ -545,7 +545,7 @@
                                 android:textColor="#fff57c33"
                                 android:id="@+id/product_install_price" android:visibility="visible"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:layout_marginLeft="10.0dip" android:text="还差11元包邮哦" />
+                                android:layout_marginLeft="10.0dip" android:text="选择安装门店后计算" />
                         </LinearLayout>
                         <TextView android:textSize="12.0sp" android:textColor="@color/head_colors"
                             android:layout_gravity="center" android:id="@+id/tv_azf" android:paddingTop="5.0dip"
@@ -567,7 +567,7 @@
                             android:layout_gravity="center"
                             android:id="@+id/product_dilivery_price" android:paddingTop="4.0dip"
                             android:paddingRight="5.0dip" android:layout_width="wrap_content"
-                            android:text="123"
+                            android:text="+ 0.0"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                     <LinearLayout android:gravity="center" android:orientation="horizontal"
@@ -582,7 +582,7 @@
                             android:paddingRight="5.0dip"
                             android:visibility="visible"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="-0.0" />
+                            android:text="- 0.0" />
                     </LinearLayout>
                     <LinearLayout android:orientation="horizontal" android:visibility="gone"
                         android:layout_width="fill_parent" android:layout_height="wrap_content"

@@ -111,7 +111,8 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
         //实现点击种类scroll自动滚动
         pointYs = new int[8];
-        getScrollPoints();
+        getScrollPoints();        getScrollPoints();
+
 
         //去拿轮播图片
         httpGetBannerPics();

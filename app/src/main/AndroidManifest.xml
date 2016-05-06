@@ -104,7 +104,25 @@
         <activity
             android:name="com.car.yubangapk.ui.RegisterDetailChooseCarInfoActivity"
             android:label="@string/title_activity_register_detail_choose_car_info"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseBrandActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:name="com.car.yubangapk.ui.RegisterDetailChooseCarChildBrandActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.car.yubangapk.ui.RegisterDetailChooseCarYearActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.car.yubangapk.ui.RegisterDetailChooseCarCapacityActivity" />
+
 
         <!-- 注册车辆详情 上传身份证 -->
         <activity
@@ -392,10 +410,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 以上为ShareSDK -->
 
-        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseBrandActivity" />
-        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarChildBrandActivity" />
-        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarYearActivity" />
-        <activity android:name="com.car.yubangapk.ui.RegisterDetailChooseCarCapacityActivity" />
+
         <activity android:name="com.car.yubangapk.ui.UploadedInfosCheckActivity" />
         <activity android:name="com.car.yubangapk.ui.AdWebViewActivity" />
         <activity android:name="com.car.yubangapk.ui.ShoppingmallProductChangeActivity" />
