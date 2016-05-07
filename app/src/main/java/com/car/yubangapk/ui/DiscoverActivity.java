@@ -10,6 +10,8 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetMyOrderDetailInfo;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
@@ -108,12 +110,32 @@ public class DiscoverActivity extends BaseActivity implements View.OnClickListen
             case R.id.iwant_get_cash_account_alipay_account_layout1:
 
                 //这里测试分享
-
-                shareQQ();
+                testGetOrderInfo();
+                //shareQQ();
                 //wxMoment();
 
                 break;
         }
+    }
+
+    private void testGetOrderInfo() {
+
+        HttpReqGetMyOrderDetailInfo orderDetailInfo = new HttpReqGetMyOrderDetailInfo();
+        orderDetailInfo.setCallback(new HttpReqCallback() {
+            @Override
+            public void onFail(int errorCode, String message)
+            {
+
+            }
+
+            @Override
+            public void onSuccess(Object object)
+            {
+
+            }
+        });
+        orderDetailInfo.getMyOrderDetailInfo(null, null);
+
     }
 
     private void qqZone()

@@ -13,7 +13,7 @@
 
     <TextView android:textSize="12.0dip"
         android:textColor="#ff000000"
-        android:id="@+id/order_item_Text"
+        android:id="@+id/order_info_order_num"
         android:text="11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,14 +38,14 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content" 
         android:layout_marginLeft="10.0dip"
         android:text="订单金额: "
-        android:layout_below="@+id/order_item_Text" />
+        android:layout_below="@+id/order_info_order_num" />
 
     <TextView android:textSize="12.0dip"
         android:textColor="#ffff0000"
         android:id="@+id/order_item_totalPrice" android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:text="11"
-        android:layout_toRightOf="@+id/order_item_price_hint" android:layout_below="@+id/order_item_Text" />
+        android:layout_toRightOf="@+id/order_item_price_hint" android:layout_below="@+id/order_info_order_num" />
 
     <TextView android:textSize="12.0dip" android:id="@+id/order_item_subtime_hint"
         android:layout_width="wrap_content" android:layout_height="wrap_content" 

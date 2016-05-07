@@ -99,10 +99,10 @@ public class MyOrdersActivity extends FragmentActivity{
 
         MyOrdersFragment2 f6 = new MyOrdersFragment2(WAIT_EVALUATE);
         pagerAdapter.addFragment(f6);
-        MyOrdersFragment2 f7 = new MyOrdersFragment2(DEAL_SUCCESS);
+        MyOrdersFragment2 f7 = new MyOrdersFragment2(DEAL_FAIL);
         pagerAdapter.addFragment(f7);
 
-        MyOrdersFragment2 f8 = new MyOrdersFragment2(DEAL_FAIL);
+        MyOrdersFragment2 f8 = new MyOrdersFragment2(DEAL_SUCCESS);
         pagerAdapter.addFragment(f8);
 
         my_orders_viewpager.setAdapter(pagerAdapter);

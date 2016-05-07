@@ -178,6 +178,10 @@
     <color name="brown">#f2af19</color>
     <color name="green">#9cbe08</color>
     <color name="light_gold">#ccca6e</color>
+    <color name="first_page_nav_tab_bar">#9cbe08</color>
+    009140
+
+
 
     <!-- sticky Listview 头部的颜色-->
     <color name="header_normal">#ffe74c3c</color>

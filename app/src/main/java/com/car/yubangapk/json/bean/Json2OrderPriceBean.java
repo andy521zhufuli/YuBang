@@ -23,6 +23,24 @@ public class Json2OrderPriceBean extends Base
 
     private double payPrice=0;//需要支付价格
 
+    String orderId;
+
+    public void setIsReturnStr(boolean isReturnStr) {
+        this.isReturnStr = isReturnStr;
+    }
+
+    public void setIsJson(boolean isJson) {
+        this.isJson = isJson;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
     public String getMessage() {
         return message;
     }

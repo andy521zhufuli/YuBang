@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/android_layout_bg"
+    android:orientation="vertical"
+    tools:context="com.car.yubangapk.ui.MyOrderDetailInfoActivity">
+    <!-- 顶部标题 -->
+    <RelativeLayout
+        android:id="@+id/layout_topbar"
+        style="@style/TopbarStyle" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/common_title_back_selector" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="待签收"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/medium_text_size" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+                <!-- 订单价格信息-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="@color/white"
+                    >
+                    <TextView android:textSize="12.0dip"
+                        android:id="@+id/order_item_Text_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_marginTop="10.0dip"
+                        android:text="订单号: "
+                        android:layout_alignParentTop="true" />
+                    <TextView android:textSize="12.0dip"
+                        android:textColor="#ff000000"
+                        android:id="@+id/order_info_order_num"
+                        android:text="11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10.0dip"
+                        android:layout_marginRight="5.0dip"
+                        android:layout_toRightOf="@+id/order_item_Text_hint"
+                        android:layout_alignParentTop="true" />
+
+                    <LinearLayout
+                        android:layout_below="@+id/order_item_Text_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            >
+                            <TextView android:textSize="@dimen/text_20"
+                                android:textColor="@color/black"
+                                android:id="@+id/order_total_price_desc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10.0dip"
+                                android:layout_marginTop="10.0dip"
+
+                                android:text="总额: "
+                                android:layout_alignParentTop="true" />
+                            <TextView android:textSize="@dimen/text_25"
+                                android:textColor="@color/pd_red"
+                                android:id="@+id/order_total_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:text="￥1999"
+                                android:layout_alignParentTop="true" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            >
+                            <TextView android:textSize="@dimen/text_20"
+                                android:textColor="@color/black"
+                                android:id="@+id/order_word_time_cost_desc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:text="工时费: "
+                                android:layout_alignParentTop="true" />
+                            <TextView android:textSize="@dimen/text_25"
+                                android:textColor="@color/pd_red"
+                                android:id="@+id/order_word_time_cost"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:text="￥1999"
+                                android:layout_alignParentTop="true" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+                <!-- 分割线-->
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1.0dip"
+                    android:background="@color/liuliu_border" />
+
+                <!-- 订单安装信息-->
+                <include layout="@layout/my_order_detail_top_info"/>
+
+                <ListView
+                    android:id="@+id/order_detail_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+                </ListView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

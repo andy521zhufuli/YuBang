@@ -449,14 +449,15 @@ public class MyOrdersFragment2 extends Fragment {
         {
             mRequestStatus = "5";
         }
-        else if (mType.equals(MyOrdersActivity.DEAL_SUCCESS))
+        else if (mType.equals(MyOrdersActivity.DEAL_FAIL))
         {
             mRequestStatus = "6";
         }
-        else if (mType.equals(MyOrdersActivity.DEAL_FAIL))
+        else if (mType.equals(MyOrdersActivity.DEAL_SUCCESS))
         {
             mRequestStatus = "7";
         }
         return mRequestStatus;
+
     }
 }

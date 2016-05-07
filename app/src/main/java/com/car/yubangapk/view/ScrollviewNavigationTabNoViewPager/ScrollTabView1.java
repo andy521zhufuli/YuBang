@@ -95,7 +95,8 @@ public class ScrollTabView1 extends HorizontalScrollView {
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
                     selectedTab(position);
-                    if (mOnClickListener != null) {
+                    if (mOnClickListener != null)
+                    {
                         mOnClickListener.onTabItemClick(tabAdapter, position);
                     }
                 }
@@ -109,7 +110,8 @@ public class ScrollTabView1 extends HorizontalScrollView {
 
 
         //默认是第一个  也就是第0个按钮是选中的
-        if (mOnClickListener != null  ){
+        if (mOnClickListener != null  )
+        {
             mOnClickListener.onTabItemClick(tabAdapter, 0);
         }
 
@@ -123,7 +125,7 @@ public class ScrollTabView1 extends HorizontalScrollView {
             TextView tabname = (TextView) view.findViewById(R.id.tab_name);
             View ind = view.findViewById(R.id.indicator1);
             if (position == i) {
-                tabname.setTextColor(Color.parseColor("#ff0000"));
+                tabname.setTextColor(Color.parseColor("#009140"));
                 ind.setVisibility(View.VISIBLE);
             } else {
                 tabname.setTextColor(Color.parseColor("#4f4f4f"));

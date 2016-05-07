@@ -92,7 +92,6 @@
                             android:background="@drawable/bg_item_bottom"
                             >
 
-
                             <!-- 中间产品名字  半合成-->
                             <LinearLayout
                                 android:gravity="center_vertical"
@@ -102,13 +101,14 @@
                                 android:layout_height="fill_parent"
                                 android:layout_marginRight="2.0dip"
                                 android:layout_weight="7.0">
-                                <TextView android:textSize="@dimen/text_12"
+                                <TextView
+                                    android:textSize="@dimen/text_12"
                                     android:textColor="#ffbbbbbb"
                                     android:id="@+id/maintenance_produte_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5.0dip"
-                                    android:text="\ 1111111111" />
+                                    android:text="\1111111111" />
                                 <LinearLayout android:gravity="center_vertical"
                                     android:orientation="horizontal"
                                     android:id="@+id/linearLayout1"
@@ -123,7 +123,8 @@
                                         android:text="半合成"
                                         android:textSize="@dimen/text_12"
                                         />
-                                    <ImageView android:id="@+id/maintenance_img_2"
+                                    <ImageView
+                                        android:id="@+id/maintenance_img_2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5.0dip" />

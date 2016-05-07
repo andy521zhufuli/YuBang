@@ -21,6 +21,7 @@ public class Json2OrderPrice {
     private double payPrice = 0;//需要支付价格
 
     private String mJson;
+    String orderId;
 
     public Json2OrderPrice(String json) {
         this.mJson = json;
@@ -55,7 +56,7 @@ public class Json2OrderPrice {
             returneMsg = total.getString("returneMsg");
             message = total.getString("message");
 
-
+            orderId = total.getString("orderId");
 
             orderPriceBean.setJson(isJson);
             orderPriceBean.setReturnStr(isReturnStr);
@@ -66,6 +67,8 @@ public class Json2OrderPrice {
             orderPriceBean.setCouponPrice(couponPrice);
             orderPriceBean.setInstallationCoast(installationCoast);
             orderPriceBean.setPayPrice(payPrice);
+
+            orderPriceBean.setOrderId(orderId);
             orderPriceBean.setHasData(true);
 
 

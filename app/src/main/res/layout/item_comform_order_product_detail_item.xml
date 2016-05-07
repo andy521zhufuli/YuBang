@@ -5,13 +5,45 @@
         android:layout_width="fill_parent"
         android:layout_height="1.0px" />
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/product_service_title_layout"
+            style="@style/MineItemStyle"
+            android:background="@drawable/bg_item_bottom" >
+
+            <ImageView
+                android:id="@+id/product_service_left_image"
+                android:layout_width="2.0dip"
+                android:layout_height="26.0dip"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:scaleType="fitXY"
+                android:visibility="invisible"
+                android:src="@mipmap/my_dingdan"
+                />
+
+            <TextView
+                android:id="@+id/product_service_name"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="保养服务"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_medium_text_size" />
+        </LinearLayout>
+
         <!-- 左边图片显示-->
         <LinearLayout android:orientation="horizontal"
             android:id="@+id/maintenance_produte_layouts" android:layout_width="fill_parent"
             android:layout_height="wrap_content" android:layout_weight="1.0">
+
+
+
 
             <!-- 左边图片-->
             <FrameLayout

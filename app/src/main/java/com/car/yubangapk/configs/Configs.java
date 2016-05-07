@@ -18,7 +18,7 @@ public class Configs {
     public static String SMS_APPSECRET = "7f3dedcb36d92deebcb373af921d635a";
 
     //网络请求地址
-    public static String IP_ADDRESS = "http://203.195.206.146/carService";
+    public static String IP_ADDRESS = "http://119.29.36.65//carService";
     //public static String IP_ADDRESS = "http://192.168.1.7:8080/carService";
 
     //--------------------------网络请求action-------------------------------------
@@ -38,9 +38,14 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GET_ADDRESS = "/client/address/address";
     public static String IP_ADDRESS_ACTION_GET_INSTALL_SHOP = "/client/shop/getServiceShop";
     public static String IP_ADDRESS_ACTION_GET_SERVICE_SHOP = "/client/shop/getServiceShop";//推荐合伙人
+
     public static String IP_ADDRESS_ACTION_GET_COUPON = "/client/order/getCoupon";
     public static String IP_ADDRESS_ACTION_GET_ORDER_PRICE = "/client/order/getOrderPrice";//获取订单价格  安装费
     public static String IP_ADDRESS_ACTION_SUBMIT_ORDER = "/client/order/submitOrder";//提交订单
+    public static String IP_ADDRESS_ACTION_GET_ORDER_DETAIL = "/client/order/getOrderInfo";//获取订单详情
+
+
+
     public static String IP_ADDRESS_ACTION_GET_RECOMMEDN_SHOP_CLICK = "/client/point/pointRecShop";
     public static String IP_ADDRESS_ACTION_GET_RECOMMEDN_SHOP_PUT_DETAIL_INFO = "/client/shop/recommendShop";
     public static String IP_ADDRESS_ACTION_GET_RECOMMEDN_SHOP_UPLOAD_SHOP_PHOTO = "/client/shop/uploadShopPhoto";
@@ -48,6 +53,8 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GET_USER_INFO = "/client/user/getUserInfo";
     public static String IP_ADDRESS_ACTION_ALTER_USER_INFO = "/client/user/alterUserInfo";
     public static String IP_ADDRESS_ACTION_FORGET_PWD = "/client/user/forgetPassWorld";
+
+
 
 
 

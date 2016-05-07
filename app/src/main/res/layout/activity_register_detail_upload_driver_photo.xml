@@ -39,7 +39,7 @@
             android:id="@+id/image_show1"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:src="@mipmap/upload_id_card"
+            android:src="@mipmap/register_upload_driver_photo"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             />

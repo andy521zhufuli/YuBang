@@ -433,16 +433,11 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
             @Override
             public void onFail(int errorCode, String message) {
                 mProgress.dismiss();
-                if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION)
-                {
+                if (errorCode == ErrorCodes.ERROR_CODE_LOW_VERSION) {
                     UpdateApp.gotoUpdateApp(mContext);
-                }
-                else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
-                {
+                } else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR) {
                     toastMgr.builder.display(message, 1);
-                }
-                else
-                {
+                } else {
                     toastMgr.builder.display(message, 1);
                 }
             }
@@ -506,10 +501,12 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
                     @Override
                     public void onClick(View view) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("otherActivity", "orderToMy");
-                        intent.setClass(mContext, MainActivity.class);
+                        bundle.putInt(MyOrderDetailInfoActivity.TITLE_TYPE, MyOrderDetailInfoActivity.WAIT_SIGN_TYPE);
+                        bundle.putString(MyOrderDetailInfoActivity.ORDER_ID, submitOrder.getOrderId());
+                        intent.setClass(mContext, MyOrderDetailInfoActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
+                        finish();
                     }
                 })
                 .show();
