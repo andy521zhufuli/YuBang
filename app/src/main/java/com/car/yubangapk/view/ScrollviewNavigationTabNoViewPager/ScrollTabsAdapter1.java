@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import com.andy.android.yubang.R;
 
-
-
 public class ScrollTabsAdapter1 extends TabAdapter1
 {
 	private Activity activity;
