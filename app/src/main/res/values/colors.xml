@@ -168,6 +168,8 @@
     <color name="dark">#4f4f4f</color>
     <color name="gold">#d78f2f</color>
     <color name="gray">#9c9c9c</color>
+    <color name="gray_order">#6D6B6A</color>
+    <color name="gray_order_desc">#8E8E8A</color>
     <color name="lightgray">#a0a0a0</color>
     <color name="darkgray">#7b7b7b</color>
     <color name="aaa">#cc000000</color>

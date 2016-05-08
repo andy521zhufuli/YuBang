@@ -73,8 +73,8 @@ public class MyOrdersActivity extends FragmentActivity{
         tabsAdapter.add(WAIT_SHOP_INSTALL);
         tabsAdapter.add(INSTALLED);
         tabsAdapter.add(WAIT_EVALUATE);
-        tabsAdapter.add(DEAL_SUCCESS);
         tabsAdapter.add(DEAL_FAIL);
+        tabsAdapter.add(DEAL_SUCCESS);
         my_order_tab.setAdapter(tabsAdapter);
     }
 

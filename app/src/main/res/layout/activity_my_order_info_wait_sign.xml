@@ -1,47 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/android_layout_bg"
-    android:orientation="vertical"
-    tools:context="com.car.yubangapk.ui.MyOrderDetailInfoActivity">
-    <!-- 顶部标题 -->
-    <RelativeLayout
-        android:id="@+id/layout_topbar"
-        style="@style/TopbarStyle" >
-
-        <ImageView
-            android:id="@+id/img_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="6dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:src="@drawable/common_title_back_selector" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="待签收"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="@dimen/medium_text_size" />
-    </RelativeLayout>
-
-    <ScrollView
+    tools:context="com.car.yubangapk.ui.MyOrderDetailInfoActivity"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/android_layout_bg"
+        android:orientation="vertical"
+        android:layout_above="@+id/order_detail_bottom"
+        >
+        <!-- 顶部标题 -->
+        <RelativeLayout
+            android:id="@+id/layout_topbar"
+            style="@style/TopbarStyle" >
 
-        <LinearLayout
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="6dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/common_title_back_selector" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="待签收"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/medium_text_size" />
+
+            <Button
+                android:id="@+id/order_detail_btn_top"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_centerVertical="true"
+                android:text="取消订单"
+                android:background="@drawable/bg_item_top"
+                />
+        </RelativeLayout>
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
                 <!-- 订单价格信息-->
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -134,15 +152,31 @@
                 <!-- 订单安装信息-->
                 <include layout="@layout/my_order_detail_top_info"/>
 
-                <ListView
+                <include layout="@layout/my_order_detail_maintaince_desc"/>
+
+
+
+                <com.car.yubangapk.view.ListViewInScrollView
                     android:id="@+id/order_detail_listview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     >
-                </ListView>
+                </com.car.yubangapk.view.ListViewInScrollView>
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </ScrollView>
+        </ScrollView>
+    </LinearLayout>
 
-</LinearLayout>
+
+    <include
+        android:id="@+id/order_detail_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/order_detail_bottom_price_button_display"/>
+
+</RelativeLayout>
+
+
+

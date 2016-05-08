@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+
+    <RelativeLayout
+        android:id="@+id/order_detail_bottom_layout_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottombar_height"
+        android:layout_alignParentBottom="true"
+        android:background="#cc000000"
+        >
+
+
+        <TextView
+            android:id="@+id/tv_add_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="6dp"
+            android:text="合计："
+            android:textSize="@dimen/large_middle_text_size"
+            android:textColor="@color/white"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tv_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_add_all"
+            android:layout_below="@+id/tv_add_all"
+            android:textColor="@color/white"
+            android:paddingLeft="20dp"
+            android:text="(含安装费)"
+            />
+
+
+        <RelativeLayout
+            android:id="@+id/btn_service"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/btn_pay"
+            android:gravity="center"
+            android:background="@drawable/btn_kefu" >
+
+            <TextView
+                android:id="@+id/tv_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:textSize="@dimen/large_text_size"
+                android:textColor="@color/white"
+                android:text="客服" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_pay"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:clickable="true"
+            android:background="@drawable/btn_add_to_cart" >
+
+            <TextView
+                android:id="@+id/tv_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:textSize="@dimen/large_text_size"
+                android:textColor="@color/white"
+                android:text="去结算" />
+
+            <TextView
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_pay"
+                android:layout_toRightOf="@+id/tv_pay"
+                android:includeFontPadding="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_medium_text_size"
+                android:text="" />
+
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tv_add_all"
+            android:layout_toRightOf="@+id/tv_add_all"
+            android:text="￥0.00"
+            android:textSize="@dimen/large_middle_text_size"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </RelativeLayout>
+
+</LinearLayout>

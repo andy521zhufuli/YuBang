@@ -2,6 +2,7 @@ package com.car.yubangapk.ui.myordersfragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,9 +23,12 @@ import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2MyOrderBean;
 import com.car.yubangapk.json.bean.MyOrderBean;
+import com.car.yubangapk.json.bean.OrderDetail.OrderDetailInfo;
 import com.car.yubangapk.network.myHttpReq.HttpGetMyOrders;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetMyOrderDetailInfo;
 import com.car.yubangapk.swipetoloadlayout.SwipeToLoadLayout;
+import com.car.yubangapk.ui.MyOrderDetailInfoActivity;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
@@ -35,7 +40,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyOrdersFragment2 extends Fragment {
+public class MyOrdersFragment2 extends Fragment implements AdapterView.OnItemClickListener{
 	TextView tv;
 	String text;
 
@@ -58,6 +63,8 @@ public class MyOrdersFragment2 extends Fragment {
     String mUserId ;
 
     Context mContext;
+
+
     public MyOrdersFragment2()
     {
 
@@ -118,6 +125,8 @@ public class MyOrdersFragment2 extends Fragment {
                         mIsPullUp = true;
                     }
                 });
+
+        my_order_listview.setOnItemClickListener(this);
 
         if (isFirstVisibleToUser == false)
         {
@@ -204,7 +213,6 @@ public class MyOrdersFragment2 extends Fragment {
                 //不是第一次可见  已经过时返回来之后
                 L.e("TAG " + mType, "不是第一次可见  已经过时返回来之后 ");
             }
-
         }
         else
         {
@@ -225,7 +233,7 @@ public class MyOrdersFragment2 extends Fragment {
 
     private void pullUpToLoad()
     {
-        mGetOrders.getOrders(mUserId, mCurrentPage+1 + "", "1", getRequestType());
+        mGetOrders.getOrders(mUserId, mCurrentPage + 1 + "", "1", getRequestType());
     }
 
 
@@ -235,6 +243,27 @@ public class MyOrdersFragment2 extends Fragment {
             NotLogin.gotoLogin(getActivity());
         }
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+    {
+        MyOrderBean orderBean = mMyOrderList.get(position-1);
+        toastMgr.builder.display("position = " + position  + "orderSize = " + mMyOrderList.size(), 1);
+        String orderId = orderBean.getId();
+        int orderstatus = getOrderStatus(orderBean.getOrderStatusName());
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putInt(MyOrderDetailInfoActivity.TITLE_TYPE, orderstatus);
+        bundle.putString(MyOrderDetailInfoActivity.ORDER_ID, orderId);
+        intent.setClass(mContext, MyOrderDetailInfoActivity.class);
+        intent.putExtras(bundle);
+
+        intent.setClass(mContext, MyOrderDetailInfoActivity.class);
+
+        startActivity(intent);
+    }
+
+
 
     class GetOrders implements HttpReqCallback
     {
@@ -379,6 +408,10 @@ public class MyOrdersFragment2 extends Fragment {
             holder.order_item_amount.setText("x" + myOrderBeans.get(position).getProductNum());
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + myOrderBeans.get(position).getPathCode() + "&fileReq.fileName=" + myOrderBeans.get(position).getPhoto();
             ImageLoaderTools.getInstance(mContext).displayImage(url, holder.order_item_image);
+
+
+
+
             return view;
         }
 
@@ -460,4 +493,44 @@ public class MyOrdersFragment2 extends Fragment {
         return mRequestStatus;
 
     }
+
+
+    private int getOrderStatus(String status)
+    {
+        int requestStatus = 0;
+        if(status.equals(MyOrdersActivity.ALL_ORDER))
+        {
+            requestStatus = 0;
+        }
+        else if (status.equals(MyOrdersActivity.WAIT_SIGN))
+        {
+            requestStatus = 1;
+        }
+        else if (status.equals(MyOrdersActivity.WAIT_BUYER))
+        {
+            requestStatus = 2;
+        }
+        else if (status.equals(MyOrdersActivity.WAIT_SHOP_INSTALL))
+        {
+            requestStatus = 3;
+        }
+        else if (status.equals(MyOrdersActivity.INSTALLED))
+        {
+            requestStatus = 4;
+        }
+        else if (status.equals(MyOrdersActivity.WAIT_EVALUATE))
+        {
+            requestStatus = 5;
+        }
+        else if (status.equals(MyOrdersActivity.DEAL_FAIL))
+        {
+            requestStatus = 6;
+        }
+        else if (status.equals(MyOrdersActivity.DEAL_SUCCESS))
+        {
+            requestStatus = 7;
+        }
+        return requestStatus;
+    }
+
 }

@@ -9,6 +9,7 @@ import com.car.yubangapk.json.formatJson.Json2MyRecommendPartners;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
+import com.car.yubangapk.utils.toastMgr;
 
 import okhttp3.Call;
 
@@ -49,7 +50,7 @@ public class HttpReqGetMyOrderDetailInfo
 
 
         mUserId  = "66a64d1d-a51d-4b2f-a5ee-cff9900f3a52";
-        orderId = "fc9b2282-47b6-4e1d-9812-eb1c8f331be7";
+        orderId = "8152d8de-067a-4863-b659-716e1bd03644";
 
         OkHttpUtils.post()
                 .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_ORDER_DETAIL)
@@ -79,11 +80,10 @@ public class HttpReqGetMyOrderDetailInfo
         @Override
         public void onResponse(String response) {
 
+            L.d(TAG, "获取订单详情 json = " + response);
+
             Json2OrderDetail json2OrderDetail = new Json2OrderDetail(response);
             OrderDetailInfo orderDetailInfo = json2OrderDetail.getMyOrderDetailInfo();
-
-
-            L.d(TAG, "获取订单详情 json = " + response);
 
 
             if (orderDetailInfo == null)
@@ -101,9 +101,14 @@ public class HttpReqGetMyOrderDetailInfo
                 {
                     mCallback.onFail(ErrorCodes.ERROR_CODE_SERVER_ERROR, ErrorCodes.SERVER_ERROR);
                 }
-                else
+                else if (orderDetailInfo.getReturnCode() == 0)
                 {
                     mCallback.onSuccess(orderDetailInfo);
+                }
+                else
+                {
+                    mCallback.onFail(orderDetailInfo.getReturnCode(),orderDetailInfo.getMessage());
+                    toastMgr.builder.display(orderDetailInfo.getMessage(), 1);
                 }
             }
         }

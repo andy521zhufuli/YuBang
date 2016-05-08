@@ -28,7 +28,7 @@ public class Json2OrderDetail
         this.json = json;
     }
 
-    String UNDEFINED = "未定义";
+    public static String UNDEFINED = "未定义";
     public OrderDetailInfo getMyOrderDetailInfo() {
 
         OrderDetailInfo orderDetailInfo = new OrderDetailInfo();
@@ -63,6 +63,14 @@ public class Json2OrderDetail
             returneMsg = JSONUtils.getString(jsonObject, "returneMsg", UNDEFINED);
             message = JSONUtils.getString(jsonObject, "message", UNDEFINED);
 
+            if (returnCode != 0)
+            {
+                orderDetailInfo.setReturnCode(returnCode);
+                orderDetailInfo.setHasData(false);
+                orderDetailInfo.setMessage(message);
+                return orderDetailInfo;
+            }
+
             carName = JSONUtils.getString(jsonObject, "carName", UNDEFINED);
             shopName = JSONUtils.getString(jsonObject, "shopName", UNDEFINED);
             installTime = JSONUtils.getString(jsonObject, "installTime", UNDEFINED);
@@ -94,6 +102,8 @@ public class Json2OrderDetail
 
 
             JSONObject addressObjuect = JSONUtils.getJSONObject(jsonObject, "orderAddress", null);
+
+
             name = JSONUtils.getString(addressObjuect, "name", UNDEFINED);
             phone  = JSONUtils.getString(addressObjuect, "phone", UNDEFINED);
             carNum  = JSONUtils.getString(addressObjuect, "carNum", UNDEFINED);
@@ -101,6 +111,8 @@ public class Json2OrderDetail
             orderAddress.setPhone(phone);
             orderAddress.setCarNum(carNum);
             orderDetailInfo.setOrderAddress(orderAddress);
+
+
 
 
             OrderPrice orderPrice = new OrderPrice();

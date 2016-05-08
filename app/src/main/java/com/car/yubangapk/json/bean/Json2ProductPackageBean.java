@@ -27,7 +27,8 @@ public class Json2ProductPackageBean extends Base
         //        "productShow":"合成",
         //        "productName":"爆发刹车油",
         //        "productAmount":1},
-//        {"categoryName":"油管","retailPrice":1.0,"pathCode":"2","productShow":"合成","productName":"爆炸油管","productAmount":1,"photoName":"827d461c-03d5-4532-9f7d-c00fc4ac6584.png"},{"categoryName":"油管","retailPrice":1.0,"pathCode":"2","productShow":"合成","productName":"爆炸油管","productAmount":1,"photoName":"827d461c-03d5-4532-9f7d-c00fc4ac6584.png"}]}
+//        {"categoryName":"油管","retailPrice":1.0,"pathCode":"2","productShow":"合成",
+// "productName":"爆炸油管","productAmount":1,"photoName":"827d461c-03d5-4532-9f7d-c00fc4ac6584.png"},{"categoryName":"油管","retailPrice":1.0,"pathCode":"2","productShow":"合成","productName":"爆炸油管","productAmount":1,"photoName":"827d461c-03d5-4532-9f7d-c00fc4ac6584.png"}]}
     private String categoryName;
 
     private double retailPrice;
@@ -57,6 +58,25 @@ public class Json2ProductPackageBean extends Base
 
     private String packageName;//为了适应项目 而自己加的字段  后台没有这个字段
     private String repairService;//为了适应项目 而自己加的字段  后台没有这个字段
+    private String packageNamePathCode;//为了适应项目 而自己加的字段  后台没有这个字段
+    private String packageNamePhotoName;//为了适应项目 而自己加的字段  后台没有这个字段
+    private String ProductPackageId;//为了适应项目 而自己加的字段  后台没有这个字段  此商品对应的产品包id
+
+    public String getPackageNamePathCode() {
+        return packageNamePathCode;
+    }
+
+    public void setPackageNamePathCode(String packageNamePathCode) {
+        this.packageNamePathCode = packageNamePathCode;
+    }
+
+    public String getPackageNamePhotoName() {
+        return packageNamePhotoName;
+    }
+
+    public void setPackageNamePhotoName(String packageNamePhotoName) {
+        this.packageNamePhotoName = packageNamePhotoName;
+    }
 
     public String getRepairService() {
         return repairService;
@@ -74,7 +94,7 @@ public class Json2ProductPackageBean extends Base
         ProductPackageId = productPackageId;
     }
 
-    private String ProductPackageId;//为了适应项目 而自己加的字段  后台没有这个字段  此商品对应的产品包id
+
 
     public String getPackageName() {
         return packageName;
