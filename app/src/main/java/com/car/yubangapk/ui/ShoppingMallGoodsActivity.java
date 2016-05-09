@@ -152,8 +152,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         }
     }
 
-
-
     /**
      * 根据上一个界面(商城 banner 门店)的serviceId 去拿对应产品包id 再根据id 去拿产品包内容成功后的回调
      *
@@ -164,10 +162,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onGetPPkgSucces(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
-
-
-
-
         List<Category> data = getListViewData(json2ProductPackageBeanList);
 
         goodsAdapter1 = new ProductPackageAdapter1(data,FROM_SHOPPINGMALL, mContext);
@@ -180,8 +174,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     {
         return GoodsCategoryHelper.productsToCategoryList(json2ProductPackageBeanList);
     }
-
-
 
     /**
      * 根据上一个界面(商城 banner 门店)的serviceId 去拿对应产品包id 再根据id 去拿产品包内容失败后的回调
@@ -218,7 +210,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             toastMgr.builder.display("errorcode = " + errorCode, 1);
         }
     }
-
 
     /**
      * 从商城或者门店进来, 去判断有多少个项目 可以修改,  最顶部显示个数
@@ -314,8 +305,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             modifyable_product_count.setText("1个项目需要保养(共" + mModifyableSHopItemList.size() + "个项目)");
         }
     }
-
-
 
     private List<Json2ProductPackageIdBean> mModifyableItemList = new ArrayList<>();
     private List<Json2ShopServiceBean> mModifyableSHopItemList = new ArrayList<>();
@@ -667,8 +656,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     }
 
 
-
-
     /**
      * 列表暂时适配器
      *
@@ -924,8 +911,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         }
     }
 
-
-
     public class ProductPackageAdapter1 extends BaseAdapter{
 
         List<Category> mpplist;
@@ -1086,7 +1071,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             }
             String productName = ((Json2ProductPackageBean)getItem(position)).getProductName();
             holder.maintenance_produte_name.setText(productName);
-            double price = ((Json2ProductPackageBean)getItem(position)).getRetailPrice();
+            final double price = ((Json2ProductPackageBean)getItem(position)).getRetailPrice();
             holder.produte_price.setText("￥" + price + "");
 
             String show = ((Json2ProductPackageBean)getItem(position)).getProductShow();
@@ -1165,7 +1150,9 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             holder.productitem_changge_before.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    toastMgr.builder.display("商品详情",1);
+                    toastMgr.builder.display("商品详情", 1);
+                    String productId = mJson2ProductPackageBeanList.get(position).getId();
+                    gotoProductDetailPage(productId);
 
                 }
             });
@@ -1240,6 +1227,20 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             TextView        product_service_name;//保养服务分类名字
             LinearLayout    product_service_title_layout;//分类布局
         }
+    }
+
+    /**
+     * 去产品详情页
+     * @param productId
+     */
+    private void gotoProductDetailPage(String productId) {
+        Intent intent = new Intent();
+        intent.setClass(mContext, ShoppingmallProductDetailActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("productId", productId);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 

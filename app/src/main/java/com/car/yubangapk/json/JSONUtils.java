@@ -819,5 +819,7 @@ public final class JSONUtils {
         }
     }
 
+    public static String UNDEFINED = "未定义";
+    public static int ERROR_INT = 0XFFFF;
 
 }

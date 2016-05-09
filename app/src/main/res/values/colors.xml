@@ -181,7 +181,8 @@
     <color name="green">#9cbe08</color>
     <color name="light_gold">#ccca6e</color>
     <color name="first_page_nav_tab_bar">#9cbe08</color>
-    009140
+    <color name="first_page_nav_tab_bar_text_select">#009140</color>
+
 
 
 

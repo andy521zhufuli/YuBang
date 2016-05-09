@@ -29,6 +29,7 @@ public class Json2OrderDetail
     }
 
     public static String UNDEFINED = "未定义";
+    public static int ERROR_INT = 0XFFFF;
     public OrderDetailInfo getMyOrderDetailInfo() {
 
         OrderDetailInfo orderDetailInfo = new OrderDetailInfo();

@@ -1,6 +1,5 @@
 package com.car.yubangapk.json.bean.OrderDetail;
 
-import com.car.yubangapk.json.bean.BaseJsonCommonBean;
 
 import java.util.List;
 
