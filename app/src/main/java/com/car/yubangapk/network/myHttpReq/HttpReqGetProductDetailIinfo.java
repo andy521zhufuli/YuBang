@@ -62,13 +62,27 @@ public class HttpReqGetProductDetailIinfo
                 .execute(new GetProductCommentDetailInfoCallBack());
 
         L.i(TAG, "产品评论 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_PRODUCT_COMMENT_DETAIL_INFO + "?"
-                        + "productDetailReq.productId" + "=" + productId
+                        + "productDetailReq.productId" + "=" + "673784aa-a22e-4515-937a-7ce930c3b739"
                         + "&sqlName=clientGetProductComment"
                         + "&page=" + page
                         + "&rows=" + row
-                        + "&dataReqModel.args.productId=" + productId
         );
     }
+
+
+    public void getProductDetailInfoWebview(String productId)
+    {
+        OkHttpUtils.post()
+                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_PRODUCT_DETAIL_INFO_DETAIL_INFO)
+                .addParams("productDetailReq.productId","673784aa-a22e-4515-937a-7ce930c3b739")
+                .build()
+                .execute(new GetProductDetailInfoWebviewCallBack());
+
+        L.i(TAG, "产品详情webview url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_PRODUCT_DETAIL_INFO_DETAIL_INFO + "?"
+                        + "productDetailReq.productId" + "=" + productId
+        );
+    }
+
 
     class GetProductDetailInfoCallBack extends StringCallback
     {
@@ -138,11 +152,57 @@ public class HttpReqGetProductDetailIinfo
                     mCallback.onFail(commentsDetailbean.getReturnCode(), commentsDetailbean.getMessage());
                     toastMgr.builder.display(commentsDetailbean.getMessage(), 1);
                 }
+                else if (commentsDetailbean.getRows().size() == 0)
+                {
+                    mCallback.onFail(ErrorCodes.ERROR_CODE_NO_DATA, ErrorCodes.NO_DATA);
+                    toastMgr.builder.display("没有更多评论了", 1);
+                }
                 else
                 {
                     mCallback.onSuccess(commentsDetailbean);
                 }
             }
+        }
+    }
+
+    class GetProductDetailInfoWebviewCallBack extends StringCallback
+    {
+
+        @Override
+        public void onError(Call call, Exception e) {
+            L.d(TAG, "网络错误");
+            mCallback.onFail(ErrorCodes.ERROR_CODE_NETWORK,ErrorCodes.NETWORK_ERROR);
+        }
+
+        @Override
+        public void onResponse(String response) {
+            L.d(TAG, "产品详情webview json = " + response);
+            //得到的是html
+            mCallback.onSuccess(response);
+
+//            Json2ProductCommentDetail commentDetail = new Json2ProductCommentDetail(response);
+//            Json2ProductCommentsDetailbean commentsDetailbean = commentDetail.getProductCommentDetail();
+//
+//            if (commentsDetailbean == null)
+//            {
+//                mCallback.onFail(ErrorCodes.ERROR_CODE_SERVER_ERROR, ErrorCodes.SERVER_ERROR);
+//            }
+//            else
+//            {
+//                if (commentsDetailbean.getReturnCode() == ErrorCodes.ERROR_CODE_NOT_LOGIN)
+//                {
+//                    mCallback.onFail(ErrorCodes.ERROR_CODE_NOT_LOGIN, commentsDetailbean.getMessage());
+//                }
+//                else if (commentsDetailbean.getReturnCode() != 0)
+//                {
+//                    mCallback.onFail(commentsDetailbean.getReturnCode(), commentsDetailbean.getMessage());
+//                    toastMgr.builder.display(commentsDetailbean.getMessage(), 1);
+//                }
+//                else
+//                {
+//                    mCallback.onSuccess(commentsDetailbean);
+//                }
+//            }
         }
     }
 

@@ -191,6 +191,11 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
         mProgressDialog = new CustomProgressDialog(mContext);
         //去拿首页上面导航的5getab
         httpGetFirstPageTopTab();
+
+
+
+
+
     }
 
 

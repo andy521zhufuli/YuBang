@@ -3,6 +3,8 @@ package com.car.yubangapk.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,8 +41,12 @@ import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2FirstPageShopBean;
 import com.car.yubangapk.json.bean.Json2FirstPageTabsBean;
 import com.car.yubangapk.json.bean.Json2LoginBean;
+import com.car.yubangapk.json.bean.sysconfigs.Json2AppConfigs;
 import com.car.yubangapk.json.formatJson.Json2FirstPageShop;
 import com.car.yubangapk.json.formatJson.Json2FirstPageTabs;
+import com.car.yubangapk.json.formatJson.formatSysconfigs.Json2SYSConfigs;
+import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetAppConfig;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.BDMapData;
@@ -160,8 +166,86 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
         mProgressDialog = new CustomProgressDialog(mContext);
         //去拿首页上面导航的5getab
         httpGetFirstPageTopTab();
+
+        checkNewVersion();
+
     }
 
+    /**
+     * 检查新版本
+     */
+    private void checkNewVersion() {
+
+        HttpReqGetAppConfig getAppConfig = new HttpReqGetAppConfig(mContext);
+        getAppConfig.setCallback(new HttpReqCallback() {
+            @Override
+            public void onFail(int errorCode, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object object) {
+                Json2SYSConfigs configs = new Json2SYSConfigs(mContext);
+                Json2AppConfigs appConfigs = configs.getAppConfigs();
+
+
+
+                final String version = appConfigs.getSys().getCzVersion();
+                if ("".equals(version))
+                {
+
+                }
+                else
+                {
+                    if (!getVersion().equals(version))
+                    {
+                        AlertDialog alertDialog = new AlertDialog(mContext);
+                        alertDialog.builder().setTitle("更新提醒")
+                                .setMsg("您有新版本可以下载")
+                                .setCancelable(true)
+                                .setPositiveButton("立即更新", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        updateAPp(version);
+                                    }
+                                })
+                                .setNegativeButton("下次再说", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                    }
+                                })
+                                .show();
+                    }
+                }
+            }
+        });
+
+        getAppConfig.getAppConfig();
+
+
+
+    }
+
+    private void updateAPp(String version) {
+        Intent intent = new Intent();
+        intent.setClass(mContext, UpgradeAppWebviewActivity.class);
+        startActivity(intent);
+    }
+
+    public String getVersion()
+    {
+        try {
+            PackageManager manager = this.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+            String version = info.versionName;
+            return version;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
 
     /**

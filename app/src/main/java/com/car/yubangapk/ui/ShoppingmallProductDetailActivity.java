@@ -23,7 +23,7 @@ import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetProductDetailIinfo;
 import com.car.yubangapk.view.CustomProgressDialog;
 
-import java.lang.reflect.GenericArrayType;
+
 import java.util.List;
 
 /**
@@ -195,7 +195,12 @@ public class ShoppingmallProductDetailActivity extends BaseActivity implements V
      */
     private void displayProductDetailInfoWebview() {
 
-        
+        Intent intent = new Intent();
+        intent.setClass(mContext, ProductDetailInfoWebviewActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("productId", getProductId());
+        intent.putExtras(bundle);
+        startActivity(intent);
 
     }
 
@@ -204,7 +209,12 @@ public class ShoppingmallProductDetailActivity extends BaseActivity implements V
      */
     private void displayMoreCommentInfo() {
         Intent intent = new Intent();
-//        intent.setClass()
+        Bundle bundle =  new Bundle();
+        bundle.putString("productId", getProductId());
+        intent.putExtras(bundle);
+        intent.setClass(mContext,MoreProductCommentListActivity.class);
+        startActivity(intent);
+
     }
 
     /**

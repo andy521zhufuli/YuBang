@@ -443,7 +443,9 @@
         <activity android:name="com.car.yubangapk.ui.FirstPagenew2Activity" />
         <activity android:name="com.car.yubangapk.ui.MyOrderDetailInfoActivity" />
         <activity android:name="com.car.yubangapk.ui.SplashActivity" />
-        <activity android:name="com.car.yubangapk.ui.ProductDetailInfoWebviewActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.ProductDetailInfoWebviewActivity" />
+        <activity android:name="com.car.yubangapk.ui.MoreProductCommentListActivity" />
+        <activity android:name="com.car.yubangapk.ui.UpgradeAppWebviewActivity"></activity>
     </application>
 
 </manifest>

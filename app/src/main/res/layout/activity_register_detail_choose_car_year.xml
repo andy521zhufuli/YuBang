@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="请选择子品牌"
+            android:text="请选择生产年份"
             android:textColor="@color/black"
             android:textSize="@dimen/medium_text_size"
             android:textAppearance="?android:attr/textAppearanceLarge" />

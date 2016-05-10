@@ -1,8 +1,6 @@
 package com.car.yubangapk.ui;
 
-
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -16,54 +14,37 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import com.andy.android.yubang.R;
-import com.car.yubangapk.js.AccountInfoJs;
+import com.car.yubangapk.json.bean.sysconfigs.Json2AppConfigs;
+import com.car.yubangapk.json.formatJson.formatSysconfigs.Json2SYSConfigs;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.AlertDialog;
 
-/**
- * AdWebViewActivity:广告的页面
- *
- * @author andy
- * @version 1.0
- * @created 2016-04-22
- */
-public class AdWebViewActivity extends BaseActivity implements View.OnClickListener{
-
+public class UpgradeAppWebviewActivity extends BaseActivity implements View.OnClickListener{
 
     private Context mContext;
     private static final String TAG = AdWebViewActivity.class.getName();
     private ImageView img_back;
     private WebView   ad_webview;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_ad_web_view);
-
-        mContext = this;
+        setContentView(R.layout.activity_upgrade_app_webview);
 
         findVies();
 
+        mContext = this;
 
-        String link = null;
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null)
-        {
-            link = bundle.getString("link");
-            if (!link.contains("http://"))
-            {
-                webviewSetting("http://" + link);
-            }
-            webviewSetting(link);
-        }else
-        {
-
-        }
+        Json2SYSConfigs configs = new Json2SYSConfigs(mContext);
+        Json2AppConfigs appConfigs = configs.getAppConfigs();
 
 
+
+        String version = appConfigs.getSys().getCzVersion();
+        String url = appConfigs.getSys().getCzUploadUrl();
+        webviewSetting(url);
 
     }
 
@@ -78,9 +59,6 @@ public class AdWebViewActivity extends BaseActivity implements View.OnClickListe
 
         //设置监听器
         img_back.setOnClickListener(this);
-
-
-
 
     }
 
@@ -114,12 +92,12 @@ public class AdWebViewActivity extends BaseActivity implements View.OnClickListe
 //        ad_webview.loadData(html, "text/html;charset=UTF-8",null);
         ad_webview.loadUrl(html);
         //goods_list_webview.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
-        ad_webview.setWebChromeClient(new MyWebChromeClient());
-        ad_webview.setWebViewClient(new MyWebViewClient());
+//        ad_webview.setWebChromeClient(new MyWebChromeClient());
+//        ad_webview.setWebViewClient(new MyWebViewClient());
         //设置支持js
         WebSettings webViewSettings = ad_webview.getSettings();
         webViewSettings.setJavaScriptEnabled(true);
-        webViewSettings.setAllowFileAccess(true);
+//        webViewSettings.setAllowFileAccess(true);
         //ad_webview.addJavascriptInterface(new AccountInfoJs(mContext), "callClient");
     }
 
@@ -149,16 +127,16 @@ public class AdWebViewActivity extends BaseActivity implements View.OnClickListe
             //用Android组件替换
             AlertDialog alertDialog = new AlertDialog(mContext);
             alertDialog.builder()
-            .setTitle("JS提示")
-            .setMsg(message)
-            .setPositiveButton("确定", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    result.confirm();
-                }
-            })
-            .setCancelable(false)
-            .show();
+                    .setTitle("JS提示")
+                    .setMsg(message)
+                    .setPositiveButton("确定", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            result.confirm();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
             return true;
         }
 

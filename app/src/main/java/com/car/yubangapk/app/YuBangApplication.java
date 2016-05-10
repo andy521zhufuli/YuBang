@@ -86,9 +86,6 @@ public class YuBangApplication extends Application
                         }
                     });
         }
-        //去拿配置信息
-        getAppConfig();
-
     }
 
 
@@ -105,36 +102,6 @@ public class YuBangApplication extends Application
         return false;
     }
 
-    /**
-     * 拿到启动后配置信息
-     */
-    public void getAppConfig()
-    {
-        OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_SYS_CONFIG)
-                .build().execute(new MyAppConfigCallback());
-    }
-
-    /**
-     * 获取配置信息回调
-     */
-    public class MyAppConfigCallback extends StringCallback
-    {
-
-        @Override
-        public void onError(Call call, Exception e)
-        {
-            L.d(TAG, "get MyAppConfigCallback error ====" + e.toString());
-        }
-
-        @Override
-        public void onResponse(String response)
-        {
-            //持久性保存
-            SPUtils.put(getApplicationContext(), Configs.APP_SYS_CONFIG, response);
-            L.d(TAG, "get MyAppConfigCallback onResponse ====" + response);
-        }
-    }
 
 
 }

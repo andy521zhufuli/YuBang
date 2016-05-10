@@ -144,8 +144,8 @@ public class MyRecommendedPartnerActivity extends FragmentActivity {
                 indicator2.setVisibility(View.INVISIBLE);
                 indicator3.setVisibility(View.VISIBLE);
                 tv1.setTextColor(Color.parseColor("#4f4f4f"));
-                tv2.setTextColor(Color.parseColor("#009140"));
-                tv3.setTextColor(Color.parseColor("#ff0000"));
+                tv2.setTextColor(Color.parseColor("#4f4f4f"));
+                tv3.setTextColor(Color.parseColor("#009140"));
                 select(2);
             }
         });

@@ -14,17 +14,32 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import com.andy.android.yubang.R;
+import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetProductDetailIinfo;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.AlertDialog;
+import com.car.yubangapk.view.CustomProgressDialog;
 
-public class ProductDetailInfoWebviewActivity extends BaseActivity implements View.OnClickListener{
+/**
+ * ProductDetailInfoWebviewActivity:产品详情的webview页面
+ *
+ * @author andy
+ * @version 1.0
+ * @created 2016-05-10
+ */
+
+public class ProductDetailInfoWebviewActivity extends BaseActivity implements View.OnClickListener, HttpReqCallback{
 
 
     private Context mContext;
     private static final String TAG = AdWebViewActivity.class.getName();
     private ImageView img_back;
     private WebView   ad_webview;
+
+    private String mProductId;
+    private CustomProgressDialog mProgress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +50,36 @@ public class ProductDetailInfoWebviewActivity extends BaseActivity implements Vi
 
         findVies();
 
+        setProductId();
+
+        mProgress = new CustomProgressDialog(mContext);
+
+        getDetailByProductId(getProductId());
+    }
+
+    /**
+     * 通过商品id去拿到商品详情
+     * @param productId
+     */
+    private void getDetailByProductId(String productId) {
+
+        mProgress = mProgress.show(mContext, "正在加载商品详情...", false, null);
+        HttpReqGetProductDetailIinfo info = new HttpReqGetProductDetailIinfo();
+        info.setCallback(this);
+        info.getProductDetailInfoWebview(productId);
+
+    }
+
+
+    private void setProductId() {
+
+        Bundle bundle = getIntent().getExtras();
+        mProductId = bundle.getString("productId");
+    }
+
+    private String getProductId()
+    {
+        return mProductId;
     }
 
 
@@ -67,7 +112,8 @@ public class ProductDetailInfoWebviewActivity extends BaseActivity implements Vi
      */
     private void webviewSetting(String html) {
 
-        ad_webview.loadData(html, "text/html;charset=UTF-8",null);
+        ad_webview.loadData(html, "text/html;charset=UTF-8", null);
+        //ad_webview.loadUrl(html);
         //goods_list_webview.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
         ad_webview.setWebChromeClient(new MyWebChromeClient());
         ad_webview.setWebViewClient(new MyWebViewClient());
@@ -88,6 +134,19 @@ public class ProductDetailInfoWebviewActivity extends BaseActivity implements Vi
 
 
         }
+    }
+
+    @Override
+    public void onFail(int errorCode, String message) {
+        mProgress.dismiss();
+        toastMgr.builder.display("服务器错误", 1);
+    }
+
+    @Override
+    public void onSuccess(Object object) {
+        mProgress.dismiss();
+        String url = (String) object;
+        webviewSetting(url);
     }
 
 
@@ -172,8 +231,7 @@ public class ProductDetailInfoWebviewActivity extends BaseActivity implements Vi
             super.onPageFinished(view, url);
             // 调用webview (服务器界面上的JS)
             L.i("onPageFinished loadUrl call js");
-            toastMgr.builder.display("onPageFinished loadUrl call js", 0);
-            //iwant_get_cash_bank_list_webview.loadUrl("javascript:addNextPage('1aqsdgasg')");
+
         }
 
         @Override
