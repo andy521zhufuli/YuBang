@@ -110,7 +110,7 @@ public class DiscoverActivity extends BaseActivity implements View.OnClickListen
             case R.id.iwant_get_cash_account_alipay_account_layout1:
 
                 //这里测试分享
-                testGetOrderInfo();
+                //testGetOrderInfo();
                 //shareQQ();
                 //wxMoment();
 
@@ -212,8 +212,8 @@ public class DiscoverActivity extends BaseActivity implements View.OnClickListen
        sp.setShareType(Platform.SHARE_WEBPAGE); //非常重要：一定要设置分享属性
        sp.setTitle("我是分享标题");  //分享标题
        sp.setText("我是分享文本，啦啦啦~http://uestcbmi.com/");   //分享文本
-        sp.setImageUrl("http://7sby7r.com1.z0.glb.clouddn.com/CYSJ_02.jpg");//网络图片rul
-        sp.setUrl("http://sharesdk.cn");   //网友点进链接后，可以看到分享的详情
+       sp.setImageUrl("http://7sby7r.com1.z0.glb.clouddn.com/CYSJ_02.jpg");//网络图片ru
+       sp.setUrl("http://sharesdk.cn");   //网友点进链接后，可以看到分享的详情
 
         //3、非常重要：获取平台对象
         Platform wechatMoments = ShareSDK.getPlatform(WechatMoments.NAME);

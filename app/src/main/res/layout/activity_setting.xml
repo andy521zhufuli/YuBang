@@ -171,11 +171,12 @@
 
 
         <LinearLayout
-            android:id="@+id/layout_about"
+            android:id="@+id/layout_about_version"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/item_height"
             android:background="@drawable/bg_item_bottom"
             android:gravity="center_vertical"
+            android:clickable="true"
             android:orientation="horizontal" >
 
             <TextView
