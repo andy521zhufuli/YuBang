@@ -49,6 +49,9 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GET_PRODUCT_COMMENT_DETAIL_INFO = "/client/comment/getComment";//获取产品评价详情
     public static String IP_ADDRESS_ACTION_GET_PRODUCT_DETAIL_INFO_DETAIL_INFO = "/client/product/productDetail";//获取产品详情的详情
 
+    public static String IP_ADDRESS_ACTION_GET_WX_SHARE = "/client/wx/share";//获取微信分享参数
+
+
 
 
 

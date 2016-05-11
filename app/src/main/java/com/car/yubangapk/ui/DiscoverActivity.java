@@ -113,6 +113,9 @@ public class DiscoverActivity extends BaseActivity implements View.OnClickListen
                 //testGetOrderInfo();
                 //shareQQ();
                 //wxMoment();
+                //wxFriends();
+                //oneKeyShare();
+                shareWx();
 
                 break;
         }
@@ -307,6 +310,45 @@ public class DiscoverActivity extends BaseActivity implements View.OnClickListen
         msg.share(sp);
     }
 
+
+
+    private void shareWx()
+    {
+        //2、设置分享内容
+        Platform.ShareParams sp = new Platform.ShareParams();
+        sp.setShareType(Platform.SHARE_WEBPAGE);//非常重要：一定要设置分享属性
+        sp.setTitle("我是分享标题");  //分享标题
+        sp.setText("我是分享文本，啦啦啦~http://uestcbmi.com/");   //分享文本
+        sp.setImageUrl("http://7sby7r.com1.z0.glb.clouddn.com/CYSJ_02.jpg");//网络图片rul
+        sp.setUrl("http://sharesdk.cn");   //网友点进链接后，可以看到分享的详情
+
+        //3、非常重要：获取平台对象
+        Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
+        wechat.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                toastMgr.builder.display("分享微信好友完成", 0);
+                L.d(TAG + "分享好友", "分享好友完成");
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                toastMgr.builder.display("分享好友失败", 0);
+                L.d(TAG + "分享好友", "分享好友失败" + "i " + i + ",throwable" + throwable.toString());
+                if (i == 9) {
+                    toastMgr.builder.display("分享好友失败,您未安装微信, 请安装微信", 0);
+                }
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                toastMgr.builder.display("分享好友取消", 0);
+                L.d(TAG + "分享好友", "分享好友取消");
+            }
+        }); // 设置分享事件回调
+        // 执行分享
+        wechat.share(sp);
+    }
 
 
     private void shareQQ()

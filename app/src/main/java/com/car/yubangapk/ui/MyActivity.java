@@ -8,26 +8,39 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2MyUserInfoBean;
+import com.car.yubangapk.json.bean.WxShareBean;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetUserInfo;
+import com.car.yubangapk.network.myHttpReq.HttpReqWXShare;
 import com.car.yubangapk.ui.myordersfragment.MyOrdersActivity;
 import com.car.yubangapk.ui.myrecommendpartner.MyRecommendedPartnerActivity;
+import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.view.CustomProgressDialog;
+import com.car.yubangapk.view.ShareDialog;
 
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 import cn.trinea.android.common.service.impl.RemoveTypeBitmapLarge;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -42,6 +55,7 @@ public class MyActivity extends BaseActivity {
 
 
     private Context mContext;
+    String TAG = MyActivity.class.getSimpleName();
     /**
      * 未登录的时候显示的东西
      */
@@ -105,6 +119,8 @@ public class MyActivity extends BaseActivity {
         {
 
         }
+
+        ShareSDK.initSDK(mContext);
 
     }
 
@@ -346,9 +362,7 @@ public class MyActivity extends BaseActivity {
                     toastMgr.builder.display("您还没登陆,请先去登陆",1);
                     return;
                 }
-                Intent intent = new Intent();
-                intent.setClass(MyActivity.this, MyQRCodeActivity.class);
-                startActivity(intent);
+                share();
             }
         });
         //我的设置
@@ -367,6 +381,106 @@ public class MyActivity extends BaseActivity {
             }
         });
     }
+
+
+    private ShareDialog shareDialog;
+    private void share() {
+
+        shareDialog = new ShareDialog(this);
+        shareDialog.setCancelButtonOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                shareDialog.dismiss();
+
+            }
+        });
+        shareDialog.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int arg2, long arg3) {
+                HashMap<String, Object> item = (HashMap<String, Object>) arg0.getItemAtPosition(arg2);
+                if (item.get("ItemText").equals("微信好友")) {
+                    toastMgr.builder.display("微信好友", 1);
+                    getWxShareBean();
+                }
+                else
+                {
+                    toastMgr.builder.display("other", 1);
+                }
+                shareDialog.dismiss();
+
+            }
+        });
+
+    }
+
+
+
+    private void shareFriend(String title, String textcontent, String imageUrl, String url)
+    {
+        //2、设置分享内容
+        Platform.ShareParams sp = new Platform.ShareParams();
+        sp.setShareType(Platform.SHARE_WEBPAGE);//非常重要：一定要设置分享属性
+        sp.setTitle(title);  //分享标题
+        sp.setText(textcontent);   //分享文本
+        sp.setImageUrl(imageUrl);//网络图片rul
+        sp.setUrl(url);   //网友点进链接后，可以看到分享的详情
+
+        //3、非常重要：获取平台对象
+        Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
+        wechat.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                toastMgr.builder.display("分享微信好友完成", 0);
+                L.d(TAG + "分享好友", "分享好友完成");
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                toastMgr.builder.display("分享好友失败", 0);
+                L.d(TAG + "分享好友", "分享好友失败" + "i " + i + ",throwable" + throwable.toString());
+                if (i == 9) {
+                    toastMgr.builder.display("分享好友失败,您未安装微信, 请安装微信", 0);
+                }
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                toastMgr.builder.display("分享好友取消", 0);
+                L.d(TAG + "分享好友", "分享好友取消");
+            }
+        }); // 设置分享事件回调
+        // 执行分享
+        wechat.share(sp);
+    }
+
+
+
+    private void getWxShareBean()
+    {
+        final HttpReqWXShare wxShare = new HttpReqWXShare(mContext);
+        wxShare.setCallback(new HttpReqCallback() {
+            @Override
+            public void onFail(int errorCode, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object object) {
+                WxShareBean wxShareBean = (WxShareBean) object;
+                String title = wxShareBean.getTitle();
+                String imageUrl = wxShareBean.getImageUrl();
+                String url = wxShareBean.getUrl();
+                String textcontent = wxShareBean.getDest();
+                shareFriend(title, textcontent, imageUrl, url);
+
+            }
+        });
+        wxShare.getWxShare(Configs.getLoginedInfo(mContext).getUserid());
+    }
+
 
 
     @Override
