@@ -1,19 +1,13 @@
 package com.car.yubangapk.ui;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andy.android.yubang.R;
@@ -21,8 +15,6 @@ import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
 import com.car.yubangapk.utils.L;
-import com.car.yubangapk.utils.toastMgr;
-import com.car.yubangapk.view.AlertDialog;
 
 import java.util.List;
 
@@ -129,7 +121,7 @@ public class ConformOrderProductDetailActivity extends BaseActivity {
                 holder.produte_price = (TextView) view.findViewById(R.id.produte_price);
                 holder.produte_count = (TextView) view.findViewById(R.id.produte_count);
                 holder.maintenance_hecheng_1 = (TextView) view.findViewById(R.id.maintenance_hecheng_1);
-
+                holder.product_service_name = (TextView) view.findViewById(R.id.product_service_name);
                 view.setTag(holder);
             }
             else
@@ -152,6 +144,8 @@ public class ConformOrderProductDetailActivity extends BaseActivity {
 
             holder.produte_price.setText(mpplist.get(position).getRetailPrice() + "");
 
+            holder.product_service_name.setText(mpplist.get(position).getPackageName());
+
 
 
 
@@ -172,6 +166,8 @@ public class ConformOrderProductDetailActivity extends BaseActivity {
 
             TextView        produte_price;//产品价格
             TextView        produte_count;//产品数量
+
+            TextView        product_service_name;//产品包名字
 
 
         }
