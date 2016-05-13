@@ -25,10 +25,14 @@ public class NotifyStyles
         this.mContext = context;
     }
 
-    /**
-     * 高仿淘宝
+    /***
+     * 高仿淘宝 单行通知
+     *
+     * @param title 通知的标题
+     * @param content 通知的内容
+     * @param customContent json 包含type orderId
      */
-    private void notify_normal_singLine() {
+    public void notify_normal_singLine(String title, String content, String customContent) {
         //设置想要展示的数据内容
         Intent intent = new Intent(mContext, NofityClick2ShowActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -36,8 +40,6 @@ public class NotifyStyles
                 requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         int smallIcon = R.drawable.yybao_bigicon;
         String ticker = "您有一条新通知";
-        String title = "双十一大优惠！！！";
-        String content = "仿真皮肤充气娃娃，女朋友带回家！";
 
         //实例化工具类，并且调用接口
         NotifyUtil notify1 = new NotifyUtil(mContext, 1);
@@ -71,7 +73,7 @@ public class NotifyStyles
     /**
      * 高仿应用宝
      */
-    private void notify_customview() {
+    public void notify_customview() {
         //设置想要展示的数据内容
         Intent intent = new Intent(mContext, NofityClick2ShowActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

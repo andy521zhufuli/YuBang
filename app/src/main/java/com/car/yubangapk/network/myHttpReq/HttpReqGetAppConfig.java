@@ -58,7 +58,7 @@ public class HttpReqGetAppConfig {
         {
             //持久性保存
             SPUtils.put(mContext, Configs.APP_SYS_CONFIG, response);
-            L.d("", "get MyAppConfigCallback onResponse ====" + response);
+            L.d("qwer", "get MyAppConfigCallback onResponse ====" + response);
 
             if (mCallback != null)
             {

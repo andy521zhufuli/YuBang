@@ -210,6 +210,7 @@
             android:id="@+id/discover_activity_nearby_layout"
             android:layout_below="@+id/line_discover1"
             style="@style/MineItemStyle"
+            android:visibility="gone"
             android:background="@drawable/bg_item_top" >
 
             <ImageView
@@ -255,6 +256,7 @@
         android:layout_marginTop="16px"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_below="@+id/discover_activity_recommend_partners_layout"
         >
         <!-- 物流-->

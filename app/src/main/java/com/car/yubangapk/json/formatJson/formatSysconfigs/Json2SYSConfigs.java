@@ -58,12 +58,16 @@ public class Json2SYSConfigs
             json2AppConfigs.setMessage(message);
 
             JSONObject sysObject = JSONUtils.getJSONObject(jsonObject, "sys", null);
+
             String id = JSONUtils.getString(sysObject, "id", "");
             String czVersion = JSONUtils.getString(sysObject, "czVersion", "");
             String wxAppid = JSONUtils.getString(sysObject, "wxAppid", "");
             String wxAppSecret = JSONUtils.getString(sysObject, "wxAppSecret", "");
             String czUploadUrl = JSONUtils.getString(sysObject, "czUploadUrl", "");
             String errorFileMd5code1 = JSONUtils.getString(sysObject, "errorFileMd5code", "");
+            String xinge_access_id = JSONUtils.getString(sysObject, "xingeAccessId", "");//信鸽的access_id
+            String xinge_access_key = JSONUtils.getString(sysObject, "xingeAccessKey", "");//信鸽的access_key
+
 
             Sys sys = new Sys();
             sys.setId(id);
@@ -72,6 +76,8 @@ public class Json2SYSConfigs
             sys.setWxAppid(wxAppid);
             sys.setWxAppSecret(wxAppSecret);
             sys.setErrorFileMd5code(errorFileMd5code1);
+            sys.setXinge_access_id(xinge_access_id);
+            sys.setXinge_access_key(xinge_access_key);
             json2AppConfigs.setSys(sys);
 
         } catch (JSONException e) {

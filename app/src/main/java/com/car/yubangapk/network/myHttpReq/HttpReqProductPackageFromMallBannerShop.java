@@ -301,7 +301,6 @@ public class HttpReqProductPackageFromMallBannerShop
         @Override
         public void onResponse(String response, Object object, int position) {
 
-
             synchronized (this)
             {
                 Json2ProductPackageIdBean ids = (Json2ProductPackageIdBean) object;

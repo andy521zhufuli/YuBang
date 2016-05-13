@@ -22,6 +22,9 @@ public class Sys
     String czUploadUrl;
     String errorFileMd5code;
 
+    String xingeAccessId;//信鸽的access_id
+    String xingeAccessKey;//信鸽的access_key
+
     public String getId() {
         return id;
     }
@@ -68,5 +71,21 @@ public class Sys
 
     public void setErrorFileMd5code(String errorFileMd5code) {
         this.errorFileMd5code = errorFileMd5code;
+    }
+
+    public String getXinge_access_id() {
+        return xingeAccessId;
+    }
+
+    public void setXinge_access_id(String xinge_access_id) {
+        this.xingeAccessId = xinge_access_id;
+    }
+
+    public String getXinge_access_key() {
+        return xingeAccessKey;
+    }
+
+    public void setXinge_access_key(String xinge_access_key) {
+        this.xingeAccessKey = xinge_access_key;
     }
 }

@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.car.yubangapk.network.myHttpReq.HttpReqModifyPPkgByIdsFromShop;
+import com.car.yubangapk.network.myHttpReq.HttpReqModifyPPkgByPkgIds;
 import com.car.yubangapk.ui.shoppingmallgoodsutil.Category;
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
@@ -316,118 +318,33 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
      */
     private void httpGetProductPackageByIds(List<Json2ProductPackageIdBean> ppList)
     {
-        HttpReqProductPackageFromMallBannerShop req = new HttpReqProductPackageFromMallBannerShop();
-        req.setInterface(new GetPPIdsCallbac());
+        HttpReqModifyPPkgByPkgIds req = new HttpReqModifyPPkgByPkgIds();
+        req.setInterface(new GetPPIdsCallbac1());
         req.httpGetProductPackageByIds(ppList);
+
+
+
     }
 
-    class GetPPIdsCallbac implements HttpReqProductPackageFromMallBannerShop.GetProductPackageContent
+    class GetPPIdsCallbac1 implements HttpReqModifyPPkgByPkgIds.GetProductPackageContent
     {
 
         @Override
         public void onGetPPkgSucces(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
-            if (json2ProductPackageBeanList.get(0).isHasData() == false)
-            {
+            mJson2ProductPackageBeanList.clear();
 
-                //所有的id都遍历了 但是还是没有产品包
-                //没有产品包
-                toastMgr.builder.display("对不起, 没有相关产品包", 1);
-                AlertDialog alertDialog = new AlertDialog(mContext);
-                alertDialog.builder().setTitle("提示")
-                        .setCancelable(false)
-                        .setMsg("当前产品包没有相关产品")
-                        .setPositiveButton("确定", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+            mJson2ProductPackageBeanList = json2ProductPackageBeanList;
 
-                            }
-                        })
-                        .show();
+            List<Category> cLst = getListViewData(mJson2ProductPackageBeanList);
+            goodsAdapter1.refresh(getListViewData(mJson2ProductPackageBeanList));
+            countTotalPrice(categoryToJsonProductPackageGoods(cLst));
 
-                return;
-            }
-            else
-            {
-                if (GET_IDS_TIMES == 0)
-                {
-                    //清楚现有的产皮包
-                    mJson2ProductPackageBeanList.clear();
-                }
-
-                if (mGetModifyProductPkgCount == 1)//只选了一个产品包  那就直接显示出来
-                {
-                    int size1 = json2ProductPackageBeanList.size();
-                    for (int i= 0; i < size1; i++)
-                    {
-                        mJson2ProductPackageBeanList.add(json2ProductPackageBeanList.get(i));
-                    }
-                    List<Category> cLst = getListViewData(mJson2ProductPackageBeanList);
-                    goodsAdapter1.refresh(getListViewData(mJson2ProductPackageBeanList));
-//                  goodsAdapter.refresh(mJson2ProductPackageBeanList);
-                    countTotalPrice(categoryToJsonProductPackageGoods(cLst));
-                    GET_IDS_TIMES = 0;
-                    return;
-                }
-                else
-                {
-                    if (GET_IDS_TIMES  == mGetModifyProductPkgCount - 1)
-                    {
-
-                        int size1 = json2ProductPackageBeanList.size();
-                        for (int i= 0; i < size1; i++)
-                        {
-                            mJson2ProductPackageBeanList.add(json2ProductPackageBeanList.get(i));
-                        }
-
-                        List<Category> cLst = getListViewData(mJson2ProductPackageBeanList);
-                        goodsAdapter1.refresh(getListViewData(mJson2ProductPackageBeanList));
-
-//                        goodsAdapter.refresh(mJson2ProductPackageBeanList);
-                        countTotalPrice(mJson2ProductPackageBeanList);
-                        GET_IDS_TIMES = 0;
-                        return;
-                    }
-                    else
-                    {
-                        //这里不知道显示的对不对
-                        int size1 = json2ProductPackageBeanList.size();
-                        for (int i= 0; i < size1; i++)
-                        {
-                            mJson2ProductPackageBeanList.add(json2ProductPackageBeanList.get(i));
-                        }
-                    }
-                }
-            }
-            GET_IDS_TIMES++;
         }
 
         @Override
         public void onGetPPkgFail(int errorCode)
         {
 
-            mProgressDialog.dismiss();
-            if (errorCode == ErrorCodes.ERROR_CODE_NO_PRODUCT_PKG)
-            {
-                //所有的id都遍历了 但是还是没有产品包
-                //没有产品包
-                toastMgr.builder.display("对不起, 没有相关产品包", 1);
-                AlertDialog alertDialog = new AlertDialog(mContext);
-                alertDialog.builder().setTitle("提示")
-                        .setCancelable(false)
-                        .setMsg("当前产品包没有相关产品")
-                        .setPositiveButton("确定", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                            }
-                        })
-                        .show();
-            }else if (errorCode == ErrorCodes.ERROR_CODE_SERVER_ERROR)
-            {
-                toastMgr.builder.display("服务器错误", 1);
-            }
-
-//            tv_modify_goods.setClickable(false);
         }
     }
 
@@ -437,64 +354,21 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
      */
     private void httpGetShopServiceByIds(List<Json2ShopServiceBean> ppList)
     {
-        int size = ppList.size();
-        int index = 0;
-        for (index = 0; index < size; index++)
-        {
-            String repairservice = ppList.get(index).getId();
-            OkHttpUtils.post()
-                    .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA)
-                    .addParams("sqlName", "clientSearchCarRepairServiceProductPackage")
-                    .addParams("dataReqModel.args.needTotal", "needTotal")
-                    .addParams("dataReqModel.args.carType", mCarType)
-                    .addParams("dataReqModel.args.repairService", repairservice)
-                    .build()
-                    .executeObject(new GetProductPackageIdFromShopModify(), ppList, index);
-
-            L.i("c产品包", "获取产品包id url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
-                    + "sqlName=" + "clientSearchCarRepairServiceProductPackage"
-                    + "&dataReqModel.args.needTotal=needTotal"
-                    + "&dataReqModel.args.repairService=" + repairservice
-            );
-        }
-    }
-    private class GetProductPackageIdFromShopModify extends MyObjectStringCallback
-    {
-        @Override
-        public void onError(Call call, Object object, int position, Exception e) {
-            toastMgr.builder.display("网络错误", 1);
-        }
-        @Override
-        public void onResponse(String response, Object object, int position) {
-            //从门店过来
-            List<Json2ShopServiceBean> ppList = (List<Json2ShopServiceBean>) object;
-            synchronized (this)
-            {
-                Json2ProductPackageId jppid = new Json2ProductPackageId(response);
-                List<Json2ProductPackageIdBean> beans = jppid.getProductIds();
-                if (beans == null)
-                {
-                    toastMgr.builder.display("您当前版本太低,请升级版本", 1);
-                }
-                else
-                {
-                    for (Json2ProductPackageIdBean bean : beans)
-                    {
-                        if (bean.isHasData() == true)
-                        {
-                            bean.setRepairService(ppList.get(position).getId());
-                            httpGetProductPackageByIds(beans);
-                        }
-                        else
-                        {
-
-                        }
-                    }
-                }
+        HttpReqModifyPPkgByIdsFromShop req = new HttpReqModifyPPkgByIdsFromShop();
+        req.setInterface(new HttpReqModifyPPkgByIdsFromShop.GetProductPackageContent() {
+            @Override
+            public void onGetPPkgSucces(List<Json2ProductPackageIdBean> json2ProductPackageIDBeanList) {
+                httpGetProductPackageByIds(json2ProductPackageIDBeanList);
             }
 
-        }
+            @Override
+            public void onGetPPkgFail(int errorCode) {
+
+            }
+        });
+        req.httpGetShopServiceByIds(ppList, mCarType);
     }
+
 
     private  int FROM_SHOPPINGMALL = 1;//从商品界面过来
     private static final int FROM_MODIFY       = 2;//从修改界面过来
@@ -1262,13 +1136,9 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         {
             if (resultCode == Activity.RESULT_OK)
             {
-
                 Bundle bundle = data.getExtras();
                 Json2ChangeableProductBean bean = (Json2ChangeableProductBean) bundle.getSerializable("changedProductBean");
                 int _position = bundle.getInt("position");
-
-
-                //TODO 也是要改的  要设置repairService之类
                 mJson2ProductPackageBeanList.get(_position).setCategory(bean.getCategory());
                 mJson2ProductPackageBeanList.get(_position).setPathCode(bean.getPathCode());
                 mJson2ProductPackageBeanList.get(_position).setCategoryName(bean.getCategoryName());
@@ -1280,7 +1150,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 List<Category> categories = GoodsCategoryHelper.productsToCategoryList(mJson2ProductPackageBeanList);
                 goodsAdapter1.refresh(categories);
                 countTotalPrice(mJson2ProductPackageBeanList);
-
             }
             else if (resultCode == Activity.RESULT_CANCELED)
             {
@@ -1297,7 +1166,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
                 if (from1.equals(Configs.FROM_SHOPPINGMALL))
                 {
-
                     List<Json2ProductPackageIdBean> productPackageIdBeanList = (List<Json2ProductPackageIdBean>) bundle.getSerializable("bean");
                     mGetModifyProductPkgCount = productPackageIdBeanList.size();
                     if (mGetModifyProductPkgCount == 0)
@@ -1311,7 +1179,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 }
                 else
                 {
-
                     List<Json2ShopServiceBean> json2ShopServiceBean = (List<Json2ShopServiceBean>) bundle.getSerializable("bean");
                     mGetModifyProductPkgCount = json2ShopServiceBean.size();
                     if (mGetModifyProductPkgCount == 0)
