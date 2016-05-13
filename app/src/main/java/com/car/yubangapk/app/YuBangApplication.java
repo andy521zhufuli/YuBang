@@ -70,18 +70,17 @@ public class YuBangApplication extends Application
 
                 XGPushManager.registerPush(getApplicationContext(), userid, new XGIOperateCallback() {
                     @Override
-                    public void onSuccess(Object data, int flag) {
+                    public void onSuccess(Object data, int flag)
+                    {
                         Log.d("TPush", "注册成功，设备token为：" + data);
-
-
                         Intent intent = new Intent();
                         intent.setClass(getApplicationContext(), LoginActivity.class);
                         String s = intent.toString();
                         Log.d("intent", s);
                     }
-
                     @Override
-                    public void onFail(Object data, int errCode, String msg) {
+                    public void onFail(Object data, int errCode, String msg)
+                    {
                         Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
                     }
                 });
@@ -92,7 +91,8 @@ public class YuBangApplication extends Application
                 // 相当于这个回调会拦截在信鸽的弹出通知之前被截取
                 // 一般上针对需要获取通知内容、标题，设置通知点击的跳转逻辑等等
                 XGPushManager
-                        .setNotifactionCallback(new XGPushNotifactionCallback() {
+                        .setNotifactionCallback(new XGPushNotifactionCallback()
+                        {
 
                             @Override
                             public void handleNotify(XGNotifaction xGNotifaction) {
@@ -111,12 +111,10 @@ public class YuBangApplication extends Application
                             }
                         });
             }
-            else {
+            else
+            {
                 L.d(TAG, "不注册信鸽");
             }
-
-
-
         }
     }
 

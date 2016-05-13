@@ -2,7 +2,6 @@ package com.car.yubangapk.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ import com.car.yubangapk.ui.shoppingmallgoodsutil.GoodsCategoryHelper;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
-import com.car.yubangapk.view.AlertDialog;
+import com.car.yubangapk.view.ActionSheetChoosePayMethodDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -263,13 +262,13 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
         switch (view.getId())
         {
             case R.id.img_back:
-                gotoMyActiviy();
+                gotoMyOrdersActiviy();
                 break;
-            case R.id.order_detail_btn_top:
+            case R.id.order_detail_btn_top://取消订单 或者是
                 toastMgr.builder.display(order_detail_btn_top.getText().toString(), 1);
                 if (mCurrentType == WAIT_BUYER_TYPE)//待付款
                 {
-
+                    cancelOrder();
                 }
                 else if (mCurrentType == WAIT_EVALUATE_TYPE)//待评价
                 {
@@ -283,16 +282,59 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
                 //支付或者确认安装
                 if (mCurrentType == WAIT_BUYER_TYPE)//待付款
                 {
-
+                    payOrderAndChoosePayMethod();
                 }
                 else if (mCurrentType == WAIT_SHOP_INSTALL_TYPE)//待安装
                 {
-
+                    conformInstall();
                 }
                 break;
         }
     }
-    private void gotoMyActiviy()
+
+    /**
+     * 取消订单
+     */
+    private void cancelOrder() {
+        toastMgr.builder.display("取消订单, 暂无接口", 1);
+    }
+
+
+    /**
+     * 去付款, 并且选择付款方式
+     */
+    private void payOrderAndChoosePayMethod()
+    {
+        //点击确认支付, 弹出选择支付的方式的对话框
+        ActionSheetChoosePayMethodDialog choosePayMethodDialog = new ActionSheetChoosePayMethodDialog(mContext);
+        choosePayMethodDialog.builder().setCanceledOnTouchOutside(true)
+                .setCancelable(true)
+                .setConformClickListener(new ActionSheetChoosePayMethodDialog.OnConformClickListener() {
+                    @Override
+                    public void onConformClick(int payType) {
+                        if (payType == ActionSheetChoosePayMethodDialog.OFFLINE_PAY) {
+                            //到店支付  那就去到待安装界面
+                            toastMgr.builder.display("去到待安装界面", 1);
+                        } else {
+                            //线上支付  选择线上支付方式
+                            toastMgr.builder.display("选择微信支付还是支付宝支付", 1);
+                        }
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * 确认安装
+     */
+    private void conformInstall() {
+
+    }
+
+    /**
+     * 返回, 去我的订单
+     */
+    private void gotoMyOrdersActiviy()
     {
         Intent intent = new Intent();
         intent.setClass(mContext, MyOrdersActivity.class);
@@ -341,8 +383,12 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
         setMaintanceInfo(orderDetailInfo);
         //4.显示订单详情  这里就是listview了
         setListviewDisplay(orderDetailInfo.getOrderPackageModels());
+        //5.设置顶部按钮状态text 设置底部价格, 确认付款 获取是去人安装
+        setTopBottomTextShow(orderDetailInfo.getOrderPrice());
 
     }
+
+
 
     private void setListviewDisplay(List<OrderPackageModels> orderPackageModels) {
 
@@ -427,6 +473,34 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
         order_info_order_num.setText(orderPrice.getOrderNum());//订单号
         order_total_price.setText(orderPrice.getTotalPrice() + "");//订单总价
         order_word_time_cost.setText(orderPrice.getInstallCoast() + "");//工时费
+    }
+
+    /**
+     * 设置顶部以及底部显示
+     * @param orderPrice
+     */
+    private void setTopBottomTextShow(OrderPrice orderPrice) {
+        if (mCurrentType == WAIT_BUYER_TYPE)
+        {
+            title.setText("待付款");
+            order_detail_btn_top.setVisibility(View.VISIBLE);
+            order_detail_btn_top.setText("取消订单");
+
+            //可见
+            order_detail_bottom_layout_bar.setVisibility(View.VISIBLE);
+            tv_pay.setText("确认付款");
+            tv_price.setText(orderPrice.getTotalPrice() + "");
+        }
+        else if (mCurrentType == WAIT_SHOP_INSTALL_TYPE)
+        {
+            title.setText("待安装");
+            //顶部不可见
+            order_detail_btn_top.setVisibility(View.GONE);
+            //可见
+            order_detail_bottom_layout_bar.setVisibility(View.VISIBLE);
+            tv_pay.setText("确认安装");
+            tv_price.setText(orderPrice.getTotalPrice() + "");
+        }
     }
 
     public class OrderDetailListViewAdapter extends BaseAdapter {
@@ -637,6 +711,7 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
 
     private void setTitle2(int titleType)
     {
+        mCurrentType = titleType;
         if (WAIT_SIGN_TYPE == titleType)
         {
             title.setText("待签收");
