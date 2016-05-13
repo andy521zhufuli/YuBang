@@ -83,8 +83,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     private CustomProgressDialog mProgressDialog;
     String mRepairServiceServiceId;
     String mCarType;
-
-    private ProductPackageAdapter goodsAdapter;
     private ProductPackageAdapter1 goodsAdapter1;
 
     private List<Json2ProductPackageBean> mJson2ProductPackageBeanList;//商城过来  保存的数据
@@ -530,260 +528,6 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     }
 
 
-    /**
-     * 列表暂时适配器
-     *
-     *TODO 这里要把这个适配器抽象出来 放在adapter下面
-     *
-     * 适配器的定义,要继承BaseAdapter
-     */
-    public class ProductPackageAdapter extends BaseAdapter{
-
-        List<Json2ProductPackageBean> mpplist;
-        int from;
-
-        public ProductPackageAdapter(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
-        }
-
-        public ProductPackageAdapter(List<Json2ProductPackageBean> json2ProductPackageBeanList, int _from) {
-            this.mpplist = json2ProductPackageBeanList;
-            this.from = _from;
-            mProductPkgBeanListToConformOrderPage = json2ProductPackageBeanList;
-        }
-
-
-        public void refresh(List<Json2ProductPackageBean> json2ProductPackageBeanList) {
-            mpplist = json2ProductPackageBeanList;
-            mProductPkgBeanListToConformOrderPage = json2ProductPackageBeanList;
-            notifyDataSetChanged();
-            L.d("refresh");
-        }
-
-
-        @Override
-        public int getCount() {
-            return mpplist.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mpplist.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View view, ViewGroup parent) {
-            /*
-             * 1.手工创建对象 2.加载xml文件
-             */
-            final ViewHolder holder;
-            if (view == null)
-            {
-                holder =  new ViewHolder();
-                view = View.inflate(mContext, R.layout.item_test_listview_data, null);
-                productitem_changge_before = (LinearLayout) view.findViewById(R.id.productitem_changge_before);
-                productitem_changge_after  = (LinearLayout) view.findViewById(R.id.productitem_changge_after);
-
-
-                holder.produte_pic = (ImageView) view.findViewById(R.id.produte_pic);
-                holder.productitem_changge_before = (LinearLayout) view.findViewById(R.id.productitem_changge_before);
-                holder.maintenance_produte_name = (TextView) view.findViewById(R.id.maintenance_produte_name);
-                holder.maintenance_img_1 = (TextView) view.findViewById(R.id.maintenance_hecheng_1);
-                holder.produte_price = (TextView) view.findViewById(R.id.produte_price);
-                holder.produte_count = (TextView) view.findViewById(R.id.produte_count);
-                holder.maintenance_hecheng_1 = (TextView) view.findViewById(R.id.maintenance_hecheng_1);
-
-                holder.productitem_changge_after = (LinearLayout) view.findViewById(R.id.productitem_changge_after);
-                holder.jiancount = (Button) view.findViewById(R.id.jiancount);
-                holder.jiacount = (Button) view.findViewById(R.id.jiacount);
-                holder.count_tx = (TextView) view.findViewById(R.id.count_tx);
-                holder.delete_bt = (RelativeLayout) view.findViewById(R.id.delete_bt);
-                holder.change_bt = (RelativeLayout) view.findViewById(R.id.change_bt);
-
-
-                holder.product_service_left_image = (ImageView) view.findViewById(R.id.product_service_left_image);;//保养服务分类图片
-                holder.product_service_name = (TextView) view.findViewById(R.id.product_service_name);;//保养服务分类名字
-                holder.product_service_title_layout = (LinearLayout) view.findViewById(R.id.product_service_title_layout);;//分类布局
-
-                view.setTag(holder);
-            }
-            else
-            {
-                holder = (ViewHolder) view.getTag();
-            }
-            String pathcode = mpplist.get(position).getPathCode();
-            String photoname = mpplist.get(position).getPhotoName();
-            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
-
-            //笨方法用来分类, 行不通
-            if (position == 0)
-            {
-                lastItemTitle = mpplist.get(position).getPackageName();
-            }
-            else
-            {
-                nowItemTitle = mpplist.get(position).getPackageName();
-                if (nowItemTitle.equals(lastItemTitle))
-                {
-                    holder.product_service_title_layout.setVisibility(View.GONE);
-                }
-            }
-            //上面那方法废弃了
-
-            if (isModifyList == false)
-            {
-                L.d(TAG, "产品包图片加载url = " + url);
-                ImageLoaderTools.getInstance(mContext).displayImage(url, holder.produte_pic);
-            }
-
-            if (tv_modify_goods.getText().toString().equals("保存"))
-            {
-                holder.productitem_changge_before.setVisibility(View.GONE);
-                holder.productitem_changge_after.setVisibility(View.VISIBLE);
-            }
-            else if (tv_modify_goods.getText().toString().equals("编辑"))
-            {
-                holder.productitem_changge_after.setVisibility(View.GONE);
-                holder.productitem_changge_before.setVisibility(View.VISIBLE);
-            }
-
-            holder.maintenance_produte_name.setText(mpplist.get(position).getProductName());
-            holder.produte_price.setText("￥" + mpplist.get(position).getRetailPrice() + "");
-
-            holder.maintenance_hecheng_1.setText(mpplist.get(position).getProductShow());
-
-            holder.produte_count.setText("x" + mpplist.get(position).getProductAmount() + "");
-            holder.produte_price.setText("￥" + mpplist.get(position).getRetailPrice() + "");
-            holder.produte_price.setText("￥" + mpplist.get(position).getRetailPrice() + "");
-            holder.count_tx.setText("x" + mpplist.get(position).getProductAmount() + "");
-
-            holder.product_service_name.setText(mpplist.get(position).getPackageName());
-
-
-            //加商品
-            holder.jiacount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String num = holder.produte_count.getText().toString();
-                    int num1 = Integer.parseInt(num);
-                    num1++;
-                    mJson2ProductPackageBeanList.get(position).setProductAmount(num1);
-                    holder.produte_count.setText("x" + num1);
-                    holder.count_tx.setText("x" + num1);
-
-                    countTotalPrice(mJson2ProductPackageBeanList);
-                }
-            });
-            //减商品
-            holder.jiancount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String numJian = holder.produte_count.getText().toString();
-                    int num2 = Integer.parseInt(numJian);
-                    if (num2 == 1)
-                    {
-                        AlertDialog alertDialog = new AlertDialog(mContext);
-                        alertDialog.builder()
-                                .setTitle("提示")
-                                .setMsg("您确定要删除商品吗?")
-                                .setPositiveButton("确定", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                    }
-                                })
-                                .setNegativeButton("取消", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                    }
-                                })
-                                .show();
-                        toastMgr.builder.display("请点击删除来删除商品",1);
-                        return;
-                    }
-                    num2--;
-                    mJson2ProductPackageBeanList.get(position).setProductAmount(num2);
-                    holder.produte_count.setText("x" + num2);
-                    holder.count_tx.setText("x" + num2);
-
-                    countTotalPrice(mJson2ProductPackageBeanList);
-
-                }
-            });
-            holder.productitem_changge_before.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    toastMgr.builder.display("商品详情",1);
-
-                }
-            });
-
-
-            holder.delete_bt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    toastMgr.builder.display("删除商品", 1);
-                    mJson2ProductPackageBeanList.remove(position);
-                    List<Category> categories = GoodsCategoryHelper.productsToCategoryList(mJson2ProductPackageBeanList);
-                    goodsAdapter1.refresh(categories);
-
-                }
-            });
-            holder.change_bt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    toastMgr.builder.display("更换商品", 1);
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, ShoppingmallProductChangeActivity.class);
-                    String categoryid = mpplist.get(position).getCategory();
-
-
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("position",position);
-                    bundle.putSerializable("product", mpplist.get(position));
-                    bundle.putString(Configs.categoryId, categoryid);
-                    intent.putExtras(bundle);
-                    ShoppingMallGoodsActivity.this.startActivityForResult(intent, CHANGE_PRODUCT_Request);
-                }
-            });
-
-            L.d("会不会重新刷新");
-
-
-            countTotalPrice(mpplist);
-
-            return view;
-        }
-
-        class ViewHolder
-        {
-            ImageView       produte_pic;//左侧图片
-
-            LinearLayout    productitem_changge_before;//商品名字  价格等等
-            TextView        maintenance_produte_name;//产品名字
-            TextView        maintenance_img_1;//半合成
-            TextView        produte_price;//产品价格
-            TextView        produte_count;//产品数量
-            TextView        maintenance_hecheng_1;//半合成
-
-            LinearLayout    productitem_changge_after;//商品数量删除 加减 更换
-            Button          jiancount;//减商品数量
-            Button          jiacount;//加商品数量
-            TextView        count_tx;//商品数量  加减中间的
-            RelativeLayout  delete_bt;//商品删除
-            RelativeLayout  change_bt;//商品更换
-
-            ImageView       product_service_left_image;//保养服务分类图片
-            TextView        product_service_name;//保养服务分类名字
-            LinearLayout    product_service_title_layout;//分类布局
-        }
-    }
 
     public class ProductPackageAdapter1 extends BaseAdapter{
 
@@ -802,12 +546,18 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             this.from = _from;
             this.mPContext = context;
             mProductPkgBeanListToConformOrderPage = categoryToJsonProductPackageGoods(json2ProductPackageBeanList);
+
+            mJson2ProductPackageBeanList = null;
+            mJson2ProductPackageBeanList = mProductPkgBeanListToConformOrderPage;
         }
 
 
         public void refresh(List<Category> json2ProductPackageBeanList) {
             mpplist = json2ProductPackageBeanList;
             mProductPkgBeanListToConformOrderPage = categoryToJsonProductPackageGoods(json2ProductPackageBeanList);
+
+            mJson2ProductPackageBeanList = null;
+            mJson2ProductPackageBeanList = mProductPkgBeanListToConformOrderPage;
             notifyDataSetChanged();
             L.d("refresh");
         }
