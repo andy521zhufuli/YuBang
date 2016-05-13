@@ -20,7 +20,8 @@ import okhttp3.Call;
 public class HttpReqWXShare
 {
     private Context mContext;
-    private HttpReqCallback mCallback;
+    private HttpReqShareCallback mCallback;
+    int mType;
 
     public HttpReqWXShare(Context context)
     {
@@ -29,9 +30,10 @@ public class HttpReqWXShare
     }
 
 
-    public void setCallback(HttpReqCallback callback)
+    public void setCallback(HttpReqShareCallback callback, int type)
     {
         this.mCallback = callback;
+        this.mType = type;
     }
 
     /**
@@ -82,7 +84,7 @@ public class HttpReqWXShare
                 }
                 else
                 {
-                    mCallback.onSuccess(wxShareBean);
+                    mCallback.onSuccess(wxShareBean, mType);
                 }
             }
 
