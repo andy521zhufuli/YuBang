@@ -3,13 +3,20 @@ package com.car.yubangapk.utils.customnotify;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.RemoteViews;
 
 import com.andy.android.yubang.R;
+import com.car.yubangapk.json.JSONUtils;
+import com.car.yubangapk.ui.MyOrderDetailInfoActivity;
 import com.car.yubangapk.ui.NofityBtnClick2ShowActivity;
 import com.car.yubangapk.ui.NofityClick2ShowActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 
 /**
@@ -34,11 +41,31 @@ public class NotifyStyles
      */
     public void notify_normal_singLine(String title, String content, String customContent) {
         //设置想要展示的数据内容
-        Intent intent = new Intent(mContext, NofityClick2ShowActivity.class);
+        String orderId = null;
+        try {
+            JSONObject jsonObject = new JSONObject(customContent);
+            String type = JSONUtils.getString(jsonObject, "type", "");
+            if (type.equals("order"))
+            {
+                orderId = JSONUtils.getString(jsonObject, "orderId", "");
+            }
+            else
+            {
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(mContext, MyOrderDetailInfoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("orderId", orderId);
+        intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pIntent = PendingIntent.getActivity(mContext,
                 requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        int smallIcon = R.drawable.yybao_bigicon;
+        int smallIcon = R.mipmap.ic_launcher;
         String ticker = "您有一条新通知";
 
         //实例化工具类，并且调用接口

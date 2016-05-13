@@ -107,8 +107,7 @@ public class YuBangApplication extends Application
                                 // 如果还要弹出通知，可直接调用以下代码或自己创建Notifaction，否则，本通知将不会弹出在通知栏中。
                                 NotifyStyles styles = new NotifyStyles(getApplicationContext());
                                 styles.notify_normal_singLine(title, content, customContent);
-
-                                xGNotifaction.doNotify();
+                                //xGNotifaction.doNotify();
                             }
                         });
             }

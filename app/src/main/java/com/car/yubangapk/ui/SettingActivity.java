@@ -104,6 +104,10 @@ public class SettingActivity extends BaseActivity {
                         })
                         .show();
             }
+            else
+            {
+                toastMgr.builder.display("您当前为最新版", 1);
+            }
         }
     }
 

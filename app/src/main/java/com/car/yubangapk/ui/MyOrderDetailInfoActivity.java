@@ -28,6 +28,7 @@ import com.car.yubangapk.json.bean.OrderDetail.OrderProductModels;
 import com.car.yubangapk.json.formatJson.FormatJsonOrderDetail.Json2OrderDetail;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetMyOrderDetailInfo;
+import com.car.yubangapk.ui.myordersfragment.MyOrdersActivity;
 import com.car.yubangapk.ui.shoppingmallgoodsutil.Category;
 import com.car.yubangapk.ui.shoppingmallgoodsutil.GoodsCategoryHelper;
 import com.car.yubangapk.utils.L;
@@ -182,7 +183,15 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
             return;
         }
 
-        getOrderDetail(userid, mOrderId);
+        if (mOrderId == null)
+        {
+
+        }
+        else
+        {
+            getOrderDetail(userid, mOrderId);
+        }
+
 
     }
 
@@ -254,7 +263,7 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
         switch (view.getId())
         {
             case R.id.img_back:
-                finish();
+                gotoMyActiviy();
                 break;
             case R.id.order_detail_btn_top:
                 toastMgr.builder.display(order_detail_btn_top.getText().toString(), 1);
@@ -283,6 +292,14 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
                 break;
         }
     }
+    private void gotoMyActiviy()
+    {
+        Intent intent = new Intent();
+        intent.setClass(mContext, MyOrdersActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
+
 
 
     /**
@@ -311,6 +328,10 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
     @Override
     public void onSuccess(Object object) {
         OrderDetailInfo orderDetailInfo = (OrderDetailInfo) object;
+
+        String status = orderDetailInfo.getOrderStatus();
+        setTitle2(Integer.parseInt(status));
+
         //根据这个区显示
         //1.首先显示单号 价格
         setOrderPrice(orderDetailInfo.getOrderPrice());
@@ -613,6 +634,65 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
         listView.setLayoutParams(params);
     }
 
+
+    private void setTitle2(int titleType)
+    {
+        if (WAIT_SIGN_TYPE == titleType)
+        {
+            title.setText("待签收");
+            //不可见
+            order_detail_btn_top.setVisibility(View.GONE);
+
+            order_detail_bottom_layout_bar.setVisibility(View.GONE);
+        }
+        else if (WAIT_BUYER_TYPE == titleType)
+        {
+            title.setText("待付款");
+            order_detail_btn_top.setVisibility(View.VISIBLE);
+            order_detail_btn_top.setText("取消订单");
+            //可见
+            order_detail_bottom_layout_bar.setVisibility(View.VISIBLE);
+            tv_pay.setText("确认付款");
+        }
+        else if (WAIT_SHOP_INSTALL_TYPE == titleType)
+        {
+            title.setText("待安装");
+            //顶部不可见
+            order_detail_btn_top.setVisibility(View.GONE);
+            //可见
+            order_detail_bottom_layout_bar.setVisibility(View.VISIBLE);
+            tv_pay.setText("确认安装");
+        }
+        else if (INSTALLED_TYPE == titleType)
+        {
+            title.setText("已安装");
+            //不可见
+            order_detail_btn_top.setVisibility(View.GONE);
+            order_detail_bottom_layout_bar.setVisibility(View.GONE);
+        }
+        else if (WAIT_EVALUATE_TYPE == titleType)
+        {
+            title.setText("待评价");
+            order_detail_btn_top.setVisibility(View.VISIBLE);
+            order_detail_btn_top.setText("评价订单");
+            //不可见
+            order_detail_bottom_layout_bar.setVisibility(View.GONE);
+        }
+        else if (DEAL_FAIL_TYPE == titleType)
+        {
+            title.setText("交易失败");
+            //不可见
+            order_detail_btn_top.setVisibility(View.GONE);
+            order_detail_bottom_layout_bar.setVisibility(View.GONE);
+        }
+        else if (DEAL_SUCCESS_TYPE == titleType)
+        {
+            title.setText("交易成功");
+            //不可见
+            order_detail_btn_top.setVisibility(View.GONE);
+            order_detail_bottom_layout_bar.setVisibility(View.GONE);
+        }
+    }
 
 
 }

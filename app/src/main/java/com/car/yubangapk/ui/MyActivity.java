@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,27 +15,16 @@ import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2MyUserInfoBean;
-import com.car.yubangapk.json.bean.WxShareBean;
 import com.car.yubangapk.model.Share;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetUserInfo;
-import com.car.yubangapk.network.myHttpReq.HttpReqShareCallback;
-import com.car.yubangapk.network.myHttpReq.HttpReqWXShare;
 import com.car.yubangapk.ui.myordersfragment.MyOrdersActivity;
 import com.car.yubangapk.ui.myrecommendpartner.MyRecommendedPartnerActivity;
-import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.view.CustomProgressDialog;
-import com.car.yubangapk.view.ShareDialog;
-
-import java.util.HashMap;
-
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.wechat.friends.Wechat;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
