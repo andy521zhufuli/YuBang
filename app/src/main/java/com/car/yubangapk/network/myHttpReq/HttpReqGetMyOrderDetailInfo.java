@@ -49,8 +49,8 @@ public class HttpReqGetMyOrderDetailInfo
     {
 
 
-        mUserId  = "66a64d1d-a51d-4b2f-a5ee-cff9900f3a52";
-        orderId = "8152d8de-067a-4863-b659-716e1bd03644";
+        //mUserId  = "66a64d1d-a51d-4b2f-a5ee-cff9900f3a52";
+        //orderId = "8152d8de-067a-4863-b659-716e1bd03644";
 
         OkHttpUtils.post()
                 .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_ORDER_DETAIL)

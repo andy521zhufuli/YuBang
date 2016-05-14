@@ -66,6 +66,9 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_FORGET_PWD = "/client/user/forgetPassWorld";
 
 
+    public static String IP_ADDRESS_ACTION_SEARCH_SEARCH = "/client/search/search";//搜索
+
+
 
 
 

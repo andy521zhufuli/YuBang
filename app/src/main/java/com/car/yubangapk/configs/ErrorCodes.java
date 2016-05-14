@@ -9,7 +9,7 @@ public class ErrorCodes {
     public static final String NETWORK_ERROR = "网络错误";
     public static final String SERVER_ERROR = "服务器错误";
     public static final String NO_PROCUDT_PACKAGE = "对不起, 没有相关产品包";
-    public static final String NO_DATA = "服务器错误";
+    public static final String NO_DATA = "没有数据";
     public static final String NOT_LOGIN = "用户未登录";
     public static final String  _JSON_DECODE_ERROR = "json解析出错";//json 解析出错
 

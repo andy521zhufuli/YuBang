@@ -90,7 +90,7 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
         findViews();
 
         Bundle bundle = getIntent().getExtras();
-        String response = bundle.getString("response");
+
         String carTyep = bundle.getString(Configs.mCarType);
         mFrom = bundle.getString(Configs.FROM);
         mCarType = carTyep;
@@ -166,43 +166,6 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
 
     }
 
-
-    /**
-     * 通过传过来的Json2ProductPackageBean  是字符串  拿到里面所有的id  然后遍历每个id里面的产品包的名字
-     */
-    private void getAllRepareServiceByIds(String response) {
-
-        Json2ShoppingmallBottomPics pic = new Json2ShoppingmallBottomPics(response);
-        List<Json2ShoppingmallBottomPicsBean> beans = pic.getShoppingmallBottomPics();
-        if (beans == null)
-        {
-            AlertDialog alertDialog = new AlertDialog(mContext);
-            alertDialog.builder().setTitle("没有可修改")
-                    .setCancelable(false)
-                    .setNegativeButton("返回", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            finish();
-                        }
-                    })
-                    .show();
-            return;
-        }
-        else
-        {
-            mBeans = beans;
-            int size = beans.size();
-            mSizeBean = size;
-            for (int position = 0; position < size; position++)
-            {
-                String id = beans.get(position).getId();
-
-                httpGetProductPackageId(id,mCarType, position);
-            }
-        }
-
-
-    }
 
 
 
@@ -478,21 +441,15 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
 
         List<Json2ProductPackageIdBean> mpplist;
 
-
-        public ProductServiceModifyAdapter() {
-        }
-
         public ProductServiceModifyAdapter(List<Json2ProductPackageIdBean> json2ProductPackageBeanList) {
             this.mpplist = json2ProductPackageBeanList;
         }
-
 
         public void refresh(List<Json2ProductPackageIdBean> json2ProductPackageBeanList) {
             mpplist = json2ProductPackageBeanList;
             notifyDataSetChanged();
             L.d("refresh");
         }
-
 
         @Override
         public int getCount() {
@@ -531,7 +488,6 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
                 holder = (ViewHolder) view.getTag();
             }
 
-
             String packageName = mpplist.get(position).getPackageName();
 
             holder.product_service_modify_name.setText(packageName);
@@ -544,17 +500,11 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
             holder.product_service_modify_layout.setOnClickListener(new ListViewItemClick(position, holder.product_service_modify_check));
             return view;
         }
-
-
         class ViewHolder
         {
             ImageView       product_service_modify_left_image;//左侧图片
-
-
             TextView        product_service_modify_name;//服务名字
-
             CheckBox product_service_modify_check;//选择框
-
             LinearLayout    product_service_modify_layout;//整个item布局
         }
     }
@@ -589,41 +539,23 @@ public class ShoppingmallProductModifyActivity extends BaseActivity implements V
 //                mCheckedBox.remove(mPositoin);
                 mCheckBoxMap.remove(mPositoin);
             }
-
             //遍历mCheckBoxMap 中有几个 然后就有几个放进去了
             int index = 0;
-
             mCheckedProductPackageIdBeans.clear();
             for (index = 0; index < mSizeBean; index++)
             {
-
-
                 if (mCheckBoxMap.containsKey(index) == true)
                 {
                     Json2ProductPackageIdBean bean = mJson2ProductPackageIdBeans.get(index);
                     mCheckedProductPackageIdBeans.add(bean);
                 }
             }
-
             int count = 0;
             count = mCheckedProductPackageIdBeans.size();
 
             info_check_sure_btn.setText("确定("+ count + ")");
-
-
-
-
-
-
-
-
-
-
         }
     }
-
-
-
 
     private boolean isFirstShowListview = false;
     private List<CheckBox> mCheckedBox;//记录item中的哪些checkbox被选中

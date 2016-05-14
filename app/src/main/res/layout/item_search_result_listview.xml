@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <View android:background="#ffced0cf"
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px" />
+
+    <!-- 左边图片显示-->
+    <LinearLayout android:orientation="horizontal"
+        android:id="@+id/maintenance_produte_layouts"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        <!-- 左边图片-->
+        <FrameLayout
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:background="@color/white" android:layout_width="60.0dip"
+            android:layout_height="60.0dip" android:layout_marginLeft="5.0dip"
+            android:layout_marginTop="10.0dip" android:layout_marginRight="5.0dip"
+            android:layout_marginBottom="7.0dip">
+            <ImageView
+                android:id="@+id/repair_service_pic"
+                android:padding="1.0dip" android:layout_width="60.0dip"
+                android:layout_height="60.0dip"
+                android:src="@mipmap/ic_launcher" />
+            <ImageView
+                android:layout_gravity="bottom"
+                android:id="@+id/produte_pic_add_1l"
+                android:visibility="gone"
+                android:layout_width="60.0dip"
+                android:layout_height="30.0dip"
+                android:src="@mipmap/product_item_add1l" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/result_item"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            >
+            <LinearLayout android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:id="@+id/linearLayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2.0dip"
+                android:layout_marginLeft="15dp"
+                >
+                <TextView android:id="@+id/pp_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="半合成"
+                    android:textSize="@dimen/text_20"
+                    />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
+
+

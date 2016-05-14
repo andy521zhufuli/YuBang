@@ -446,7 +446,8 @@
         <activity android:name="com.car.yubangapk.ui.ProductDetailInfoWebviewActivity" />
         <activity android:name="com.car.yubangapk.ui.MoreProductCommentListActivity" />
         <activity android:name="com.car.yubangapk.ui.UpgradeAppWebviewActivity" />
-        <activity android:name="com.car.yubangapk.ui.GuideActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.GuideActivity" />
+        <activity android:name="com.car.yubangapk.ui.SearchResultProductPackageActivity"></activity>
     </application>
 
 </manifest>

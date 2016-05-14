@@ -78,33 +78,6 @@ public class MyOrdersFragment extends ListFragment {
 			 ViewGroup container,  Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.my_order_fragment, container, false);
-
-
-//        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
-//        my_order_listview = (ListView) view.findViewById(android.R.id.list);
-//        mAdapter = new OrderListAdapter(list, list.size());
-//
-//        my_order_listview.setAdapter(mAdapter);
-//
-//        my_order_listview.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-//                    if (view.getLastVisiblePosition() == view.getCount() - 1 && !ViewCompat.canScrollVertically(view, 1)) {
-//                        swipeToLoadLayout.setLoadingMore(true);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//
-//            }
-//
-//        });
-//
-//        swipeToLoadLayout.setOnRefreshListener(this);
-//        swipeToLoadLayout.setOnLoadMoreListener(this);
 		return view;
 	}
 

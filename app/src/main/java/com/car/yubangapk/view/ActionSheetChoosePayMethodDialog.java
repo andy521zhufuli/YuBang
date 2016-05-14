@@ -74,7 +74,7 @@ public class ActionSheetChoosePayMethodDialog {
 	}
 
 
-	private static int CURRENT_PAY_METHOD = 0;
+	private static int CURRENT_PAY_METHOD = 2;
 	public static int ONLINE_PAY = 1;
 	public static int OFFLINE_PAY = 2;
 	private void initView(View view)

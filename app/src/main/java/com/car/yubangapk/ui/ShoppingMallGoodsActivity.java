@@ -87,7 +87,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
 
     private List<Json2ProductPackageBean> mJson2ProductPackageBeanList;//商城过来  保存的数据
     private List<Json2ShopServiceBean>    mJson2ShopServiceBeanList;
-    private String mResponse;
+//    private String mResponse;
 
     private String mRepairService;
     //传递给可修改的那一页
@@ -121,9 +121,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             mFrom = bundle.getString(Configs.FROM);
             //从首页门店过来  就要获取产品包
             String serviceId = bundle.getString(Configs.serviceId);//服务id
-            String carType = bundle.getString(Configs.mCarType);//车主车类型
-            //这个是从上一个界面传过来的 为了去 修改 界面  备用
-            mResponse = bundle.getString("repairService");
+            String carType =   bundle.getString(Configs.mCarType);//车主车类型
 
             mRepairService = serviceId;
 
@@ -467,7 +465,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 finish();
                 break;
             case R.id.shoppingmall_goods_modify_layout:
-                modifyLayoutClicked(mResponse, mCarType);
+                modifyLayoutClicked(null, mCarType);
                 break;
         }
     }
@@ -499,7 +497,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         }
 
 
-        bundle.putString("response", response);
+
         bundle.putString(Configs.mCarType, carType);
         intent.putExtras(bundle);
         startActivityForResult(intent,MODIFY_PRODUCT_PKG_Request);

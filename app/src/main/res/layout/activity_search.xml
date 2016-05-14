@@ -1,15 +1,14 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffe4e7e9"
+    android:orientation="vertical"
     tools:context=".SearchActivity" >
 
     <RelativeLayout
         android:id="@+id/layout_search_topbar"
         style="@style/TopbarStyle" >
-
-
         <RelativeLayout
             android:id="@+id/layout_search_bar"
             android:layout_width="match_parent"
@@ -18,7 +17,6 @@
             android:layout_toLeftOf="@+id/tv_search"
             android:layout_toRightOf="@+id/img_back"
             >
-
             <EditText
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
@@ -28,11 +26,10 @@
                 android:layout_toRightOf="@+id/img_search"
                 android:layout_toLeftOf="@+id/topbar_search_voice"
                 android:background="@null"
-                android:hint="搜索京东商品/店铺"
+                android:hint="搜索产品包"
                 android:textColorHint="#a0a0a0"
                 android:textSize="@dimen/small_text_size" >
                 <requestFocus />
-
             </EditText>
 
             <ImageView
@@ -80,7 +77,6 @@
     <!-- 热门搜索 -->
     <RelativeLayout
         android:id="@+id/hot_search"
-        android:layout_below="@+id/layout_search_topbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/TopbarStyle"
@@ -114,7 +110,6 @@
 
     <RelativeLayout
         android:id="@+id/history_search"
-        android:layout_below="@+id/hot_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/TopbarStyle"
@@ -147,4 +142,4 @@
     </RelativeLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

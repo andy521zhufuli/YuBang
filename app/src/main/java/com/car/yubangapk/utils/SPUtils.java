@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -60,7 +61,6 @@ public class SPUtils
         {
             editor.putString(key, object.toString());
         }
-
         SharedPreferencesCompat.apply(editor);
     }
 
