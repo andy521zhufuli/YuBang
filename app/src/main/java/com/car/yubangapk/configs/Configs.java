@@ -67,6 +67,7 @@ public class Configs {
 
 
     public static String IP_ADDRESS_ACTION_SEARCH_SEARCH = "/client/search/search";//搜索
+    public static String IP_ADDRESS_ACTION_PAY_ORDER_PAY_METHOD = "/client/order/payOrder";//支付订单 支付方式
 
 
 

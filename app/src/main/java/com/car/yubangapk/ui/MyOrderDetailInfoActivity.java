@@ -27,6 +27,7 @@ import com.car.yubangapk.json.bean.OrderDetail.OrderProductModels;
 import com.car.yubangapk.json.formatJson.FormatJsonOrderDetail.Json2OrderDetail;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetMyOrderDetailInfo;
+import com.car.yubangapk.network.myHttpReq.HttpReqPayOrdersPayMethod;
 import com.car.yubangapk.ui.myordersfragment.MyOrdersActivity;
 import com.car.yubangapk.ui.shoppingmallgoodsutil.Category;
 import com.car.yubangapk.ui.shoppingmallgoodsutil.GoodsCategoryHelper;
@@ -315,6 +316,7 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
                         if (payType == ActionSheetChoosePayMethodDialog.OFFLINE_PAY) {
                             //到店支付  那就去到待安装界面
                             toastMgr.builder.display("去到待安装界面", 1);
+                            conformPay();
                         } else {
                             //线上支付  选择线上支付方式
                             toastMgr.builder.display("选择微信支付还是支付宝支付", 1);
@@ -322,6 +324,26 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
                     }
                 })
                 .show();
+    }
+
+
+    private void conformPay()
+    {
+        HttpReqPayOrdersPayMethod payOrdersPayMethod = new HttpReqPayOrdersPayMethod();
+        payOrdersPayMethod.setCallback(new HttpReqCallback() {
+            @Override
+            public void onFail(int errorCode, String message) {
+                toastMgr.builder.display("到店支付失败" + message, 1);
+            }
+
+            @Override
+            public void onSuccess(Object object) {
+                toastMgr.builder.display("到店支付成功, 请在店支付", 1);
+                gotoMyOrdersActiviy();
+            }
+        });
+        String userid = Configs.getLoginedInfo(mContext).getUserid();
+        payOrdersPayMethod.payOrders(mOrderId, "2", userid);
     }
 
     /**
