@@ -365,7 +365,6 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
     }
 
 
-
     /**
      * 获取订单详情失败
      * @param errorCode
