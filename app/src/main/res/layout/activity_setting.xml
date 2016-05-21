@@ -12,12 +12,12 @@
         <ImageView
             android:id="@+id/img_back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_margin="6dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingRight="30dp"
             android:src="@drawable/common_title_back_selector" />
 
         <TextView
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="更多"
+            android:text="设置"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/black"
             android:textSize="@dimen/medium_text_size" />
@@ -35,7 +35,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_login_topbar"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        >
 
         <LinearLayout
             android:id="@+id/layout_location"
@@ -43,7 +44,9 @@
             android:layout_height="@dimen/item_height"
             android:background="@drawable/bg_item_center"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="0.0dip"
@@ -68,7 +71,8 @@
             android:layout_height="@dimen/item_height"
             android:background="@drawable/bg_item_center"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0.0dip"
@@ -95,7 +99,9 @@
             android:layout_height="@dimen/item_height"
             android:background="@drawable/bg_item_center"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="0.0dip"
@@ -120,7 +126,9 @@
             android:layout_height="@dimen/item_height"
             android:background="@drawable/bg_item_center"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="0.0dip"
@@ -146,7 +154,9 @@
             android:layout_height="@dimen/item_height"
             android:background="@drawable/bg_item_center"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="0.0dip"
@@ -206,14 +216,19 @@
                 android:src="@mipmap/personel_arrow_right" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_margin="@dimen/item_margin_large"
-            android:background="@drawable/btn_ok"
-            android:text="退出"
-            android:textColor="@color/white" />
+
     </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/item_margin_large"
+        android:background="@drawable/btn_ok"
+        android:text="退出"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        />
 
 </RelativeLayout>

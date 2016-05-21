@@ -28,7 +28,7 @@
             android:id="@+id/choose_car_company_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ssdk_oks_classic_alipay"
+            android:src="@drawable/choose_car_info_icon"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="15dp"
             />

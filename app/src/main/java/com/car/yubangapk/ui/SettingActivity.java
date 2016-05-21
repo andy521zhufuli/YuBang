@@ -7,13 +7,17 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.andy.android.yubang.R;
+import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2FirstPageTabsBean;
 import com.car.yubangapk.json.bean.sysconfigs.Json2AppConfigs;
 import com.car.yubangapk.json.formatJson.formatSysconfigs.Json2SYSConfigs;
+import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.AlertDialog;
 import com.car.yubangapk.view.ScrollNavigationTab.ScrollTabView;
@@ -35,6 +39,8 @@ public class SettingActivity extends BaseActivity {
     Context     mContext;
     TextView    tv_version;
     LinearLayout    layout_about_version;
+    ImageView       img_back;
+    Button          btn_logout;
 
 
     @Override
@@ -63,6 +69,9 @@ public class SettingActivity extends BaseActivity {
     {
         tv_version = (TextView) findViewById(R.id.tv_version);
         layout_about_version = (LinearLayout) findViewById(R.id.layout_about_version);
+        img_back = (ImageView) findViewById(R.id.img_back);
+
+        btn_logout = (Button) findViewById(R.id.btn_logout);
 
         layout_about_version.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +79,35 @@ public class SettingActivity extends BaseActivity {
                 checkVersion();
             }
         });
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+    }
+
+    /**
+     * 退出登录
+     */
+    private void logout() {
+
+        SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+        //去到我的界面
+        toastMgr.builder.display("退出登录成功!", 1);
+        Bundle bundle = new Bundle();
+        bundle.putString("otherActivity", "logout");
+        Intent intent = new Intent();
+        intent.setClass(SettingActivity.this, MainActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
     }
 
     private void checkVersion() {

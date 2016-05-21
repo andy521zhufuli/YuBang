@@ -17,7 +17,7 @@
             android:layout_gravity="center_vertical"
             android:id="@+id/title_back"
             android:paddingLeft="15.0dip"
-            android:paddingRight="15.0dip"
+            android:paddingRight="30.0dip"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:src="@drawable/common_title_back_selector"

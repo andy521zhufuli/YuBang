@@ -278,6 +278,7 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.btn_service:
                 //客服
+                showServicePage();
                 break;
             case R.id.btn_pay:
                 //支付或者确认安装
@@ -291,6 +292,15 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
                 }
                 break;
         }
+    }
+
+    /**
+     * 显示联系客服界面
+     */
+    private void showServicePage() {
+        Intent intent = new Intent();
+        intent.setClass(MyOrderDetailInfoActivity.this, ClientServiceActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -408,8 +418,6 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
         setTopBottomTextShow(orderDetailInfo.getOrderPrice());
 
     }
-
-
 
     private void setListviewDisplay(List<OrderPackageModels> orderPackageModels) {
 

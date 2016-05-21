@@ -82,6 +82,7 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
 
         initViews();
 
+        //获取汽车生产厂商信息
         getCarCompanyInfo();
 
     }
@@ -111,7 +112,7 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
 
         @Override
         public void onResponse(String response) {
-            L.d(TAG, "汽车公司名字 json -= " + response);
+            L.d(TAG, "汽车公司名字 json = " + response);
             Json2CarCompany json2CarCompany = new Json2CarCompany(response);
             List<Json2CarCompanyBean> json2CarCompanyBeans = json2CarCompany.getCarCompanyList();
             mJson2CarCompanyList = json2CarCompanyBeans;

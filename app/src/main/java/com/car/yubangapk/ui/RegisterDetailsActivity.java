@@ -167,6 +167,9 @@ public class RegisterDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", IDCARD);
+                intent.putExtras(bundle);
                 intent.setClass(RegisterDetailsActivity.this, RegisterDetailUploadIDCardActivity.class);
                 startActivityForResult(intent, IDCARD);//上传身份证
             }
@@ -176,6 +179,9 @@ public class RegisterDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", DRIVER_PHOTO);
+                intent.putExtras(bundle);
                 intent.setClass(RegisterDetailsActivity.this, RegisterDetailUploadIDCardActivity.class);
                 startActivityForResult(intent, DRIVER_PHOTO);//上传司机照片
             }
@@ -185,6 +191,9 @@ public class RegisterDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", CAR_PHOTO);
+                intent.putExtras(bundle);
                 intent.setClass(RegisterDetailsActivity.this, RegisterDetailUploadIDCardActivity.class);
                 startActivityForResult(intent, CAR_PHOTO);//上传车辆照片
             }
@@ -194,6 +203,9 @@ public class RegisterDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", DRIVER_LICENSE);
+                intent.putExtras(bundle);
                 intent.setClass(RegisterDetailsActivity.this, RegisterDetailUploadIDCardActivity.class);
                 startActivityForResult(intent, DRIVER_LICENSE);//上传驾驶证
             }
@@ -203,6 +215,9 @@ public class RegisterDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", DRIVING_LICENSE);
+                intent.putExtras(bundle);
                 intent.setClass(RegisterDetailsActivity.this, RegisterDetailUploadIDCardActivity.class);
                 startActivityForResult(intent, DRIVING_LICENSE);//上传行驶证
             }
@@ -212,6 +227,9 @@ public class RegisterDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", TAXI_LICENSE);
+                intent.putExtras(bundle);
                 intent.setClass(RegisterDetailsActivity.this, RegisterDetailUploadIDCardActivity.class);
                 startActivityForResult(intent, TAXI_LICENSE);//上传营运证
             }
@@ -719,12 +737,12 @@ public class RegisterDetailsActivity extends BaseActivity {
 
 
 
-    private static final int IDCARD = 0X11;
-    private static final int DRIVER_PHOTO = 0X12;
-    private static final int CAR_PHOTO = 0X13;
-    private static final int DRIVER_LICENSE = 0X14;//驾驶证
-    private static final int DRIVING_LICENSE = 0X15;//行驶证
-    private static final int TAXI_LICENSE = 0X16;//营运证
+    public static final int IDCARD = 0X11;
+    public static final int DRIVER_PHOTO = 0X12;
+    public static final int CAR_PHOTO = 0X13;
+    public static final int DRIVER_LICENSE = 0X14;//驾驶证
+    public static final int DRIVING_LICENSE = 0X15;//行驶证
+    public static final int TAXI_LICENSE = 0X16;//营运证
 
 
 

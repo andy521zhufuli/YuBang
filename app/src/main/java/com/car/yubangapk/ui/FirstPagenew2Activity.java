@@ -49,6 +49,7 @@ import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetAppConfig;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
+import com.car.yubangapk.utils.APPUtils;
 import com.car.yubangapk.utils.BDMapData;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
@@ -206,7 +207,7 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
                                 .setPositiveButton("立即更新", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        updateAPp(version);
+                                        updateAPp();
                                     }
                                 })
                                 .setNegativeButton("下次再说", new View.OnClickListener() {
@@ -227,7 +228,7 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
 
     }
 
-    private void updateAPp(String version) {
+    private void updateAPp() {
         Intent intent = new Intent();
         intent.setClass(mContext, UpgradeAppWebviewActivity.class);
         startActivity(intent);
@@ -235,16 +236,7 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
 
     public String getVersion()
     {
-        try {
-            PackageManager manager = this.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            String version = info.versionName;
-            return version;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
+        return APPUtils.getVersion(mContext);
     }
 
 

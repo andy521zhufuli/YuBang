@@ -311,14 +311,16 @@ public class MainActivity extends TabActivity {
             //去发现界面
             setDisplayDiscoverPage();
         }
+        else if(activityToShow.equals("logout"))
+        {
+            //退出登录 之后 来到我的界面
+            setDisplayMyPage();
+        }
 //        else if (activityToShow.equals("LOGIN_SUCCESS"))
 //        {
 //            //这里不能判断 就正常启动行了
 //        }
-//        else if (activityToShow.equals("LOGINOUT_SUCCESS"))//退出了
-//        {
-//
-//        }
+
 
 
     }

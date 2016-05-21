@@ -45,6 +45,11 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true" />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        style="@style/line_vertical"
+        />
     <!-- 保养维护 一行显示两个-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,6 +80,11 @@
             android:scaleType="fitXY"
             />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        style="@style/line_vertical"
+        />
     <!-- 保养维护 一行显示四个-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -88,7 +98,6 @@
             android:layout_weight="1"
             android:src="@mipmap/shoppingmall_baoyang_03"
             android:gravity="center"
-            android:scaleType="fitXY"
             />
         <View
             android:layout_width="1.0px"
@@ -102,7 +111,6 @@
             android:layout_weight="1"
             android:src="@mipmap/shoppingmall_baoyang_04"
             android:gravity="center"
-            android:scaleType="fitXY"
             />
         <View android:layout_width="1.0px" android:layout_height="match_parent"
             android:layout_alignParentLeft="true" android:layout_centerVertical="true"
@@ -114,7 +122,6 @@
             android:layout_weight="1"
             android:src="@mipmap/shoppingmall_baoyang_05"
             android:gravity="center"
-            android:scaleType="fitXY"
             />
         <View android:layout_width="1.0px" android:layout_height="match_parent"
             android:layout_alignParentLeft="true" android:layout_centerVertical="true"
@@ -126,10 +133,14 @@
             android:layout_weight="1"
             android:src="@mipmap/shoppingmall_baoyang_06"
             android:gravity="center"
-            android:scaleType="fitXY"
             />
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        style="@style/line_vertical"
+        />
     <ImageView
         android:id="@+id/main_product_ad_3"
         android:layout_width="match_parent"

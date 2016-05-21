@@ -15,7 +15,7 @@
             android:layout_centerVertical="true"
             android:paddingLeft="10dp"
             android:layout_margin="6dp"
-            android:paddingRight="10dp"
+            android:paddingRight="30dp"
             android:src="@drawable/common_title_back_selector" />
 
         <TextView
@@ -262,7 +262,7 @@
                 android:includeFontPadding="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/small_medium_text_size"
-                android:text="(0)" />
+                android:text="" />
 
         </RelativeLayout>
         <TextView

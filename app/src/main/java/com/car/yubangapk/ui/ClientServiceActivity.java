@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.andy.android.yubang.R;
 import com.car.yubangapk.json.Base;
@@ -24,6 +25,8 @@ public class ClientServiceActivity extends BaseActivity implements View.OnClickL
     private Context mContext;
 
     private ImageView img_back;
+
+    private TextView header_name;
 
 
     @Override
@@ -44,9 +47,10 @@ public class ClientServiceActivity extends BaseActivity implements View.OnClickL
     private void findViews() {
 
         img_back = (ImageView) findViewById(R.id.img_back);
+        header_name  = (TextView) findViewById(R.id.header_name);
 
-
-
+        img_back.setOnClickListener(this);
+        header_name.setText("联系客服");
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +66,7 @@ public class RegisterDetailUploadIDCardActivity extends BaseActivity implements 
     private TextView text_take_photo;//拍照
     private TextView text_pick_photo;//从相册选择照片
     private TextView text_cancle;//取消
+    private ImageView   image_show1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,42 @@ public class RegisterDetailUploadIDCardActivity extends BaseActivity implements 
         mContext = this;
 
         findViews();
+        getUploadType();
+    }
+
+    private void getUploadType() {
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        int type = bundle.getInt("type");
+        switch (type)
+        {
+            case RegisterDetailsActivity.IDCARD:
+                text_pick_photo.setText("请上传身份证");
+                image_show1.setImageResource(R.mipmap.register_upload_user_id_card);
+                break;
+            case RegisterDetailsActivity.DRIVER_PHOTO:
+                text_pick_photo.setText("请上传司机照片");
+                image_show1.setImageResource(R.mipmap.register_upload_driver_photo);
+                break;
+            case RegisterDetailsActivity.CAR_PHOTO:
+                text_pick_photo.setText("请上传车辆照片");
+                image_show1.setImageResource(R.mipmap.register_upload_car_photo);
+                break;
+            case RegisterDetailsActivity.DRIVER_LICENSE:
+                text_pick_photo.setText("请上传驾驶证");
+                image_show1.setImageResource(R.mipmap.register_upload_driver_lincense);
+                break;
+            case RegisterDetailsActivity.DRIVING_LICENSE:
+                text_pick_photo.setText("请上传行驶证");
+                image_show1.setImageResource(R.mipmap.upload_id_card);
+                break;
+            case RegisterDetailsActivity.TAXI_LICENSE:
+                text_pick_photo.setText("请上传营运证");
+                image_show1.setImageResource(R.mipmap.upload_id_card);
+                break;
+        }
+
     }
 
     /**
@@ -84,6 +122,7 @@ public class RegisterDetailUploadIDCardActivity extends BaseActivity implements 
         text_take_photo = (TextView) findViewById(R.id.text_take_photo);//拍照
         text_pick_photo = (TextView) findViewById(R.id.text_pick_photo);//从相册选择照片
         text_cancle = (TextView) findViewById(R.id.text_cancle);//取消
+        image_show1 = (ImageView) findViewById(R.id.image_show1);
 
         //设置监听器
         text_take_photo.setOnClickListener(this);
@@ -212,7 +251,7 @@ public class RegisterDetailUploadIDCardActivity extends BaseActivity implements 
                 break;
             //从相册选择
             case R.id.text_pick_photo:
-                pickPhoto();
+                //pickPhoto();
                 break;
             //取消
             case R.id.text_cancle:

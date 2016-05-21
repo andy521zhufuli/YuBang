@@ -5,10 +5,7 @@ import android.content.Context;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.GetVerifyCodeBean;
-import com.car.yubangapk.json.bean.WxShareBean;
 import com.car.yubangapk.json.formatJson.FormatPayOrder;
-import com.car.yubangapk.json.formatJson.Json2WxShare;
-import com.car.yubangapk.json.formatJson.VerifyCode;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
@@ -30,8 +27,6 @@ public class HttpReqPayOrdersPayMethod
 
     public HttpReqPayOrdersPayMethod()
     {
-
-
     }
 
 

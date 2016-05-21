@@ -111,7 +111,7 @@
                 android:layout_weight="1.0"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="推荐合伙人"
+                android:text="推荐店家"
                 android:textColor="@color/red"
                 android:textSize="@dimen/small_medium_text_size" />
 
