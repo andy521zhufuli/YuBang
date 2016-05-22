@@ -31,6 +31,7 @@
             android:src="@drawable/choose_car_info_icon"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="15dp"
+            android:padding="2dp"
             />
 
 

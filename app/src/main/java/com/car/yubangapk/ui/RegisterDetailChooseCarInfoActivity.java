@@ -203,18 +203,30 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 //这里要利用adapter.getItem(position)来获取当前position所对应的对象
-                String name = mJson2CarCompanyList.get(position).getCompanyName();
+                TextView tv  = (TextView) view.findViewById(R.id.title);
+                String text = tv.getText().toString();
+                String name = "";
+                String companyId  = "";
+                for (Json2CarCompanyBean bean : mJson2CarCompanyList)
+                {
+                    if (bean.getCompanyName().equals(text))
+                    {
+                        name = text;
+                        companyId = bean.getId();
+                        break;
+                    }
+                }
                 toastMgr.builder.display("您选择的是" + name, 1);
-                String companyId = mJson2CarCompanyList.get(position).getId();
-                SPUtils.put(mContext, "companyId", companyId);
 
+                SPUtils.put(mContext, "companyId", companyId);
+                SPUtils.put(mContext, "chooseedCompany", name);
 
                 //去到子品牌
                 Intent intent = new Intent();
                 intent.setClass(RegisterDetailChooseCarInfoActivity.this, RegisterDetailChooseBrandActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("companyId", RegisterDetailChooseCarInfoActivity.this.mJson2CarCompanyList.get(position).getId());
-                SPUtils.put(mContext, "chooseedCompany", mJson2CarCompanyList.get(position).getCompanyName());
+                bundle.putString("companyId", companyId);
+
                 intent.putExtras(bundle);
 
                 startActivity(intent);

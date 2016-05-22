@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2CarBrandBean;
+import com.car.yubangapk.json.bean.Json2CarCompanyBean;
 import com.car.yubangapk.json.formatJson.Json2CarBrand;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
@@ -184,19 +185,29 @@ public class RegisterDetailChooseBrandActivity extends BaseActivity implements V
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 //这里要利用adapter.getItem(position)来获取当前position所对应的对象
-                toastMgr.builder.display(((SortModel) adapter.getItem(position)).getName(), 1);
 
-                String name = mJson2CarBrandBean.get(position).getCarBrandName();
+                TextView tv  = (TextView) view.findViewById(R.id.title);
+                String text = tv.getText().toString();
+                String name = "";
+                String brandId = "";
+                for (Json2CarBrandBean bean : mJson2CarBrandBean)
+                {
+                    if (bean.getCarBrandName().equals(text))
+                    {
+                        name = text;
+                        brandId = bean.getId();
+                        break;
+                    }
+                }
                 toastMgr.builder.display("您选择的是" + name, 1);
-                String brandId = mJson2CarBrandBean.get(position).getId();
                 SPUtils.put(mContext, "brandId", brandId);
-
+                SPUtils.put(mContext, "chooseedBrand", name);
                 //去到子品牌
                 Intent intent = new Intent();
                 intent.setClass(RegisterDetailChooseBrandActivity.this, RegisterDetailChooseCarChildBrandActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("brand", mJson2CarBrandBean.get(position).getId());
-                SPUtils.put(mContext, "chooseedBrand",mJson2CarBrandBean.get(position).getCarBrandName());
+                bundle.putString("brand", brandId);
+
                 intent.putExtras(bundle);
                 startActivity(intent);
 
