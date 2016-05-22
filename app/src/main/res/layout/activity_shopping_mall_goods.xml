@@ -91,15 +91,24 @@
         android:background="@drawable/bg_item_top" >
 
         <TextView
+            android:id="@+id/select_product_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:layout_marginLeft="20.0dip"
+            android:singleLine="true"
+            android:text="1"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/small_medium_text_size" />
+        <TextView
             android:id="@+id/modifyable_product_count"
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
-            android:layout_marginLeft="20.0dip"
             android:layout_marginRight="15.0dip"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="1个项目需要保养(共14个项目)"
+            android:text="个服务已选择(共14个产品包)"
             android:textColor="@color/gray"
             android:textSize="@dimen/small_medium_text_size" />
 
@@ -146,6 +155,7 @@
                 android:src="@mipmap/my_dingdan"
                 android:layout_marginLeft="15dp"
                 android:layout_alignParentLeft="true"
+                android:visibility="invisible"
                 />
             <TextView
                 android:id="@+id/text1_service"
@@ -158,7 +168,9 @@
                 android:text="小保养服务"
                 android:layout_centerVertical="true"
                 android:textColor="@color/text"
-                android:textSize="@dimen/small_text_size" />
+                android:textSize="@dimen/small_text_size"
+                android:visibility="invisible"
+                />
 
             <TextView
                 android:id="@+id/tv_modify_goods"

@@ -140,6 +140,12 @@ public class Configs {
     public static String FROM_SHOP         = "shop";//门店
 
 
+    //从门店进入产品包界面, 要把这个店铺的信息  店名 店的id带上, 作为确认订单里面的默认安装店铺
+    public static String DEFAULT_SHOP_NAME = "default_shop_name";//默认店铺的名字
+    public static String DEFAULT_SHOP_ID = "default_shop_id";//默认店铺的id
+    public static String DEFAULT_SHOP_ADDRESS = "default_shop_address";//默认的店铺地址
+    public static String IS_FROM_SHOP = "is_from_shop";//默认的店铺地址
+
     /**
      * 登陆之后的信息设置到sp里面
      * @param mContext

@@ -203,6 +203,13 @@ public class RegisterDetailChooseCarInfoActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 //这里要利用adapter.getItem(position)来获取当前position所对应的对象
+
+
+                /**
+                 * 这里是因为mJson2CarCompanyList 与重新按照字母
+                 * 排序后的顺序不一样, 不能直接用mJson2CarCompanyList去拿选择的数据
+                 * 所以这里就要重新匹配一下
+                 */
                 TextView tv  = (TextView) view.findViewById(R.id.title);
                 String text = tv.getText().toString();
                 String name = "";

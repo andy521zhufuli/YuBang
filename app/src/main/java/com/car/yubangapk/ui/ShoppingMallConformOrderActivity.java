@@ -39,6 +39,7 @@ import com.car.yubangapk.network.myHttpReq.HttpReqConformOrderCouponInterface;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetOrderPrice;
 import com.car.yubangapk.network.myHttpReq.HttpReqSubmitOrder;
 import com.car.yubangapk.network.myHttpReq.httpReqAddressInterface;
+import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.Warn.UpdateApp;
 import com.car.yubangapk.utils.toastMgr;
@@ -166,6 +167,35 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
         loadFisrtProductImage(mProductPackageListToOrderProductDetailPage);
         //获取默认的地址
         getDefaultAddress();
+
+        //获取默认的安装门店 ,如果是从门店进来才有
+        getDefaultShop();
+    }
+
+    /**
+     * 获取从门店进来的默认店铺
+     */
+    private void getDefaultShop() {
+        String defaultShopName = (String) SPUtils.get(mContext, Configs.DEFAULT_SHOP_NAME,"");
+        String defaultShopId = (String) SPUtils.get(mContext, Configs.DEFAULT_SHOP_ID,"");
+        String defaultShopAddress = (String) SPUtils.get(mContext, Configs.DEFAULT_SHOP_ADDRESS, "");
+
+        boolean isFrom = (boolean) SPUtils.get(mContext, Configs.IS_FROM_SHOP, false);
+
+        if (!defaultShopId.equals("") && !defaultShopName.equals("") && isFrom == true)
+        {
+            mInstallShopBean = new Json2InstallShopModelsBean();
+            mInstallShopBean.setShopId(defaultShopId);
+            mInstallShopBean.setShopName(defaultShopName);
+            mInstallShopBean.setShopAddress(defaultShopAddress);
+            //textview_receiver_address_content.setText("在" + defaultShopAddress + defaultShopName + "安装");
+            //这里 也直接去拿优惠券跟订单价格
+            setInstallShop(mInstallShopBean);
+        }
+        else
+        {
+
+        }
     }
 
     private void setCurrentDataToInstallTime() {
@@ -640,6 +670,8 @@ public class ShoppingMallConformOrderActivity extends BaseActivity implements Vi
 
     /**
      * 选择安装店铺
+     * 两个入口, 1, 在上面点击选择安装店铺的时候   调用这个方法
+     *          2. 在点击优惠券的时候 如果没有选择安装店铺, 那么就去选择安装店铺, 在查询优惠券
      */
     private void chooseInstallShop() {
 

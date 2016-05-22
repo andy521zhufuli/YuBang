@@ -23,10 +23,12 @@ import com.car.yubangapk.json.formatJson.Json2ShopService;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
 import com.car.yubangapk.utils.L;
+import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.view.AlertDialog;
 import com.car.yubangapk.view.CustomProgressDialog;
+import com.car.yubangapk.view.ListViewInScrollView;
 
 import java.util.List;
 
@@ -59,7 +61,7 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
     private TextView       show_shop_dan;//订单数目
 
     private ImageView      img_back;
-    private ListView       shop_show_service_listview;//店铺服务的listview
+    private ListViewInScrollView       shop_show_service_listview;//店铺服务的listview
     private ShopServiceListViewAdapter shopServiceAdapter;
 
     private List<Json2FirstPageShopBean> mShopBeanList;//店铺信息
@@ -181,7 +183,7 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
         img_back = (ImageView) findViewById(R.id.img_back);
 
         photo_show = (LinearLayout) findViewById(R.id.photo_show);//点击门店
-        shop_show_service_listview = (ListView) findViewById(R.id.shop_show_service_listview);//
+        shop_show_service_listview = (ListViewInScrollView) findViewById(R.id.shop_show_service_listview);//
 
         show_shop_photo         = (ImageView) findViewById(R.id.show_shop_photo);//店铺照片
         show_shop_name          = (TextView) findViewById(R.id.show_shop_name);//店铺名字
@@ -363,9 +365,9 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
         {
             //店面点击
             case R.id.photo_show:
-
-                intent.setClass(FirstPageShopShowActivity.this, FirstPageShopBigPhotoShowActivity.class);
-                startActivity(intent);
+                //只有一张图片,  没有点击显示大图
+                //intent.setClass(FirstPageShopShowActivity.this, FirstPageShopBigPhotoShowActivity.class);
+                //startActivity(intent);
                 break;
 
             //游湖活动
@@ -453,6 +455,11 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
                 public void onClick(View view) {
 
                     gotoShoppingmallGoodsActivity(position);
+                    //在确认订单里面用到,  用作默认店铺
+                    SPUtils.put(mContext, Configs.DEFAULT_SHOP_ID, shopInfoId);
+                    SPUtils.put(mContext, Configs.DEFAULT_SHOP_NAME, shopInfoShopName);
+                    SPUtils.put(mContext, Configs.DEFAULT_SHOP_ADDRESS, shopInfoShopAddress);
+                    SPUtils.put(mContext, Configs.IS_FROM_SHOP, true);
                 }
             });
 

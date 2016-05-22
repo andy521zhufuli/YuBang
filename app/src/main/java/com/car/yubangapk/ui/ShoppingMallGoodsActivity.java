@@ -37,6 +37,7 @@ import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.MyObjectStringCallback;
 import com.car.yubangapk.ui.shoppingmallgoodsutil.GoodsCategoryHelper;
 import com.car.yubangapk.utils.L;
+import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.Warn.NoProductPackage;
 import com.car.yubangapk.utils.Warn.UpdateApp;
 import com.car.yubangapk.utils.toastMgr;
@@ -78,6 +79,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     private LinearLayout    shoppingmall_goods_modify_layout;//修改
 
     private TextView        modifyable_product_count;//可修改的数目显示
+    private TextView        select_product_count;//当前选择了几个项目
+
 
 
     private CustomProgressDialog mProgressDialog;
@@ -132,6 +135,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             {
                 //从商城来  这里是去显示有多少个可修改  可供选择的项目 最顶部
                 httpGetLogicalService(serviceId, mFrom, carType);
+                //这里 不是从店铺进来的 在确认订单里面读取的时候 就不会显示默认店铺
+                SPUtils.put(mContext, Configs.IS_FROM_SHOP, false);
             }
             else
             {
@@ -268,7 +273,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
             mProgressDialog.dismiss();
             mModifyableItemList = modifyableItemList;
             mModifyableItemShoppingmallBottomPicBeanList = modifyableItemShoppingmallBottomPicBeanList;
-            modifyable_product_count.setText("1个项目需要保养(共" + mModifyableItemList.size() + "个项目)");
+            modifyable_product_count.setText("个项目需要保养(共" + mModifyableItemList.size() + "个项目)");
         }
     }
     class GetModifiableNumFromShop implements HttpReqModifiableCountFromShopCallback
@@ -300,7 +305,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         @Override
         public void onSuccess(List<Json2ShopServiceBean> modifyableSHopItemList) {
             mModifyableSHopItemList = modifyableSHopItemList;
-            modifyable_product_count.setText("1个项目需要保养(共" + mModifyableSHopItemList.size() + "个项目)");
+            modifyable_product_count.setText("个服务已选择(共" + mModifyableSHopItemList.size() + "个产品包)");
         }
     }
 
@@ -379,6 +384,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
         btn_service = (RelativeLayout) findViewById(R.id.btn_service);
         tv_price = (TextView) findViewById(R.id.tv_price);
         modifyable_product_count = (TextView) findViewById(R.id.modifyable_product_count);
+        select_product_count = (TextView) findViewById(R.id.select_product_count);
 
 
 
@@ -526,7 +532,9 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
     }
 
 
-
+    /**
+     * 产品包的adapter
+     */
     public class ProductPackageAdapter1 extends BaseAdapter{
 
         List<Category> mpplist;
@@ -723,7 +731,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 @Override
                 public void onClick(View view) {
                     String num = holder.produte_count.getText().toString();
-                    int num1 = Integer.parseInt(num);
+                    String realNum = num.substring(1);
+                    int num1 = Integer.parseInt(realNum);
                     num1++;
                     mJson2ProductPackageBeanList.get(position).setProductAmount(num1);
                     holder.produte_count.setText("x" + num1);
@@ -737,7 +746,8 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 @Override
                 public void onClick(View view) {
                     String numJian = holder.produte_count.getText().toString();
-                    int num2 = Integer.parseInt(numJian);
+                    String realNum = numJian.substring(1);
+                    int num2 = Integer.parseInt(realNum);
                     if (num2 == 1)
                     {
                         AlertDialog alertDialog = new AlertDialog(mContext);
@@ -916,6 +926,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 {
                     List<Json2ProductPackageIdBean> productPackageIdBeanList = (List<Json2ProductPackageIdBean>) bundle.getSerializable("bean");
                     mGetModifyProductPkgCount = productPackageIdBeanList.size();
+                    select_product_count.setText(mGetModifyProductPkgCount+"");
                     if (mGetModifyProductPkgCount == 0)
                     {
                         toastMgr.builder.display("您没有选择",1);
@@ -929,6 +940,7 @@ public class ShoppingMallGoodsActivity extends BaseActivity implements View.OnCl
                 {
                     List<Json2ShopServiceBean> json2ShopServiceBean = (List<Json2ShopServiceBean>) bundle.getSerializable("bean");
                     mGetModifyProductPkgCount = json2ShopServiceBean.size();
+                    select_product_count.setText(mGetModifyProductPkgCount+"");
                     if (mGetModifyProductPkgCount == 0)
                     {
                         toastMgr.builder.display("您没有选择",1);
