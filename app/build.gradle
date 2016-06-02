@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0.65"
+        versionName "1.0.67"
         multiDexEnabled true
     }
     buildTypes {

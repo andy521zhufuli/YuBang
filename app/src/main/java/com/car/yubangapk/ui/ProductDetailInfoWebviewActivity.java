@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import com.andy.android.yubang.R;
+import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetProductDetailIinfo;
 import com.car.yubangapk.utils.L;
@@ -112,8 +113,8 @@ public class ProductDetailInfoWebviewActivity extends BaseActivity implements Vi
      */
     private void webviewSetting(String html) {
 
-        ad_webview.loadData(html, "text/html;charset=UTF-8", null);
-        //ad_webview.loadUrl(html);
+        //ad_webview.loadData(html, "text/html;charset=UTF-8", null);
+        ad_webview.loadUrl(html);
         //goods_list_webview.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
         ad_webview.setWebChromeClient(new MyWebChromeClient());
         ad_webview.setWebViewClient(new MyWebViewClient());
@@ -145,7 +146,8 @@ public class ProductDetailInfoWebviewActivity extends BaseActivity implements Vi
     @Override
     public void onSuccess(Object object) {
         mProgress.dismiss();
-        String url = (String) object;
+
+        String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_PRODUCT_DETAIL_INFO_DETAIL_INFO + "?" + "productDetailReq.productId" + "=" + getProductId();
         webviewSetting(url);
     }
 

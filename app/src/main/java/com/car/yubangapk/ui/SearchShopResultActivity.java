@@ -1,25 +1,24 @@
 package com.car.yubangapk.ui;
 
-
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andy.android.yubang.R;
-import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
-import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
+import com.car.yubangapk.json.bean.Json2FirstPageShopBean;
 import com.car.yubangapk.json.bean.search.SearchResultProductPackageRows;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqSearchShop;
 import com.car.yubangapk.network.myHttpReq.search.HttpReqGetSearchReuslt;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
@@ -29,14 +28,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.List;
 
-public class SearchResultProductPackageActivity extends BaseActivity implements HttpReqCallback, PullToRefreshBase.OnRefreshListener2{
+public class SearchShopResultActivity extends BaseActivity implements HttpReqCallback, PullToRefreshBase.OnRefreshListener2 {
 
-
-    private Context                 mContext;
-    private final String     TAG = "SearchResultProductPackageActivity";
-    ImageView                       img_back;//返回
-    PullToRefreshListView           search_result_pull_refresh_list;//
-    HttpReqGetSearchReuslt          mHttpReqGetSearchReuslt;
+    private Context mContext;
+    private final String     TAG = "SearchShopResultActivity";
+    ImageView img_back;//返回
+    PullToRefreshListView search_result_pull_refresh_list;//
+    HttpReqSearchShop mHttpReqSearchShop;
     SearchResultListViewAdapter     mListViewAdapter;
 
     boolean                         isFirstRequest = true;
@@ -45,37 +43,38 @@ public class SearchResultProductPackageActivity extends BaseActivity implements 
     String                          mHotWord;
     String                          mUserid;
     int                             mCurrentPage = 1;
+    double                          mLat;
+    double                          mLon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_search_result_product_package);
+        setContentView(R.layout.activity_search_shop_result);
+
+
         mContext = this;
 
         findViews();
 
         Bundle bundle = getIntent().getExtras();
-        mCarType = bundle.getString("carType");
+        //mCarType = bundle.getString("carType");
         mHotWord = bundle.getString("word");
-        mUserid = bundle.getString("userid");
+        mLat = bundle.getDouble("latitude");
+        mLon = bundle.getDouble("longitude");
+        //mUserid = bundle.getString("userid");
 
-        mHttpReqGetSearchReuslt = new HttpReqGetSearchReuslt();
-        mHttpReqGetSearchReuslt.setCallback(this);
+
+        mHttpReqSearchShop = new HttpReqSearchShop();
+        mHttpReqSearchShop.setCallback(this);
+
+
         //第一次请求
-        getSearchResultByWord(mCarType, mCurrentPage + "", "5", mHotWord, mUserid);
-
+        getSearchResultByWord(mCurrentPage, 8, mHotWord);
 
     }
 
-    /**
-     *
-     * @param word
-     * @param carType
-     */
-    private void getSearchResultByWord(String carType, String page, String row, String word, String userid) {
-        mHttpReqGetSearchReuslt.getSearchResult(carType, page, row, word, userid);
-    }
 
     private void findViews() {
         img_back = (ImageView) findViewById(R.id.img_back);//返回
@@ -90,24 +89,29 @@ public class SearchResultProductPackageActivity extends BaseActivity implements 
 
     }
 
+
+    private void getSearchResultByWord(int page, int row, String word) {
+        mHttpReqSearchShop.searchShop(page, row, word, mLat, mLon);
+    }
+
     @Override
     public void onFail(int errorCode, String message) {
         toastMgr.builder.display(message, 1);
         if (errorCode == ErrorCodes.ERROR_CODE_NOT_LOGIN)
         {
-            NotLogin.gotoLogin(SearchResultProductPackageActivity.this);
+            NotLogin.gotoLogin(SearchShopResultActivity.this);
         }
         search_result_pull_refresh_list.onRefreshComplete();
     }
 
     @Override
     public void onSuccess(Object object) {
-        List<SearchResultProductPackageRows> rows = (List<SearchResultProductPackageRows>) object;
+        List<Json2FirstPageShopBean> json2FirstPageShopBeanList  = (List<Json2FirstPageShopBean>) object;
         mCurrentPage++;
         if (isFirstRequest)
         {
             initIndicator();
-            mListViewAdapter = new SearchResultListViewAdapter(rows);
+            mListViewAdapter = new SearchResultListViewAdapter(json2FirstPageShopBeanList);
             search_result_pull_refresh_list.setOnRefreshListener(this);
             search_result_pull_refresh_list.setAdapter(mListViewAdapter);
 
@@ -116,16 +120,13 @@ public class SearchResultProductPackageActivity extends BaseActivity implements 
         else
         {
             search_result_pull_refresh_list.onRefreshComplete();
-            List<SearchResultProductPackageRows> list = mListViewAdapter.getList();
-            for (SearchResultProductPackageRows row : rows) {
+            List<Json2FirstPageShopBean> list = mListViewAdapter.getList();
+            for (Json2FirstPageShopBean row : json2FirstPageShopBeanList) {
                 list.add(row);
             }
             mListViewAdapter.refresh(list);
         }
-
-
     }
-
 
     private void initIndicator()
     {
@@ -144,32 +145,32 @@ public class SearchResultProductPackageActivity extends BaseActivity implements 
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase refreshView) {
-        //没有下啦刷新的功能, 还有上啦加载
+
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-        getSearchResultByWord(mCarType, mCurrentPage + "", "5", mHotWord, mUserid);
+        getSearchResultByWord(mCurrentPage+1, 8, mHotWord);
     }
 
 
     class SearchResultListViewAdapter extends BaseAdapter
     {
 
-        private List<SearchResultProductPackageRows> repairServiceList;
+        private List<Json2FirstPageShopBean> repairServiceList;
 
-        public SearchResultListViewAdapter(List<SearchResultProductPackageRows> list)
+        public SearchResultListViewAdapter(List<Json2FirstPageShopBean> list)
         {
             this.repairServiceList = list;
         }
 
-        public void refresh(List<SearchResultProductPackageRows> list)
+        public void refresh(List<Json2FirstPageShopBean> list)
         {
             this.repairServiceList = list;
             notifyDataSetChanged();
         }
 
-        public List<SearchResultProductPackageRows> getList()
+        public List<Json2FirstPageShopBean> getList()
         {
             return this.repairServiceList;
         }
@@ -213,7 +214,7 @@ public class SearchResultProductPackageActivity extends BaseActivity implements 
             //String pathcode = repairServiceList.get(position).getPathCode();
             //String photoname = repairServiceList.get(position).getPhotoName();
             //String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
-            holder.pp_name.setText(repairServiceList.get(position).getPackageName());
+            holder.pp_name.setText(repairServiceList.get(position).getShopName());
             //ImageLoaderTools.getInstance(mContext).displayImage(url, holder.repair_service_pic);
             holder.result_item.setOnClickListener(new OnItemClick(repairServiceList.get(position)));
             return view;
@@ -228,24 +229,22 @@ public class SearchResultProductPackageActivity extends BaseActivity implements 
 
     class OnItemClick implements View.OnClickListener
     {
-        SearchResultProductPackageRows row;
+        Json2FirstPageShopBean row;
 
-        public OnItemClick(SearchResultProductPackageRows _row)
+        public OnItemClick(Json2FirstPageShopBean _row)
         {
             this.row = _row;
         }
 
         @Override
         public void onClick(View view) {
-            String repairService = row.getRepairService();
+
             Bundle bundle = new Bundle();
-            bundle.putString(Configs.serviceId, repairService);
-            bundle.putString(Configs.mCarType, mCarType);
-            bundle.putString(Configs.FROM, Configs.FROM_SHOPPINGMALL);
+            bundle.putSerializable("shopBean", row);
             Intent intent = new Intent();
             intent.putExtras(bundle);
-            intent.setClass(SearchResultProductPackageActivity.this, ShoppingMallGoodsActivity.class);
-            SearchResultProductPackageActivity.this.startActivity(intent);
+            intent.setClass(SearchShopResultActivity.this, FirstPageShopShowActivity.class);
+            SearchShopResultActivity.this.startActivity(intent);
         }
     }
 

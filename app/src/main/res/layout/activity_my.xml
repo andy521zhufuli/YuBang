@@ -202,12 +202,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/item_margin_top"
                 android:orientation="vertical" >
-
                 <LinearLayout
                     android:id="@+id/my_layout_mine_wallet"
                     style="@style/MineItemStyle"
-                    android:background="@drawable/bg_item_top" >
-
+                    android:background="@drawable/bg_item_top"
+                    android:visibility="gone"
+                    >
                     <ImageView
                         android:layout_width="26.0dip"
                         android:layout_height="26.0dip"

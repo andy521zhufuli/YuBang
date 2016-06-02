@@ -3,8 +3,6 @@ package com.car.yubangapk.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ZoomControls;
 
@@ -63,7 +60,6 @@ import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.ScrollTabView1;
 import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.ScrollTabsAdapter1;
 import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.TabAdapter1;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +81,7 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
     private BMapManager mBMapManager;
 
     private ImageView first_page_search;//搜索
+
 
     private List<BDMapData> bdMapClientList;
     //当前定位结果的经纬度
@@ -921,26 +918,14 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
         switch (view.getId())
         {
 
-//            case R.id.layout_order5:
-//                CURRENT_GET_SHOP_TIME = 1;//每次点击都默认是第一次去拿店铺
-//                TextView01.setBackground(getResources().getDrawable(R.mipmap.all_car));
-//                TextView02.setBackground(getResources().getDrawable(R.mipmap.baoyang));
-//                TextView03.setBackground(getResources().getDrawable(R.mipmap.dianlu));
-//                TextView04.setBackground(getResources().getDrawable(R.mipmap.peijian));
-//                TextView05.setBackground(getResources().getDrawable(R.mipmap.youlu_selected));
-//
-//                if (currentPage != YOU_LU_PAGE)
-//                {
-
-//                    locationClick();
-//                    initOverlay(YOU_LU_PAGE,mJson2FirstPageShopBeanList);
-//                }
-//                currentPage = YOU_LU_PAGE;
-//                break;
             //搜素
             case R.id.search_image_new:
                 Intent intent3 = new Intent();
-                intent3.setClass(FirstPagenew2Activity.this, SearchActivity.class);
+                intent3.setClass(FirstPagenew2Activity.this, SearchShopActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putDouble("latitude", latitude);
+                bundle.putDouble("longitude", longitude);
+                intent3.putExtras(bundle);
                 startActivity(intent3);
 
                 break;

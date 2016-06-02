@@ -264,7 +264,9 @@ public class MyOrdersFragment2 extends Fragment implements AdapterView.OnItemCli
     }
 
 
-
+    /**
+     * 获取订单的回调
+     */
     class GetOrders implements HttpReqCallback
     {
 
@@ -337,7 +339,9 @@ public class MyOrdersFragment2 extends Fragment implements AdapterView.OnItemCli
     }
 
 
-
+    /**
+     * 订单列表的适配器
+     */
     class OrderListAdapter extends BaseAdapter
     {
 
@@ -455,6 +459,11 @@ public class MyOrdersFragment2 extends Fragment implements AdapterView.OnItemCli
 
 
     private String mRequestStatus;
+
+    /**
+     * 请求状态吗
+     * @return
+     */
     private String getRequestType()
     {
 
@@ -495,6 +504,11 @@ public class MyOrdersFragment2 extends Fragment implements AdapterView.OnItemCli
     }
 
 
+    /**
+     * 获取订单状态
+     * @param status
+     * @return
+     */
     private int getOrderStatus(String status)
     {
         int requestStatus = 0;

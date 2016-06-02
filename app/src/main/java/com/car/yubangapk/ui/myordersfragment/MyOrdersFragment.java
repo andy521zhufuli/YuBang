@@ -48,15 +48,6 @@ public class MyOrdersFragment extends ListFragment {
 
 	public MyOrdersFragment(String text){
 		this.text=text;
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
 	}
 
 	@Override

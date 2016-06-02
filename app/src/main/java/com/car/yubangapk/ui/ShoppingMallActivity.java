@@ -836,7 +836,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product1_06     = (ImageView) findViewById(R.id.main_product1_06);
 
         //电子电路
-        shoppingmall_more_02 = (ImageView) findViewById(R.id.shoppingmall_more_02);//更多
+        shoppingmall_more_02 = (TextView) findViewById(R.id.shoppingmall_more_02);//更多
         main_product2_01     = (ImageView) findViewById(R.id.main_product2_01);//主打产品
         main_product2_02     = (ImageView) findViewById(R.id.main_product2_02);
         main_product2_03     = (ImageView) findViewById(R.id.main_product2_03);
@@ -845,7 +845,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product2_06     = (ImageView) findViewById(R.id.main_product2_06);
 
         //发动机件
-        shoppingmall_more_03 = (ImageView) findViewById(R.id.shoppingmall_more_03);//更多
+        shoppingmall_more_03 = (TextView) findViewById(R.id.shoppingmall_more_03);//更多
         main_product3_01     = (ImageView) findViewById(R.id.main_product3_01);//主打产品
         main_product3_02     = (ImageView) findViewById(R.id.main_product3_02);
         main_product3_03     = (ImageView) findViewById(R.id.main_product3_03);
@@ -853,7 +853,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product3_05     = (ImageView) findViewById(R.id.main_product3_05);
         main_product3_06     = (ImageView) findViewById(R.id.main_product3_06);
         //底盘配件
-        shoppingmall_more_04 = (ImageView) findViewById(R.id.shoppingmall_more_04);//更多
+        shoppingmall_more_04 = (TextView) findViewById(R.id.shoppingmall_more_04);//更多
         main_product4_01     = (ImageView) findViewById(R.id.main_product4_01);//主打产品
         main_product4_02     = (ImageView) findViewById(R.id.main_product4_02);
         main_product4_03     = (ImageView) findViewById(R.id.main_product4_03);
@@ -861,7 +861,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product4_05     = (ImageView) findViewById(R.id.main_product4_05);
         main_product4_06     = (ImageView) findViewById(R.id.main_product4_06);
         //车架配件
-        shoppingmall_more_05 = (ImageView) findViewById(R.id.shoppingmall_more_05);//更多
+        shoppingmall_more_05 = (TextView) findViewById(R.id.shoppingmall_more_05);//更多
         main_product5_01     = (ImageView) findViewById(R.id.main_product5_01);//主打产品
         main_product5_02     = (ImageView) findViewById(R.id.main_product5_02);
         main_product5_03     = (ImageView) findViewById(R.id.main_product5_03);
@@ -869,7 +869,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product5_05     = (ImageView) findViewById(R.id.main_product5_05);
         main_product5_06     = (ImageView) findViewById(R.id.main_product5_06);
         //拖架配件
-        shoppingmall_more_06 = (ImageView) findViewById(R.id.shoppingmall_more_06);//更多
+        shoppingmall_more_06 = (TextView) findViewById(R.id.shoppingmall_more_06);//更多
         main_product6_01     = (ImageView) findViewById(R.id.main_product6_01);//主打产品
         main_product6_02     = (ImageView) findViewById(R.id.main_product6_02);
         main_product6_03     = (ImageView) findViewById(R.id.main_product6_03);
@@ -900,7 +900,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(ShoppingMallActivity.this, SearchActivity.class);
+                intent.setClass(ShoppingMallActivity.this, SearchProductPackageActivity.class);
                 mContext.startActivity(intent);
             }
         });
@@ -1688,7 +1688,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView  main_product1_06;
 
     //电子电路
-    private ImageView shoppingmall_more_02;
+    private TextView shoppingmall_more_02;
     private ImageView  main_product2_01;
     private ImageView  main_product2_02;
     private ImageView  main_product2_03;
@@ -1697,7 +1697,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView  main_product2_06;
 
     //发动机件
-    private ImageView shoppingmall_more_03;
+    private TextView shoppingmall_more_03;
     private ImageView  main_product3_01;
     private ImageView  main_product3_02;
     private ImageView  main_product3_03;
@@ -1706,7 +1706,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView  main_product3_06;
 
     //底盘配件
-    private ImageView shoppingmall_more_04;
+    private TextView shoppingmall_more_04;
     private ImageView main_product4_01;
     private ImageView main_product4_02;
     private ImageView main_product4_03;
@@ -1715,7 +1715,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView main_product4_06;
 
     //车架配件
-    private ImageView shoppingmall_more_05;
+    private TextView shoppingmall_more_05;
     private ImageView main_product5_01;
     private ImageView main_product5_02;
     private ImageView main_product5_03;
@@ -1725,7 +1725,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
 
     //托架配件
-    private ImageView shoppingmall_more_06;
+    private TextView shoppingmall_more_06;
     private ImageView main_product6_01;
     private ImageView main_product6_02;
     private ImageView main_product6_03;

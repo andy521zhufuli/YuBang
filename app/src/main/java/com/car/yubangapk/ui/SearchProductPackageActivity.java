@@ -42,7 +42,7 @@ import java.util.Map;
  * @version 1.0
  * @created 2016-02-24
  */
-public class SearchActivity extends BaseActivity implements View.OnClickListener {
+public class SearchProductPackageActivity extends BaseActivity implements View.OnClickListener {
 
 
     private Context mContext;
@@ -57,6 +57,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private EditText textView2;//搜索框
     private TextView tv_search;//搜索
     private RelativeLayout  history_search;
+    private double mLatitude;
+    private double mLongitude;
 
 
     SearchHistoryAdapter mSearchHitoryAdapter;
@@ -70,12 +72,15 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         mContext = this;
         findViews();
 
-        mHistoryDBHelper = new RecordSQLiteOpenHelper(mContext);
+        mHistoryDBHelper = new RecordSQLiteOpenHelper(mContext, RecordSQLiteOpenHelper.PRODUCT_TYPE);
 
         getHotWord();
 
         getSearchHistory();
 
+        /**
+         * 搜索历史点击
+         */
         history_search_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -290,6 +295,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
 
     private void findViews() {
+
         //热门搜索
         layout_search_topbar = (RelativeLayout) findViewById(R.id.layout_search_topbar);
         search_recommend_gridview = (ForbiddenScrollGridView) findViewById(R.id.search_recommand);

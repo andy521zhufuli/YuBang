@@ -158,11 +158,31 @@
     </style>
 
 
+    <!-- 评论-->
     <style name="roomRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:maxHeight">14.0dip</item>
         <item name="android:progressDrawable">@drawable/ratingbar_drawable</item>
         <item name="android:minHeight">14.0dip</item>
     </style>
+
+    <style name="yellowStarRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:maxHeight">35.0dip</item>
+        <item name="android:progressDrawable">@drawable/yellow_star_rating_bar_full</item>
+        <item name="android:minHeight">35.0dip</item>
+    </style>
+
+    <style name="edit_text">
+        <item name="android:background">@drawable/edit_text_x</item>
+    </style>
+
+    <style name="common_button">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/android_big_button_x</item>
+        <item name="android:padding">0.0dip</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 
 
     <!-- 自定义的仿IOS的 ProgressDialog-->

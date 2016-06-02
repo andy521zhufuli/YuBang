@@ -5,43 +5,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ZoomControls;
 
 import com.andy.android.yubang.R;
 
 import com.car.yubangapk.configs.Configs;
-import com.car.yubangapk.json.bean.Json2FirstPageShopBean;
 import com.car.yubangapk.json.bean.Json2FirstPageTabsBean;
-import com.car.yubangapk.json.bean.Json2LoginBean;
-import com.car.yubangapk.json.formatJson.Json2FirstPageShop;
 import com.car.yubangapk.json.formatJson.Json2FirstPageTabs;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
-import com.car.yubangapk.ui.FirstPageMarkerClickedActivity;
-import com.car.yubangapk.ui.FirstPageShopShowActivity;
-import com.car.yubangapk.ui.LoginActivity;
-import com.car.yubangapk.ui.RegisterDetailsActivity;
-import com.car.yubangapk.ui.SearchActivity;
-import com.car.yubangapk.ui.UploadedInfosCheckActivity;
-import com.car.yubangapk.ui.myrecommendpartner.MyRecommendedPartnerFirstFragmentActivityFragment;
-import com.car.yubangapk.utils.BDMapData;
+import com.car.yubangapk.ui.SearchProductPackageActivity;
 import com.car.yubangapk.utils.L;
-import com.car.yubangapk.utils.SPUtils;
-import com.car.yubangapk.utils.ViewGroupToBitmap;
 import com.car.yubangapk.utils.toastMgr;
-import com.car.yubangapk.view.AlertDialog;
 import com.car.yubangapk.view.CustomProgressDialog;
 import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.FragmentAdapter;
 import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.ScrollTabView1;
@@ -50,7 +30,6 @@ import com.car.yubangapk.view.ScrollviewNavigationTabNoViewPager.TabAdapter1;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -132,7 +111,7 @@ public class FirstPageNewActivity extends FragmentActivity implements View.OnCli
             //搜素
             case R.id.search_image_new:
                 Intent intent3 = new Intent();
-                intent3.setClass(FirstPageNewActivity.this, SearchActivity.class);
+                intent3.setClass(FirstPageNewActivity.this, SearchProductPackageActivity.class);
                 startActivity(intent3);
                 break;
 

@@ -28,22 +28,16 @@
         <TextView
             android:textSize="15.0sp"
             android:textColor="@color/baoyangweihu"
+            android:id="@+id/shoppingmall_more_02"
             android:paddingLeft="15.0dip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="更多"
-            android:layout_toLeftOf="@+id/shoppingmall_more_02"
+            android:text="更多   "
+            android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
+            android:drawableRight="@mipmap/android_list_idex"
             android:layout_centerVertical="true" />
 
-        <ImageView
-            android:id="@+id/shoppingmall_more_02"
-            android:paddingRight="20.0dip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/android_list_idex"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

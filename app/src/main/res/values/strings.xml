@@ -87,4 +87,26 @@
 即
 领
 取"</string>
+    <!--评价-->
+    <string name="comment_book_idea">心得：</string>
+    <string name="comment_content_alert">请输入心得，长度在5-200个字之间</string>
+    <string name="comment_content_book_alert">请输入心得，长度在10-2000个字之间</string>
+    <string name="comment_discuss_instruction">评价/晒单说明</string>
+    <string name="comment_discuss_list">评价/晒单</string>
+    <string name="comment_goodtip">好评度</string>
+    <string name="comment_grade">评分：</string>
+    <string name="comment_idea">评价：</string>
+    <string name="comment_list_all">全部评价</string>
+    <string name="comment_list_b">差评</string>
+    <string name="comment_list_c">中评</string>
+    <string name="comment_list_content">使用心得：</string>
+    <string name="comment_list_g">好评</string>
+    <string name="comment_list_s">有图</string>
+    <string name="comment_list_title">商品“%1$s”的全部评价</string>
+    <string name="comment_my_order_track">订单跟踪</string>
+    <string name="comment_no_content_alert">心得不能为空</string>
+    <string name="comment_reply_input_hint">说点儿什么呗~</string>
+    <string name="comment_title_name">标题：</string>
+    <string name="new_comment_use_experience_hint">"长度在5-200个字之间
+例如该商品或某功能为您带来的帮助，或使用过程中遇到的问题等"</string>
 </resources>

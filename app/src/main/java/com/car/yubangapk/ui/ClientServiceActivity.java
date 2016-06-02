@@ -1,6 +1,8 @@
 package com.car.yubangapk.ui;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +30,8 @@ public class ClientServiceActivity extends BaseActivity implements View.OnClickL
 
     private TextView header_name;
 
+    TextView service_tx;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,12 @@ public class ClientServiceActivity extends BaseActivity implements View.OnClickL
         img_back = (ImageView) findViewById(R.id.img_back);
         header_name  = (TextView) findViewById(R.id.header_name);
 
+        service_tx = (TextView) findViewById(R.id.service_tx);
+
         img_back.setOnClickListener(this);
         header_name.setText("联系客服");
+
+        service_tx.setOnClickListener(this);
     }
 
     @Override
@@ -59,6 +67,11 @@ public class ClientServiceActivity extends BaseActivity implements View.OnClickL
         {
             case R.id.img_back:
                 finish();
+                break;
+            case R.id.service_tx:
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + "13800138000"));
+                mContext.startActivity(intent);
                 break;
         }
     }

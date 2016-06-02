@@ -34,6 +34,7 @@ public class Configs {
     public static String IP_ADDRESSS_ACTION_UP_LOAD_CAR_TYPE = "/client/user/alterCuserCarType";
     public static String IP_ADDRESSS_ACTION_UP_LOAD_CAR_NUM = "/client/user/alterCarNum";
     public static String IP_ADDRESS_ACTION_GET_FIRST_PAGE_TAB= "/getData";
+
     public static String IP_ADDRESS_ACTION_GET_SHOP =  "/client/shop/getShop";
     public static String IP_ADDRESS_ACTION_GET_ADDRESS = "/client/address/address";
     public static String IP_ADDRESS_ACTION_GET_INSTALL_SHOP = "/client/shop/getServiceShop";
@@ -68,6 +69,11 @@ public class Configs {
 
     public static String IP_ADDRESS_ACTION_SEARCH_SEARCH = "/client/search/search";//搜索
     public static String IP_ADDRESS_ACTION_PAY_ORDER_PAY_METHOD = "/client/order/payOrder";//支付订单 支付方式
+
+
+
+    public static String IP_ADDRESS_ACTION_ADD_COMMENT = "/client/comment/addComment";//添加评论
+
 
 
 

@@ -34,7 +34,6 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
@@ -520,7 +519,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
                     .addParams("sqlName", "clientSearchShop")
                     .addParams("dataReqModel.args.logicalService",serviceId)
                     .addParams("dataReqModel.args.needTotal", "needTotal")
-                    .addParams("dataReqModel.args.shopProvince", getUTF8XMLString(Province))
+                    .addParams("dataReqModel/**/.args.shopProvince", getUTF8XMLString(Province))
                     .addParams("dataReqModel.args.shopCity",getUTF8XMLString(City))
                     .addParams("dataReqModel.args.shopDistrict",getUTF8XMLString(District))
                     .addParams("shopReq.lon", longitude + "")
@@ -953,7 +952,7 @@ public class FirstPageActivity extends BaseActivity implements View.OnClickListe
             //搜素
             case R.id.search_image_new:
                 Intent intent3 = new Intent();
-                intent3.setClass(FirstPageActivity.this, SearchActivity.class);
+                intent3.setClass(FirstPageActivity.this, SearchProductPackageActivity.class);
                 startActivity(intent3);
 
                 break;

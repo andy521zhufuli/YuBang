@@ -208,7 +208,9 @@
             <LinearLayout
                 android:id="@+id/first_page_shop_show_sales_activity"
                 style="@style/MineItemStyle"
-                android:background="@drawable/bg_item_top" >
+                android:background="@drawable/bg_item_top"
+                android:visibility="gone"
+                >
 
                 <ImageView
                     android:layout_width="26.0dip"
@@ -239,7 +241,9 @@
             <LinearLayout
                 android:id="@+id/first_page_shop_show_customers_comments"
                 style="@style/MineItemStyle"
-                android:background="@drawable/bg_item_top" >
+                android:background="@drawable/bg_item_top"
+                android:visibility="gone"
+                >
 
                 <ImageView
                     android:layout_width="26.0dip"

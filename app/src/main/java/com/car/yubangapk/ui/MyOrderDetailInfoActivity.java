@@ -273,7 +273,7 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
                 }
                 else if (mCurrentType == WAIT_EVALUATE_TYPE)//待评价
                 {
-
+                    commentOrder();
                 }
                 break;
             case R.id.btn_service:
@@ -292,6 +292,27 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
                 }
                 break;
         }
+    }
+
+    /**
+     * 评价订单
+     */
+    private void commentOrder() {
+        String userid = Configs.getLoginedInfo(mContext).getUserid();
+        if (userid.equals(""))
+        {
+            toastMgr.builder.display("用户未登录", 1);
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString("userid",userid);
+        bundle.putString("orderId",mOrderId);
+
+
+        Intent intent = new Intent();
+        intent.setClass(mContext, MakeNewCommentActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     /**
