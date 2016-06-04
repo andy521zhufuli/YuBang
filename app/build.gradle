@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0.67"
+        versionName "1.0.68"
         multiDexEnabled true
     }
     buildTypes {
@@ -66,6 +66,8 @@ dependencies {
     compile files('libs/jg_filter_sdk_1.1.jar')
     compile files('libs/wup-1.0.0.E-SNAPSHOT.jar')
     compile files('libs/Xg_sdk_v2.42_20160111_1539.jar')
+
+
     //支持metail design
     //compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'

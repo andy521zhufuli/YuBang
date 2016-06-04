@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.controller.CancelMyOrder;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
 import com.car.yubangapk.json.bean.OrderDetail.OrderAddress;
 import com.car.yubangapk.json.bean.OrderDetail.OrderDetailInfo;
@@ -266,7 +267,7 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
                 gotoMyOrdersActiviy();
                 break;
             case R.id.order_detail_btn_top://取消订单 或者是
-                toastMgr.builder.display(order_detail_btn_top.getText().toString(), 1);
+                //toastMgr.builder.display(order_detail_btn_top.getText().toString(), 1);
                 if (mCurrentType == WAIT_BUYER_TYPE)//待付款
                 {
                     cancelOrder();
@@ -306,7 +307,7 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
         }
         Bundle bundle = new Bundle();
         bundle.putString("userid",userid);
-        bundle.putString("orderId",mOrderId);
+        bundle.putString("orderId", mOrderId);
 
 
         Intent intent = new Intent();
@@ -328,7 +329,14 @@ public class MyOrderDetailInfoActivity extends BaseActivity implements View.OnCl
      * 取消订单
      */
     private void cancelOrder() {
-        toastMgr.builder.display("取消订单, 暂无接口", 1);
+        CancelMyOrder cancelMyOrder = new CancelMyOrder(MyOrderDetailInfoActivity.this);
+        String userid = Configs.getLoginedInfo(mContext).getUserid();
+        if (userid.equals(""))
+        {
+            toastMgr.builder.display("用户未登录", 1);
+            return;
+        }
+        cancelMyOrder.cancleOrder(userid, mOrderId);
     }
 
 

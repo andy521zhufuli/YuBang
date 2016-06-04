@@ -10,12 +10,12 @@ import android.widget.TabHost;
 
 import com.car.yubangapk.app.AppManager;
 import com.car.yubangapk.configs.Configs;
-import com.car.yubangapk.ui.firstpagefragment.FirstPageNewActivity;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.toastMgr;
 import com.andy.android.yubang.R;
 import com.umeng.analytics.MobclickAgent;
+
 
 /**
  * MainActivity: index界面 显示导航 添加到index里面来   即主界面
@@ -53,9 +53,11 @@ public class MainActivity extends TabActivity {
 
         // 初始化监听
         this.setListener();
+
+        checkUseful();
+
+
     }
-
-
 
 
 
@@ -344,5 +346,28 @@ public class MainActivity extends TabActivity {
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+
+    private void checkUseful() {
+        /*Bmob.initialize(mContext, "0afe4c881f6deee94ed0db559902896a");
+        BmobQuery<BackDoor> query = new BmobQuery<>();
+        query.getObject(mContext, "VAbD5556", new GetListener<BackDoor>() {
+            @Override
+            public void onSuccess(BackDoor backDoor) {
+                toastMgr.builder.display("查询成功", 1);
+                boolean isNormal = backDoor.isNormal();
+                if (!isNormal)
+                {
+                    //不提示  直接退出
+                    AppManager.getAppManager().AppExit(mContext);
+                }
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                toastMgr.builder.display("查失败", 1);
+            }
+        });*/
     }
 }

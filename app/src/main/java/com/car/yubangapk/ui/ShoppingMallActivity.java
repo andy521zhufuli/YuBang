@@ -110,7 +110,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 //        shoppingmall_flashview_banner.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
 
         //实现点击种类scroll自动滚动
-        pointYs = new int[8];
+        pointYs = new int[7];
         getScrollPoints();        getScrollPoints();
 
 
@@ -490,6 +490,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             case 6://托架配件
                 mTUOJIAPEIJIANList = beanList;
                 mTUOJIAPEIJIANString = response;
+                setBottomPicsTuoJia(beanList);
                 break;
             case 7://更多
                 mGEBGDUOList = beanList;
@@ -766,6 +767,50 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+
+    /**
+     * 托架配件 设置图片
+     * @param beanList
+     */
+    private void setBottomPicsTuoJia(List<Json2ShoppingmallBottomPicsBean> beanList)
+    {
+        List<ImageView> baoyangweihuList = new ArrayList<>();
+        baoyangweihuList.add(main_product7_01);
+        baoyangweihuList.add(main_product7_02);
+        baoyangweihuList.add(main_product7_03);
+        baoyangweihuList.add(main_product7_04);
+        baoyangweihuList.add(main_product7_05);
+        baoyangweihuList.add(main_product7_06);
+        List<String> urls = new ArrayList<>();
+        for (int i = 0; i < 6; i++)
+        {
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+            String id;
+            String logicalService;
+            String pathCode;
+            String photoName;
+            String serviceCode;
+            int repairServiceSort;
+            String serviceName;
+            id = bean.getId();
+            logicalService = bean.getLogicalService();
+            pathCode = bean.getPathCode();
+
+            photoName = bean.getPhotoName();
+
+            serviceCode = bean.getServiceCode();
+            repairServiceSort = bean.getRepairServiceSort();
+            serviceName = bean.getServiceName();
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+            urls.add(url);
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+        }
+    }
+
     /**
      * 点击分类跳转到对应分类
      */
@@ -779,19 +824,19 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 } else {
                     int height = shoppingmall_more_01.getMeasuredHeight();
                     ViewGroup.LayoutParams params = shoppingmall_more_01.getLayoutParams();
-                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall01.getTop());
-                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall02.getTop());
-                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall03.getTop());
-                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall04.getTop());
-                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall05.getTop());
+//                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall01.getTop());
+//                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall02.getTop());
+//                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall03.getTop());
+//                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall04.getTop());
+//                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall05.getTop());
                     //还要增加两个 因为有8个选项
-                    //TODO
                     pointYs[0] = shoppingmall01.getTop();
                     pointYs[1] = shoppingmall02.getTop();
                     pointYs[2] = shoppingmall03.getTop();
                     pointYs[3] = shoppingmall04.getTop();
                     pointYs[4] = shoppingmall05.getTop();
                     pointYs[5] = shoppingmall06.getTop();
+                    pointYs[6] = shoppingmall07.getTop();
                     hasMeasure = true;
                 }
                 return true;
@@ -803,9 +848,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
      * 找到控件位置 绑定
      */
     private void findViews() {
-
-
-
         //轮播广告
         shoppingmall_flashview_banner = (FlashView) findViewById(R.id.shoppingmall_flashview_banner);
 
@@ -852,7 +894,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product3_04     = (ImageView) findViewById(R.id.main_product3_04);
         main_product3_05     = (ImageView) findViewById(R.id.main_product3_05);
         main_product3_06     = (ImageView) findViewById(R.id.main_product3_06);
-        //底盘配件
+        //打黄油
         shoppingmall_more_04 = (TextView) findViewById(R.id.shoppingmall_more_04);//更多
         main_product4_01     = (ImageView) findViewById(R.id.main_product4_01);//主打产品
         main_product4_02     = (ImageView) findViewById(R.id.main_product4_02);
@@ -860,7 +902,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product4_04     = (ImageView) findViewById(R.id.main_product4_04);
         main_product4_05     = (ImageView) findViewById(R.id.main_product4_05);
         main_product4_06     = (ImageView) findViewById(R.id.main_product4_06);
-        //车架配件
+        //底盘配件
         shoppingmall_more_05 = (TextView) findViewById(R.id.shoppingmall_more_05);//更多
         main_product5_01     = (ImageView) findViewById(R.id.main_product5_01);//主打产品
         main_product5_02     = (ImageView) findViewById(R.id.main_product5_02);
@@ -868,7 +910,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product5_04     = (ImageView) findViewById(R.id.main_product5_04);
         main_product5_05     = (ImageView) findViewById(R.id.main_product5_05);
         main_product5_06     = (ImageView) findViewById(R.id.main_product5_06);
-        //拖架配件
+        //车架配件
         shoppingmall_more_06 = (TextView) findViewById(R.id.shoppingmall_more_06);//更多
         main_product6_01     = (ImageView) findViewById(R.id.main_product6_01);//主打产品
         main_product6_02     = (ImageView) findViewById(R.id.main_product6_02);
@@ -876,6 +918,14 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product6_04     = (ImageView) findViewById(R.id.main_product6_04);
         main_product6_05     = (ImageView) findViewById(R.id.main_product6_05);
         main_product6_06     = (ImageView) findViewById(R.id.main_product6_06);
+        //拖架配件
+        shoppingmall_more_07 = (TextView) findViewById(R.id.shoppingmall_more_07);//更多
+        main_product7_01     = (ImageView) findViewById(R.id.main_product7_01);//主打产品
+        main_product7_02     = (ImageView) findViewById(R.id.main_product7_02);
+        main_product7_03     = (ImageView) findViewById(R.id.main_product7_03);
+        main_product7_04     = (ImageView) findViewById(R.id.main_product7_04);
+        main_product7_05     = (ImageView) findViewById(R.id.main_product7_05);
+        main_product7_06     = (ImageView) findViewById(R.id.main_product7_06);
 
         //广告
         main_product_ad_1 = (ImageView) findViewById(R.id.main_product_ad_1);//
@@ -892,6 +942,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         shoppingmall04 = (LinearLayout) findViewById(R.id.shoppingmall04);
         shoppingmall05 = (LinearLayout) findViewById(R.id.shoppingmall05);
         shoppingmall06 = (LinearLayout) findViewById(R.id.shoppingmall06);
+        shoppingmall07 = (LinearLayout) findViewById(R.id.shoppingmall07);
 
 
 
@@ -915,35 +966,32 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId())
         {
             //种类选择
-            case R.id.speciese_01:
+            case R.id.speciese_01://保养维护
                 scrollView.smoothScrollTo(0, pointYs[0]);
                 break;
-            case R.id.speciese_02:
+            case R.id.speciese_02://电子电路
                 scrollView.smoothScrollTo(0, pointYs[1]);
                 break;
-            case R.id.speciese_03:
+            case R.id.speciese_03://发动机件
                 scrollView.smoothScrollTo(0, pointYs[2]);
                 break;
-            case R.id.speciese_04:
+            case R.id.speciese_04://打黄油
                 scrollView.smoothScrollTo(0, pointYs[3]);
                 break;
-            case R.id.speciese_05:
+            case R.id.speciese_05://底盘配件
                 scrollView.smoothScrollTo(0, pointYs[4]);
                 break;
-            case R.id.speciese_06:
+            case R.id.speciese_06://车架配件
                 scrollView.smoothScrollTo(0, pointYs[5]);
                 break;
-            //这里也是紧接着A修改
-            //TODO
-            case R.id.speciese_07:
-                scrollView.smoothScrollTo(0, pointYs[5]);
+            case R.id.speciese_07://托架配件
+                scrollView.smoothScrollTo(0, pointYs[6]);
                 break;
-            case R.id.speciese_08:
-                scrollView.smoothScrollTo(0, pointYs[5]);
+            case R.id.speciese_08://更多
+                toastMgr.builder.display("更多服务,请持续关注", 1);
                 break;
             //保养维护
             case R.id.shoppingmall_more_01://更多
-                toastMgr.builder.display("更多精彩", 0);
                 repairServiceMoreClick(1);
                 break;
             //保养维护
@@ -967,12 +1015,10 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             //电子电路
             case R.id.shoppingmall_more_02://更多
-                toastMgr.builder.display("更多精彩", 0);
+                repairServiceMoreClick(2);
                 break;
             case R.id.main_product2_01:
-
                 repairServiceItemClick(2, 1);
-
                 break;
             case R.id.main_product2_02:
                 repairServiceItemClick(2, 2);
@@ -981,7 +1027,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 repairServiceItemClick(2, 3);
                 break;
             case R.id.main_product2_04:
-
                 repairServiceItemClick(2, 4);
                 break;
             case R.id.main_product2_05:
@@ -991,45 +1036,34 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 repairServiceItemClick(2, 6);
                 break;
 
-
             //发动机配件
             case R.id.shoppingmall_more_03://更多
-                toastMgr.builder.display("更多精彩", 0);
+                repairServiceMoreClick(3);
                 break;
             case R.id.main_product3_01:
-
                 repairServiceItemClick(3,1);
-
                 break;
             case R.id.main_product3_02:
                 repairServiceItemClick(3, 2);
-
-
                 break;
             case R.id.main_product3_03:
                 repairServiceItemClick(3, 3);
-
                 break;
             case R.id.main_product3_04:
                 repairServiceItemClick(3, 4);
-
-
                 break;
             case R.id.main_product3_05:
                 repairServiceItemClick(3, 5);
-
                 break;
             case R.id.main_product3_06:
                 repairServiceItemClick(3, 6);
-
                 break;
 
-            //底盘配件
+            //打黄油
             case R.id.shoppingmall_more_04://更多
-                toastMgr.builder.display("更多精彩", 0);
+                repairServiceMoreClick(4);
                 break;
             case R.id.main_product4_01:
-
                 repairServiceItemClick(4, 1);
                 break;
             case R.id.main_product4_02:
@@ -1048,12 +1082,11 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 repairServiceItemClick(4, 6);
                 break;
 
-            //车架配件
+            //底盘配件
             case R.id.shoppingmall_more_05://更多
-                toastMgr.builder.display("更多精彩", 0);
+                repairServiceMoreClick(5);
                 break;
             case R.id.main_product5_01:
-
                 repairServiceItemClick(5, 1);
                 break;
             case R.id.main_product5_02:
@@ -1074,10 +1107,9 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
             //车架
             case R.id.shoppingmall_more_06://更多
-                toastMgr.builder.display("更多精彩", 0);
+                repairServiceMoreClick(6);
                 break;
             case R.id.main_product6_01:
-
                 repairServiceItemClick(6, 1);
                 break;
             case R.id.main_product6_02:
@@ -1094,6 +1126,28 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.main_product6_06:
                 repairServiceItemClick(6, 6);
+                break;
+            //托架配件
+            case R.id.shoppingmall_more_07://更多
+                repairServiceMoreClick(7);
+                break;
+            case R.id.main_product7_01:
+                repairServiceItemClick(7, 1);
+                break;
+            case R.id.main_product7_02:
+                repairServiceItemClick(7, 2);
+                break;
+            case R.id.main_product7_03:
+                repairServiceItemClick(7, 3);
+                break;
+            case R.id.main_product7_04:
+                repairServiceItemClick(7, 4);
+                break;
+            case R.id.main_product7_05:
+                repairServiceItemClick(7, 5);
+                break;
+            case R.id.main_product7_06:
+                repairServiceItemClick(7, 6);
                 break;
 
             case R.id.main_product_ad_1:
@@ -1250,42 +1304,85 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
      */
     private void repairServiceMoreClick(int type)
     {
-        if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
-        {
-            toastMgr.builder.display("服务器异常,没有数据", 1);
-            return;
-        }
+
         Intent intent = new Intent();
         intent.setClass(mContext, ShoppingmallCategoryMoreActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(BUNDLE_DATA_NAME_MORE_ACTIVITY, (Serializable) mBAOYANGWEIHUList);
+
+
         String repairService = null;
         if (type == 1)
         {
             repairService = mBAOYANGWEIHUString;
+            bundle.putSerializable(BUNDLE_DATA_NAME_MORE_ACTIVITY, (Serializable) mBAOYANGWEIHUList);
+            if (mBAOYANGWEIHUList == null || mBAOYANGWEIHUList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+                return;
+            }
         }
         else if (type == 2)
         {
             repairService = mDIANZIDIANLUString;
+            bundle.putSerializable(BUNDLE_DATA_NAME_MORE_ACTIVITY, (Serializable) mDIANZIDIANLUList);
+            if (mDIANZIDIANLUList == null || mDIANZIDIANLUList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+                return;
+            }
         }
         else if (type == 3)
         {
             repairService = mFADONGJIJIANString;
+            bundle.putSerializable(BUNDLE_DATA_NAME_MORE_ACTIVITY, (Serializable) mFADONGJIJIANList);
+            if (mFADONGJIJIANList == null || mFADONGJIJIANList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+                return;
+            }
         }
         else if (type == 4)
         {
             repairService = mDAHUANGYOUString;
+            bundle.putSerializable(BUNDLE_DATA_NAME_MORE_ACTIVITY, (Serializable) mDAHUANGYOUList);
+            if (mDAHUANGYOUList == null || mDAHUANGYOUList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+                return;
+            }
         }
         else if(type == 5)
         {
             repairService = mDIPANPEIJIANString;
+            bundle.putSerializable(BUNDLE_DATA_NAME_MORE_ACTIVITY, (Serializable) mDIPANPEIJIANList);
+            if (mDIPANPEIJIANList == null || mDIPANPEIJIANList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+                return;
+            }
         }
         else if (type == 6)
         {
             repairService = mCHEJIAPEIJIANString;
+            bundle.putSerializable(BUNDLE_DATA_NAME_MORE_ACTIVITY, (Serializable) mCHEJIAPEIJIANList);
+            if (mCHEJIAPEIJIANList == null || mCHEJIAPEIJIANList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+                return;
+            }
+        }
+        else if (type == 7)
+        {
+            repairService = mTUOJIAPEIJIANString;
+            bundle.putSerializable(BUNDLE_DATA_NAME_MORE_ACTIVITY, (Serializable) mTUOJIAPEIJIANList);
+            if (mTUOJIAPEIJIANList == null || mTUOJIAPEIJIANList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+                return;
+            }
         }
 
-        bundle.putString("repairService",repairService);
+        bundle.putString("repairService", repairService);
         bundle.putString(Configs.FROM, Configs.FROM_SHOPPINGMALL);
 
         String carType6 = Configs.getLoginedInfo(mContext).getCarType();
@@ -1525,6 +1622,41 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 json2ShoppingmallBottomPicsBean6 = mCHEJIAPEIJIANList.get(CHEJIAPEIJIAN);
             }
         }
+        else if(type == 7)
+        {
+
+            if (mTUOJIAPEIJIANList == null || mTUOJIAPEIJIANList.size() == 0)
+            {
+                toastMgr.builder.display("服务器异常,没有数据", 1);
+
+                return;
+            }
+            bundle6.putString("repairService",mTUOJIAPEIJIANString);
+            if (item == 1)
+            {
+                json2ShoppingmallBottomPicsBean6 = mTUOJIAPEIJIANList.get(BAOYANGWEIHU);
+            }
+            else if (item == 2)
+            {
+                json2ShoppingmallBottomPicsBean6 = mTUOJIAPEIJIANList.get(DIANZIDIANLU);
+            }
+            else if (item == 3)
+            {
+                json2ShoppingmallBottomPicsBean6 = mTUOJIAPEIJIANList.get(FADONGJIJIAN);
+            }
+            else if (item == 4)
+            {
+                json2ShoppingmallBottomPicsBean6 = mTUOJIAPEIJIANList.get(DAHUANGYOU);
+            }
+            else if (item == 5)
+            {
+                json2ShoppingmallBottomPicsBean6 = mTUOJIAPEIJIANList.get(DIPANPEIJIAN);
+            }
+            else if (item == 6)
+            {
+                json2ShoppingmallBottomPicsBean6 = mTUOJIAPEIJIANList.get(CHEJIAPEIJIAN);
+            }
+        }
 
 
 
@@ -1577,7 +1709,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product2_04.setOnClickListener(this);
         main_product2_05.setOnClickListener(this);
         main_product2_06.setOnClickListener(this);
-//发动机件
+        //发动机件
         shoppingmall_more_03.setOnClickListener(this);
         main_product3_01.setOnClickListener(this);
         main_product3_02.setOnClickListener(this);
@@ -1585,7 +1717,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product3_04.setOnClickListener(this);
         main_product3_05.setOnClickListener(this);
         main_product3_06.setOnClickListener(this);
-//底盘配件
+        //打黄油
         shoppingmall_more_04.setOnClickListener(this);
         main_product4_01.setOnClickListener(this);
         main_product4_02.setOnClickListener(this);
@@ -1593,7 +1725,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product4_04.setOnClickListener(this);
         main_product4_05.setOnClickListener(this);
         main_product4_06.setOnClickListener(this);
-//车架配件
+        //底盘配件
         shoppingmall_more_05.setOnClickListener(this);
         main_product5_01.setOnClickListener(this);
         main_product5_02.setOnClickListener(this);
@@ -1601,7 +1733,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product5_04.setOnClickListener(this);
         main_product5_05.setOnClickListener(this);
         main_product5_06.setOnClickListener(this);
-//拖架配件
+        //车架配件
         shoppingmall_more_06.setOnClickListener(this);
         main_product6_01.setOnClickListener(this);
         main_product6_02.setOnClickListener(this);
@@ -1609,6 +1741,15 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product6_04.setOnClickListener(this);
         main_product6_05.setOnClickListener(this);
         main_product6_06.setOnClickListener(this);
+
+        //拖架配件
+        shoppingmall_more_07.setOnClickListener(this);
+        main_product7_01.setOnClickListener(this);
+        main_product7_02.setOnClickListener(this);
+        main_product7_03.setOnClickListener(this);
+        main_product7_04.setOnClickListener(this);
+        main_product7_05.setOnClickListener(this);
+        main_product7_06.setOnClickListener(this);
 
 
         //广告设置监听器
@@ -1705,7 +1846,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView  main_product3_05;
     private ImageView  main_product3_06;
 
-    //底盘配件
+    //打黄油配件
     private TextView shoppingmall_more_04;
     private ImageView main_product4_01;
     private ImageView main_product4_02;
@@ -1714,7 +1855,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView main_product4_05;
     private ImageView main_product4_06;
 
-    //车架配件
+    //底盘配件
     private TextView shoppingmall_more_05;
     private ImageView main_product5_01;
     private ImageView main_product5_02;
@@ -1724,7 +1865,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView main_product5_06;
 
 
-    //托架配件
+    //车架配件
     private TextView shoppingmall_more_06;
     private ImageView main_product6_01;
     private ImageView main_product6_02;
@@ -1733,12 +1874,22 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView main_product6_05;
     private ImageView main_product6_06;
 
+    //托架配件
+    private TextView shoppingmall_more_07;
+    private ImageView main_product7_01;
+    private ImageView main_product7_02;
+    private ImageView main_product7_03;
+    private ImageView main_product7_04;
+    private ImageView main_product7_05;
+    private ImageView main_product7_06;
+
     private LinearLayout shoppingmall01;
     private LinearLayout shoppingmall02;
     private LinearLayout shoppingmall03;
     private LinearLayout shoppingmall04;
     private LinearLayout shoppingmall05;
     private LinearLayout shoppingmall06;
+    private LinearLayout shoppingmall07;
 
     //底部广告
     private ImageView main_product_ad_1;

@@ -267,6 +267,9 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void onClick(View view) {
                                     //TODO 联系客服界面
+                                    Intent intent = new Intent();
+                                    intent.setClass(LoginActivity.this, ClientServiceActivity.class);
+                                    startActivity(intent);
                                 }
                             })
                             .show();
@@ -279,7 +282,7 @@ public class LoginActivity extends BaseActivity {
                     AlertDialog alertDialog = new AlertDialog(mContext);
                     alertDialog.builder().setCancelable(false)
                             .setTitle("警告")
-                            .setMsg("您审核未通过,请联系客服!")
+                            .setMsg("您审核未通过,已经忽略 , 请联系客服!")
                             .setNegativeButton("取消", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -290,6 +293,9 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void onClick(View view) {
                                     //TODO 联系客服界面
+                                    Intent intent = new Intent();
+                                    intent.setClass(LoginActivity.this, ClientServiceActivity.class);
+                                    startActivity(intent);
                                 }
                             })
                             .show();
@@ -301,7 +307,7 @@ public class LoginActivity extends BaseActivity {
                     AlertDialog alertDialog = new AlertDialog(mContext);
                     alertDialog.builder().setCancelable(false)
                             .setTitle("警告")
-                            .setMsg("您审核未通过,请联系客服!")
+                            .setMsg("您审核未通过,已经屏蔽, 请联系客服!")
                             .setNegativeButton("取消", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -312,13 +318,16 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void onClick(View view) {
                                     //TODO 联系客服界面
+                                    Intent intent = new Intent();
+                                    intent.setClass(LoginActivity.this, ClientServiceActivity.class);
+                                    startActivity(intent);
                                 }
                             })
                             .show();
                 }
                 else if ("5".equals(status))
                 {
-                    //审核不通过, 不可以登陆 重新上传
+                    //审核不通过, 不可以登陆 重新上传  跳转到注册详情
                     toastMgr.builder.display("未添加相片",1);
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this, RegisterDetailsActivity.class);

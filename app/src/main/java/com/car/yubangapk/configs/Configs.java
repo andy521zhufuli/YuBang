@@ -73,6 +73,13 @@ public class Configs {
 
 
     public static String IP_ADDRESS_ACTION_ADD_COMMENT = "/client/comment/addComment";//添加评论
+    public static String IP_ADDRESS_ACTION_CANCEL_ORDER = "/client/order/cancelOrder";//取消订单
+
+    //获取省市区
+    public static String IP_ADDRESS_ACTION_GET_PROVINCE = "/getData";//获取省
+    public static String IP_ADDRESS_ACTION_GET_CITY = "/getData";//获取省
+    public static String IP_ADDRESS_ACTION_GET_DISTRICT = "/getData";//获取省
+
 
 
 

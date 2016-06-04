@@ -281,5 +281,10 @@
     <!--item被点击时的背景色-->
     <color name="item_pressed">#ebebeb</color>
     <color name="image_loading">#edeee9</color>
+    <!-- 选择安装店铺过滤-->
+    <color name="popup_main_background">#b0000000</color>
+    <color name="choose_eara_item_press_color">#f4f4f4</color>
+    <color name="no_color">#00000000</color>
+
 
 </resources>

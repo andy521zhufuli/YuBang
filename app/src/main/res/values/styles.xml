@@ -248,5 +248,11 @@
         <item name="android:layout_height">1.0dip</item>
     </style>
 
+    <!--选择安装店铺的  popup Window -->
+    <style name="PopupWindowAnimation">
+        <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
+        <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
+    </style>
+
 
 </resources>

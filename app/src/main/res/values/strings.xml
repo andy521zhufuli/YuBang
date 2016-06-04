@@ -109,4 +109,7 @@
     <string name="comment_title_name">标题：</string>
     <string name="new_comment_use_experience_hint">"长度在5-200个字之间
 例如该商品或某功能为您带来的帮助，或使用过程中遇到的问题等"</string>
+
+
+    <string name="no_data">没有相关信息</string>
 </resources>

@@ -20,11 +20,11 @@ import okhttp3.Call;
  * 提交评论
  *
  */
-public class HttpPushComment
+public class HttpReqPushComment
 {
     private HttpReqCallback mCallback;
 
-    public HttpPushComment()
+    public HttpReqPushComment()
     {
 
     }

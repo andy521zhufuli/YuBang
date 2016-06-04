@@ -29,13 +29,18 @@ import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2InstallShopBean;
 import com.car.yubangapk.json.bean.Json2InstallShopModelsBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
+import com.car.yubangapk.json.bean.Json2ProvinceBean;
 import com.car.yubangapk.json.bean.Json2ShopServiceBean;
 import com.car.yubangapk.json.bean.Json2ShoppingmallBottomPicsBean;
+import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqGetRegion;
 import com.car.yubangapk.network.myHttpReq.HttpReqInstallShopList;
 import com.car.yubangapk.network.myHttpReq.HttpReqInstallShopListInterface;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.CustomProgressDialog;
+import com.car.yubangapk.view.expandTabView.ExpandTabView;
+import com.car.yubangapk.view.expandTabView.ViewMiddle;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,12 +56,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * @version 1.0
  * @created 2016-04-20
  */
-public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener, HttpReqCallback{
 
     private final static String TAG = ShoppingMallChoosePaymentActivity.class.getSimpleName();
     private Context mContext;
 
     private ImageView img_back;
+
+    private ExpandTabView       choose_install_shop_expandtab_view;//选择安装店铺的tabview  选择省市
+
 
     private LinearLayout        choose_install_shop_nearest_shop;//最近的一个店的布局
     //最近的一个门店
@@ -111,23 +119,24 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         mContext = this;
 
         findViews();
-
+        initView();
+        initVaule();
+        initListener();
         Bundle bundle = getIntent().getExtras();
 
         getExtra(bundle);
 
-
-
-
         mProgress = new CustomProgressDialog(mContext);
 
         //首先获取经纬度
-
         locationLocatioin();
-
+        //在定位同时  拿到接下来可能会用到的省市区
+        getRegion();
 
 
     }
+
+
 
     private List<Json2ProductPackageBean> mProductPackageListConformOrder;
     /**
@@ -220,6 +229,52 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         intent.putExtras(bundle);
         setResult(Activity.RESULT_OK,intent );
         finish();
+
+    }
+
+
+    private boolean isReadyToDisplayRegionProvince = false;
+    private boolean isReadyToDisplayRegionCity = false;
+    private int mCurrentReqRegionType = 0;
+    /**
+     * 请求省市区错误回调
+     * @param errorCode
+     * @param message
+     */
+    @Override
+    public void onFail(int errorCode, String message) {
+        if (mCurrentReqRegionType == HttpReqGetRegion.TYPE_PROVINCE)
+        {
+            isReadyToDisplayRegionProvince = false;
+        }
+        else
+        {
+            isReadyToDisplayRegionCity = false;
+        }
+
+    }
+
+    /**
+     * 请求省市区  成功回调
+     * @param object
+     */
+    @Override
+    public void onSuccess(Object object)
+    {
+        if (mCurrentReqRegionType == HttpReqGetRegion.TYPE_PROVINCE)
+        {
+            isReadyToDisplayRegionProvince = true;
+            //强制转换成省
+            List<Json2ProvinceBean> provinceBeanList = (List<Json2ProvinceBean>) object;
+            //成功拿到省之后, 才可以去拿市
+
+        }
+        else
+        {
+            //强制转换成市
+            isReadyToDisplayRegionCity = true;
+
+        }
 
     }
 
@@ -351,10 +406,39 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         tv_shop_address.setText(json2InstallShopModelsBean.getShopAddress());
     }
 
+
+    /**
+     * 向后台请求省市区
+     */
+    private void getRegion(int type, String parentID)
+    {
+        if (type == HttpReqGetRegion.TYPE_PROVINCE)
+        {
+            //先请求省
+            HttpReqGetRegion httpReqGetRegion = new HttpReqGetRegion();
+            httpReqGetRegion.setCallback(this);
+            httpReqGetRegion.setCurrentType(HttpReqGetRegion.TYPE_PROVINCE);
+            httpReqGetRegion.getProvince();
+            mCurrentReqRegionType = HttpReqGetRegion.TYPE_PROVINCE;
+        }
+        else
+        {
+            //先请求省
+            HttpReqGetRegion httpReqGetRegion = new HttpReqGetRegion();
+            httpReqGetRegion.setCallback(this);
+            httpReqGetRegion.setCurrentType(HttpReqGetRegion.TYPE_CITY);
+            httpReqGetRegion.getCity(parentID);
+            mCurrentReqRegionType = HttpReqGetRegion.TYPE_CITY;
+        }
+
+    }
+
     /**
      * 绑定控件
      */
     private void findViews() {
+
+        choose_install_shop_expandtab_view = (ExpandTabView) findViewById(R.id.choose_install_shop_expandtab_view);
 
         img_back = (ImageView) findViewById(R.id.img_back);//
 
@@ -385,6 +469,59 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         choose_install_shop_nearest_shop = (LinearLayout) findViewById(R.id.choose_install_shop_nearest_shop);
         choose_install_shop_nearest_shop.setOnClickListener(this);
         conform_order_choose_install_shop_listview.setOnItemClickListener(this);
+    }
+
+    private ViewMiddle viewMiddle;
+    private void initView() {
+        viewMiddle = new ViewMiddle(this);
+    }
+    private ArrayList<View> mViewArray = new ArrayList<View>();
+    private void initVaule() {
+
+
+        mViewArray.add(viewMiddle);
+
+        ArrayList<String> mTextArray = new ArrayList<String>();
+        mTextArray.add("地区");
+
+        choose_install_shop_expandtab_view.setValue(mTextArray, mViewArray);
+
+        choose_install_shop_expandtab_view.setTitle("选择地区", 0);
+    }
+
+    private void initListener() {
+
+
+
+        viewMiddle.setOnSelectListener(new ViewMiddle.OnSelectListener() {
+
+            @Override
+            public void getValue(String showText) {
+
+                onRefresh(viewMiddle, showText);
+
+            }
+        });
+    }
+
+    private void onRefresh(View view, String showText) {
+
+        choose_install_shop_expandtab_view.onPressBack();
+        int position = getPositon(view);
+        if (position >= 0 && !choose_install_shop_expandtab_view.getTitle(position).equals(showText)) {
+            choose_install_shop_expandtab_view.setTitle(showText, position);
+        }
+        toastMgr.builder.display(showText, 1);
+
+    }
+
+    private int getPositon(View tView) {
+        for (int i = 0; i < mViewArray.size(); i++) {
+            if (mViewArray.get(i) == tView) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 

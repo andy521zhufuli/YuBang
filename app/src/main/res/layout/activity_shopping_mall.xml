@@ -326,13 +326,17 @@
                 layout="@layout/item_shoppingmall_fadongji_jian"/>
             <include
                 android:id="@+id/shoppingmall04"
-                layout="@layout/item_shoppingmall_dipan_peijian"/>
+                layout="@layout/item_shoppingmall_dahuangyou"/>
             <include
                 android:id="@+id/shoppingmall05"
-                layout="@layout/item_shoppingmall_chejia_peijian"/>
+                layout="@layout/item_shoppingmall_dipan_peijian"/>
             <include
                 android:id="@+id/shoppingmall06"
+                layout="@layout/item_shoppingmall_chejia_peijian"/>
+            <include
+                android:id="@+id/shoppingmall07"
                 layout="@layout/item_shoppingmall_tuojia_peijian"/>
+
 
         </LinearLayout>
     </ScrollView>

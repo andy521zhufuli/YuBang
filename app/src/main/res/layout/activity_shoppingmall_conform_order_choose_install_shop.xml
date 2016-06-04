@@ -31,6 +31,14 @@
             android:textSize="@dimen/medium_text_size" />
     </RelativeLayout>
 
+
+    <com.car.yubangapk.view.expandTabView.ExpandTabView
+        android:id="@+id/choose_install_shop_expandtab_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.car.yubangapk.view.expandTabView.ExpandTabView>
+
     <!-- 安装门店 最近的一个-->
     <LinearLayout
         android:id="@+id/choose_install_shop_nearest_shop"

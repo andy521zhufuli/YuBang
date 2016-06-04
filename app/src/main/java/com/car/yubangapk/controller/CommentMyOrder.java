@@ -1,10 +1,10 @@
 package com.car.yubangapk.controller;
 
 import android.app.Activity;
-import android.content.Context;
 
-import com.car.yubangapk.network.myHttpReq.HttpPushComment;
+import com.car.yubangapk.network.myHttpReq.HttpReqPushComment;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.CustomProgressDialog;
 
@@ -66,7 +66,7 @@ public class CommentMyOrder implements HttpReqCallback
      */
     public void uploadContent()
     {
-        HttpPushComment pushComment = new HttpPushComment();
+        HttpReqPushComment pushComment = new HttpReqPushComment();
         pushComment.setCallback(this);
         pushComment.pushComment(userid, orderId, commentContent, uploadType, (int) star);
         mProgress = mProgress.show(context, "正在上传...", false, null);
@@ -95,6 +95,11 @@ public class CommentMyOrder implements HttpReqCallback
     @Override
     public void onFail(int errorCode, String message) {
         mProgress.dismiss();
+
+        if (errorCode == 100)
+        {
+            NotLogin.gotoLogin(this.context);
+        }
     }
 
     @Override
