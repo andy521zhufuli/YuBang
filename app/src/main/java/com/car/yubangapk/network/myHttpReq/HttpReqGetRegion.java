@@ -2,7 +2,9 @@ package com.car.yubangapk.network.myHttpReq;
 
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
+import com.car.yubangapk.json.bean.Json2CityBean;
 import com.car.yubangapk.json.bean.Json2ProvinceBean;
+import com.car.yubangapk.json.formatJson.Json2City;
 import com.car.yubangapk.json.formatJson.Json2Province;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
@@ -58,15 +60,16 @@ public class HttpReqGetRegion
     public void getCity(String patent_ID)
     {
         OkHttpUtils.post()
-                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_USER_ORDER)
+                .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_CITY)
                 .addParams("sqlName", "clientGetRegion")
                 .addParams("dataReqModel.args.needTotal", "needTotal")
                 .addParams("dataReqModel.args.PARENT_ID", patent_ID)
                 .build()
                 .execute(new GetRegionCallBack());
-        L.i("HttpReqGetRegion", "获取省 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_PROVINCE + "?"
-                        + "sqlName" + "=" + "clientGetProvince"
+        L.i("HttpReqGetRegion", "获取市 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_CITY + "?"
+                        + "sqlName" + "=" + "clientGetRegion"
                         + "&" + "dataReqModel.args.needTotal" + "=" + "needTotal"
+                        + "&" + "dataReqModel.args.PARENT_ID" + "=" + "patent_ID"
         );
     }
 
@@ -107,23 +110,23 @@ public class HttpReqGetRegion
             }
             else
             {
-                Json2Province json2Province = new Json2Province(response);
-                List<Json2ProvinceBean> provinceBeans = json2Province.getProvince();
-                if (provinceBeans == null)
+                Json2City json2City = new Json2City(response);
+                List<Json2CityBean> cityBeans = json2City.getCity();
+                if (cityBeans == null)
                 {
                     mCallback.onFail(ErrorCodes.ERROR_CODE_SERVER_ERROR, ErrorCodes.SERVER_ERROR);
                     toastMgr.builder.display(ErrorCodes.NO_DATA, 1);
                 }
                 else
                 {
-                    if (provinceBeans.get(0).isHasData() == false)
+                    if (cityBeans.get(0).isHasData() == false)
                     {
                         mCallback.onFail(ErrorCodes.ERROR_CODE_NO_DATA, ErrorCodes.NO_DATA);
                         toastMgr.builder.display(ErrorCodes.NO_DATA, 1);
                     }
                     else
                     {
-                        mCallback.onSuccess(provinceBeans);
+                        mCallback.onSuccess(cityBeans);
                     }
                 }
             }

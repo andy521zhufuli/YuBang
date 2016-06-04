@@ -131,7 +131,7 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         //首先获取经纬度
         locationLocatioin();
         //在定位同时  拿到接下来可能会用到的省市区
-        getRegion();
+        getRegion(HttpReqGetRegion.TYPE_PROVINCE, null);
 
 
     }
