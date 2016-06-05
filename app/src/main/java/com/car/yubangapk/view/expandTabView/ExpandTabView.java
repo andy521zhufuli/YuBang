@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.andy.android.yubang.R;
+import com.car.yubangapk.utils.toastMgr;
 
 /**
  * 菜单控件头部，封装了下拉动画，动态生成头部按钮个数
@@ -84,7 +85,7 @@ public class ExpandTabView extends LinearLayout implements OnDismissListener {
 			r.addView(viewArray.get(i), rl);
 			mViewArray.add(r);
 			r.setTag(SMALL);
-			ToggleButton tButton = (ToggleButton) inflater.inflate(R.layout.toggle_button, this, false);
+			final ToggleButton tButton = (ToggleButton) inflater.inflate(R.layout.toggle_button, this, false);
 			addView(tButton);
 			View line = new TextView(mContext);
 			line.setBackgroundResource(R.drawable.choosebar_line);
@@ -107,6 +108,16 @@ public class ExpandTabView extends LinearLayout implements OnDismissListener {
 			tButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
+					//设置是否可以popup Window 的数据
+					//因为数据是从网上拿的  如果没拿到 或者是出现的错  就不给显示
+					if (mIsDataReady)
+					{
+						tButton.setChecked(false);
+						toastMgr.builder.display("服务器数据异常, 不能选择地区", 1);
+						return;
+					}
+
+
 					// initPopupWindow();
 					ToggleButton tButton = (ToggleButton) view;
 
@@ -214,5 +225,16 @@ public class ExpandTabView extends LinearLayout implements OnDismissListener {
 	public interface OnButtonClickListener {
 		void onClick(int selectPosition);
 	}
+
+	/**
+	 * 设置是否可以popup Window 的数据
+	 * 因为数据是从网上拿的  如果没拿到 或者是出现的错  就不给显示
+	 * @param isDataReady
+	 */
+	public void setIsDataReady(boolean isDataReady)
+	{
+		mIsDataReady = isDataReady;
+	}
+	private boolean mIsDataReady = false;
 
 }

@@ -136,6 +136,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         >
+        <!-- 上传照片几个字-->
         <RelativeLayout
 
             android:layout_width="match_parent"
@@ -175,32 +176,75 @@
             android:layout_marginTop="10dp">
 
             <!-- 身份证-->
-            <ImageView
-                android:id="@+id/image_id_card"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@mipmap/item_upload_pic_background"
-                />
+                >
+                <ImageView
+                    android:id="@+id/image_id_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/item_upload_pic_background"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="身份证"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center_horizontal"
+                    />
+            </RelativeLayout>
+
             <!-- 司机照片-->
-            <ImageView
-                android:id="@+id/image_driver_photo"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@mipmap/item_upload_pic_background"
-                />
+                >
+                <ImageView
+                    android:id="@+id/image_driver_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/item_upload_pic_background"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="司机照片"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center_horizontal"
+                    />
+            </RelativeLayout>
+
             <!-- 车辆照片-->
-            <ImageView
-                android:id="@+id/image_car_photo"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@mipmap/item_upload_pic_background"
-                />
+                >
+                <ImageView
+                    android:id="@+id/image_car_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/item_upload_pic_background"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="车辆照片"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center_horizontal"
+                    />
+            </RelativeLayout>
 
         </LinearLayout>
         <View
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
             android:id="@+id/car_info_line3"
             android:layout_width="match_parent"
             android:layout_height="2px"
@@ -209,31 +253,73 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginBottom="4dp"
             >
             <!-- 驾驶证-->
-            <ImageView
-                android:id="@+id/image_driver_license"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@mipmap/item_upload_pic_background"
-                />
+                >
+                <ImageView
+                    android:id="@+id/image_driver_license"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/item_upload_pic_background"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="驾驶证"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center_horizontal"
+                    />
+            </RelativeLayout>
+
             <!-- 行驶证-->
-            <ImageView
-                android:id="@+id/image_driving_license"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@mipmap/item_upload_pic_background"
-                />
+                >
+                <ImageView
+                    android:id="@+id/image_driving_license"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/item_upload_pic_background"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="行驶证"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center_horizontal"
+                    />
+            </RelativeLayout>
+
             <!-- 营运证-->
-            <ImageView
-                android:id="@+id/image_taxi_license"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@mipmap/item_upload_pic_background"
-                />
+                >
+                <ImageView
+                    android:id="@+id/image_taxi_license"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/item_upload_pic_background"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="行驶证"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center_horizontal"
+                    />
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

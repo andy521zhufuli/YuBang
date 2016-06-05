@@ -203,16 +203,16 @@ public class SearchResultProductPackageActivity extends BaseActivity implements 
 
                 holder.pp_name = (TextView) view.findViewById(R.id.pp_name);
                 holder.result_item = (RelativeLayout) view.findViewById(R.id.result_item);
-
+                holder.search_pp_result_pic = (ImageView) view.findViewById(R.id.search_pp_result_pic);
                 view.setTag(holder);
             }
             else
             {
                 holder = (ViewHolder) view.getTag();
             }
-            //String pathcode = repairServiceList.get(position).getPathCode();
-            //String photoname = repairServiceList.get(position).getPhotoName();
-            //String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
+//            String pathcode = repairServiceList.get(position).getPathCode();
+//            String photoname = repairServiceList.get(position).getPhotoName();
+//            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
             holder.pp_name.setText(repairServiceList.get(position).getPackageName());
             //ImageLoaderTools.getInstance(mContext).displayImage(url, holder.repair_service_pic);
             holder.result_item.setOnClickListener(new OnItemClick(repairServiceList.get(position)));
@@ -223,6 +223,7 @@ public class SearchResultProductPackageActivity extends BaseActivity implements 
         {
             TextView        pp_name;//名字
             RelativeLayout  result_item;
+            ImageView       search_pp_result_pic;
         }
     }
 

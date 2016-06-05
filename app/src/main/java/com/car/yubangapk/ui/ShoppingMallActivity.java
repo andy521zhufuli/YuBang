@@ -651,7 +651,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         baoyangweihuList.add(main_product4_05);
         baoyangweihuList.add(main_product4_06);
         List<String> urls = new ArrayList<>();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 1; i++)
         {
             Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
             String id;
@@ -674,7 +674,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             urls.add(url);
         }
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 1; i++)
         {
             ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
         }
@@ -1061,7 +1061,8 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
             //打黄油
             case R.id.shoppingmall_more_04://更多
-                repairServiceMoreClick(4);
+                //打黄油没有更多
+                //repairServiceMoreClick(4);
                 break;
             case R.id.main_product4_01:
                 repairServiceItemClick(4, 1);

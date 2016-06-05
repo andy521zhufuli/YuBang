@@ -62,6 +62,7 @@ public class Json2FirstPageShop {
             {
                 Json2FirstPageShopBean pageShopBean1 = new Json2FirstPageShopBean();
                 pageShopBean1.setId("0");
+                pageShopBean1.setHasData(false);
                 json2FirstPageShopBeanList.add(pageShopBean1);
                 return json2FirstPageShopBeanList;
             }
@@ -128,6 +129,7 @@ public class Json2FirstPageShop {
                 pageShopBean.setOrder(order);
                 pageShopBean.setDistance(distance);
                 pageShopBean.setOrderNum(orderNum);
+                pageShopBean.setHasData(true);
                 json2FirstPageShopBeanList.add(pageShopBean);
             }
             long stopTime = System.currentTimeMillis();

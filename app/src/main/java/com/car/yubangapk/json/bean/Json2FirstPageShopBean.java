@@ -37,6 +37,9 @@ public class Json2FirstPageShopBean extends Base
     String star;
     int order;
     long orderNum;
+    double distance;
+
+
 
     public long getOrderNum() {
         return orderNum;
@@ -45,10 +48,6 @@ public class Json2FirstPageShopBean extends Base
     public void setOrderNum(long orderNum) {
         this.orderNum = orderNum;
     }
-
-
-
-    double distance;
 
     public double getDistance() {
 

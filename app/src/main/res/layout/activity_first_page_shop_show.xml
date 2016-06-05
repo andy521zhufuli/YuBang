@@ -131,6 +131,7 @@
                 android:background="@mipmap/first_page_shop_show_nav"
                 android:layout_marginRight="@dimen/margin_15"
                 android:layout_marginTop="@dimen/margin_15"
+                android:visibility="gone"
                 />
 
         </LinearLayout>

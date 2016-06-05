@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.andy.android.yubang.R;
+import com.car.yubangapk.utils.L;
+import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.expandTabView.adapter.TextAdapter;
 
 
@@ -96,9 +98,12 @@ public class ViewMiddle extends LinearLayout implements ViewBaseAction {
 					@Override
 					public void onItemClick(View view, int position) {
 						if (position < children.size()) {
+							L.d("group " + groups.get(position));
+
 							childrenItem.clear();
 							childrenItem.addAll(children.get(position));
 							plateListViewAdapter.notifyDataSetChanged();
+							L.d("children " + children.get(position));
 						}
 					}
 				});
@@ -117,6 +122,7 @@ public class ViewMiddle extends LinearLayout implements ViewBaseAction {
 					public void onItemClick(View view, final int position) {
 						
 						showString = childrenItem.get(position);
+						L.d("showString " + showString);
 						if (mOnSelectListener != null) {
 							
 							mOnSelectListener.getValue(showString);
@@ -146,9 +152,14 @@ public class ViewMiddle extends LinearLayout implements ViewBaseAction {
 		mOnSelectListener = onSelectListener;
 	}
 
+	/**
+	 * 右边一列的item 被点击的时候 回调
+	 */
 	public interface OnSelectListener {
-		public void getValue(String showText);
+		void getValue(String showText);
 	}
+
+
 
 	@Override
 	public void hide() {

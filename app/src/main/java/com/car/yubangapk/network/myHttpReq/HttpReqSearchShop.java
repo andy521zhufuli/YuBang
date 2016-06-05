@@ -85,6 +85,10 @@ public class HttpReqSearchShop {
                     mCallback.onFail(ErrorCodes.ERROR_CODE_NO_DATA, ErrorCodes.NO_DATA);
                     toastMgr.builder.display("没有合适的店铺", 1);
 
+                }else if (json2FirstPageShopBeanList.get(0).isHasData() == false)
+                {
+                    mCallback.onFail(ErrorCodes.ERROR_CODE_NO_DATA, ErrorCodes.NO_DATA);
+                    toastMgr.builder.display("没有合适的店铺", 1);
                 }
                 else
                 {

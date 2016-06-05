@@ -251,6 +251,7 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         {
             isReadyToDisplayRegionCity = false;
         }
+        choose_install_shop_expandtab_view.setIsDataReady(false);
 
     }
 
@@ -267,6 +268,7 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
             //强制转换成省
             List<Json2ProvinceBean> provinceBeanList = (List<Json2ProvinceBean>) object;
             //成功拿到省之后, 才可以去拿市
+            getRegion(HttpReqGetRegion.TYPE_CITY,provinceBeanList);
 
         }
         else
@@ -398,19 +400,21 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         String pathcode = json2InstallShopModelsBean.getPathCode();
         String photoname = json2InstallShopModelsBean.getPhotoName();
         String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
-        L.d(TAG,"商城中间图片加载url = " + url);
+        L.d(TAG, "商城中间图片加载url = " + url);
         ImageLoaderTools.getInstance(mContext).displayImage(url, im_shop_img);
 
         tv_shop_name.setText(json2InstallShopModelsBean.getShopName());
         tv_shop_juli.setText(json2InstallShopModelsBean.getDistance() + "米");
         tv_shop_address.setText(json2InstallShopModelsBean.getShopAddress());
+        tv_evaluate_text.setText(json2InstallShopModelsBean.getStar());
+        tv_shop_points.setText(json2InstallShopModelsBean.getOrderNum() + "单");
     }
 
 
     /**
      * 向后台请求省市区
      */
-    private void getRegion(int type, String parentID)
+    private void getRegion(int type, List<Json2ProvinceBean> provinceBeanList)
     {
         if (type == HttpReqGetRegion.TYPE_PROVINCE)
         {
@@ -427,7 +431,7 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
             HttpReqGetRegion httpReqGetRegion = new HttpReqGetRegion();
             httpReqGetRegion.setCallback(this);
             httpReqGetRegion.setCurrentType(HttpReqGetRegion.TYPE_CITY);
-            httpReqGetRegion.getCity(parentID);
+            httpReqGetRegion.getAllCity(provinceBeanList);
             mCurrentReqRegionType = HttpReqGetRegion.TYPE_CITY;
         }
 
@@ -474,6 +478,7 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
     private ViewMiddle viewMiddle;
     private void initView() {
         viewMiddle = new ViewMiddle(this);
+        choose_install_shop_expandtab_view.setIsDataReady(false);
     }
     private ArrayList<View> mViewArray = new ArrayList<View>();
     private void initVaule() {
@@ -493,7 +498,8 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
 
 
 
-        viewMiddle.setOnSelectListener(new ViewMiddle.OnSelectListener() {
+        viewMiddle.setOnSelectListener(new ViewMiddle.OnSelectListener()
+        {
 
             @Override
             public void getValue(String showText) {
@@ -594,6 +600,9 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
             holder.tv_shop_name.setText(mShopModels.get(position).getShopName());
             holder.tv_shop_juli.setText(mShopModels.get(position).getDistance() + "米");
             holder.tv_shop_address.setText(mShopModels.get(position).getShopAddress());
+            holder.tv_evaluate_text.setText(mShopModels.get(position).getStar());
+            holder.tv_shop_points.setText(mShopModels.get(position).getOrderNum() + "单");
+
             return view;
         }
 

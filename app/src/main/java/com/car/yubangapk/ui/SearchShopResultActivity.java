@@ -2,24 +2,23 @@ package com.car.yubangapk.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andy.android.yubang.R;
+import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.configs.ErrorCodes;
 import com.car.yubangapk.json.bean.Json2FirstPageShopBean;
-import com.car.yubangapk.json.bean.search.SearchResultProductPackageRows;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqSearchShop;
-import com.car.yubangapk.network.myHttpReq.search.HttpReqGetSearchReuslt;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
@@ -157,33 +156,33 @@ public class SearchShopResultActivity extends BaseActivity implements HttpReqCal
     class SearchResultListViewAdapter extends BaseAdapter
     {
 
-        private List<Json2FirstPageShopBean> repairServiceList;
+        private List<Json2FirstPageShopBean> shopResultList;
 
         public SearchResultListViewAdapter(List<Json2FirstPageShopBean> list)
         {
-            this.repairServiceList = list;
+            this.shopResultList = list;
         }
 
         public void refresh(List<Json2FirstPageShopBean> list)
         {
-            this.repairServiceList = list;
+            this.shopResultList = list;
             notifyDataSetChanged();
         }
 
         public List<Json2FirstPageShopBean> getList()
         {
-            return this.repairServiceList;
+            return this.shopResultList;
         }
 
 
         @Override
         public int getCount() {
-            return repairServiceList.size();
+            return shopResultList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return repairServiceList.get(position);
+            return shopResultList.get(position);
         }
 
         @Override
@@ -200,30 +199,69 @@ public class SearchShopResultActivity extends BaseActivity implements HttpReqCal
             final ViewHolder holder;
             if (view == null) {
                 holder = new ViewHolder();
-                view = View.inflate(mContext, R.layout.item_search_result_listview, null);
+                view = View.inflate(mContext, R.layout.item_search_shop_result, null);
 
-                holder.pp_name = (TextView) view.findViewById(R.id.pp_name);
-                holder.result_item = (RelativeLayout) view.findViewById(R.id.result_item);
-
+                holder.im_shop_img                  = (ImageView) view.findViewById(R.id.im_shop_img);
+                holder.shopbusinesstype             = (TextView) view.findViewById(R.id.shopbusinesstype);
+                holder.tv_shop_name                 = (TextView) view.findViewById(R.id.tv_shop_name);
+                holder.tv_shop_juli                 = (TextView) view.findViewById(R.id.tv_shop_juli);
+                holder.tv_evaluate_text             = (TextView) view.findViewById(R.id.tv_evaluate_text);
+                holder.tv_shop_points               = (TextView) view.findViewById(R.id.tv_shop_points);
+                holder.tv_shop_address              = (TextView) view.findViewById(R.id.tv_shop_address);
+                holder.zfb                          = (ImageView) view.findViewById(R.id.zfb);
+                holder.wx                           = (ImageView) view.findViewById(R.id.wx);
+                holder.yhk                          = (ImageView) view.findViewById(R.id.yhk);
+                holder.xj                           = (ImageView) view.findViewById(R.id.xj);
+                holder.search_shop_result_item      = (LinearLayout) view.findViewById(R.id.search_shop_result_item);
                 view.setTag(holder);
             }
             else
             {
                 holder = (ViewHolder) view.getTag();
             }
-            //String pathcode = repairServiceList.get(position).getPathCode();
-            //String photoname = repairServiceList.get(position).getPhotoName();
-            //String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
-            holder.pp_name.setText(repairServiceList.get(position).getShopName());
-            //ImageLoaderTools.getInstance(mContext).displayImage(url, holder.repair_service_pic);
-            holder.result_item.setOnClickListener(new OnItemClick(repairServiceList.get(position)));
+            String pathcode = shopResultList.get(position).getPathCode();
+            String photoname = shopResultList.get(position).getShopPhoto();
+            String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
+            ImageLoaderTools.getInstance(mContext).displayImage(url, holder.im_shop_img);
+
+            holder.tv_shop_name.setText(shopResultList.get(position).getShopName());
+
+            holder.tv_shop_juli.setText(shopResultList.get(position).getDistance()+"米");
+
+            holder.tv_evaluate_text.setText(shopResultList.get(position).getStar());
+            holder.tv_shop_points.setText(shopResultList.get(position).getOrderNum() + "单");
+
+            holder.tv_shop_address.setText(shopResultList.get(position).getShopAddress());
+
+            holder.search_shop_result_item.setOnClickListener(new OnItemClick(shopResultList.get(position)));
             return view;
         }
 
         class ViewHolder
         {
-            TextView        pp_name;//名字
-            RelativeLayout  result_item;
+            ImageView           im_shop_img;//店铺的照片
+
+            TextView            shopbusinesstype;//店铺类型  快修店  这个没参数  不修改
+
+            TextView            tv_shop_name;//店铺名字
+
+            TextView            tv_shop_juli;//店铺距离当前位置距离
+
+            TextView            tv_evaluate_text;//店铺评价分数
+
+            TextView            tv_shop_points;//店铺接单数
+
+            TextView            tv_shop_address;//店铺地址信息
+
+            ImageView           zfb;//店铺支持的支付类型         支付宝
+
+            ImageView           wx;//店铺支持的支付类型          微信
+
+            ImageView           yhk;//店铺支持的支付类型         银行卡
+
+            ImageView           xj;//店铺支持的支付类型          现金
+
+            LinearLayout        search_shop_result_item;//
         }
     }
 
