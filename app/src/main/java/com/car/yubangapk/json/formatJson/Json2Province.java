@@ -46,10 +46,11 @@ public class Json2Province
                 JSONObject item = (JSONObject) total.get(i);
                 Json2ProvinceBean provinceBean  = new Json2ProvinceBean();
 
-                provinceBean.setPARENT_ID(JSONUtils.getInt(item, "REGION_ID", 0));
-                provinceBean.setREGION_ID(JSONUtils.getInt(item, "PARENT_ID", 0));
+                provinceBean.setPARENT_ID(JSONUtils.getInt(item, "PARENT_ID", 0));
+                provinceBean.setREGION_ID(JSONUtils.getInt(item, "REGION_ID", 0));
                 provinceBean.setREGION_NAME(JSONUtils.getString(item, "REGION_NAME", ""));
                 provinceBean.setHasData(true);
+                provinceBeanList.add(provinceBean);
             }
         } catch (JSONException e) {
             e.printStackTrace();

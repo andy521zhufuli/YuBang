@@ -60,8 +60,10 @@ public class HttpReqInstallShopList
 
         province = String2UTF8.getUTF8String(province);
         city = String2UTF8.getUTF8String(city);
-        district = String2UTF8.getUTF8String(district);
-
+        if (!district.equals(""))
+        {
+            district = String2UTF8.getUTF8String(district);
+        }
         PostFormBuilder builder = OkHttpUtils.post().url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_INSTALL_SHOP)
                 .addParams(ARGS_LON,lon + "")
                 .addParams(ARGS_LAT, lat + "")
@@ -71,6 +73,8 @@ public class HttpReqInstallShopList
                 .addParams(ARGS_DISTRICT, district)
                 .addParams(ARGS_SHOP_STATUS, shopStatus)
                 .addParams(ARGS_USERID, userid);
+
+
 
         int size = list.size();
         String url = "";
@@ -131,7 +135,15 @@ public class HttpReqInstallShopList
                 else
                 {
                     List<Json2InstallShopModelsBean> shopModels = shopBean.getShopModels();
-                    callback.onGetInstallShopSucces(shopModels);
+                    if (shopBean.isHasData() == false)
+                    {
+                        callback.onGetInstallShopFail(ErrorCodes.ERROR_CODE_NO_DATA, ErrorCodes.NO_DATA);
+                    }
+                    else
+                    {
+                        callback.onGetInstallShopSucces(shopModels);
+                    }
+
                 }
 
             }

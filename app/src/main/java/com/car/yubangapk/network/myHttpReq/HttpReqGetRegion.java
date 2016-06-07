@@ -51,13 +51,13 @@ public class HttpReqGetRegion
         OkHttpUtils.post()
                 .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_PROVINCE)
                 .addParams("sqlName", "clientGetProvince")
-                .addParams("dataReqModel.args.needTotal", "needTotal")
+                //.addParams("dataReqModel.args.needTotal", "needTotal")
                 .build()
                 .execute(new GetRegionCallBack());
 
         L.i("HttpReqGetRegion", "获取省 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_PROVINCE + "?"
                         + "sqlName" + "=" + "clientGetProvince"
-                        + "&" + "dataReqModel.args.needTotal" + "=" + "needTotal"
+                        //+ "&" + "dataReqModel.args.needTotal" + "=" + "needTotal"
         );
     }
 
@@ -66,13 +66,13 @@ public class HttpReqGetRegion
         OkHttpUtils.post()
                 .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_CITY)
                 .addParams("sqlName", "clientGetRegion")
-                .addParams("dataReqModel.args.needTotal", "needTotal")
+                //.addParams("dataReqModel.args.needTotal", "needTotal")
                 .addParams("dataReqModel.args.PARENT_ID", patent_ID)
                 .build()
                 .execute(new GetRegionCallBack());
         L.i("HttpReqGetRegion", "获取市 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_CITY + "?"
                         + "sqlName" + "=" + "clientGetRegion"
-                        + "&" + "dataReqModel.args.needTotal" + "=" + "needTotal"
+                        //+ "&" + "dataReqModel.args.needTotal" + "=" + "needTotal"
                         + "&" + "dataReqModel.args.PARENT_ID" + "=" + "patent_ID"
         );
     }
@@ -91,15 +91,15 @@ public class HttpReqGetRegion
                 OkHttpUtils.post()
                         .url(Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_CITY)
                         .addParams("sqlName", "clientGetRegion")
-                        .addParams("dataReqModel.args.needTotal", "needTotal")
+                        //.addParams("dataReqModel.args.needTotal", "needTotal")
                         .addParams("dataReqModel.args.PARENT_ID", bean.getREGION_ID() + "")
                         .build()
                         .executeObject(new GetAllCityCallbacm(), bean, 0);
-                L.i("HttpReqGetRegion", "获取市 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_CITY + "?"
-                                + "sqlName" + "=" + "clientGetRegion"
-                                + "&" + "dataReqModel.args.needTotal" + "=" + "needTotal"
-                                + "&" + "dataReqModel.args.PARENT_ID" + "=" + bean.getREGION_ID()
-                );
+//                L.i("HttpReqGetRegion", "获取市 url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GET_CITY + "?"
+//                                + "sqlName" + "=" + "clientGetRegion"
+//                                //+ "&" + "dataReqModel.args.needTotal" + "=" + "needTotal"
+//                                + "&" + "dataReqModel.args.PARENT_ID" + "=" + bean.getREGION_ID()
+//                );
             }
             else
             {
@@ -211,7 +211,7 @@ public class HttpReqGetRegion
                             mRegionMap.put(province.getREGION_NAME(), cityList);
                             if (mCurrentTime == provinceSize)
                             {
-                                L.d("mCurrentTime = " + mCurrentTime + "  provinceSize = " + provinceSize);
+                                //L.d("mCurrentTime = " + mCurrentTime + "  provinceSize = " + provinceSize);
                                 mCallback.onSuccess(mRegionMap);
                             }
 

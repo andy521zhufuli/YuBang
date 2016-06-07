@@ -44,10 +44,11 @@ public class Json2City
                 JSONObject item = (JSONObject) total.get(i);
                 Json2CityBean cityBean  = new Json2CityBean();
 
-                cityBean.setPARENT_ID(JSONUtils.getInt(item, "REGION_ID", 0));
-                cityBean.setREGION_ID(JSONUtils.getInt(item, "PARENT_ID", 0));
+                cityBean.setREGION_ID(JSONUtils.getInt(item, "REGION_ID", 0));
+                cityBean.setPARENT_ID(JSONUtils.getInt(item, "PARENT_ID", 0));
                 cityBean.setREGION_NAME(JSONUtils.getString(item, "REGION_NAME", ""));
                 cityBean.setHasData(true);
+                cityBeanList.add(cityBean);
             }
         } catch (JSONException e) {
             e.printStackTrace();

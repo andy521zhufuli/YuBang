@@ -26,6 +26,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
+import com.car.yubangapk.json.bean.Json2CityBean;
 import com.car.yubangapk.json.bean.Json2InstallShopBean;
 import com.car.yubangapk.json.bean.Json2InstallShopModelsBean;
 import com.car.yubangapk.json.bean.Json2ProductPackageBean;
@@ -119,9 +120,9 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         mContext = this;
 
         findViews();
-        initView();
-        initVaule();
-        initListener();
+        //initView(null, false);
+        //initVaule();
+        //initListener();
         Bundle bundle = getIntent().getExtras();
 
         getExtra(bundle);
@@ -275,6 +276,10 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         {
             //强制转换成市
             isReadyToDisplayRegionCity = true;
+            Map<String, List<Json2CityBean>> regionMap = (Map<String, List<Json2CityBean>>) object;
+            initView(regionMap, true);
+            initVaule();
+            initListener();
 
         }
 
@@ -364,12 +369,18 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         @Override
         public void onGetInstallShopSucces(List<Json2InstallShopModelsBean> shopModels) {
             mProgress.dismiss();
-
-            //这里 去显示列表
-            mShopListAdapter = new InstallShopListAdapter(shopModels);
-            mInstallShopModelsList = shopModels;
-            conform_order_choose_install_shop_listview.setAdapter(mShopListAdapter);
-
+            conform_order_choose_install_shop_listview.setVisibility(View.VISIBLE);
+            if (mChoosePlace == false){
+                //这里 去显示列表
+                mShopListAdapter = new InstallShopListAdapter(shopModels);
+                mInstallShopModelsList = shopModels;
+                conform_order_choose_install_shop_listview.setAdapter(mShopListAdapter);
+            }
+            else {
+                mInstallShopModelsList.clear();
+                mInstallShopModelsList = shopModels;
+                mShopListAdapter.refresh(mInstallShopModelsList);
+            }
 
             //另外 第一个也要显示
 
@@ -387,6 +398,8 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
             toastMgr.builder.display(message, 1);
 
             choose_install_shop_nearest_shop.setVisibility(View.INVISIBLE);
+            conform_order_choose_install_shop_listview.setVisibility(View.GONE);
+            toastMgr.builder.display("没有合适的店铺", 1);
 
 
         }
@@ -397,6 +410,7 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
      * @param json2InstallShopModelsBean
      */
     private void showTheNearestInstallShop(Json2InstallShopModelsBean json2InstallShopModelsBean) {
+        choose_install_shop_nearest_shop.setVisibility(View.VISIBLE);
         String pathcode = json2InstallShopModelsBean.getPathCode();
         String photoname = json2InstallShopModelsBean.getPhotoName();
         String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
@@ -438,6 +452,12 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
     }
 
     /**
+     * 通过顶部筛选, 选择的省 市
+     */
+    private String mChooseedProvince;
+    private String mChooseCity;
+
+    /**
      * 绑定控件
      */
     private void findViews() {
@@ -471,19 +491,22 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
 
         conform_order_choose_install_shop_listview = (ListView) findViewById(R.id.conform_order_choose_install_shop_listview);
         choose_install_shop_nearest_shop = (LinearLayout) findViewById(R.id.choose_install_shop_nearest_shop);
+
+
+        img_back.setOnClickListener(this);
         choose_install_shop_nearest_shop.setOnClickListener(this);
         conform_order_choose_install_shop_listview.setOnItemClickListener(this);
     }
 
     private ViewMiddle viewMiddle;
-    private void initView() {
-        viewMiddle = new ViewMiddle(this);
-        choose_install_shop_expandtab_view.setIsDataReady(false);
+    private void initView(Map<String, List<Json2CityBean>> regionMap, boolean isOkToshow) {
+        viewMiddle = new ViewMiddle(this, regionMap);
+        choose_install_shop_expandtab_view.setIsDataReady(isOkToshow);
     }
     private ArrayList<View> mViewArray = new ArrayList<View>();
     private void initVaule() {
 
-
+        mViewArray.clear();
         mViewArray.add(viewMiddle);
 
         ArrayList<String> mTextArray = new ArrayList<String>();
@@ -495,8 +518,6 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
     }
 
     private void initListener() {
-
-
 
         viewMiddle.setOnSelectListener(new ViewMiddle.OnSelectListener()
         {
@@ -516,10 +537,21 @@ public class ShoppingmallConformOrderChooseInstallShopActivity extends BaseActiv
         int position = getPositon(view);
         if (position >= 0 && !choose_install_shop_expandtab_view.getTitle(position).equals(showText)) {
             choose_install_shop_expandtab_view.setTitle(showText, position);
+            String[] array = showText.split(" ");
+            mChooseedProvince = array[0];
+            mChooseCity = array[1];
+            //这里, 根据选择的省市  去请求店铺
+            mChoosePlace = true;
+            String userid = Configs.getLoginedInfo(mContext).getUserid();
+            String carType = Configs.getLoginedInfo(mContext).getCarType();
+            mProgress = mProgress.show(mContext, "正在加载店铺信息...", false, null);
+            getInstallShop(mLongitude, mLatitude, userid, carType, mChooseedProvince ,mChooseCity, "", "1", mRepairServiceList);
+
         }
         toastMgr.builder.display(showText, 1);
 
     }
+    private boolean mChoosePlace = false;
 
     private int getPositon(View tView) {
         for (int i = 0; i < mViewArray.size(); i++) {

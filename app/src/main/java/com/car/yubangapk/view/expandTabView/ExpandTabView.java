@@ -110,7 +110,7 @@ public class ExpandTabView extends LinearLayout implements OnDismissListener {
 				public void onClick(View view) {
 					//设置是否可以popup Window 的数据
 					//因为数据是从网上拿的  如果没拿到 或者是出现的错  就不给显示
-					if (mIsDataReady)
+					if (!mIsDataReady)
 					{
 						tButton.setChecked(false);
 						toastMgr.builder.display("服务器数据异常, 不能选择地区", 1);

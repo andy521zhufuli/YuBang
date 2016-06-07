@@ -2,6 +2,8 @@ package com.car.yubangapk.view.expandTabView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -12,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.andy.android.yubang.R;
+import com.car.yubangapk.json.bean.Json2CityBean;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.expandTabView.adapter.TextAdapter;
@@ -30,15 +33,23 @@ public class ViewMiddle extends LinearLayout implements ViewBaseAction {
 	private int tEaraPosition = 0;
 	private int tBlockPosition = 0;
 	private String showString = "不限";
+	Map<String, List<Json2CityBean>> mRegionMap;
 
-	public ViewMiddle(Context context) {
+	public ViewMiddle(Context context, Map<String, List<Json2CityBean>> regionMap) {
 		super(context);
-		init(context);
+		this.mRegionMap = regionMap;
+		if (mRegionMap != null)
+		{
+			init(context, mRegionMap);
+		}
 	}
 
 	public ViewMiddle(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init(context);
+		if (mRegionMap != null)
+		{
+			init(context, mRegionMap);
+		}
 	}
 
 	public void updateShowText(String showArea, String showBlock) {
@@ -66,7 +77,7 @@ public class ViewMiddle extends LinearLayout implements ViewBaseAction {
 		setDefaultSelect();
 	}
 
-	private void init(Context context) {
+	private void init(Context context, Map<String, List<Json2CityBean>> regionmap) {
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.view_region, this, true);
@@ -74,17 +85,33 @@ public class ViewMiddle extends LinearLayout implements ViewBaseAction {
 		plateListView = (ListView) findViewById(R.id.listView2);
 		setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.choosearea_bg_left));
-
-		for(int i=0;i<10;i++){
-			groups.add(i+"行");
-			LinkedList<String> tItem = new LinkedList<String>();
-			for(int j=0;j<15;j++){
-				
-				tItem.add(i+"行"+j+"列");
-				
+		int count = 0;
+		for (Map.Entry<String, List<Json2CityBean>> entry : regionmap.entrySet()) {
+			System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
+			groups.add(entry.getKey());
+			if (count == 0)
+			{
+				mProvince = entry.getKey();
 			}
-			children.put(i, tItem);
+			List<Json2CityBean> citys = entry.getValue();
+			LinkedList<String> tItem = new LinkedList<String>();
+			for (int i = 0; i < citys.size(); i++) {
+				tItem.add(citys.get(i).getREGION_NAME());
+			}
+			children.put(count, tItem);
+			count++;
 		}
+
+//		for(int i=0;i<10;i++){
+//			groups.add(i+"行");
+//			LinkedList<String> tItem = new LinkedList<String>();
+//			for(int j=0;j<15;j++){
+//
+//				tItem.add(i+"行"+j+"列");
+//
+//			}
+//			children.put(i, tItem);
+//		}
 
 		earaListViewAdapter = new TextAdapter(context, groups,
 				R.drawable.choose_item_selected,
@@ -98,8 +125,8 @@ public class ViewMiddle extends LinearLayout implements ViewBaseAction {
 					@Override
 					public void onItemClick(View view, int position) {
 						if (position < children.size()) {
-							L.d("group " + groups.get(position));
 
+							mProvince = groups.get(position);
 							childrenItem.clear();
 							childrenItem.addAll(children.get(position));
 							plateListViewAdapter.notifyDataSetChanged();
@@ -120,12 +147,12 @@ public class ViewMiddle extends LinearLayout implements ViewBaseAction {
 
 					@Override
 					public void onItemClick(View view, final int position) {
-						
+
 						showString = childrenItem.get(position);
 						L.d("showString " + showString);
 						if (mOnSelectListener != null) {
 							
-							mOnSelectListener.getValue(showString);
+							mOnSelectListener.getValue(mProvince + " " + showString);
 						}
 
 					}
@@ -139,6 +166,7 @@ public class ViewMiddle extends LinearLayout implements ViewBaseAction {
 
 	}
 
+	private String mProvince = "";
 	public void setDefaultSelect() {
 		regionListView.setSelection(tEaraPosition);
 		plateListView.setSelection(tBlockPosition);
