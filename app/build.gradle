@@ -4,6 +4,15 @@ android {
     compileSdkVersion 23
     buildToolsVersion '23.0.1'
 
+    signingConfigs {
+        release {
+            storeFile file("yubang.keystore")
+            storePassword "yubang"
+            keyAlias "yubangcarowner"
+            keyPassword "yubangcarowner"
+        }
+    }
+
     defaultConfig {
         applicationId "com.car.yubangapk"
         minSdkVersion 14
@@ -12,12 +21,19 @@ android {
         versionName "1.0.70"
         multiDexEnabled true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
+
+
 
 
 }
