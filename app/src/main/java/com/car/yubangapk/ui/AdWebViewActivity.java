@@ -36,7 +36,6 @@ public class AdWebViewActivity extends BaseActivity implements View.OnClickListe
     private ImageView img_back;
     private WebView   ad_webview;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
