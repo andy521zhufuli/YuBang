@@ -37,6 +37,7 @@ public class Share implements PlatformActionListener, HttpReqShareCallback
     Context mContext;
     Share mShare = null;
     String TAG = Share.class.getSimpleName();
+    ShareDialog shareDialog;
     public Share(Context context)
     {
         this.mContext = context;
@@ -46,7 +47,6 @@ public class Share implements PlatformActionListener, HttpReqShareCallback
 
     public void startShare()
     {
-        final ShareDialog shareDialog;
         shareDialog = new ShareDialog(mContext);
         shareDialog.setCancelButtonOnClickListener(new View.OnClickListener() {
 
@@ -68,11 +68,13 @@ public class Share implements PlatformActionListener, HttpReqShareCallback
                 } else if (item.get("ItemText").equals("朋友圈")) {
                     getWxShareBean(SHARE_WX_MOMENTS);
                     toastMgr.builder.display("微信朋友圈", 1);
-                } else {
-                    toastMgr.builder.display("other", 1);
+                } else if (item.get("ItemText").equals("QQ空间")) {
+                    toastMgr.builder.display("QQ Zone", 1);
+                    getWxShareBean(SHARE_QQ_ZOME);
+                } else if (item.get("ItemText").equals("QQ")) {
+                    toastMgr.builder.display("QQ", 1);
+                    getWxShareBean(SHARE_QQ_FRIENDS);
                 }
-                shareDialog.dismiss();
-
             }
         });
     }
@@ -118,6 +120,35 @@ public class Share implements PlatformActionListener, HttpReqShareCallback
         // 执行分享
         wechat.share(sp);
     }
+
+    private void shareQQFriends(String title, String textcontent, String imageUrl, String url)
+    {
+        Platform.ShareParams sp = new Platform.ShareParams();
+        sp.setTitle(title);
+        sp.setText(textcontent);
+        sp.setImageUrl(imageUrl);//网络图片rul
+        sp.setTitleUrl(url);  //网友点进链接后，可以看到分享的详情
+        //3、非常重要：获取平台对象
+        Platform qq = ShareSDK.getPlatform(QQ.NAME);
+        qq.setPlatformActionListener(this);
+        qq.share(sp);
+    }
+
+    private void shareQQZone(String title, String textcontent, String imageUrl, String url)
+    {
+        Platform.ShareParams sp = new Platform.ShareParams();
+        sp.setTitle(title);
+        sp.setTitleUrl(url); // 标题的超链接
+        sp.setText(textcontent);
+        sp.setImageUrl(imageUrl);
+        sp.setSite("驭帮");
+        sp.setSiteUrl(url);
+
+        Platform qzone = ShareSDK.getPlatform (QZone.NAME);
+        qzone.setPlatformActionListener(this);
+        qzone.share(sp);
+    }
+
 
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
@@ -185,9 +216,13 @@ public class Share implements PlatformActionListener, HttpReqShareCallback
         {
             shareWXMoments(title, textcontent, imageUrl, url);
         }
-        else
+        else if (type == SHARE_QQ_FRIENDS)
         {
-
+            shareQQFriends(title, textcontent, imageUrl, url);
+        }
+        else if (type == SHARE_QQ_ZOME)
+        {
+            shareQQZone(title, textcontent, imageUrl, url);
         }
 
     }
@@ -228,6 +263,8 @@ public class Share implements PlatformActionListener, HttpReqShareCallback
                 default:
                     break;
             }
+            shareDialog.dismiss();
+
         }
 
     };
