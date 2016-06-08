@@ -390,7 +390,5 @@ public class MyActivity extends BaseActivity {
             }
         }
     }
-
     private int REQUEST_USER_INFO = 0X11;
-
 }
