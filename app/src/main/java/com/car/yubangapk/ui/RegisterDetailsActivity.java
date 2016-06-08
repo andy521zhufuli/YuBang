@@ -258,21 +258,21 @@ public class RegisterDetailsActivity extends BaseActivity {
                     return;
                 }
 
-                if ((isSetPhoto1 && isSetPhoto2 && isSetPhoto3 && isSetPhoto4 && isSetPhoto5 && isSetPhoto6) != true)
-                {
-                    AlertDialog alertDialog = new AlertDialog(mContext);
-                    alertDialog.builder().
-                            setCancelable(true)
-                            .setTitle("添加信息不完整")
-                            .setPositiveButton("继续添加", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
-                            .show();
-                    return;
-                }
+//                if ((isSetPhoto1 && isSetPhoto2 && isSetPhoto3 && isSetPhoto4 && isSetPhoto5 && isSetPhoto6) != true)
+//                {
+//                    AlertDialog alertDialog = new AlertDialog(mContext);
+//                    alertDialog.builder().
+//                            setCancelable(true)
+//                            .setTitle("添加信息不完整")
+//                            .setPositiveButton("继续添加", new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//
+//                                }
+//                            })
+//                            .show();
+//                    return;
+//                }
 
                 upLoadCarTNum(register_detail_select_car_num.getText().toString(), Configs.getLoginedInfo(mContext).getUserid());
             }
@@ -546,12 +546,30 @@ public class RegisterDetailsActivity extends BaseActivity {
                     //将最新的信息保存
                     //接下来就是上传图片
                     //首先上传身份证
-                    mCurrentUploadingStatus = UploadStatus.ID;
-                    mProgressDialog.setMessage("上传牌照成功");
-                    L.d(TAG, "上传车辆牌照成功, ");
+//                    mCurrentUploadingStatus = UploadStatus.ID;
+//                    mProgressDialog.setMessage("上传牌照成功");
+//                    L.d(TAG, "上传车辆牌照成功, ");
+//
+//                    //去上传图片
+//                    uploadFile(mPicPath1,"0");
 
-                    //去上传图片
-                    uploadFile(mPicPath1,"0");
+
+                    mProgressDialog.setMessage("恭喜您, 上传成功!");
+                    mProgressDialog.dismiss();
+                    mCurrentUploadingStatus = UploadStatus.DONE;
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    alertDialog.builder().setCancelable(true).setTitle("成功")
+                            .setMsg("恭喜您上传成功,请等待审核")
+                            .setPositiveButton("确定", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    toastMgr.builder.display("前往审核界面,", 1);
+                                    Intent intent = new Intent();
+                                    intent.setClass(mContext,UploadedInfosCheckActivity.class);
+                                    startActivity(intent);
+                                }
+                            })
+                            .show();
                 }
                 else if (json2LoginBean.getReturnCode() == 100)
                 {
