@@ -66,7 +66,7 @@
                 android:orientation="vertical"
                 android:background="@color/white"
                 >
-
+                <!-- 前面4个逻辑服务-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                     android:paddingBottom="3dp"
                     android:layout_marginTop="11dp"
                     >
-
+                    <!-- 逻辑服务1-->
                     <LinearLayout
                         android:id="@+id/ll_speciese_01"
                         android:orientation="vertical"
@@ -93,6 +93,7 @@
 
                             />
                         <TextView
+                            android:id="@+id/speciese_name_01"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="保养维护"
@@ -100,7 +101,7 @@
                             android:textSize="@dimen/tiny_middle_text_size"
                             />
                     </LinearLayout>
-
+                    <!-- 逻辑服务2-->
                     <LinearLayout
                         android:id="@+id/ll_speciese_02"
                         android:orientation="vertical"
@@ -120,6 +121,7 @@
                             android:background="@mipmap/shoppingmall_dianzi_dianlu"
                             />
                         <TextView
+                            android:id="@+id/speciese_name_02"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="电子电路"
@@ -127,7 +129,7 @@
                             android:textSize="@dimen/tiny_middle_text_size"
                             />
                     </LinearLayout>
-
+                    <!-- 逻辑服务3-->
                     <LinearLayout
                         android:id="@+id/ll_speciese_03"
                         android:orientation="vertical"
@@ -145,6 +147,7 @@
                             android:background="@mipmap/shoppingmall_fadongji_peijian"
                             />
                         <TextView
+                            android:id="@+id/speciese_name_03"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="发动机件"
@@ -152,7 +155,7 @@
                             android:textSize="@dimen/tiny_middle_text_size"
                             />
                     </LinearLayout>
-
+                    <!-- 逻辑服务4-->
                     <LinearLayout
                         android:id="@+id/ll_speciese_04"
                         android:orientation="vertical"
@@ -170,6 +173,7 @@
                             android:background="@mipmap/shoppingmall_dahuangyou"
                             />
                         <TextView
+                            android:id="@+id/speciese_name_04"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="打黄油"
@@ -177,8 +181,8 @@
                             android:textSize="@dimen/tiny_middle_text_size"
                             />
                     </LinearLayout>
-
                 </LinearLayout>
+                <!-- 后面4个逻辑服务-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -188,7 +192,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="8dp"
                     >
-
+                    <!-- 逻辑服务5-->
                     <LinearLayout
                         android:id="@+id/ll_speciese_05"
                         android:orientation="vertical"
@@ -206,6 +210,7 @@
                             android:background="@mipmap/shoppingmall_dipan_peijian"
                             />
                         <TextView
+                            android:id="@+id/speciese_name_05"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -213,7 +218,7 @@
                             android:textSize="@dimen/tiny_middle_text_size"
                             />
                     </LinearLayout>
-
+                    <!-- 逻辑服务6-->
                     <LinearLayout
                         android:id="@+id/ll_speciese_06"
                         android:orientation="vertical"
@@ -231,6 +236,7 @@
                             android:background="@mipmap/shoppingmall_cheija_peijian"
                             />
                         <TextView
+                            android:id="@+id/speciese_name_06"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -238,7 +244,7 @@
                             android:textSize="@dimen/tiny_middle_text_size"
                             />
                     </LinearLayout>
-
+                    <!-- 逻辑服务7-->
                     <LinearLayout
                         android:id="@+id/ll_speciese_07"
                         android:orientation="vertical"
@@ -256,6 +262,7 @@
                             android:background="@mipmap/shoppingmall_tuojia_paijian"
                             />
                         <TextView
+                            android:id="@+id/speciese_name_07"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="托架配件"
@@ -263,7 +270,7 @@
                             android:textSize="@dimen/tiny_middle_text_size"
                             />
                     </LinearLayout>
-
+                    <!-- 逻辑服务8-->
                     <LinearLayout
                         android:id="@+id/ll_speciese_08"
                         android:orientation="vertical"
@@ -281,6 +288,7 @@
                             android:background="@mipmap/shoppingmall_more"
                             />
                         <TextView
+                            android:id="@+id/speciese_name_08"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="更多"
@@ -288,13 +296,7 @@
                             android:textSize="@dimen/tiny_middle_text_size"
                             />
                     </LinearLayout>
-
-
-
                 </LinearLayout>
-
-
-
             </LinearLayout>
 
             <View

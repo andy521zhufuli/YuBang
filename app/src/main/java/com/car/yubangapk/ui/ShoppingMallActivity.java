@@ -866,6 +866,15 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         speciese_06 = (ImageView) findViewById(R.id.speciese_06);//车架配件
         speciese_07 = (ImageView) findViewById(R.id.speciese_07);//托架配件
         speciese_08 = (ImageView) findViewById(R.id.speciese_08);//更多
+        //种类  也就是逻辑服务, 对应的名字, 这都是从后台拿来的   不能写死了
+        speciese_name_01 = (TextView) findViewById(R.id.speciese_name_01);//保养维护的名字
+        speciese_name_02 = (TextView) findViewById(R.id.speciese_name_02);//电子电路的名字
+        speciese_name_03 = (TextView) findViewById(R.id.speciese_name_03);//发动机件的名字
+        speciese_name_04 = (TextView) findViewById(R.id.speciese_name_04);//打黄油的名字
+        speciese_name_05 = (TextView) findViewById(R.id.speciese_name_05);//底盘配件的名字
+        speciese_name_06 = (TextView) findViewById(R.id.speciese_name_06);//车架配件的名字
+        speciese_name_07 = (TextView) findViewById(R.id.speciese_name_07);//托架配件的名字
+        speciese_name_08 = (TextView) findViewById(R.id.speciese_name_08);//更多的名字
 
 
         //保养维护
@@ -1820,6 +1829,17 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ImageView speciese_06;//车架配件
     private ImageView speciese_07;//托架配件
     private ImageView speciese_08;//更多
+    //逻辑服务的名字
+    //种类  也就是逻辑服务, 对应的名字, 这都是从后台拿来的   不能写死了
+    private TextView speciese_name_01;//保养维护
+    private TextView speciese_name_02;//电子电路
+    private TextView speciese_name_03;//发动机件
+    private TextView speciese_name_04;//打黄油
+    private TextView speciese_name_05;//底盘配件
+    private TextView speciese_name_06;//车架配件
+    private TextView speciese_name_07;//托架配件
+    private TextView speciese_name_08;//更多
+
     //保养维护
     private TextView shoppingmall_more_01;//更多
     private ImageView  main_product1_01;//主打产品
