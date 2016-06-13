@@ -17,6 +17,7 @@
         android:background="#ffffffff"
         >
         <TextView
+            android:id="@+id/main_product_name_6"
             android:textSize="15.0sp"
             android:textColor="@color/holo_green_dark"
             android:paddingLeft="15.0dip"

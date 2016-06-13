@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -69,8 +68,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     List<ShoppingmallAd>        mRepairServiceAdBeanList;//保存网上获取的repairservice的广告
 
-    // 定义图片的资源
-    private String[] strings = {"保养维护", "电子电路", "发动机件", "底盘配件", "车架配件", "拖架配件" };
 
     //实现点击种类scroll自动滚动
     private int pointYs[];
@@ -96,28 +93,16 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         //设置banner的点击监听
         setBannerClickedListener();
 
-        //广告轮播 最开始的广告轮播
-//        imageUrls = new ArrayList<String>();
-//        imageUrls.add("http://www.juzi2.com/uploads/allimg/130619/1_130619193218_1.jpg");
-//        imageUrls.add("http://a.hiphotos.baidu.com/zhidao/pic/item/4034970a304e251f4dd80e61a786c9177f3e5378.jpg");
-//        imageUrls.add("http://f.hiphotos.baidu.com/zhidao/pic/item/9e3df8dcd100baa12801ad224710b912c8fc2e7e.jpg");
-//        imageUrls.add("drawable://" + R.mipmap.banner01);
-//        imageUrls.add("drawable://" + R.mipmap.banner02);
-//        imageUrls.add("drawable://" + R.mipmap.banner03);
-//
-//
-//        shoppingmall_flashview_banner.setImageUris(imageUrls);
-//        shoppingmall_flashview_banner.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
-
         //实现点击种类scroll自动滚动
         pointYs = new int[7];
-        getScrollPoints();        getScrollPoints();
+        getScrollPoints();
+        getScrollPoints();
 
 
         //去拿轮播图片
         httpGetBannerPics();
         //去拿中间8个的图片
-        httpGetMiddleSpeciesPics();
+        httpGetLogicalServicePicsAndNames();
         //repairService 图片获取
         httpGetAdListPics();
     }
@@ -167,6 +152,8 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 toastMgr.builder.display("网络未连接, 请检查您的网络设置.", 1);
             }
         });
+        //1.为获取repairService下面的广告图片
+        //2.为获取顶部Banner的图片
         getShoppingmallBanner.getBannerPics("2");
     }
 
@@ -252,7 +239,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     /**
      * 去拿中间分类的小图标以及信息  LogicalService
      */
-    private void httpGetMiddleSpeciesPics()
+    private void httpGetLogicalServicePicsAndNames()
     {
         HttpReqGetLogicalService getLogicalService = new HttpReqGetLogicalService();
         getLogicalService.setCallback(new HttpReqCallback() {
@@ -294,12 +281,13 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             String id        = shoppingmallSpeciesePicBean.getId();
 
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathcode + "&fileReq.fileName=" + photoname;
-            L.d(TAG,"商城中间图片加载url = " + url);
+            L.d(TAG, "商城中间图片加载url = " + url);
             ImageLoaderTools.getInstance(mContext).displayImage(url, mMiddleSpeciesList.get(i));
 
-            //在此同时, 去拿对应的6个图片
+            setLogicalServiceNames(i, picList.get(i));
+
             /**
-             * 去拿中间以下6个的图片
+             * 去拿每个 LogicalService 所对应的RepairService的内容
              */
             OkHttpUtils.post()
                     .url(Configs.IP_ADDRESS+Configs.IP_ADDRESS_ACTION_GETDATA)
@@ -308,8 +296,40 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                     .addParams("dataReqModel.args.logicalService",id)
                     .build()
                     .executeMy(new MallBottomCallback(),i);
-            L.i(TAG, "service all kinds bottom " + i  + " url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
+            L.i(TAG, "第" + i + "个LogicalService 所对应的RepairService的url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
                     + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+id);
+        }
+    }
+
+    private void setLogicalServiceNames(int index, ShoppingmallSpeciesePicBean LogicalService)
+    {
+        switch (index)
+        {
+            case 0:
+                speciese_name_01.setText(LogicalService.getServiceName());
+                break;
+            case 1:
+                speciese_name_02.setText(LogicalService.getServiceName());
+                break;
+            case 2:
+                speciese_name_03.setText(LogicalService.getServiceName());
+                break;
+            case 3:
+                speciese_name_04.setText(LogicalService.getServiceName());
+                break;
+            case 4:
+                speciese_name_05.setText(LogicalService.getServiceName());
+                break;
+            case 5:
+                speciese_name_06.setText(LogicalService.getServiceName());
+                break;
+            case 6:
+                speciese_name_07.setText(LogicalService.getServiceName());
+                break;
+            case 7:
+                //这里的LogicalService只有7个, 因为后台只配置了这么多 所以第八个 周边产品不会出现  还需要老杨后台配置
+                speciese_name_08.setText(LogicalService.getServiceName());
+                break;
         }
     }
 
@@ -824,11 +844,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 } else {
                     int height = shoppingmall_more_01.getMeasuredHeight();
                     ViewGroup.LayoutParams params = shoppingmall_more_01.getLayoutParams();
-//                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall01.getTop());
-//                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall02.getTop());
-//                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall03.getTop());
-//                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall04.getTop());
-//                    L.d(TAG + "shoppingmall_more_01 pos" + shoppingmall05.getTop());
                     //还要增加两个 因为有8个选项
                     pointYs[0] = shoppingmall01.getTop();
                     pointYs[1] = shoppingmall02.getTop();
@@ -879,6 +894,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
         //保养维护
         shoppingmall_more_01 = (TextView) findViewById(R.id.shoppingmall_more_01);//更多
+        main_product_name_1  = (TextView) findViewById(R.id.main_product_name_1);//repairService的名字
         main_product1_01     = (ImageView) findViewById(R.id.main_product1_01);//主打产品
         main_product1_02     = (ImageView) findViewById(R.id.main_product1_02);
         main_product1_03     = (ImageView) findViewById(R.id.main_product1_03);
@@ -888,6 +904,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
         //电子电路
         shoppingmall_more_02 = (TextView) findViewById(R.id.shoppingmall_more_02);//更多
+        main_product_name_2  = (TextView) findViewById(R.id.main_product_name_2);;//repairService的名字
         main_product2_01     = (ImageView) findViewById(R.id.main_product2_01);//主打产品
         main_product2_02     = (ImageView) findViewById(R.id.main_product2_02);
         main_product2_03     = (ImageView) findViewById(R.id.main_product2_03);
@@ -897,6 +914,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
         //发动机件
         shoppingmall_more_03 = (TextView) findViewById(R.id.shoppingmall_more_03);//更多
+        main_product_name_3  = (TextView) findViewById(R.id.main_product_name_3);//repairService的名字
         main_product3_01     = (ImageView) findViewById(R.id.main_product3_01);//主打产品
         main_product3_02     = (ImageView) findViewById(R.id.main_product3_02);
         main_product3_03     = (ImageView) findViewById(R.id.main_product3_03);
@@ -905,6 +923,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product3_06     = (ImageView) findViewById(R.id.main_product3_06);
         //打黄油
         shoppingmall_more_04 = (TextView) findViewById(R.id.shoppingmall_more_04);//更多
+        main_product_name_4  = (TextView) findViewById(R.id.main_product_name_4);//repairService的名字
         main_product4_01     = (ImageView) findViewById(R.id.main_product4_01);//主打产品
         main_product4_02     = (ImageView) findViewById(R.id.main_product4_02);
         main_product4_03     = (ImageView) findViewById(R.id.main_product4_03);
@@ -913,6 +932,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product4_06     = (ImageView) findViewById(R.id.main_product4_06);
         //底盘配件
         shoppingmall_more_05 = (TextView) findViewById(R.id.shoppingmall_more_05);//更多
+        main_product_name_5  = (TextView) findViewById(R.id.main_product_name_5);//repairService的名字
         main_product5_01     = (ImageView) findViewById(R.id.main_product5_01);//主打产品
         main_product5_02     = (ImageView) findViewById(R.id.main_product5_02);
         main_product5_03     = (ImageView) findViewById(R.id.main_product5_03);
@@ -921,6 +941,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product5_06     = (ImageView) findViewById(R.id.main_product5_06);
         //车架配件
         shoppingmall_more_06 = (TextView) findViewById(R.id.shoppingmall_more_06);//更多
+        main_product_name_6  = (TextView) findViewById(R.id.main_product_name_6);//repairService的名字
         main_product6_01     = (ImageView) findViewById(R.id.main_product6_01);//主打产品
         main_product6_02     = (ImageView) findViewById(R.id.main_product6_02);
         main_product6_03     = (ImageView) findViewById(R.id.main_product6_03);
@@ -929,6 +950,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product6_06     = (ImageView) findViewById(R.id.main_product6_06);
         //拖架配件
         shoppingmall_more_07 = (TextView) findViewById(R.id.shoppingmall_more_07);//更多
+        main_product_name_7  = (TextView) findViewById(R.id.main_product_name_7);//repairService的名字
         main_product7_01     = (ImageView) findViewById(R.id.main_product7_01);//主打产品
         main_product7_02     = (ImageView) findViewById(R.id.main_product7_02);
         main_product7_03     = (ImageView) findViewById(R.id.main_product7_03);
@@ -943,6 +965,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product_ad_4 = (ImageView) findViewById(R.id.main_product_ad_4);
         main_product_ad_5 = (ImageView) findViewById(R.id.main_product_ad_5);
         main_product_ad_6 = (ImageView) findViewById(R.id.main_product_ad_6);
+        main_product_ad_7 = (ImageView) findViewById(R.id.main_product_ad_7);
 
 
         shoppingmall01 = (LinearLayout) findViewById(R.id.shoppingmall01);
@@ -1771,40 +1794,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         main_product_ad_6.setOnClickListener(this);
     }
 
-    /*
-     * 适配器的定义,要继承BaseAdapter
-     */
-    public class ImageAdapter extends BaseAdapter {
-
-        public ImageAdapter() {
-        }
-
-        @Override
-        public int getCount() {
-            return strings.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return strings[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View view, ViewGroup parent) {
-            /*
-             * 1.手工创建对象 2.加载xml文件
-             */
-            view = View.inflate(mContext, R.layout.item_shoppingmall_species_gridview, null);
-            TextView species = (TextView) view.findViewById(R.id.item_shoppingmall_species_textview);
-            species.setText(strings[position]);
-            return view;
-        }
-    }
 
     //是不是通过网络拿到了bottom的图片  这样点击的时候才知道跳转的参数
     private boolean isBottomPicGetted = false;
@@ -1842,6 +1831,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     //保养维护
     private TextView shoppingmall_more_01;//更多
+    private TextView main_product_name_1;//repairService的名字
     private ImageView  main_product1_01;//主打产品
     private ImageView  main_product1_02;
     private ImageView  main_product1_03;
@@ -1851,6 +1841,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     //电子电路
     private TextView shoppingmall_more_02;
+    private TextView main_product_name_2;//repairService的名字
     private ImageView  main_product2_01;
     private ImageView  main_product2_02;
     private ImageView  main_product2_03;
@@ -1860,6 +1851,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     //发动机件
     private TextView shoppingmall_more_03;
+    private TextView main_product_name_3;//repairService的名字
     private ImageView  main_product3_01;
     private ImageView  main_product3_02;
     private ImageView  main_product3_03;
@@ -1869,6 +1861,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     //打黄油配件
     private TextView shoppingmall_more_04;
+    private TextView main_product_name_4;//repairService的名字
     private ImageView main_product4_01;
     private ImageView main_product4_02;
     private ImageView main_product4_03;
@@ -1878,6 +1871,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     //底盘配件
     private TextView shoppingmall_more_05;
+    private TextView main_product_name_5;//repairService的名字
     private ImageView main_product5_01;
     private ImageView main_product5_02;
     private ImageView main_product5_03;
@@ -1888,6 +1882,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     //车架配件
     private TextView shoppingmall_more_06;
+    private TextView main_product_name_6;//repairService的名字
     private ImageView main_product6_01;
     private ImageView main_product6_02;
     private ImageView main_product6_03;
@@ -1897,6 +1892,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     //托架配件
     private TextView shoppingmall_more_07;
+    private TextView main_product_name_7;//repairService的名字
     private ImageView main_product7_01;
     private ImageView main_product7_02;
     private ImageView main_product7_03;
@@ -1915,10 +1911,11 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     //底部广告
     private ImageView main_product_ad_1;
     private ImageView main_product_ad_2;
-    private ImageView main_product_ad_3;
+    private ImageView main_product_ad_3;//打黄油  这个广告没有了
     private ImageView main_product_ad_4;
     private ImageView main_product_ad_5;
     private ImageView main_product_ad_6;
+    private ImageView main_product_ad_7;//托架配件
 
 
 
