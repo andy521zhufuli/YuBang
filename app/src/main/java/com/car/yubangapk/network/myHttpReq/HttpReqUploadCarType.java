@@ -1,6 +1,7 @@
 package com.car.yubangapk.network.myHttpReq;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import com.car.yubangapk.configs.Configs;
@@ -9,6 +10,7 @@ import com.car.yubangapk.json.bean.Json2LoginBean;
 import com.car.yubangapk.json.formatJson.Json2Login;
 import com.car.yubangapk.network.okhttp.OkHttpUtils;
 import com.car.yubangapk.network.okhttp.callback.StringCallback;
+import com.car.yubangapk.ui.ClientServiceActivity;
 import com.car.yubangapk.utils.L;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.AlertDialog;
@@ -45,6 +47,8 @@ public class HttpReqUploadCarType
                                 String _carSeries,
                                 String _produceYear,
                                 String _carCapacity,
+                                String _carHorsePower,
+                                String _carMotivation,
                                 String _userid
     )
     {
@@ -54,8 +58,10 @@ public class HttpReqUploadCarType
                 .addParams("userReq.carCompany",  _carCompany)
                 .addParams("userReq.carBrand",    _carBrand)
                 .addParams("userReq.carSeries", _carSeries)
-                .addParams("userReq.produceYear", _produceYear)
-                .addParams("userReq.carCapacity", _carCapacity)
+//                .addParams("userReq.produceYear", _produceYear)
+//                .addParams("userReq.carCapacity", _carCapacity)
+                .addParams("userReq.horsepower", _carHorsePower)
+                .addParams("userReq.motivation", _carMotivation)
                 .addParams("userReq.userid", _userid)
                 .build()
                 .execute(new UploadCarTypeCallback());
@@ -63,8 +69,10 @@ public class HttpReqUploadCarType
                         + "userReq.carCompany=" + _carCompany
                         + "&userReq.carBrand=" + _carBrand
                         + "&userReq.carSeries=" + _carSeries
-                        + "&userReq.produceYear=" + _produceYear
-                        + "&userReq.carCapacity=" + _carCapacity
+                        + "&userReq.horsepower=" +    _carHorsePower
+                        + "&userReq.motivation=" +    _carMotivation
+                        //+ "&userReq.produceYear=" +  _produceYear
+                        //+ "&userReq.carCapacity=" +  _carCapacity
                         + "&userReq.userid=" + _userid
         );
 
@@ -111,6 +119,19 @@ public class HttpReqUploadCarType
                 {
                     //查无此车
                     toastMgr.builder.display(json2LoginBean.getMessage(), 1);
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    alertDialog.builder().setCancelable(true).setTitle("查无此车")
+                            .setMsg("您选择的车型暂时还没有,请联系客服!")
+                            .setPositiveButton("确定", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent();
+                                    intent.setClass(mContext, ClientServiceActivity.class);
+                                    mContext.startActivity(intent);
+                                    //联系客服
+                                }
+                            })
+                            .show();
 
                 }
                 else if(json2LoginBean.getReturnCode() == -1)

@@ -205,7 +205,7 @@ public class RegisterDetailChooseCarChildBrandActivity extends BaseActivity impl
 
                 //去到子品牌
                 Intent intent = new Intent();
-                intent.setClass(RegisterDetailChooseCarChildBrandActivity.this, RegisterDetailChooseCarCapacityActivity.class);
+                intent.setClass(RegisterDetailChooseCarChildBrandActivity.this, RegisterDetailChooseCarHorsePowerActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("childbrandid", seriesId);
 

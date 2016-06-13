@@ -142,7 +142,7 @@
                     android:layout_alignLeft="@+id/tv_user_name"
                     android:layout_centerVertical="true"
                     android:text=""
-                    android:textColor="@color/pd_red"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/small_medium_text_size" />
 
                 <TextView

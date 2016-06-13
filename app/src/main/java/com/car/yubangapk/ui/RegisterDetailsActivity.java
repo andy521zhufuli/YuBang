@@ -360,12 +360,16 @@ public class RegisterDetailsActivity extends BaseActivity {
             String carSeries;
             String produceYear;
             String carCapacity;
+            String carHorsePower;
+            String carMotivation;
             String userid;
             carCompany = bundle.getString(Configs.carCompany, "");
             carBrand = bundle.getString(Configs.carBrand, "");
             carSeries = bundle.getString(Configs.carSeries, "");
             produceYear = bundle.getString(Configs.produceYear, "");
             carCapacity = bundle.getString(Configs.carCapacity, "");
+            carHorsePower = bundle.getString(Configs.carHorsepower, "");
+            carMotivation = bundle.getString(Configs.carMotivation, "");
 //            userid      = (String) SPUtils.get(mContext,Configs.userid,"");
             userid = Configs.getLoginedInfo(mContext).getUserid();
 
@@ -373,15 +377,16 @@ public class RegisterDetailsActivity extends BaseActivity {
             chooseedType = (String) SPUtils.get(mContext,"chooseedCompany","");
             chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedBrand","");
             chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedChildBrand","");
-            chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedCapacity","");
-            chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedYear","");
-
+            //chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedCapacity","");
+            //chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedYear","");
+            chooseedType = chooseedType + "-" + carHorsePower;
+            chooseedType = chooseedType + "-" + carMotivation;
 
             register_detail_select_car_info.setText(chooseedType);
 
 
             //上传
-            upLoadCarType(carCompany, carBrand, carSeries, produceYear, carCapacity, userid);
+            upLoadCarType(carCompany, carBrand, carSeries, produceYear, carCapacity, carHorsePower, carMotivation, userid);
         }
     }
 
@@ -398,6 +403,8 @@ public class RegisterDetailsActivity extends BaseActivity {
                                 String _carSeries,
                                 String _produceYear,
                                 String _carCapacity,
+                                String _carHorsePower,
+                                String _carMotivation,
                                 String _userid
                                 )
     {
@@ -408,8 +415,10 @@ public class RegisterDetailsActivity extends BaseActivity {
                 .addParams("userReq.carCompany",  _carCompany)
                 .addParams("userReq.carBrand",    _carBrand)
                 .addParams("userReq.carSeries", _carSeries)
-                .addParams("userReq.produceYear", _produceYear)
-                .addParams("userReq.carCapacity", _carCapacity)
+                .addParams("userReq.horsepower", _carHorsePower)
+                .addParams("userReq.motivation", _carMotivation)
+                //.addParams("userReq.produceYear", _produceYear)
+                //.addParams("userReq.carCapacity", _carCapacity)
                 .addParams("userReq.userid", _userid)
                 .build()
                 .execute(new UploadCarTypeCallback());
@@ -417,8 +426,10 @@ public class RegisterDetailsActivity extends BaseActivity {
                         + "userReq.carCompany=" +   _carCompany
                         + "&userReq.carBrand=" +   _carBrand
                         + "&userReq.carSeries=" +    _carSeries
-                        + "&userReq.produceYear=" +  _produceYear
-                        + "&userReq.carCapacity=" +  _carCapacity
+                        + "&userReq.horsepower=" +    _carHorsePower
+                        + "&userReq.motivation=" +    _carMotivation
+                        //+ "&userReq.produceYear=" +  _produceYear
+                        //+ "&userReq.carCapacity=" +  _carCapacity
                         + "&userReq.userid=" +_userid
         );
 
@@ -598,9 +609,9 @@ public class RegisterDetailsActivity extends BaseActivity {
                             .setPositiveButton("确定", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-//                                    Intent intent = new Intent();
-//                                    intent.setClass(mContext, LoginActivity.class);
-//                                    mContext.startActivity(intent);
+                                    Intent intent = new Intent();
+                                    intent.setClass(mContext, ClientServiceActivity.class);
+                                    mContext.startActivity(intent);
                                     //联系客服
                                 }
                             })
@@ -609,17 +620,6 @@ public class RegisterDetailsActivity extends BaseActivity {
                 else if(json2LoginBean.getReturnCode() == -1)
                 {
                     toastMgr.builder.display(json2LoginBean.getMessage(), 1);
-                    //参数错误
-                    AlertDialog alertDialog = new AlertDialog(mContext);
-                    alertDialog.builder().setCancelable(true).setTitle("更新")
-                            .setMsg("当前版本太低,请更新版本")
-                            .setPositiveButton("立即更新", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    toastMgr.builder.display("前往应用商城,", 1);
-                                }
-                            })
-                            .show();
                 }
             }
 

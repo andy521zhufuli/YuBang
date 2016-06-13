@@ -398,12 +398,16 @@ public class MyPersonalInfoActivity extends BaseActivity{
             String carSeries;
             String produceYear;
             String carCapacity;
+            String carHorsePower;
+            String carMotivation;
             String userid;
             carCompany = bundle.getString(Configs.carCompany, "");
             carBrand = bundle.getString(Configs.carBrand, "");
             carSeries = bundle.getString(Configs.carSeries, "");
             produceYear = bundle.getString(Configs.produceYear, "");
             carCapacity = bundle.getString(Configs.carCapacity, "");
+            carHorsePower = bundle.getString(Configs.carHorsepower, "");
+            carMotivation = bundle.getString(Configs.carMotivation, "");
 //            userid      = (String) SPUtils.get(mContext,Configs.userid,"");
             userid = Configs.getLoginedInfo(mContext).getUserid();
 
@@ -411,13 +415,15 @@ public class MyPersonalInfoActivity extends BaseActivity{
             chooseedType = (String) SPUtils.get(mContext,"chooseedCompany","");
             chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedBrand","");
             chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedChildBrand","");
-            chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedCapacity","");
-            chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedYear","");
+//            chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedCapacity","");
+//            chooseedType = chooseedType + "-" + SPUtils.get(mContext, "chooseedYear","");
+            chooseedType = chooseedType + "-" + carHorsePower;
+            chooseedType = chooseedType + "-" + carMotivation;
             mChoosedCarType = chooseedType;
             //上传
             HttpReqUploadCarType uploadCarType = new HttpReqUploadCarType(mContext);
             uploadCarType.setCallback(new UploadCarTypeCallback());
-            uploadCarType.upLoadCarType(carCompany, carBrand, carSeries, produceYear, carCapacity, userid);
+            uploadCarType.upLoadCarType(carCompany, carBrand, carSeries, produceYear, carCapacity, carHorsePower, carMotivation, userid);
         }
     }
 

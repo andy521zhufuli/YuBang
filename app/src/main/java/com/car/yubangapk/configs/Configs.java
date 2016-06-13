@@ -90,6 +90,8 @@ public class Configs {
 
 
 
+
+
     //--------------------------网络请求action-------------------------------------
 
     //Sputil
@@ -98,6 +100,8 @@ public class Configs {
     public static final String carSeries = "seriesId";//选择子品牌保存
     public static final String produceYear = "yearId";//选择年份保存
     public static final String carCapacity = "capacityId";//选择排量保存
+    public static final String carHorsepower = "chooseedHorsePower";//选择马力保持
+    public static final String carMotivation = "chooseedMotivation";//选择驱动形式保存
 
 
     //--------------------------用户登录后的信息-------------------------------------
