@@ -295,12 +295,115 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                     .addParams("dataReqModel.args.needTotal","needTotal")
                     .addParams("dataReqModel.args.logicalService",id)
                     .build()
-                    .executeMy(new MallBottomCallback(),i);
+                    .executeMy(new RepairServiceCallback(),i);
             L.i(TAG, "第" + i + "个LogicalService 所对应的RepairService的url = " + Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETDATA + "?"
                     + "sqlName=clientSearchRepairService&dataReqModel.args.needTotal=needTotal&dataReqModel.args.logicalService="+id);
         }
     }
+    /**
+     * 细节分类 没给7个图标 还不算广告
+     * 中部以下的图标获取
+     */
+    public class RepairServiceCallback extends MyStringCallback
+    {
 
+
+        @Override
+        public void onError(Call call, int position, Exception e) {
+            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置", 1);
+            //这时候点击任何一个都会提示不能点击  不能进入到下一个页面
+        }
+
+        @Override
+        public void onResponse(String response, int position) {
+            L.i(TAG, "中部以下的图片json = " + response);
+            L.i(TAG, "中部以下的图片position = " + position);
+            Json2ShoppingmallBottomPics json2ShoppingmallBottomPics = new Json2ShoppingmallBottomPics(response);
+            List<Json2ShoppingmallBottomPicsBean> beans = json2ShoppingmallBottomPics.getShoppingmallBottomPics();
+
+            if (beans == null)
+            {
+                //提示更新app
+                toastMgr.builder.display("版本太低, 请更新app", 1);
+
+            }
+            else
+            {
+                if (beans.get(0).isHasData() == true)
+                {
+                    //有数据  拿到了数据
+
+                    setRepairServicePics(position, beans, response);
+                }
+                else
+                {
+                    toastMgr.builder.display("服务器异常!", 0);
+                }
+            }
+        }
+    }
+    /**
+     * 拿到了图片 去给下面的控件设置图片
+     */
+    private synchronized void setRepairServicePics(int position, List<Json2ShoppingmallBottomPicsBean> beanList, String response)
+    {
+        switch (position)
+        {
+            case 0://保养维护
+                mBAOYANGWEIHUList = beanList;
+                mBAOYANGWEIHUString = response;
+                main_product_name_1.setText(mShoppingmallSpeciesPicList.get(position).getServiceName());
+                //先去去显示图片
+                setBottomPicsBaoyang(beanList);
+                break;
+            case 1://电子电路
+                mDIANZIDIANLUList = beanList;
+                mDIANZIDIANLUString = response;
+                main_product_name_2.setText(mShoppingmallSpeciesPicList.get(position).getServiceName());
+                setBottomPicsDianziDianlu(beanList);
+                break;
+            case 2://发动机件
+                mFADONGJIJIANList = beanList;
+                mFADONGJIJIANString = response;
+                main_product_name_3.setText(mShoppingmallSpeciesPicList.get(position).getServiceName());
+                setBottomPicsFaDongjijian(beanList);
+                break;
+            case 3://打黄油
+                mDAHUANGYOUList = beanList;
+                setBottomPicsDaHuangyou(beanList);
+                main_product_name_4.setText(mShoppingmallSpeciesPicList.get(position).getServiceName());
+                break;
+            case 4://底盘配件
+                mDIPANPEIJIANList = beanList;
+                mDIPANPEIJIANString = response;
+                main_product_name_5.setText(mShoppingmallSpeciesPicList.get(position).getServiceName());
+                setBottomPicsDiPan(beanList);
+                break;
+            case 5://车架配件
+                mCHEJIAPEIJIANList = beanList;
+                mCHEJIAPEIJIANString = response;
+                main_product_name_6.setText(mShoppingmallSpeciesPicList.get(position).getServiceName());
+                setBottomPicsCheJia(beanList);
+                break;
+            case 6://托架配件
+                mTUOJIAPEIJIANList = beanList;
+                mTUOJIAPEIJIANString = response;
+                main_product_name_7.setText(mShoppingmallSpeciesPicList.get(position).getServiceName());
+                setBottomPicsTuoJia(beanList);
+                break;
+            case 7://更多
+                mGEBGDUOList = beanList;
+                mGEBGDUOString = response;
+                //TODO
+                break;
+        }
+    }
+
+    /**
+     * 设置逻辑服务的名字
+     * @param index
+     * @param LogicalService
+     */
     private void setLogicalServiceNames(int index, ShoppingmallSpeciesePicBean LogicalService)
     {
         switch (index)
@@ -418,120 +521,14 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         mShoppingmallBottomPicMap = new HashMap<>();
         mShoppingmallBottomImageviewList = new ArrayList<>();
         //后期做加载图片的时候再做
-
-
-
     }
 
-
-
-    /**
-     * 细节分类 没给7个图标 还不算广告
-     * 中部以下的图标获取
-     */
-    public class MallBottomCallback extends MyStringCallback
-    {
-
-
-        @Override
-        public void onError(Call call, int position, Exception e) {
-            toastMgr.builder.display("网络连接有问题, 请教检查您的网络设置", 1);
-            //这时候点击任何一个都会提示不能点击  不能进入到下一个页面
-        }
-
-        @Override
-        public void onResponse(String response, int position) {
-            L.i(TAG, "中部以下的图片json = " + response);
-            L.i(TAG, "中部以下的图片position = " + position);
-            Json2ShoppingmallBottomPics json2ShoppingmallBottomPics = new Json2ShoppingmallBottomPics(response);
-            List<Json2ShoppingmallBottomPicsBean> beans = json2ShoppingmallBottomPics.getShoppingmallBottomPics();
-
-            if (beans == null)
-            {
-                //提示更新app
-                toastMgr.builder.display("版本太低, 请更新app", 1);
-
-            }
-            else
-            {
-                if (beans.get(0).isHasData() == true)
-                {
-                    //有数据  拿到了数据
-
-                    setBottomPics(position, beans, response);
-                }
-                else
-                {
-                    toastMgr.builder.display("服务器异常!", 0);
-                }
-            }
-        }
-
-    }
-
-
-    /**
-     * 拿到了图片 去给下面的控件设置图片
-     */
-    private synchronized void setBottomPics(int position, List<Json2ShoppingmallBottomPicsBean> beanList,String response)
-    {
-        switch (position)
-        {
-            case 0://保养维护
-                mBAOYANGWEIHUList = beanList;
-                mBAOYANGWEIHUString = response;
-                //先去去显示图片
-                setBottomPicsBaoyang(beanList);
-                break;
-            case 1://电子电路
-                mDIANZIDIANLUList = beanList;
-                mDIANZIDIANLUString = response;
-                setBottomPicsDianziDianlu(beanList);
-                break;
-            case 2://发动机件
-                mFADONGJIJIANList = beanList;
-                mFADONGJIJIANString = response;
-                setBottomPicsFaDongjijian(beanList);
-                break;
-            case 3://打黄油
-                mDAHUANGYOUList = beanList;
-                setBottomPicsDaHuangyou(beanList);
-                break;
-            case 4://底盘配件
-                mDIPANPEIJIANList = beanList;
-                mDIPANPEIJIANString = response;
-                setBottomPicsDiPan(beanList);
-                break;
-            case 5://车架配件
-                mCHEJIAPEIJIANList = beanList;
-                mCHEJIAPEIJIANString = response;
-                setBottomPicsCheJia(beanList);
-                break;
-            case 6://托架配件
-                mTUOJIAPEIJIANList = beanList;
-                mTUOJIAPEIJIANString = response;
-                setBottomPicsTuoJia(beanList);
-                break;
-            case 7://更多
-                mGEBGDUOList = beanList;
-                mGEBGDUOString = response;
-                //TODO
-                break;
-
-
-
-        }
-
-    }
 
     /**
      * 保养维护 设置图片
      */
     private void setBottomPicsBaoyang(List<Json2ShoppingmallBottomPicsBean> beanList)
     {
-
-
-
         List<ImageView> baoyangweihuList = new ArrayList<>();
         baoyangweihuList.add(main_product1_01);
         baoyangweihuList.add(main_product1_02);
@@ -540,34 +537,63 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         baoyangweihuList.add(main_product1_05);
         baoyangweihuList.add(main_product1_06);
         List<String> urls = new ArrayList<>();
-        for (int i = 0; i < 6; i++)
+
+        if (beanList.size() == 0)
         {
-            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
-            String id;
-            String logicalService;
+            main_product1_01.setVisibility(View.GONE);
+            main_product1_02.setVisibility(View.GONE);
+            main_product1_03.setVisibility(View.GONE);
+            main_product1_04.setVisibility(View.GONE);
+            main_product1_05.setVisibility(View.GONE);
+            main_product1_06.setVisibility(View.GONE);
+            return;
+        }
+        else if (beanList.size() == 1)
+        {
+            //这是不可见
+            main_product1_02.setVisibility(View.GONE);
+            main_product1_03.setVisibility(View.GONE);
+            main_product1_04.setVisibility(View.GONE);
+            main_product1_05.setVisibility(View.GONE);
+            main_product1_06.setVisibility(View.GONE);
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(0);
             String pathCode;
             String photoName;
-            String serviceCode;
-            int repairServiceSort;
-            String serviceName;
-            id = bean.getId();
-            logicalService = bean.getLogicalService();
             pathCode = bean.getPathCode();
-
             photoName = bean.getPhotoName();
-
-            serviceCode = bean.getServiceCode();
-            repairServiceSort = bean.getRepairServiceSort();
-            serviceName = bean.getServiceName();
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
-            urls.add(url);
+            ImageLoaderTools.getInstance(mContext).displayImage(url,main_product1_01);
         }
-
-        for (int i = 0; i < 6; i++)
+        else if (beanList.size() >= 6)
         {
-            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
-        }
+            for (int i = 0; i < 6; i++)
+            {
+                Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+                String id;
+                String logicalService;
+                String pathCode;
+                String photoName;
+                String serviceCode;
+                int repairServiceSort;
+                String serviceName;
+                id = bean.getId();
+                logicalService = bean.getLogicalService();
+                pathCode = bean.getPathCode();
 
+                photoName = bean.getPhotoName();
+
+                serviceCode = bean.getServiceCode();
+                repairServiceSort = bean.getRepairServiceSort();
+                serviceName = bean.getServiceName();
+                String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+                urls.add(url);
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+            }
+        }
     }
 
 
@@ -585,32 +611,62 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         baoyangweihuList.add(main_product2_05);
         baoyangweihuList.add(main_product2_06);
         List<String> urls = new ArrayList<>();
-        for (int i = 0; i < 6; i++)
+
+        if (beanList.size() == 0)
         {
-            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
-            String id;
-            String logicalService;
+            main_product2_01.setVisibility(View.GONE);
+            main_product2_02.setVisibility(View.GONE);
+            main_product2_03.setVisibility(View.GONE);
+            main_product2_04.setVisibility(View.GONE);
+            main_product2_05.setVisibility(View.GONE);
+            main_product2_06.setVisibility(View.GONE);
+            return;
+        }
+        else if (beanList.size() == 1)
+        {
+            //这是不可见
+            main_product2_02.setVisibility(View.GONE);
+            main_product2_03.setVisibility(View.GONE);
+            main_product2_04.setVisibility(View.GONE);
+            main_product2_05.setVisibility(View.GONE);
+            main_product2_06.setVisibility(View.GONE);
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(0);
             String pathCode;
             String photoName;
-            String serviceCode;
-            int repairServiceSort;
-            String serviceName;
-            id = bean.getId();
-            logicalService = bean.getLogicalService();
             pathCode = bean.getPathCode();
-
             photoName = bean.getPhotoName();
-
-            serviceCode = bean.getServiceCode();
-            repairServiceSort = bean.getRepairServiceSort();
-            serviceName = bean.getServiceName();
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
-            urls.add(url);
+            ImageLoaderTools.getInstance(mContext).displayImage(url,main_product2_01);
         }
-
-        for (int i = 0; i < 6; i++)
+        else if (beanList.size() >= 6)
         {
-            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i), baoyangweihuList.get(i));
+            for (int i = 0; i < 6; i++)
+            {
+                Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+                String id;
+                String logicalService;
+                String pathCode;
+                String photoName;
+                String serviceCode;
+                int repairServiceSort;
+                String serviceName;
+                id = bean.getId();
+                logicalService = bean.getLogicalService();
+                pathCode = bean.getPathCode();
+
+                photoName = bean.getPhotoName();
+
+                serviceCode = bean.getServiceCode();
+                repairServiceSort = bean.getRepairServiceSort();
+                serviceName = bean.getServiceName();
+                String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+                urls.add(url);
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i), baoyangweihuList.get(i));
+            }
         }
     }
 
@@ -629,33 +685,64 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         baoyangweihuList.add(main_product3_05);
         baoyangweihuList.add(main_product3_06);
         List<String> urls = new ArrayList<>();
-        for (int i = 0; i < 6; i++)
+
+        if (beanList.size() == 0)
         {
-            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
-            String id;
-            String logicalService;
+            main_product3_01.setVisibility(View.GONE);
+            main_product3_02.setVisibility(View.GONE);
+            main_product3_03.setVisibility(View.GONE);
+            main_product3_04.setVisibility(View.GONE);
+            main_product3_05.setVisibility(View.GONE);
+            main_product3_06.setVisibility(View.GONE);
+            return;
+        }
+        else if (beanList.size() == 1)
+        {
+            //这是不可见
+            main_product3_02.setVisibility(View.GONE);
+            main_product3_03.setVisibility(View.GONE);
+            main_product3_04.setVisibility(View.GONE);
+            main_product3_05.setVisibility(View.GONE);
+            main_product3_06.setVisibility(View.GONE);
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(0);
             String pathCode;
             String photoName;
-            String serviceCode;
-            int repairServiceSort;
-            String serviceName;
-            id = bean.getId();
-            logicalService = bean.getLogicalService();
             pathCode = bean.getPathCode();
-
             photoName = bean.getPhotoName();
-
-            serviceCode = bean.getServiceCode();
-            repairServiceSort = bean.getRepairServiceSort();
-            serviceName = bean.getServiceName();
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
-            urls.add(url);
+            ImageLoaderTools.getInstance(mContext).displayImage(url,main_product3_01);
+        }
+        else if (beanList.size() >= 6)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+                String id;
+                String logicalService;
+                String pathCode;
+                String photoName;
+                String serviceCode;
+                int repairServiceSort;
+                String serviceName;
+                id = bean.getId();
+                logicalService = bean.getLogicalService();
+                pathCode = bean.getPathCode();
+
+                photoName = bean.getPhotoName();
+
+                serviceCode = bean.getServiceCode();
+                repairServiceSort = bean.getRepairServiceSort();
+                serviceName = bean.getServiceName();
+                String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+                urls.add(url);
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+            }
         }
 
-        for (int i = 0; i < 6; i++)
-        {
-            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
-        }
     }
     /**
      * 打黄油 设置图片
@@ -715,33 +802,63 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         baoyangweihuList.add(main_product5_05);
         baoyangweihuList.add(main_product5_06);
         List<String> urls = new ArrayList<>();
-        for (int i = 0; i < 6; i++)
+        if (beanList.size() == 0)
         {
-            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
-            String id;
-            String logicalService;
+            main_product5_01.setVisibility(View.GONE);
+            main_product5_02.setVisibility(View.GONE);
+            main_product5_03.setVisibility(View.GONE);
+            main_product5_04.setVisibility(View.GONE);
+            main_product5_05.setVisibility(View.GONE);
+            main_product5_06.setVisibility(View.GONE);
+            return;
+        }
+        else if (beanList.size() == 1)
+        {
+            //这是不可见
+            main_product5_02.setVisibility(View.GONE);
+            main_product5_03.setVisibility(View.GONE);
+            main_product5_04.setVisibility(View.GONE);
+            main_product5_05.setVisibility(View.GONE);
+            main_product5_06.setVisibility(View.GONE);
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(0);
             String pathCode;
             String photoName;
-            String serviceCode;
-            int repairServiceSort;
-            String serviceName;
-            id = bean.getId();
-            logicalService = bean.getLogicalService();
             pathCode = bean.getPathCode();
-
             photoName = bean.getPhotoName();
-
-            serviceCode = bean.getServiceCode();
-            repairServiceSort = bean.getRepairServiceSort();
-            serviceName = bean.getServiceName();
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
-            urls.add(url);
+            ImageLoaderTools.getInstance(mContext).displayImage(url,main_product5_01);
+        }
+        else if (beanList.size() >= 6)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+                String id;
+                String logicalService;
+                String pathCode;
+                String photoName;
+                String serviceCode;
+                int repairServiceSort;
+                String serviceName;
+                id = bean.getId();
+                logicalService = bean.getLogicalService();
+                pathCode = bean.getPathCode();
+
+                photoName = bean.getPhotoName();
+
+                serviceCode = bean.getServiceCode();
+                repairServiceSort = bean.getRepairServiceSort();
+                serviceName = bean.getServiceName();
+                String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+                urls.add(url);
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+            }
         }
 
-        for (int i = 0; i < 6; i++)
-        {
-            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
-        }
     }
 
     /**
@@ -758,33 +875,63 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         baoyangweihuList.add(main_product6_05);
         baoyangweihuList.add(main_product6_06);
         List<String> urls = new ArrayList<>();
-        for (int i = 0; i < 6; i++)
+        if (beanList.size() == 0)
         {
-            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
-            String id;
-            String logicalService;
+            main_product6_01.setVisibility(View.GONE);
+            main_product6_02.setVisibility(View.GONE);
+            main_product6_03.setVisibility(View.GONE);
+            main_product6_04.setVisibility(View.GONE);
+            main_product6_05.setVisibility(View.GONE);
+            main_product6_06.setVisibility(View.GONE);
+            return;
+        }
+        else if (beanList.size() == 1)
+        {
+            //这是不可见
+            main_product6_02.setVisibility(View.GONE);
+            main_product6_03.setVisibility(View.GONE);
+            main_product6_04.setVisibility(View.GONE);
+            main_product6_05.setVisibility(View.GONE);
+            main_product6_06.setVisibility(View.GONE);
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(0);
             String pathCode;
             String photoName;
-            String serviceCode;
-            int repairServiceSort;
-            String serviceName;
-            id = bean.getId();
-            logicalService = bean.getLogicalService();
             pathCode = bean.getPathCode();
-
             photoName = bean.getPhotoName();
-
-            serviceCode = bean.getServiceCode();
-            repairServiceSort = bean.getRepairServiceSort();
-            serviceName = bean.getServiceName();
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
-            urls.add(url);
+            ImageLoaderTools.getInstance(mContext).displayImage(url,main_product6_01);
+        }
+        else if (beanList.size() >= 6)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+                String id;
+                String logicalService;
+                String pathCode;
+                String photoName;
+                String serviceCode;
+                int repairServiceSort;
+                String serviceName;
+                id = bean.getId();
+                logicalService = bean.getLogicalService();
+                pathCode = bean.getPathCode();
+
+                photoName = bean.getPhotoName();
+
+                serviceCode = bean.getServiceCode();
+                repairServiceSort = bean.getRepairServiceSort();
+                serviceName = bean.getServiceName();
+                String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+                urls.add(url);
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+            }
         }
 
-        for (int i = 0; i < 6; i++)
-        {
-            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
-        }
     }
 
 
@@ -802,32 +949,61 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         baoyangweihuList.add(main_product7_05);
         baoyangweihuList.add(main_product7_06);
         List<String> urls = new ArrayList<>();
-        for (int i = 0; i < 6; i++)
+        if (beanList.size() == 0)
         {
-            Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
-            String id;
-            String logicalService;
+            main_product7_01.setVisibility(View.GONE);
+            main_product7_02.setVisibility(View.GONE);
+            main_product7_03.setVisibility(View.GONE);
+            main_product7_04.setVisibility(View.GONE);
+            main_product7_05.setVisibility(View.GONE);
+            main_product7_06.setVisibility(View.GONE);
+            return;
+        }
+        else if (beanList.size() == 1)
+        {
+            //这是不可见
+            main_product7_02.setVisibility(View.GONE);
+            main_product7_03.setVisibility(View.GONE);
+            main_product7_04.setVisibility(View.GONE);
+            main_product7_05.setVisibility(View.GONE);
+            main_product7_06.setVisibility(View.GONE);
+            Json2ShoppingmallBottomPicsBean bean = beanList.get(0);
             String pathCode;
             String photoName;
-            String serviceCode;
-            int repairServiceSort;
-            String serviceName;
-            id = bean.getId();
-            logicalService = bean.getLogicalService();
             pathCode = bean.getPathCode();
-
             photoName = bean.getPhotoName();
-
-            serviceCode = bean.getServiceCode();
-            repairServiceSort = bean.getRepairServiceSort();
-            serviceName = bean.getServiceName();
             String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
-            urls.add(url);
+            ImageLoaderTools.getInstance(mContext).displayImage(url,main_product7_01);
         }
-
-        for (int i = 0; i < 6; i++)
+        else if (beanList.size() >= 6)
         {
-            ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+            for (int i = 0; i < 6; i++)
+            {
+                Json2ShoppingmallBottomPicsBean bean = beanList.get(i);
+                String id;
+                String logicalService;
+                String pathCode;
+                String photoName;
+                String serviceCode;
+                int repairServiceSort;
+                String serviceName;
+                id = bean.getId();
+                logicalService = bean.getLogicalService();
+                pathCode = bean.getPathCode();
+
+                photoName = bean.getPhotoName();
+
+                serviceCode = bean.getServiceCode();
+                repairServiceSort = bean.getRepairServiceSort();
+                serviceName = bean.getServiceName();
+                String url = Configs.IP_ADDRESS + Configs.IP_ADDRESS_ACTION_GETFILE + "?fileReq.pathCode=" + pathCode + "&fileReq.fileName=" + photoName;
+                urls.add(url);
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                ImageLoaderTools.getInstance(mContext).displayImage(urls.get(i),baoyangweihuList.get(i));
+            }
         }
     }
 
