@@ -162,8 +162,16 @@ public class FirstPageShopShowActivity extends BaseActivity implements View.OnCl
         shopInfoOrder           = mShopBean.getOrder();
         shopInfoDistance        = mShopBean.getDistance();
         orderNum                = mShopBean.getOrderNum();
+        float star = 0;
+        try
+        {
+            star = Float.parseFloat(shopInfoStar);
+        }
+        catch (NumberFormatException e)
+        {
 
-        float star = Float.parseFloat(shopInfoStar);
+        }
+
         if (star >= (float)5.0)
             star = (float) 5.0;
 

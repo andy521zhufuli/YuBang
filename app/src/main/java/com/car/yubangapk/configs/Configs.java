@@ -81,7 +81,7 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_GET_DISTRICT = "/getData";//获取省
 
     //退出登录
-    public static String IP_ADDRESS_ACTION_LOGOUT = "/carService/client/user/loginout";//获取省
+    public static String IP_ADDRESS_ACTION_LOGOUT = "/client/user/loginout";//获取省
 
 
 

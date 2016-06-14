@@ -79,6 +79,7 @@ public class HttpReqLogout
             {
                 if (wxShareBean.getReturnCode() != 0)
                 {
+                    mCallback.onFail(wxShareBean.getReturnCode(), wxShareBean.getMessage());
                     toastMgr.builder.display(wxShareBean.getMessage(), 1);
                 }
                 else
