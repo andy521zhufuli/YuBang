@@ -61,7 +61,6 @@ public class HttpReqSearchShop {
 
     class SearchShopCallback extends StringCallback
     {
-
         @Override
         public void onError(Call call, Exception e) {
             mCallback.onFail(ErrorCodes.ERROR_CODE_NETWORK, ErrorCodes.NETWORK_ERROR);
