@@ -17,9 +17,13 @@ import com.car.yubangapk.configs.Configs;
 import com.car.yubangapk.json.bean.Json2FirstPageTabsBean;
 import com.car.yubangapk.json.bean.sysconfigs.Json2AppConfigs;
 import com.car.yubangapk.json.formatJson.formatSysconfigs.Json2SYSConfigs;
+import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
+import com.car.yubangapk.network.myHttpReq.HttpReqLogout;
 import com.car.yubangapk.utils.SPUtils;
+import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
 import com.car.yubangapk.view.AlertDialog;
+import com.car.yubangapk.view.CustomProgressDialog;
 import com.car.yubangapk.view.ScrollNavigationTab.ScrollTabView;
 import com.car.yubangapk.view.ScrollNavigationTab.ScrollTabsAdapter;
 import com.car.yubangapk.view.ScrollNavigationTab.TabAdapter;
@@ -41,7 +45,7 @@ public class SettingActivity extends BaseActivity {
     LinearLayout    layout_about_version;
     ImageView       img_back;
     Button          btn_logout;
-
+    CustomProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,7 @@ public class SettingActivity extends BaseActivity {
         setContentView(R.layout.activity_setting);
 
         mContext = this;
-
+        progressDialog = new CustomProgressDialog(mContext);
         findViews();
 
         getAndSetVersion();
@@ -97,18 +101,44 @@ public class SettingActivity extends BaseActivity {
      * 退出登录
      */
     private void logout() {
+        progressDialog = progressDialog.show(mContext, "正在退出...", false, null);
+        HttpReqLogout logout = new HttpReqLogout(mContext);
+        logout.setCallback(new HttpReqCallback() {
+            @Override
+            public void onFail(int errorCode, String message) {
+                progressDialog.dismiss();
+                if (errorCode == 100) {
+                    toastMgr.builder.display("服务器重启, 需要重新登录", 1);
+                    NotLogin.gotoLogin(SettingActivity.this);
+                }
+            }
 
-        SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
-        //去到我的界面
-        toastMgr.builder.display("退出登录成功!", 1);
-        Bundle bundle = new Bundle();
-        bundle.putString("otherActivity", "logout");
-        Intent intent = new Intent();
-        intent.setClass(SettingActivity.this, MainActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
+            @Override
+            public void onSuccess(Object object) {
+                progressDialog.dismiss();
+                SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+                //去到我的界面
+                toastMgr.builder.display("退出登录成功!", 1);
+                Bundle bundle = new Bundle();
+                bundle.putString("otherActivity", "logout");
+                Intent intent = new Intent();
+                intent.setClass(SettingActivity.this, MainActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        logout.logout(Configs.getLoginedInfo(mContext).getUserid());
+
+
+
+
 
     }
+
+
+
+
+
 
     private void checkVersion() {
 

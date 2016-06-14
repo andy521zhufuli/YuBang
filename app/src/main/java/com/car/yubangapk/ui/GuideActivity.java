@@ -127,7 +127,7 @@ public class GuideActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onPageSelected(int position) {
-        toastMgr.builder.display(position + "", 1);
+        //toastMgr.builder.display(position + "", 1);
         if (position == pics.length - 1)
         {
             //这里应该
