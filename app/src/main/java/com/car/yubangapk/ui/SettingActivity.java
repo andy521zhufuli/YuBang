@@ -132,11 +132,6 @@ public class SettingActivity extends BaseActivity {
             }
         });
         logout.logout(Configs.getLoginedInfo(mContext).getUserid());
-
-
-
-
-
     }
 
 
