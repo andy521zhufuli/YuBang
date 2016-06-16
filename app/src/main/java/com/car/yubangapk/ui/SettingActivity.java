@@ -19,6 +19,7 @@ import com.car.yubangapk.json.bean.sysconfigs.Json2AppConfigs;
 import com.car.yubangapk.json.formatJson.formatSysconfigs.Json2SYSConfigs;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqLogout;
+import com.car.yubangapk.network.okhttp.cookie.store.PersistentCookieStore;
 import com.car.yubangapk.utils.SPUtils;
 import com.car.yubangapk.utils.Warn.NotLogin;
 import com.car.yubangapk.utils.toastMgr;
@@ -117,6 +118,9 @@ public class SettingActivity extends BaseActivity {
             public void onSuccess(Object object) {
                 progressDialog.dismiss();
                 SPUtils.putUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
+                //清除现存的cookie 下次请求的时候  就会有新的cookie
+                PersistentCookieStore cookieStore = new PersistentCookieStore(mContext);
+                cookieStore.removeAll();
                 //去到我的界面
                 toastMgr.builder.display("退出登录成功!", 1);
                 Bundle bundle = new Bundle();
