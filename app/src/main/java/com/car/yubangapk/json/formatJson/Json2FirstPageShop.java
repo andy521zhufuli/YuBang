@@ -33,12 +33,6 @@ public class Json2FirstPageShop {
 
     }
 
-//    public static String getString(jsonobject , key0){
-//        try{
-//
-//        }catch ()
-//    }
-
     public Json2FirstPageShop(String json)
     {
         this.json = json;
