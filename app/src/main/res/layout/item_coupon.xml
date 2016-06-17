@@ -8,7 +8,8 @@
 
     <!-- 优惠券图片-->
     <ImageView
-        android:id="@+id/coupon_item_icon" android:duplicateParentState="true"
+        android:id="@+id/coupon_item_icon"
+        android:duplicateParentState="true"
         android:layout_width="75.0dip" android:layout_height="75.0dip"
         android:layout_marginLeft="11.0dip"
         android:layout_marginTop="11.0dip"
@@ -28,8 +29,10 @@
         android:layout_below="@+id/coupon_item_icon" />
 
     <!-- 优惠券可用时间点-->
-    <TextView android:textSize="12.0sp" android:textColor="@color/white"
-        android:id="@+id/coupon_item_date" android:layout_width="wrap_content"
+    <TextView android:textSize="12.0sp"
+        android:textColor="@color/white"
+        android:id="@+id/coupon_item_date"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" android:layout_marginLeft="15.0dip"
         android:layout_marginBottom="2.0dip" android:text="2015-06-01 - 2015-12-31"
         android:layout_alignParentBottom="true" />
@@ -57,7 +60,8 @@
             android:layout_height="wrap_content" android:layout_marginLeft="10.0dip"
             android:text="¥" android:layout_alignBaseline="@+id/coupon_item_value" />
         <TextView android:textSize="@dimen/my_coupon_value_text"
-            android:textStyle="normal" android:textColor="#ff60bbf5"
+            android:textStyle="normal"
+            android:textColor="#ff60bbf5"
             android:id="@+id/coupon_item_value" android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_marginLeft="1.0dip"
             android:text="20" android:layout_toRightOf="@+id/coupon_item_unit" />

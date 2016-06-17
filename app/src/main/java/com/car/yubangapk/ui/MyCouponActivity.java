@@ -71,6 +71,7 @@ public class MyCouponActivity extends FragmentActivity implements CouponScrollTa
                 finish();
             }
         });
+        coupon_page_nav_tabs.setOnItemClickListener(this);
 
     }
     private List<String> mTabNameList;
