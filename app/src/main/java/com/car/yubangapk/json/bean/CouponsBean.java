@@ -1,11 +1,12 @@
 package com.car.yubangapk.json.bean;
 
 import com.car.yubangapk.json.Base;
+import com.car.yubangapk.json.bean.OrderDetail.BaseJson;
 
 /**
  * Created by andy on 16/4/21.
  */
-public class CouponsBean extends Base
+public class CouponsBean extends BaseJson
 {
     //"coupons":[
     //{"couponId":"1","couponName":"总价优惠卷","regulationReach":10,"regulationSubtract":1,"startDate":"2016-04-10 20:13:36.0","endDate":"2016-08-10 20:13:39.0"},

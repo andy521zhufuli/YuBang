@@ -1,16 +1,24 @@
 package com.car.yubangapk.ui;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.andy.android.yubang.R;
+import com.car.yubangapk.ui.myrecommendpartner.MyRecommendedPartnerFirstFragmentActivityFragment;
+import com.car.yubangapk.view.ScrollviewNavigationTabCoupon.coupon.CouponScrollTabView;
+import com.car.yubangapk.view.ScrollviewNavigationTabCoupon.coupon.CouponScrollTabsAdapter;
+import com.car.yubangapk.view.ScrollviewNavigationTabCoupon.coupon.CouponTabAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * MyCouponActivity: 我的优惠券
  *
@@ -18,25 +26,18 @@ import com.andy.android.yubang.R;
  * @version 1.0
  * @created 2016-02-27
  */
-public class MyCouponActivity extends BaseActivity {
+public class MyCouponActivity extends FragmentActivity implements CouponScrollTabView.OnCouponNavItemClickListener {
 
     private Context         mContext;
     private ImageView       img_back;//返回
-    private RelativeLayout  layout_order1;//全部优惠
-    private TextView        TextView01;//全部优惠汉字
-    private View            indicator1;//底部指示
 
-    private RelativeLayout  layout_order2;//店铺优惠
-    private TextView        TextView02;//店铺优惠汉字
-    private View            indicator2;//底部指示
+    private Fragment        firstFragment;
+    private Fragment        secondFragment;
+    private Fragment        threeFragment;
+    private Fragment        fourFragment;
 
-    private RelativeLayout  layout_order3;//店铺红包
-    private TextView        TextView03;//店铺红包汉字
-    private View            indicator3;//底部指示
-
-    private ListView        my_coupon_all;//全部优惠
-    private ListView        my_coupon_store_coupon;//店铺优惠
-    private ListView        my_coupon_store_lucky_money;//店铺红包
+    CouponScrollTabView coupon_page_nav_tabs;
+    private CouponTabAdapter tabsAdapter;//顶部导航的适配器
 
 
     @Override
@@ -46,39 +47,20 @@ public class MyCouponActivity extends BaseActivity {
         setContentView(R.layout.activity_my_coupon);
 
         mContext = this;
-
         findViews();
 
-
+        mTabNameList = new ArrayList<>();
+        mTabNameList.add("全部");
+        mTabNameList.add("店铺优惠");
+        mTabNameList.add("店铺红包");
+        mTabNameList.add("已失效");
+        initTabs(mTabNameList);
     }
 
     private void findViews() {
 
         img_back = (ImageView) findViewById(R.id.img_back);//返回
-
-        layout_order1 = (RelativeLayout) findViewById(R.id.layout_order1);//全部优惠
-
-        TextView01 = (TextView) findViewById(R.id.TextView01);//全部优惠汉字
-
-        indicator1 = findViewById(R.id.indicator1);//底部指示
-
-        layout_order2 = (RelativeLayout) findViewById(R.id.layout_order2);//店铺优惠
-
-        TextView02 = (TextView) findViewById(R.id.TextView02);//店铺优惠汉字
-
-        indicator2 = findViewById(R.id.indicator2);//底部指示
-
-        layout_order3 = (RelativeLayout) findViewById(R.id.layout_order3);//店铺红包
-
-        TextView03 = (TextView) findViewById(R.id.TextView03);//店铺红包汉字
-
-        indicator3 = findViewById(R.id.indicator3);//底部指示
-
-        my_coupon_all = (ListView) findViewById(R.id.my_coupon_all);//全部优惠
-
-        my_coupon_store_coupon = (ListView) findViewById(R.id.my_coupon_store_coupon);//店铺优惠
-
-        my_coupon_store_lucky_money = (ListView) findViewById(R.id.my_coupon_store_lucky_money);//店铺红包
+        coupon_page_nav_tabs = (CouponScrollTabView) findViewById(R.id.my_coupon_nav_bar);//导航
 
         /**
          * 监听器
@@ -90,55 +72,109 @@ public class MyCouponActivity extends BaseActivity {
             }
         });
 
-        layout_order1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //颜色改变
-                //底部指示器改变
-                indicator1.setVisibility(View.VISIBLE);
-                indicator2.setVisibility(View.INVISIBLE);
-                indicator3.setVisibility(View.INVISIBLE);
-
-                TextView01.setTextColor(Color.parseColor("#ff0000"));
-                TextView02.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView03.setTextColor(Color.parseColor("#4f4f4f"));
-
-            }
-        });
-        layout_order2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //颜色改变
-                //底部指示器改变
-                indicator1.setVisibility(View.INVISIBLE);
-                indicator2.setVisibility(View.VISIBLE);
-                indicator3.setVisibility(View.INVISIBLE);
-                TextView01.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView02.setTextColor(Color.parseColor("#ff0000"));
-                TextView03.setTextColor(Color.parseColor("#4f4f4f"));
-            }
-        });
-        layout_order3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //颜色改变
-                //底部指示器改变
-                indicator1.setVisibility(View.INVISIBLE);
-                indicator2.setVisibility(View.INVISIBLE);
-                indicator3.setVisibility(View.VISIBLE);
-                TextView01.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView02.setTextColor(Color.parseColor("#4f4f4f"));
-                TextView03.setTextColor(Color.parseColor("#ff0000"));
-            }
-        });
-
-        //TODO listview的item还没画
-
-
-
-
-
+    }
+    private List<String> mTabNameList;
+    /**
+     * s设置顶部tab的名字
+     * @param mTabNameList
+     */
+    void initTabs(List<String> mTabNameList)
+    {
+        tabsAdapter = new CouponScrollTabsAdapter(this);
+        for (String bean : mTabNameList)
+        {
+            tabsAdapter.add(bean);
+        }
+        coupon_page_nav_tabs.setAdapter(tabsAdapter);
     }
 
 
+    /**实现切换不同的Fragment
+     * @param i 点击的第几个按钮
+     */
+    private void select(int i)
+    {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        hideFragment(transaction);
+        switch (i)
+        {
+            case 0:
+                if (firstFragment == null)
+                {
+                    firstFragment = new MyCouponFragmentFirst();
+                    transaction.add(R.id.my_coupon_fragment_layout, firstFragment);
+                } else
+                {
+                    transaction.show(firstFragment);
+                }
+                break;
+            case 1:
+                if (secondFragment == null)
+                {
+                    secondFragment = new MyCouponFragmentFirst();
+                    transaction.add(R.id.my_coupon_fragment_layout, secondFragment);
+                } else
+                {
+                    transaction.show(secondFragment);
+                }
+                break;
+            case 2:
+                if (threeFragment == null)
+                {
+                    threeFragment = new MyCouponFragmentFirst();
+                    transaction.add(R.id.my_coupon_fragment_layout, threeFragment);
+                } else
+                {
+                    transaction.show(threeFragment);
+                }
+                break;
+            case 3:
+                if (fourFragment == null)
+                {
+                    fourFragment = new MyCouponFragmentFirst();
+                    transaction.add(R.id.my_coupon_fragment_layout, fourFragment);
+                } else
+                {
+                    transaction.show(fourFragment);
+                }
+                break;
+        }
+        transaction.commit();
+    }
+
+    /**
+     * 用于每一显示不同的Fragment时候隐藏之前的所有可能显示的Fragment
+     * @param transaction
+     *          事物
+     */
+    private void hideFragment(FragmentTransaction transaction)
+    {
+        if (firstFragment != null)
+        {
+            transaction.hide(firstFragment);
+        }
+        if (secondFragment != null)
+        {
+            transaction.hide(secondFragment);
+        }
+        if (threeFragment != null)
+        {
+            transaction.hide(threeFragment);
+        }
+        if (fourFragment != null)
+        {
+            transaction.hide(fourFragment);
+        }
+    }
+
+    /**
+     *
+     * @param tabAdapter
+     * @param pos
+     */
+    @Override
+    public void onTabItemClick(CouponTabAdapter tabAdapter, int pos) {
+        select(pos);
+    }
 }

@@ -19,46 +19,13 @@ import java.util.Objects;
  * @created 2016-04-03
  */
 public class Json2CarBrand {
-
-
-
     String json;
-
-    public Json2CarBrand()
-    {
-
-    }
-
-    private Object getString(String jsonobject , Object object)
-    {
-
-        if (object instanceof JSONArray)
-        {
-
-        }
-
-//        try
-//        {
-//
-//
-//        }
-//        catch (JSONException e)
-//        {
-//
-//        }
-        return null;
-    }
 
     public Json2CarBrand(String json)
     {
         this.json = json;
     }
 
-
-    /**
-     *
-     * @return List<BannerAd>
-     */
     public List<Json2CarBrandBean> getBrandList() {
 
         List<Json2CarBrandBean> carBrandBeans = new ArrayList<Json2CarBrandBean>();

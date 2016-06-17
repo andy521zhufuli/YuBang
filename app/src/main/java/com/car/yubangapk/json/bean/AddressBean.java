@@ -1,12 +1,13 @@
 package com.car.yubangapk.json.bean;
 
 import com.car.yubangapk.json.Base;
+import com.car.yubangapk.json.bean.OrderDetail.BaseJson;
 
 
 /**
  * Created by andy on 16/4/16.
  */
-public class AddressBean extends Base{
+public class AddressBean extends BaseJson{
 
     String id;
     String CUserid;

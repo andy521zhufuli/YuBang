@@ -206,7 +206,7 @@
                     android:id="@+id/my_layout_mine_wallet"
                     style="@style/MineItemStyle"
                     android:background="@drawable/bg_item_top"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     >
                     <ImageView
                         android:layout_width="26.0dip"
@@ -233,7 +233,7 @@
                         android:layout_marginRight="15dp"
                         android:src="@mipmap/personel_arrow_right" />
                 </LinearLayout>
-
+                <!--我的订单-->
                 <LinearLayout
                     android:id="@+id/my_layout_order_coupon"
                     style="@style/MineItemStyle"

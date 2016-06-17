@@ -100,31 +100,31 @@
             android:label="@string/title_activity_register_detail_choose_car_info"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <!-- 选择车辆品牌-->
+        <!-- 选择车辆品牌 -->
         <activity
             android:name="com.car.yubangapk.ui.RegisterDetailChooseBrandActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <!-- 选择车辆子品牌-->
+        <!-- 选择车辆子品牌 -->
         <activity
             android:name="com.car.yubangapk.ui.RegisterDetailChooseCarChildBrandActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <!-- 选择车辆马力-->
+        <!-- 选择车辆马力 -->
         <activity
             android:name="com.car.yubangapk.ui.RegisterDetailChooseCarHorsePowerActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <!-- 选择车辆驱动形式-->
+        <!-- 选择车辆驱动形式 -->
         <activity
             android:name="com.car.yubangapk.ui.RegisterDetailChooseCarMotivationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <!-- 选择车辆生产年份-->
+        <!-- 选择车辆生产年份 -->
         <activity
             android:name="com.car.yubangapk.ui.RegisterDetailChooseCarYearActivity"
             android:screenOrientation="portrait" />
-        <!-- 选择车辆排量-->
+        <!-- 选择车辆排量 -->
         <activity
             android:name="com.car.yubangapk.ui.RegisterDetailChooseCarCapacityActivity"
             android:screenOrientation="portrait" />
@@ -466,7 +466,10 @@
         <activity android:name="com.car.yubangapk.ui.SearchResultProductPackageActivity" />
         <activity android:name="com.car.yubangapk.ui.MakeNewCommentActivity" />
         <activity android:name="com.car.yubangapk.ui.SearchShopActivity" />
-        <activity android:name="com.car.yubangapk.ui.SearchShopResultActivity"></activity>
+        <activity android:name="com.car.yubangapk.ui.SearchShopResultActivity" />
+        <activity android:name="com.car.yubangapk.ui.MyCouponFragmentFirst" />
+        <activity android:name="com.car.yubangapk.ui.MyCouponFragmentSecond" />
+        <activity android:name="com.car.yubangapk.ui.MyCouponFragmentThird"></activity>
     </application>
 
 </manifest>

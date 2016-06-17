@@ -31,7 +31,17 @@
     </RelativeLayout>
 
     <!-- 上面三个tab-->
+    <com.car.yubangapk.view.ScrollviewNavigationTabCoupon.coupon.CouponScrollTabView
+        android:layout_below="@+id/layout_category_topbar"
+        android:layout_marginTop="1px"
+        android:id="@+id/my_coupon_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_item_bottom"
+        />
+    <!-- 废弃不要了-->
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height_middle"
@@ -131,77 +141,18 @@
                 android:visibility="invisible" />
         </RelativeLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_image_coupon"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/linearLayout1"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-
-        >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/my_coupon_1"
-            />
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/my_coupon_1"
-            />
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/my_coupon_1"
-            />
-
-    </LinearLayout>
-
-
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/my_coupon_fragment_layout"
+        android:layout_below="@+id/my_coupon_nav_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linearLayout1"
-        android:background="@color/lightBg"
-        android:visibility="gone"
-        >
-        <!-- 全部优惠-->
-        <ListView
-            android:id="@+id/my_coupon_all"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cacheColorHint="@color/transparent"
-            android:divider="@null"
-            android:fadingEdge="none"
-            android:listSelector="@color/transparent" >
-        </ListView>
-        <!-- 店铺优惠-->
-        <ListView
-            android:id="@+id/my_coupon_store_coupon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cacheColorHint="@color/transparent"
-            android:divider="@null"
-            android:fadingEdge="none"
-            android:listSelector="@color/transparent"
-            android:visibility="gone"
-            >
-        </ListView>
-        <!-- 店铺红包-->
-        <ListView
-            android:id="@+id/my_coupon_store_lucky_money"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cacheColorHint="@color/transparent"
-            android:divider="@null"
-            android:fadingEdge="none"
-            android:listSelector="@color/transparent"
-            android:visibility="gone"
-            >
-        </ListView>
+        android:layout_centerHorizontal="true"
+        ></FrameLayout>
 
-    </RelativeLayout>
+
+
+
+
 
 
 </RelativeLayout>

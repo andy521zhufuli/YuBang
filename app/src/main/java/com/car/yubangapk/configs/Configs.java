@@ -83,6 +83,10 @@ public class Configs {
     //退出登录
     public static String IP_ADDRESS_ACTION_LOGOUT = "/client/user/loginout";//获取省
 
+    //钱包
+    public static String IP_ADDRESS_ACTION_GET_USER_WALLET= "/client/user/getCuserPurse";//获取用户钱包
+
+
 
 
 
