@@ -170,7 +170,6 @@ public class MyCouponActivity extends FragmentActivity implements CouponScrollTa
     }
 
     /**
-     *
      * @param tabAdapter
      * @param pos
      */
