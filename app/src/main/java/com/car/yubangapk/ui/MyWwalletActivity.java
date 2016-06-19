@@ -175,7 +175,7 @@ public class MyWwalletActivity extends BaseActivity implements HttpReqCallback{
      */
     private void inviteYongjin() {
         Intent intent = new Intent();
-        intent.setClass(MyWwalletActivity.this, MyCommissionDetailActivity.class);
+        intent.setClass(MyWwalletActivity.this, MyWalletInviteYongjinDetailActivity.class);
         startActivity(intent);
     }
 
@@ -183,7 +183,7 @@ public class MyWwalletActivity extends BaseActivity implements HttpReqCallback{
      * 广告转发明细
      */
     private void adTransmit() {
-
+        
     }
 
     /**

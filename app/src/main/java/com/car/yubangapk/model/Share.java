@@ -198,7 +198,8 @@ public class Share implements PlatformActionListener, HttpReqShareCallback
      */
     @Override
     public void onFail(int errorCode, String message) {
-        toastMgr.builder.display("服务器或者网络错误, 分享失败", 1);
+        //toastMgr.builder.display("服务器或者网络错误, 分享失败", 1);
+        handler.sendEmptyMessage(7);
     }
 
     @Override
@@ -258,8 +259,9 @@ public class Share implements PlatformActionListener, HttpReqShareCallback
                 case 6:
                     toastMgr.builder.display("分享失败啊", 1);
                     L.d(TAG + "分享好友", "分享好友失败" + ",throwable" + (String)msg.obj);
-
                     break;
+                case 7:
+                    toastMgr.builder.display("网络错误, 分享失败",1);
                 default:
                     break;
             }

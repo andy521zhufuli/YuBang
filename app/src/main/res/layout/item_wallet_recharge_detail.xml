@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/recharge_item_layout"
+    android:background="@drawable/bg_item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="12.0dip"
+    android:layout_marginRight="12.0dip"
+    android:layout_marginBottom="11.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 优惠券图片-->
+    <ImageView
+        android:id="@+id/recharge_item_icon"
+        android:duplicateParentState="true"
+        android:layout_width="75.0dip"
+        android:layout_height="75.0dip"
+        android:layout_marginLeft="11.0dip"
+        android:layout_marginTop="11.0dip"
+        android:src="@mipmap/ic_launcher"
+        />
+    <!-- 优惠券使用范围-->
+    <TextView android:textSize="14.0sp"
+        android:visibility="invisible"
+        android:textColor="#ff686868"
+        android:ellipsize="end"
+        android:id="@+id/recharge_item_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15.0dip"
+        android:layout_marginTop="7.0dip"
+        android:layout_marginRight="55.0dip"
+        android:text="仅限购买服装鞋帽类、手机通讯数码相机类商品" android:singleLine="true"
+        android:layout_below="@+id/recharge_item_icon" />
+
+    <!--顶部多少钱 以及logo-->
+    <RelativeLayout
+        android:id="@+id/recharge_item_value_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="9.0dip"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/recharge_item_icon"
+        android:layout_alignParentTop="true">
+        <TextView android:textSize="@dimen/text_18"
+            android:textColor="#ff686868"
+            android:id="@+id/recharge_item_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip"
+            android:text="时间:"
+            android:layout_alignBaseline="@+id/recharge_item_time" />
+        <TextView android:textSize="@dimen/text_18"
+            android:textStyle="normal"
+            android:textColor="#ff686868"
+            android:id="@+id/recharge_item_time" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginLeft="1.0dip"
+            android:text="2016-06-19 16:04" android:layout_toRightOf="@+id/recharge_item_unit" />
+    </RelativeLayout>
+
+    <!-- 满减条件-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="20.0dip"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginBottom="-2.0dip"
+        android:layout_above="@+id/recharge_item_limit"
+        android:layout_alignLeft="@+id/recharge_item_value_layout"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:textSize="@dimen/text_18"
+            android:textColor="#ff686868"
+            android:gravity="center_vertical"
+            android:id="@+id/recharge_item_quota"
+            android:layout_width="wrap_content"
+            android:layout_height="20.0dip"
+            android:text="金额 "
+            />
+
+
+        <TextView
+            android:textSize="@dimen/text_18"
+            android:textColor="@color/pd_red"
+            android:gravity="center_vertical"
+            android:id="@+id/recharge_item_money"
+            android:layout_width="wrap_content"
+            android:layout_height="20.0dip"
+            android:text="10"
+            android:textStyle="bold"
+            />
+
+
+
+        <TextView
+            android:textSize="@dimen/text_18"
+            android:textColor="#ff686868"
+            android:gravity="center_vertical"
+            android:id="@+id/recharge_item_quot3"
+            android:layout_width="wrap_content"
+            android:layout_height="20.0dip"
+            android:text="下线 "
+            android:layout_marginLeft="5dp"
+            />
+
+
+        <TextView
+            android:textSize="@dimen/text_18"
+            android:textColor="@color/pd_red"
+            android:gravity="center_vertical"
+            android:id="@+id/recharge_item_xiaxian"
+            android:layout_width="wrap_content"
+            android:layout_height="20.0dip"
+            android:text="18620647064"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+    <!-- 序号-->
+
+    <RelativeLayout
+        android:gravity="center"
+        android:id="@+id/recharge_item_take"
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/coupon_take_width"
+        android:layout_height="@dimen/coupon_take_width"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/wallet_yongjin_detail_bg_corners"
+        >
+        <TextView
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:id="@+id/recharge_item_order"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="1"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+</RelativeLayout>

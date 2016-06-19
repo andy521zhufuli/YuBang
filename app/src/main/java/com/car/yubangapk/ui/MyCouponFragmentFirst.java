@@ -3,7 +3,6 @@ package com.car.yubangapk.ui;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andy.android.yubang.R;
-import com.car.yubangapk.banner.ImageLoaderTools;
 import com.car.yubangapk.configs.Configs;
-import com.car.yubangapk.json.bean.MyRecommendPartnersBean;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
-import com.car.yubangapk.network.myHttpReq.HttpReqGetMyRecommendPartners;
 import com.car.yubangapk.utils.L;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -145,7 +141,7 @@ public class MyCouponFragmentFirst extends Fragment implements PullToRefreshBase
             final ViewHolder holder;
             if (view == null) {
                 holder = new ViewHolder();
-                view = inflater.inflate(R.layout.item_coupon, null);
+                view = inflater.inflate(R.layout.item_wallet_coupon, null);
                 holder.coupon_item_layout = (RelativeLayout) view.findViewById(R.id.coupon_item_layout);
                 holder.coupon_item_icon = (ImageView) view.findViewById(R.id.coupon_item_icon);
                 holder.coupon_item_value = (TextView) view.findViewById(R.id.coupon_item_value);

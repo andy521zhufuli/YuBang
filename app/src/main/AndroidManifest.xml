@@ -469,7 +469,9 @@
         <activity android:name="com.car.yubangapk.ui.SearchShopResultActivity" />
         <activity android:name="com.car.yubangapk.ui.MyCouponFragmentFirst" />
         <activity android:name="com.car.yubangapk.ui.MyCouponFragmentSecond" />
-        <activity android:name="com.car.yubangapk.ui.MyCouponFragmentThird"></activity>
+        <activity android:name="com.car.yubangapk.ui.MyCouponFragmentThird" />
+        <activity android:name="com.car.yubangapk.ui.MyWalletInviteYongjinDetailActivity" />
+        <activity android:name="com.car.yubangapk.ui.MyWalletRechargeDetailActivity"></activity>
     </application>
 
 </manifest>
