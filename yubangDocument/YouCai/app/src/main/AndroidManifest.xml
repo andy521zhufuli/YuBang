@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tec.android" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <application
+        android:name=".app.YouCaiApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme" >
+
+        <!-- Start Activity -->
+        <activity
+            android:name=".ui.SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- index 界面 -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <!-- index界面的第一个界面  首页, 商品列表界面 -->
+        <activity
+            android:name=".ui.GoodsListActivity"
+            android:label="@string/title_activity_goods_list"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- index底部导航第二个界面  购物车界面 -->
+        <activity
+            android:name=".ui.ShoppingCarActivity"
+            android:label="@string/title_activity_shopping_car"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- index底部导航第三个界面  个人中心界面 -->
+        <activity
+            android:name=".ui.MyActivity"
+            android:label="@string/title_activity_my"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 收货地址列表界面 -->
+        <activity
+            android:name=".ui.ReceivingAddressListActivity"
+            android:label="@string/title_activity_change_receiving_address"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 关于界面 -->
+        <activity
+            android:name=".ui.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 修改收货地址界面 -->
+        <activity
+            android:name=".ui.ReceivingAddressModifyActivity"
+            android:label="@string/title_activity_receiving_address_modify"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 系统设置界面 -->
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 用户登录界面  集成了微信  QQ登陆界面 -->
+        <activity
+            android:name=".ui.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 商品详情 -->
+        <activity
+            android:name=".ui.GoodsDetailActivity"
+            android:label="@string/title_activity_goods_detail"
+            android:parentActivityName=".ui.BaseActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tec.android.ui.BaseActivity" />
+        </activity>
+        <!-- 购物车里面没有商品 -->
+        <activity
+            android:name=".ui.ShoppingNoGoodsActivity"
+            android:label="@string/title_activity_shopping_no_goods"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 确认订单 -->
+        <activity
+            android:name=".ui.ConformOrderActivity"
+            android:label="@string/title_activity_conform_order"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 选择支付方式 -->
+        <activity
+            android:name=".ui.ChoosePaymentMethodActivity"
+            android:label="@string/title_activity_choose_payment_method"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 我的朋友列表 -->
+        <activity
+            android:name=".ui.MyFriendsActivity"
+            android:label="@string/title_activity_my_friends"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 我的收入 -->
+        <activity
+            android:name=".ui.MyIncomeActivity"
+            android:label="@string/title_activity_my_income"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 我的提现 -->
+        <activity
+            android:name=".ui.MyCashActivity"
+            android:label="@string/title_activity_my_cash"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 我的订单列表  历史订单列表 -->
+        <activity
+            android:name=".ui.MyOrderActivity"
+            android:label="@string/title_activity_my_order"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 我的个人信息 -->
+        <activity
+            android:name=".ui.MyInfoActivity"
+            android:label="@string/title_activity_my_info"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 我要提现多少钱 -->
+        <activity
+            android:name=".ui.IWantGetCashHowMoneyActivity"
+            android:label="@string/title_activity_iwant_get_cash"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 我要提现的账户 -->
+        <activity
+            android:name=".ui.IWantGetCashAccountActivity"
+            android:label="@string/title_activity_iwant_get_cash_account"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 选择图片还是拍照 -->
+        <activity
+            android:name=".ui.UploadFileSelectPicActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DialogStyleBottom"
+            />
+        <!-- 手机验证 -->
+        <activity
+            android:name=".ui.MobilePhoneVerifyActivity"
+            android:label="@string/title_activity_mobile_phone_verify"
+            android:screenOrientation="portrait"
+            android:theme="@style/DialogStyleBottom" >
+        </activity>
+
+        <!-- 社会化分享 -->
+        <activity
+            android:name=".ui.SocialShareActivity"
+            android:label="@string/title_activity_social_share"
+            android:screenOrientation="portrait"
+            android:theme="@style/ShareDialogStyleBottom" >
+        </activity>
+        <activity
+            android:name=".ui.IWantGetCashBankAccountActivity"
+            android:label="@string/title_activity_iwant_get_cash_bank_account"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.IWantGetCashAlipayAccountActivity"
+            android:label="@string/title_activity_iwant_get_cash_alipay_account"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 退货 -->
+        <activity
+            android:name=".ui.ReturnOfGoodsActivity"
+            android:label="@string/title_activity_return_of_goods"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.ConformGetCashInfoActivity"
+            android:label="@string/title_activity_conform_get_cash_info"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.InputMobileVerificationCodeActivity"
+            android:label="@string/title_activity_input_mobile_verification_code"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 我的提现历史 -->
+        <activity
+            android:name=".ui.MyCashListActivity"
+            android:label="@string/title_activity_my_cash_list"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.MyCashDetailInfoActivity"
+            android:label="@string/title_activity_my_cash_detail_info"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.IWantGetCashBankListActivity"
+            android:label="@string/title_activity_iwant_get_cash_bank_list"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.IWantGetCashNameListActivity"
+            android:label="@string/title_activity_iwant_get_cash_name_list"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.MyFriendPersonalCenterActivity"
+            android:label="@string/title_activity_my_friend_personal_center"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 我的好友的好友列表 -->
+        <activity
+            android:name=".ui.MyFriendFriendsListActivity"
+            android:label="@string/title_activity_my_friend_personal_center"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.ContactUsActivity"
+            android:label="@string/title_activity_contact_us"
+            android:screenOrientation="portrait" >
+            >
+        </activity>
+        <activity
+            android:name=".ui.OrderDetailActivity"
+            android:label="@string/title_activity_order_detail"
+            android:screenOrientation="portrait" >
+            >
+        </activity>
+
+        <!-- 一下是qq登陆 分享的 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1104725631" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".ui.RerunOfGoodsShouldKnowActivity"
+            android:label="@string/title_activity_rerun_of_goods_should_know"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
+    </application>
+
+</manifest>

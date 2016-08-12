@@ -1,0 +1,208 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tec.android.ui.IWantGetCashBankAccountActivity">
+
+    <!-- 提现到银行账户-->
+    <!-- 头部返回-->
+    <RelativeLayout
+        android:id="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="49.5dip">
+        <ImageView
+            android:id="@+id/titleBg"
+            android:background="@drawable/common_title_background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/title_back"
+            android:paddingLeft="15.0dip"
+            android:paddingRight="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/common_title_back_selector"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:ellipsize="end"
+            android:gravity="center"
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:maxWidth="180.0dip"
+            android:singleLine="true"
+            android:text="我要提现"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            style="@style/common_layout_title"
+            />
+    </RelativeLayout>
+
+    <!-- 姓名-->
+    <RelativeLayout
+        android:id="@+id/iwant_get_cash_bank_account_name_layout"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="52.0dip"
+        android:layout_below="@+id/common_title"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:id="@+id/iwant_get_cash_bank_account_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:background="@color/white"
+            android:text="姓名"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            />
+
+        <EditText android:textSize="17.0sp"
+            android:textColor="#ff252525"
+            android:textColorHint="#ffcccaca"
+            android:gravity="center_vertical"
+            android:id="@+id/iwant_get_cash_bank_account_name_editview"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/iwant_get_cash_bank_account_name_textview"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="5.0dip"
+            android:hint="收款人姓名"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:maxLength="20"
+            android:layout_centerVertical="true" />
+
+
+        <ImageView
+            android:id="@+id/iwant_get_cash_bank_account_name_list"
+            android:paddingRight="20.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:src="@mipmap/android_list_idex"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+    <!-- 银行卡号-->
+    <RelativeLayout
+        android:id="@+id/iwant_get_cash_bank_account_bankcar_num_layout"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="52.0dip"
+        android:layout_below="@+id/iwant_get_cash_bank_account_name_layout"
+        android:layout_marginTop="1dp"
+        >
+        <TextView
+            android:id="@+id/iwant_get_cash_bank_account_bankcar_num_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:background="@color/white"
+            android:text="卡号"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            />
+
+        <EditText android:textSize="17.0sp"
+            android:textColor="#ff252525"
+            android:textColorHint="#ffcccaca"
+            android:gravity="center_vertical"
+            android:id="@+id/iwant_get_cash_bank_account_bankcar_num_editview"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/iwant_get_cash_bank_account_bankcar_num_textview"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="5.0dip"
+            android:hint="收款储蓄卡号"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true" android:maxLength="20"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+
+    <!-- 银行  哪个银行-->
+    <RelativeLayout
+        android:id="@+id/iwant_get_cash_bank_account_bank_layout"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:clickable="true"
+        android:layout_height="52.0dip"
+        android:layout_below="@+id/iwant_get_cash_bank_account_bankcar_num_layout"
+        android:layout_marginTop="1dp"
+        >
+        <TextView
+            android:id="@+id/iwant_get_cash_bank_account_bank_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:background="@color/white"
+            android:text="银行"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            />
+
+        <EditText android:textSize="17.0sp"
+            android:textColor="#ff252525"
+            android:textColorHint="#ffcccaca"
+            android:gravity="center_vertical"
+            android:id="@+id/iwant_get_cash_bank_account_bank_editview"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/iwant_get_cash_bank_account_bank_textview"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="5.0dip"
+            android:hint="中国银行"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:maxLength="20"
+            android:layout_centerVertical="true"
+            />
+
+
+        <ImageView
+            android:id="@+id/iwant_get_cash_bank_account_banklist"
+            android:paddingRight="20.0dip"
+            android:paddingLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/android_list_idex"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+
+    <!-- 下一步  这个可以做成是调到下一个activity  而不是一个下拉-->
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:id="@+id/iwant_get_cash_bank_account_nextstep_layout"
+        android:padding="20.0dip"
+        android:visibility="visible"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iwant_get_cash_bank_account_bank_layout"
+        android:layout_centerHorizontal="true"
+        >
+        <Button
+            android:textSize="17.0sp"
+            android:textColor="@drawable/button_b_font_color"
+            android:id="@+id/iwant_get_cash_bank_account_nextstep_button"
+            android:background="@drawable/button_b"
+            android:padding="10.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:text="下一步" />
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

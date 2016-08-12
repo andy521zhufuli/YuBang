@@ -1,0 +1,11 @@
+#Sun Jul 05 14:20:05 CST 2015
+eclipse.preferences.version=1
+encoding//WebRoot/index.jsp=UTF-8
+encoding//src/com/common/log/ExPatternLayout.java=UTF-8
+encoding//src/com/common/log/ExPatternParser.java=UTF-8
+encoding//src/com/common/log/LoggerUtils.java=UTF-8
+encoding//src/com/common/log/newproxy/BizStaticFileAppender.java=UTF-8
+encoding//src/com/common/log/newproxy/BizTimeSizeRollingFileAppender.java=UTF-8
+encoding//src/com/common/log/proxy/BizStaticFileAppender.java=UTF-8
+encoding//src/com/common/log/proxy/LoggerFactory.java=UTF-8
+encoding//src/com/common/log/proxy/ServerInfo.java=UTF-8

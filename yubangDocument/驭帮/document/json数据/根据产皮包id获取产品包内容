@@ -1,0 +1,62 @@
+根据产皮包id获取产品包内容
+json =
+
+
+
+{
+    "total": 0,
+    "rows": [
+        {
+            "id": "7771dd5e-e828-11e5-b68f-28d244001fe5",
+            "categoryName": "刹车油",
+            "retailPrice": 220,
+            "pathCode": "2",
+            "category": "6f134e82-23e6-4015-a6be-c16a212c7c1e",
+            "productCode": "PP00001",
+            "productShow": "合成",
+            "productName": "爆发刹车油",
+            "productAmount": 1
+        },
+        {
+            "id": "7771dd5e-e828-11e5-b68f-28d244001fe5",
+            "categoryName": "刹车油",
+            "retailPrice": 220,
+            "pathCode": "2",
+            "category": "6f134e82-23e6-4015-a6be-c16a212c7c1e",
+            "productCode": "PP00001",
+            "productShow": "合成",
+            "productName": "爆发刹车油",
+            "productAmount": 1
+        },
+        {
+            "id": "9eab731a-0473-4c1e-8b6f-ae868b8275a3",
+            "categoryName": "油管",
+            "retailPrice": 1,
+            "pathCode": "2",
+            "category": "a0dd4a3a-4cae-4d7e-a4ea-546b5d3cf92c",
+            "productCode": "PP00002",
+            "productShow": "合成",
+            "productName": "爆炸油管",
+            "productAmount": 1
+        },
+        {
+            "id": "9eab731a-0473-4c1e-8b6f-ae868b8275a3",
+            "categoryName": "油管",
+            "retailPrice": 1,
+            "pathCode": "2",
+            "category": "a0dd4a3a-4cae-4d7e-a4ea-546b5d3cf92c",
+            "productCode": "PP00002",
+            "productShow": "合成",
+            "productName": "爆炸油管",
+            "productAmount": 1
+        }
+    ]
+}
+
+
+
+
+
+
+
+

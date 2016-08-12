@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "./struts-2.3.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<package name="APP" extends="json-default" namespace="/">
+
+        <!-- 配置查询 -->
+		<action name="AppConfig" class="AppConfigAction" method="doAction">
+		<result name="0">/json/sucess.jsp</result>
+		<result name="1">/json/error.jsp</result>
+		<result name="2">/json/sucess.jsp</result>
+		<result name="3">/json/null.jsp</result>
+		<result name="4">/json/ArgsError.jsp</result>
+		<result name="5">/json/error.jsp</result>
+		</action>
+		
+
+
+	</package>
+</struts>    

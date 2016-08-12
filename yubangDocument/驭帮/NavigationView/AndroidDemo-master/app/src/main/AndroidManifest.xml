@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    package="cn.dong.demo"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 网络 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 外部存储 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 读取联系人 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <!-- 录音 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!-- 震动 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- Common -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <application
+        android:name=".MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <!-- Main -->
+        <activity
+            android:name=".ui.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Creation -->
+        <activity android:name=".ui.original.calendar.CalendarActivity"/>
+        <activity android:name=".ui.original.FlexibleHeaderRecyclerViewActivity"/>
+        <activity android:name=".ui.original.FadeoutHeaderRecyclerViewActivity"/>
+        <activity android:name=".ui.original.FlowLayoutActivity"/>
+        <activity android:name=".ui.original.audio.AudioRecorderActivity"/>
+
+        <!-- Library -->
+        <activity android:name=".ui.library.ImageLoaderActivity"/>
+        <activity android:name=".ui.library.XListViewActivity"/>
+        <activity android:name=".ui.library.OttoActivity"/>
+        <activity android:name=".ui.library.RxJavaActivity"/>
+        <activity android:name=".ui.library.RealmActivity"/>
+
+        <!-- Component -->
+        <activity android:name=".ui.component.ServiceActivity"/>
+        <activity android:name=".ui.component.FragmentManageActivity"/>
+        <activity android:name=".ui.component.NotificationActivity"/>
+        <activity android:name=".ui.component.SendDataOneActivity"/>
+        <activity android:name=".ui.component.SendDataTwoActivity"/>
+        <activity android:name=".ui.component.IntentsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data
+                    android:host="cn.dong"
+                    android:scheme="http"/>
+            </intent-filter>
+        </activity>
+
+        <!-- UI -->
+        <activity android:name=".ui.ui.ViewPagerActivity"/>
+        <activity android:name=".ui.ui.FragmentTabHostActivity"/>
+        <activity android:name=".ui.ui.SwipeRefreshLayoutActivity"/>
+        <activity android:name=".ui.ui.DialogActivity"/>
+        <activity android:name=".ui.ui.PopupWindowActivity"/>
+        <activity android:name=".ui.ui.touch.TouchEventActivity"/>
+        <activity android:name=".ui.ui.RecyclerViewActivity"/>
+        <activity android:name=".ui.ui.DrawableStateActivity"/>
+
+        <!-- Text and Input -->
+        <activity android:name=".ui.text.TextViewSpanActivity"/>
+        <activity android:name=".ui.text.EditTextActivity"/>
+        <activity android:name=".ui.text.AutoCompleteActivity"/>
+        <activity android:name=".ui.text.TextSizeActivity"/>
+        <activity android:name=".ui.text.TextAdvanceActivity"/>
+
+        <!-- Animation -->
+        <activity android:name=".ui.animation.MarkAnimationActivity"/>
+        <activity android:name=".ui.animation.AnimationActivity"/>
+
+        <!-- Sensor -->
+        <activity android:name=".ui.sensor.GeocoderActivity"/>
+
+        <!-- Storage -->
+        <activity android:name=".ui.storage.ContentProviderActivity"/>
+        <activity android:name=".ui.storage.BitmapSaveLocalActivity"/>
+
+        <!-- Other -->
+        <activity android:name=".ui.other.Md5Activity"/>
+        <activity android:name=".ui.other.ScreenshotActivity"/>
+        <activity android:name=".ui.other.ImageSelectorActivity"/>
+        <activity android:name=".ui.other.PackageManageActivity"/>
+        <activity android:name=".ui.other.WebViewActivity"/>
+
+        <service
+            android:name=".service.MyService"
+            android:enabled="true"/>
+
+        <provider
+            android:name=".provider.MyProvider"
+            android:authorities="cn.dong.demo.provider"
+            android:exported="false"/>
+    </application>
+
+</manifest>

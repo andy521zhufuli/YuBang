@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/app_network_model_layout"
+        android:background="@color/personal_bg_color_silver"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/app_network_model_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15.0dip"
+            android:src="@mipmap/app_network_error"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"/>
+
+        <TextView android:textColor="#999999"
+            android:id="@+id/app_network_model_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="网络请求失败,点击按钮重新加载"
+            android:textSize="20sp"
+            android:layout_below="@+id/app_network_model_icon"
+            android:gravity="center_horizontal"
+            />
+
+    </RelativeLayout>
+</AbsoluteLayout>

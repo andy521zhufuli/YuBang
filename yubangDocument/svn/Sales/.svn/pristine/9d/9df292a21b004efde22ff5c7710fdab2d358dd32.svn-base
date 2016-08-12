@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="css/media.css"/>
+<link rel="stylesheet" type="text/css" href="css/layout.css"/>
+</head>
+<body>
+  <div class="list">
+    <img src="images/img1.png"/>
+    <p class="p1">玛瑞安&nbsp;蓝莓氨基酸洗面奶 </p>
+    <p class="p2">￥120.00<span>￥140.00</span><span>12片/盒</span></p>
+  </div>
+  <div class="list">
+    <img src="images/img2.png"/>
+    <p class="p1">正品脱毛霜套装 全身体腋下净毛修复乳脱毛霜全身体腋下净毛修复乳脱毛霜全身体腋下净毛修复乳脱毛霜</p>
+    <p class="p2">￥75.00<span>￥108.00</span><span>12片/盒</span></p>
+  </div>
+</body>
+</html>

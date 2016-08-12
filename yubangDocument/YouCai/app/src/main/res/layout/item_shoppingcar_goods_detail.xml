@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@drawable/layout_white_background"
+    android:layout_width="fill_parent"
+    android:layout_height="150.0dip"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+
+    <!-- 商品详情 图片 名字   价格  多少件-->
+    <LinearLayout
+        android:id="@+id/ll_goods_item"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        >
+        <!-- 选择框 -->
+        <CheckBox
+            android:id="@+id/item_goods_detail_checkBox"
+            android:background="@drawable/cart_select_checkbox_selector"
+            android:visibility="visible"
+            android:layout_width="21.0dip"
+            android:layout_height="21.0dip"
+            android:button="@null"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:checked="false" />
+
+        <!-- 商品图片 -->
+        <ImageView
+            android:id="@+id/item_goods_detail_pic"
+            android:background="@drawable/shopping_cart_product_icon_bg"
+            android:padding="1.0px"
+            android:layout_width="95.0dip"
+            android:layout_height="95.0dip"
+            android:layout_marginRight="5.0dip"
+            android:layout_marginBottom="2.0dip"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_marginLeft="5.0dip"
+            />
+        <!-- 描述文字 价格等 -->
+        <RelativeLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_white_background"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="马瑞安 脱毛霜 60g 全身腋下净脱毛 男女适用安全脱毛"
+                android:textColor="@color/liuliu_tabhost_light"
+                android:id="@+id/item_goods_detail_name"
+                android:layout_alignParentTop="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/item_goods_detail_price"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_light"
+                android:text="￥4999.00"
+                android:layout_below="@+id/item_goods_detail_name"
+                android:layout_marginTop="3dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
+
+
+            <include layout="@layout/shoppingcar_sub_plus"
+                android:layout_marginTop="2dp"
+                android:id="@+id/shoppingcar_sub_plus_include"
+                android:layout_below="@+id/item_goods_detail_price"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+
+                />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <!-- 分割线  小计多少钱 -->
+    <LinearLayout
+        android:id="@+id/ll_goods_item_down"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        >
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@android:color/black"
+            />
+        <TextView
+            android:id="@+id/item_goods_detail_small_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_gravity="right"
+            android:text="小计: ¥49"
+            android:textSize="15sp"
+            />
+    </LinearLayout>
+</LinearLayout>

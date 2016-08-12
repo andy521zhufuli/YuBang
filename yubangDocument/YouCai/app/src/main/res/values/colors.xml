@@ -1,0 +1,140 @@
+<resources>
+    <!-- used in smooth progressbar (spb) 进度条-->
+    <integer-array name="colors">
+        <item>@color/holo_blue_dark</item>
+        <item>@color/holo_yellow_dark</item>
+        <item>@color/holo_green_dark</item>
+        <item>@color/holo_purple_dark</item>
+        <item>@color/holo_red_dark</item>
+    </integer-array>
+
+    <integer-array name="gplus_colors">
+        <item>@color/gplus_color_1</item>
+        <item>@color/gplus_color_2</item>
+        <item>@color/gplus_color_3</item>
+        <item>@color/gplus_color_4</item>
+    </integer-array>
+
+    <integer-array name="pocket_bar_colors">
+        <item>@color/pocket_color_1</item>
+        <item>@color/pocket_color_1</item>
+        <item>@color/pocket_color_1</item>
+        <item>@color/pocket_color_1</item>
+        <item>@color/pocket_color_2</item>
+        <item>@color/pocket_color_2</item>
+        <item>@color/pocket_color_2</item>
+        <item>@color/pocket_color_2</item>
+        <item>@color/pocket_color_3</item>
+        <item>@color/pocket_color_3</item>
+        <item>@color/pocket_color_3</item>
+        <item>@color/pocket_color_3</item>
+        <item>@color/pocket_color_4</item>
+        <item>@color/pocket_color_4</item>
+        <item>@color/pocket_color_4</item>
+        <item>@color/pocket_color_4</item>
+    </integer-array>
+
+    <integer-array name="pocket_background_colors">
+        <item>@color/pocket_color_1</item>
+        <item>@color/pocket_color_2</item>
+        <item>@color/pocket_color_3</item>
+        <item>@color/pocket_color_4</item>
+    </integer-array>
+
+    <color name="pocket_color_1">#85edb9</color>
+    <color name="pocket_color_2">#34bdb7</color>
+    <color name="pocket_color_3">#ee4458</color>
+    <color name="pocket_color_4">#fcb74d</color>
+
+    <color name="gplus_color_1">#3e802f</color>
+    <color name="gplus_color_2">#f4b400</color>
+    <color name="gplus_color_3">#427fed</color>
+    <color name="gplus_color_4">#b23424</color>
+
+    <color name="holo_blue_dark">#0099cc</color>
+    <color name="holo_yellow_dark">#ff8800</color>
+    <color name="holo_green_dark">#669900</color>
+    <color name="holo_purple_dark">#9933cc</color>
+    <color name="holo_red_dark">#cc0000</color>
+    <!-- used in smooth progressbar (spb) end -->
+
+
+
+    <color name="black_overlay">#66000000</color>
+    <color name="no_network_background">#fff5f0eb</color>
+    <color name="liuliu_tabhost_light">#ef3a3027</color>
+    <color name="liuliu_text_dark">#ff5b4b47</color>
+    <color name="liuliu_text_light">#ff9c9590</color>
+    <color name="liuliu_divider_light">#fff5f4f3</color>
+    <color name="liuliu_light_pressed">#ffc5bfb8</color>
+    <color name="liuliu_light">#ffdad3cc</color>
+    <color name="liuliu_orange">#ffe3591d</color>
+    <color name="liuliu_border">#ffddd5d0</color>
+    <color name="liuliu_hint">#ffb6afaa</color>
+    <color name="liuliu_layout_light">#ffffffff</color>
+    <color name="liuliu_layout_dark">#fff4f4f4</color>
+    <color name="white">#ffffffff</color>
+
+    <color name="bind_gift_card_list_item_text">#ff848689</color>
+    <color name="fill_order_delivery_light">#ff686868</color>
+    <color name="personal_bg_color_silver">#fff3f4f6</color>
+    <color name="goods_list_header_bg_color">#ffe2006c</color>
+    <color name="goods_list_reload_button_pressed">#ffce0062</color>
+    <color name="goods_list_reload_button_normal">#ffe2006c</color>
+
+
+
+    <color name="common_title_text_color">#ff252525</color>
+    <color name="pd_black_25">#ff252525</color>
+    <color name="pd_black_45">#ff454545</color>
+    <color name="pd_black_4c">#ff4c4c4c</color>
+    <color name="pd_black_68">#ff686868</color>
+    <color name="black">#ff000000</color>
+    <color name="pd_gray">#ff848689</color>
+    <color name="grey">#ff808080</color>
+    <color name="gray_line_3">#ffbebebe</color>
+    <color name="login_bg_color">#ffeaeaea</color>
+
+    <color name="pd_red">#fff15353</color>
+    <color name="pd_btn_gray">#ffbfbfbf</color>
+    <color name="pd_red_d">#ffa83a3a</color>
+
+    <color name="cart_product_name">#ff555555</color>
+    <color name="shopping_cart_product_icon_stroke">#ffd7d7d7</color>
+    <color name="transparent">#00000000</color>
+    <color name="cart_bottom_show_view_bg">#cc000000</color>
+    <color name="cart_bottom_show_view_bg1">#FFE5E5E5</color>
+    <color name="cart_bottom_all_select_color">#FF828283</color>
+    <!--订单-->
+    <color name="fill_order_item_bg">#ffffffff</color>
+    <color name="fill_order_content_solid">#ff3f4246</color>
+    <color name="fill_order_content_virtual1">#ff848689</color>
+    <color name="fill_order_content_virtual2">#ff65666e</color>
+    <color name="fill_order_delivery_message_color">#ff999999</color>
+    <color name="fill_order_delivery_normal">#ff666666</color>
+    <color name="fill_order_delivery_split_line">#ffd7d7d7</color>
+    <color name="fill_order_delivery_time_color">#fff15353</color>
+    <color name="fill_order_delivery_time_color1">#ff222222</color>
+
+
+    <!-- drop down list header font color -->
+    <color name="drop_down_list_header_font_color">#000000</color>
+    <!-- drop down list header second font color -->
+    <color name="drop_down_list_header_second_font_color">#000000</color>
+    <!-- drop down list footer font color -->
+    <color name="drop_down_list_footer_font_color">#000000</color>
+
+    <!-- 手机验证-->
+    <color name="normal_text_color">#ff323232</color>
+
+
+
+
+    <!-- 对话框的颜色-->
+    <color name="trans">#00000000</color>
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+
+</resources>

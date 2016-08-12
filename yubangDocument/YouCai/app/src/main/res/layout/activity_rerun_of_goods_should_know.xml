@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.tec.android.ui.RerunOfGoodsShouldKnowActivity">
+
+    <!-- 退货须知-->
+
+    <ImageView
+        android:id="@+id/return_of_goods_should_know_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/return_of_goods_should_know_close_selector"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        />
+
+    <ImageView
+        android:id="@+id/return_of_goods_should_know_pic"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/return_of_goods_should_know_close"
+        android:scaleType="fitCenter"
+        android:layout_centerHorizontal="true"
+        />
+    <WebView
+        android:id="@+id/return_of_goods_should_know_webview"
+        android:layout_below="@+id/return_of_goods_should_know_close"
+        android:layout_marginTop="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+
+        ></WebView>
+
+</RelativeLayout>

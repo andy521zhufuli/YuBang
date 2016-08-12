@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/shoping_cart_user_no_login_tips"
+    android:background="@color/transparent"
+    android:clickable="true" android:layout_width="fill_parent" android:layout_height="50.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <RelativeLayout
+        android:id="@+id/shoping_cart_top_menu"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip">
+        <LinearLayout
+            android:id="@+id/shopping_cart_show_view"
+            android:background="@color/cart_bottom_show_view_bg1"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip" android:baselineAligned="false"
+            android:layout_alignParentTop="true">
+            <RelativeLayout
+                android:layout_gravity="center_vertical"
+                android:id="@+id/cart_select_all_layout"
+                android:layout_width="fill_parent"
+                android:clickable="true"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.7">
+                <CheckBox
+                    android:id="@+id/shoppingcar_select_all_button_edit"
+                    android:background="@drawable/cart_select_checkbox_selector"
+                    android:layout_width="21.0dip" android:layout_height="21.0dip"
+                    android:layout_marginLeft="12.0dip"
+                    android:button="@null" android:layout_centerVertical="true" />
+                <TextView
+                    android:textSize="@dimen/cart_show_all_select_textsize"
+                    android:textColor="@color/cart_bottom_all_select_color"
+                    android:id="@+id/shopping_cart_show_all_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4.0dip"
+                    android:text="全选"
+                    android:layout_toRightOf="@+id/shoppingcar_select_all_button_edit"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_gravity="center_vertical"
+                android:paddingRight="2.0dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.1">
+                <TextView
+                    android:textSize="@dimen/cart_count_price_tv_textsize"
+                    android:textColor="#FF484849"
+                    android:id="@+id/cart_count_price_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="6.0dip"
+                    android:singleLine="true"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="合计:"
+                    />
+                <TextView
+                    android:textSize="@dimen/cart_count_price_tv_textsize"
+                    android:textColor="#FFE80068"
+                    android:ellipsize="none"
+                    android:id="@+id/shoppingcar_goods_price_sum_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:singleLine="true"
+                    android:layout_toRightOf="@+id/cart_count_price_tv"
+                    android:lineSpacingMultiplier="1.1"
+                    android:paddingLeft="3dp"
+                    android:text="¥"
+                    android:gravity="center_vertical"
+                    />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/cart_settle_accounts_layout"
+                android:background="@drawable/conform_order_but_selector"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:clickable="true"
+                android:layout_weight="3.5">
+                <TextView
+                    android:textSize="@dimen/cart_settle_accounts_but_textsize"
+                    android:textColor="@color/white"
+                    android:id="@+id/cart_settle_accounts_but"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="去结算"
+                    android:singleLine="true"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

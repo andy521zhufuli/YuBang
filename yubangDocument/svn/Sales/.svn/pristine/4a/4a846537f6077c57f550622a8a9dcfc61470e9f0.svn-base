@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "./struts-2.3.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<package name="ORDER" extends="json-default" >
+
+        <!-- 订单查询 -->
+		<action name="GetOrder" class="GetOrderAction" method="doAction">
+		<result name="0">/jsp/orderdetail.jsp</result>
+		<result name="1">/json/error.jsp</result>
+		<result name="2">/json/sucess.jsp</result>
+		<result name="3">/json/null.jsp</result>
+		<result name="4">/json/ArgsError.jsp</result>
+		<result name="5">/json/error.jsp</result>
+		</action>
+		
+		 <!-- 订单修改 -->
+		<action name="ModifyOrder" class="ModifyOrderAction" method="doAction">
+		<result name="0">/temp/gooddetail.html</result>
+		<result name="1">/json/error.jsp</result>
+		<result name="2">/json/sucess.jsp</result>
+		<result name="3">/json/null.jsp</result>
+		<result name="4">/json/ArgsError.jsp</result>
+		<result name="5">/json/error.jsp</result>
+		</action>
+		
+	</package>
+</struts>    

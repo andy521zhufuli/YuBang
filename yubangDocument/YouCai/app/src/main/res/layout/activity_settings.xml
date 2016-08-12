@@ -1,0 +1,193 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff5f5f5"
+    tools:context="com.tec.android.ui.SettingsActivity">
+
+    <!-- 顶部标题 -->
+    <RelativeLayout
+        android:id="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="49.5dip"
+
+        >
+        <ImageView
+            android:id="@+id/titleBg"
+            android:background="@drawable/common_title_background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/title_back"
+            android:paddingLeft="15.0dip"
+            android:paddingRight="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/common_title_back_selector"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:ellipsize="end"
+            android:gravity="center"
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:maxWidth="180.0dip"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            style="@style/common_layout_title"
+            android:textSize="20sp"
+            android:text="设置"
+            />
+    </RelativeLayout>
+
+    <!-- 检查新版本 -->
+    <RelativeLayout
+        android:id="@+id/check_new_version_layout"
+        android:background="@drawable/common_settings_item_bg_selector"
+        android:paddingLeft="23.0dip"
+        android:layout_below="@+id/common_title"
+        android:clickable="true"
+        android:layout_width="fill_parent"
+        android:layout_height="43.0dip">
+        <TextView
+            android:id="@+id/check_version_image"
+            android:background="@mipmap/android_my_jd_phone_appoint"
+            android:padding="5.0dip" android:layout_width="25.0dip"
+            android:layout_height="25.0dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:textSize="15.0sp"
+            android:textColor="@color/black"
+            android:id="@+id/check_version_text"
+            android:paddingLeft="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="检查新版本"
+            android:layout_toRightOf="@+id/check_version_image"
+            android:layout_centerVertical="true" />
+        <ImageView
+            android:id="@+id/check_version_arrow"
+            android:paddingRight="20.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/android_list_idex"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <View android:id="@+id/my_wallet_divide_line_8"
+        android:layout_below="@+id/check_new_version_layout"
+        style="@style/line2" />
+
+    <!-- 联系客服 -->
+    <RelativeLayout
+        android:id="@+id/connect_service_layout"
+        android:background="@drawable/common_settings_item_bg_selector"
+        android:paddingLeft="23.0dip"
+        android:layout_below="@+id/my_wallet_divide_line_8"
+        android:clickable="true"
+        android:layout_width="fill_parent"
+        android:layout_height="43.0dip">
+        <TextView
+            android:id="@+id/connect_service_image"
+            android:background="@mipmap/android_my_jd_service_manager"
+            android:padding="5.0dip" android:layout_width="25.0dip"
+            android:layout_height="25.0dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:textSize="15.0sp"
+            android:textColor="@color/black"
+            android:id="@+id/connect_service_text"
+            android:paddingLeft="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="联系客服"
+            android:layout_toRightOf="@+id/connect_service_image"
+            android:layout_centerVertical="true" />
+        <ImageView
+            android:id="@+id/connect_service_arrow"
+            android:paddingRight="20.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/android_list_idex"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <View android:id="@+id/my_wallet_divide_line_81"
+        android:layout_below="@+id/connect_service_layout"
+        style="@style/line2" />
+
+    <!-- 关于我们-->
+    <RelativeLayout
+        android:id="@+id/about_us_layout"
+        android:background="@drawable/common_settings_item_bg_selector"
+        android:paddingLeft="23.0dip"
+        android:layout_below="@+id/my_wallet_divide_line_81"
+        android:clickable="true"
+        android:layout_width="fill_parent"
+        android:layout_height="43.0dip">
+        <TextView
+            android:id="@+id/about_us_image"
+            android:background="@mipmap/android_my_jd_wallet"
+            android:padding="5.0dip" android:layout_width="25.0dip"
+            android:layout_height="25.0dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:textSize="15.0sp"
+            android:textColor="@color/black"
+            android:id="@+id/about_us_text"
+            android:paddingLeft="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关于我们"
+            android:layout_toRightOf="@+id/about_us_image"
+            android:layout_centerVertical="true" />
+        <ImageView
+            android:id="@+id/about_us_arrow"
+            android:paddingRight="20.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/android_list_idex"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+    <View android:id="@+id/my_wallet_divide_line_82"
+        android:layout_below="@+id/about_us_layout"
+        style="@style/line2" />
+
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:id="@+id/layout_new_easy_buy_address_create"
+        android:padding="20.0dip" android:visibility="visible"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/justtest"
+            android:visibility="visible"
+            android:text="测试登陆"
+            />
+        <Button
+            android:textSize="17.0sp"
+            android:textColor="@drawable/button_b_font_color"
+            android:id="@+id/button_quit"
+            android:background="@drawable/button_b_common"
+            android:padding="10.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:text="退出登录" />
+    </LinearLayout>
+
+</RelativeLayout>

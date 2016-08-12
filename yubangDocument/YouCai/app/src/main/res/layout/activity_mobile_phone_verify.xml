@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/personal_bg_color_silver"
+    tools:context="com.tec.android.ui.MobilePhoneVerifyActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="49.5dip">
+        <ImageView
+            android:id="@+id/titleBg"
+            android:background="@drawable/common_title_background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/title_back"
+            android:paddingLeft="15.0dip"
+            android:paddingRight="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/common_title_back_selector"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:ellipsize="end"
+            android:gravity="center"
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:maxWidth="180.0dip"
+            android:singleLine="true"
+            android:text="手机验证"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            style="@style/common_layout_title"
+            />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/login_dynamic_login"
+        android:layout_below="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="5dp"
+        >
+        <LinearLayout
+            android:orientation="horizontal" android:layout_width="fill_parent"
+            android:layout_height="45.0dip">
+            <EditText
+                android:id="@+id/mobile_phone_dynamic_phone"
+                android:background="@color/white"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:ems="11"
+                android:phoneNumber="true"
+                android:hint="输入手机号码"
+                android:layout_weight="3.0"
+                style="@style/et_base_new" />
+            <Button
+                android:textColor="@color/white"
+                android:id="@+id/mobile_phone_dynamic_get_dynamic_pswd"
+                android:background="@drawable/button_b_common_get_code"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:text="获取动态密码"
+                android:layout_weight="2.0" />
+        </LinearLayout>
+        <EditText
+            android:id="@+id/mobile_phone_dynamic_input_pswd"
+            android:hint="输入动态密码"
+            style="@style/et_base_new" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:id="@+id/iwant_get_cash_nextstep_layout"
+        android:padding="20.0dip"
+        android:visibility="visible"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_dynamic_login"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:textSize="17.0sp"
+            android:textColor="@drawable/button_b_font_color"
+            android:id="@+id/mobile_phone_verify"
+            android:background="@drawable/button_b_common"
+            android:padding="10.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:text="下一步" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

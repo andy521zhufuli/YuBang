@@ -1,0 +1,180 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff3f4f6"
+    tools:context="com.tec.android.ui.ReceivingAddressModifyActivity">
+
+    <RelativeLayout
+        android:id="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="49.5dip">
+        <ImageView
+            android:id="@+id/titleBg"
+            android:background="@drawable/common_title_background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/title_back"
+            android:paddingLeft="15.0dip"
+            android:paddingRight="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/common_title_back_selector"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:ellipsize="end"
+            android:gravity="center"
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:maxWidth="180.0dip"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            style="@style/common_layout_title"
+            android:textSize="20sp"
+            android:text="收件地址"
+            />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/receiving_address_name_modify_layout"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="52.0dip"
+        android:layout_below="@+id/common_title">
+
+        <TextView
+            android:id="@+id/receiving_address_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:background="@color/white"
+            android:text="收件人"
+            android:textSize="17sp"
+            android:layout_centerVertical="true"
+            />
+
+        <EditText android:textSize="17.0sp"
+            android:textColor="#ff252525"
+            android:textColorHint="#ffcccaca"
+            android:gravity="center_vertical"
+            android:id="@+id/receiving_address_name_modify"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/receiving_address_name"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入姓名"
+            android:singleLine="true" android:maxLength="20"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <!--<View android:layout_below="@+id/receiving_address_name_modify_layout"-->
+        <!--style="@style/line6"/>-->
+
+
+    <RelativeLayout
+        android:id="@+id/receiving_address_phone_modify_layout"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="52.0dip"
+        android:layout_below="@+id/receiving_address_name_modify_layout"
+        android:layout_marginTop="1dp"
+        >
+
+        <TextView
+            android:id="@+id/receiving_address_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:background="@color/white"
+            android:text="联系电话"
+            android:textSize="17sp"
+            android:layout_centerVertical="true"
+            />
+
+        <EditText android:textSize="17.0sp"
+            android:textColor="#ff252525"
+            android:textColorHint="#ffcccaca"
+            android:gravity="center_vertical"
+            android:id="@+id/receiving_address_phone_modify"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/receiving_address_phone"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入电话号码"
+            android:digits="1234567890"
+            android:singleLine="true" android:maxLength="20"
+            android:layout_centerVertical="true"
+            android:selectAllOnFocus="false" />
+    </RelativeLayout>
+
+    <!--<View android:layout_below="@+id/receiving_address_phone_modify_layout"-->
+        <!--style="@style/line6"/>-->
+
+    <RelativeLayout
+        android:id="@+id/receiving_address_modify_layout"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="52.0dip"
+        android:layout_marginTop="1dp"
+        android:layout_below="@+id/receiving_address_phone_modify_layout">
+
+        <TextView
+            android:id="@+id/receiving_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:background="@color/white"
+            android:text="收件地址"
+            android:textSize="17sp"
+            android:layout_centerVertical="true"
+            />
+
+        <EditText android:textSize="17.0sp"
+            android:textColor="#ff252525"
+            android:textColorHint="#ffcccaca"
+            android:gravity="center_vertical"
+            android:id="@+id/receiving_address_modify"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/receiving_address"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入收件地址"
+            android:singleLine="false" android:maxLength="50"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+
+    <Button
+        android:textSize="17.0sp"
+        android:textColor="@drawable/button_b_font_color"
+        android:id="@+id/receiving_address_save_and_use_button"
+        android:background="@drawable/button_b"
+        android:padding="10.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15.0dip"
+        android:layout_marginRight="15.0dip"
+        android:text="保存并使用"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/receiving_address_modify_layout"
+        />
+
+
+
+
+</RelativeLayout>

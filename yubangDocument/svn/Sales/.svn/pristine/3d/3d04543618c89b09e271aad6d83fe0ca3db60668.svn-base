@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="css/media.css"/>
+<link rel="stylesheet" type="text/css" href="css/layout.css"/>
+</head>
+<body class="body1">
+  <div class="take_detail">
+    <div class="take_num">提现单号<span>T201505131901020001</span></div>
+    <div class="take_tip1">
+      提现金额<span>￥10000.00</span>
+      <div class="take_tip">
+        <p class="p1">订单审核中</p>
+        <p>请注意查收</p>
+      </div>
+    </div>
+    <div class="bank">
+      <p><span>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户</span><span>郭靖</span></p>
+      <p><span>银&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;行</span><span>中国银行</span></p>
+      <p><span>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</span><span>4392 4392 4392 4392</span></p>
+      <p><span>交易单号</span><span class="span1">89849314893843578439</span></p>
+    </div>
+    <div class="take_bottom">
+      2015-05-11  12:00:37<a href="#" class="a2" ontouchstart="this.className='a2-hover'"  ontouchend="this.className='a2'"  ontouchmove="this.className='a2'">查看详情</a>
+    </div>
+  </div>
+  <div class="take_detail">
+    <div class="take_num">提现单号<span>T201505131901020001</span></div>
+    <div class="take_tip1">
+      提现金额<span>￥10000.00</span>
+      <div class="take_tip">
+        <p>银行已划扣</p>
+        <p>请注意查收</p>
+      </div>
+    </div>
+    <div class="bank">
+      <p><span>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户</span><span>郭靖</span></p>
+      <p><span>银&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;行</span><span>中国银行</span></p>
+      <p><span>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</span><span>4392 4392 4392 4392</span></p>
+      <p><span>交易单号</span><span class="span1">89849314893843578439</span></p>
+    </div>
+    <div class="take_bottom">
+      2015-05-11  12:00:37<a href="#" class="a2" ontouchstart="this.className='a2-hover'"  ontouchend="this.className='a2'"  ontouchmove="this.className='a2'">查看详情</a>
+    </div>
+  </div>
+  <div class="take_detail">
+    <div class="take_num">提现单号<span>T201505131901020001</span></div>
+    <div class="take_tip1">
+      提现金额<span>￥10000.00</span>
+      <div class="take_tip">
+        <p class="p2">已完成</p>
+        <p>请注意查收</p>
+      </div>
+    </div>
+    <div class="bank">
+      <p><span>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户</span><span>郭靖</span></p>
+      <p><span>银&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;行</span><span>中国银行</span></p>
+      <p><span>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</span><span>4392 4392 4392 4392</span></p>
+      <p><span>交易单号</span><span class="span1">89849314893843578439</span></p>
+    </div>
+    <div class="take_bottom">
+      2015-05-11  12:00:37<a href="#" class="a2" ontouchstart="this.className='a2-hover'"  ontouchend="this.className='a2'"  ontouchmove="this.className='a2'">查看详情</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFE3E6E9"
+    tools:context="com.tec.android.ui.ReturnOfGoodsActivity">
+
+    <RelativeLayout
+        android:id="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="49.5dip">
+        <ImageView
+            android:id="@+id/titleBg"
+            android:background="@drawable/common_title_background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/title_back"
+            android:paddingLeft="15.0dip"
+            android:paddingRight="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/common_title_back_selector"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/share_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10.0dip"
+            android:src="@drawable/common_share_selector"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            android:adjustViewBounds="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:ellipsize="end"
+            android:gravity="center"
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:maxWidth="180.0dip"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            style="@style/common_layout_title"
+            android:textSize="20sp"
+            android:text="退货"
+            />
+    </RelativeLayout>
+
+
+    <!-- 订单号-->
+    <RelativeLayout
+        android:id="@+id/return_of_goods_order_id_layout"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="52.0dip"
+        android:layout_below="@+id/common_title"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:id="@+id/return_of_goods_order_id_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:background="@color/white"
+            android:text="订单号:"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView android:textSize="17.0sp"
+            android:textColor="#ff252525"
+            android:textColorHint="#ffcccaca"
+            android:gravity="center_vertical"
+            android:id="@+id/return_of_goods_order_id_editview"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/return_of_goods_order_id_textview"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true" android:maxLength="20"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <!-- 退货原因-->
+    <TextView
+        android:id="@+id/return_of_goods_reason_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请填写退货原因:"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/return_of_goods_order_id_layout"
+        />
+
+    <!-- 点击弹出退货原因   还可以上下滑动  我擦在这个应该怎么做呢-->
+    <RelativeLayout
+        android:id="@+id/return_of_goods_choose_reasons_layout"
+        android:background="@drawable/common_return_of_good_layout_bg_selector"
+        android:layout_width="fill_parent"
+        android:layout_height="52.0dip"
+        android:layout_below="@+id/return_of_goods_reason_textview"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        >
+        <TextView
+            android:id="@+id/return_of_goods_choose_reasons_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:text="选择退货原因:"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            />
+        <TextView android:textSize="17.0sp"
+            android:textColor="#ff252525"
+            android:textColorHint="#ffcccaca"
+            android:gravity="center_vertical"
+            android:id="@+id/return_of_goods_choosed_reason_textview"
+            android:layout_toRightOf="@+id/return_of_goods_choose_reasons_textview"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/return_of_goods_choose_reasons_imageview"
+            android:singleLine="true"
+            android:maxLength="20"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:id="@+id/return_of_goods_choose_reasons_imageview"
+            android:paddingRight="20.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/return_of_goods_resons"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/return_of_goods_upload_pic_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/return_of_goods_choose_reasons_layout"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        >
+        <!-- 网格显示图片 行列间距5dp 每列宽度90dp -->
+        <GridView
+            android:id="@+id/return_of_goods_uploaded_image"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:horizontalSpacing="5dp"
+            android:verticalSpacing="5dp"
+            android:numColumns="4"
+            android:columnWidth="90dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/return_of_goods_upload_pic_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="上传图片"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="15sp"
+            android:background="#ffcdcdcd"/>
+
+    </LinearLayout>
+
+
+
+
+    <!-- 提交申请-->
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:id="@+id/return_of_goods_choose_submit_apply_layout"
+        android:padding="20.0dip" android:visibility="visible"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/return_of_goods_upload_pic_layout"
+        android:layout_centerHorizontal="true"
+        >
+        <Button
+            android:textSize="17.0sp"
+            android:textColor="@drawable/button_b_font_color"
+            android:id="@+id/return_of_goods_choose_submit_apply_button"
+            android:background="@drawable/button_b_common"
+            android:padding="10.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:text="提交申请" />
+    </LinearLayout>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/return_of_goods_choose_submit_apply_layout"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交成功即表示已经阅读"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/return_of_goods_should_know_textview"
+            android:text="《退货须知》"
+            android:textColor="#FF76AAF5"
+            />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

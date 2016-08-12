@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "./struts-2.3.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<package name="USER" extends="json-default" namespace="/">
+
+
+
+		<action name="PostLogin" class="PostLoginAction" method="doAction">
+		</action>
+		
+				<!-- 登录配置查询 -->
+		<action name="PreLogin" class="PreLoginAction" method="doAction">
+		</action>
+		
+			<!-- 退出登录 -->
+		<action name="ExitLogin" class="ExitLoginAction" method="doAction">
+		</action>
+			
+	</package>
+</struts>    

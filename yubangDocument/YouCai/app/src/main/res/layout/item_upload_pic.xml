@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/goods_detail_goto_shoppingcar_layout"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_weight="1.0">
+        <ImageView
+            android:id="@+id/return_of_goods_add_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/item_upload_pic_add_pic_selector"
+            android:scaleType="fitXY"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_centerInParent="true"
+            />
+
+        <!-- 购物车有几件商品的提示小图标-->
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:textSize="@dimen/goods_detail_shoppingcar_textsize"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:id="@+id/return_of_goods_delete_pic"
+                android:background="@mipmap/item_upload_pic_quxiao_focused"
+                android:paddingLeft="@dimen/product_detail_shoppingcar_padding"
+                android:paddingRight="@dimen/product_detail_shoppingcar_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,99 @@
+商城首页,每一个分类对应的repairService 
+比如保养维护分类对应的repairService就是下面10个  
+其中前6个显示在保养维护下面的6张图片上面, 其余的点击更多的时候全部显示出来
+
+{
+    "total": 0,
+    "rows": [
+        {
+            "id": "e0635993-2f23-428c-9b42-5b53dd5a3734",
+            "pathCode": "3",
+            "logicalService": "1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
+            "photoName": "de994362-0c6b-4ff1-a8eb-b70ec9ee4a05.png",
+            "serviceCode": "6240130101",
+            "repairServiceSort": 1,
+            "serviceName": "汽机油"
+        },
+        {
+            "id": "522317e1-8dc7-44fa-a671-75890d83375f",
+            "pathCode": "",
+            "logicalService": "1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
+            "photoName": "",
+            "serviceCode": "62401301",
+            "repairServiceSort": 1,
+            "serviceName": "油品类"
+        },
+        {
+            "id": "79199302-bd72-4466-9a0c-6f8a03b2fe92",
+            "pathCode": "",
+            "logicalService": "1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
+            "photoName": "",
+            "serviceCode": "624017",
+            "repairServiceSort": 1,
+            "serviceName": "黄油"
+        },
+        {
+            "id": "9bc9e6ae-7309-4f08-903b-942b1867f495",
+            "pathCode": "",
+            "logicalService": "1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
+            "photoName": "",
+            "serviceCode": "62401302",
+            "repairServiceSort": 2,
+            "serviceName": "养护用品"
+        },
+        {
+            "id": "4b5df5f4-34c5-4f0c-a5d7-4cd97487abf9",
+            "pathCode": "3",
+            "logicalService": "1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
+            "photoName": "11891430-7952-4175-9925-010632f36a7c.png",
+            "serviceCode": "6240130102",
+            "repairServiceSort": 2,
+            "serviceName": "柴机油"
+        },
+        {
+            "id": "5864b942-4fd8-4b70-9be1-521031e6d13c",
+            "pathCode": "3",
+            "logicalService": "1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
+            "photoName": "1b9798b0-3eb9-420e-b708-67d1d67921b8.png",
+            "serviceCode": "6240130103",
+            "repairServiceSort": 3,
+            "serviceName": "自动变速箱油"
+        },
+        {
+            "id": "0c454072-12be-4e67-ba50-7e26aa80db90",
+            "pathCode": "3",
+            "logicalService": "1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
+            "photoName": "ea33ec15-cfe9-4d92-934e-b44b16c15734.png",
+            "serviceCode": "6240130104",
+            "repairServiceSort": 4,
+            "serviceName": "齿轮油"
+        },
+        {
+            "id": "38f28eb8-798d-492f-bf94-4a61153ee5da",
+            "pathCode": "3",
+            "logicalService": "1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
+            "photoName": "cbb237d9-544d-49ff-88e4-6e69bb10b5e5.png",
+            "serviceCode": "6240130105",
+            "repairServiceSort": 5,
+            "serviceName": "刹车油"
+        },
+        {
+            "id": "6e85da78-7034-4da9-97d8-5959089f9cb5",
+            "pathCode": "3",
+            "logicalService": "1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
+            "photoName": "432cec95-da04-4e7a-8cc4-fae008a1a1d8.png",
+            "serviceCode": "6240130106",
+            "repairServiceSort": 6,
+            "serviceName": "助力转向油"
+        },
+        {
+            "id": "d34affe5-b7b0-4edc-af5b-ca12d649c763",
+            "pathCode": "",
+            "logicalService": "1df3cd46-f2e5-40f1-b408-266a7d59a8b6",
+            "photoName": "",
+            "serviceCode": "624014",
+            "repairServiceSort": 14,
+            "serviceName": "保养"
+        }
+    ]
+}

@@ -1,0 +1,65 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="about_logo_paddingtop">40.0dip</dimen>
+    <dimen name="about_quick_mark_image_margintop">30.0dip</dimen>
+    <dimen name="about_quick_mark_download_margintop">7.0dip</dimen>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="invoice_padding_17.5">17.5dip</dimen>
+    <!-- 收货地址 -->
+    <dimen name="item_receiving_address_margin">15.0dip</dimen>
+    <dimen name="item_receiving_address_text_size">17.0sp</dimen>
+    <dimen name="item_receiving_address_text_size_big">18.0sp</dimen>
+    <dimen name="item_receiving_address_text_size_small">15.0sp</dimen>
+
+    <dimen name="pd_txt_size_large_h">19.0sp</dimen>
+    <dimen name="pd_txt_size_middle">14.0sp</dimen>
+    <dimen name="pd_txt_size_small">13.0sp</dimen>
+
+    <dimen name="pd_space_width_10">10.0dip</dimen>
+    <dimen name="pd_space_width_12">12.0dip</dimen>
+    <dimen name="pd_space_width_14">14.0dip</dimen>
+    <dimen name="pd_space_width_15">15.0dip</dimen>
+    <dimen name="pd_space_width_16">16.0dip</dimen>
+    <dimen name="pd_space_width_25">25.0dip</dimen>
+    <dimen name="pd_space_width_5">5.0dip</dimen>
+    <dimen name="pd_space_width_8">8.0dip</dimen>
+    <dimen name="pd_space_width_9">9.0dip</dimen>
+
+    <dimen name="goods_detail_shoppingcar_textsize">8sp</dimen>
+    <dimen name="product_detail_shoppingcar_padding">5.0dip</dimen>
+    <dimen name="product_detail_shoppingcar_textsize">8.0sp</dimen>
+    <dimen name="product_detail_shoppingcar_height">16.0dip</dimen>
+    <dimen name="cart_num_edit_add_width">28.0dip</dimen>
+    <dimen name="cart_num_edit_view_text_size">16.0sp</dimen>
+
+    <dimen name="cart_num_edit_view_width">44.0dip</dimen>
+    <dimen name="cart_show_all_select_textsize">14.0sp</dimen>
+    <dimen name="cart_count_price_tv_textsize">18.0sp</dimen>
+    <dimen name="cart_settle_accounts_but_textsize">18.0sp</dimen>
+
+
+    <!-- 订单-->
+    <dimen name="fill_order_line">1.0dip</dimen>
+    <dimen name="fill_order_line_height">0.5dip</dimen>
+    <dimen name="fill_order_line_margin">10.0dip</dimen>
+    <dimen name="fill_order_marginleft">10.0dip</dimen>
+    <dimen name="fill_order_margintop">10.0dip</dimen>
+    <dimen name="fill_order_money_text_big">30.0sp</dimen>
+    <dimen name="fill_order_name_size">17.0sp</dimen>
+    <dimen name="fill_order_padding_submit">11.5dip</dimen>
+    <dimen name="fill_order_arrow_left_margin">10.0dip</dimen>
+
+
+    <!-- 下拉刷新-->
+    <dimen name="drop_down_list_header_padding_top">12dp</dimen>
+    <dimen name="drop_down_list_header_padding_bottom">15dp</dimen>
+    <dimen name="drop_down_list_header_release_min_distance">20dp</dimen>
+    <dimen name="drop_down_list_header_progress_bar_height">36dp</dimen>
+    <dimen name="drop_down_list_footer_progress_bar_height">36dp</dimen>
+    <dimen name="drop_down_list_footer_button_margin_left">8dp</dimen>
+    <dimen name="drop_down_list_footer_button_height">48dp</dimen>
+    <!-- 手机验证-->
+    <dimen name="BasicTextSize">16.0dip</dimen>
+</resources>

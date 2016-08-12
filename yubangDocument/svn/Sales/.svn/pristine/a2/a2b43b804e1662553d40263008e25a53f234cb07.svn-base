@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="css/media.css"/>
+<link rel="stylesheet" type="text/css" href="css/layout.css"/>
+</head>
+<body>
+  <div class="list_detail">
+    <img src="images/img3.png"/>
+    <p class="p1">玛瑞安 正品脱毛霜套装 全身体腋下净毛修复乳脱毛霜女 夏季美体</p>
+    <p class="p2">夏季必备 方便快捷 轻松脱毛 修复毛孔</p>
+    <p class="p2">￥120.00<span>￥140.00</span><span>12片/盒</span></p>
+  </div>
+
+</body>
+</html>

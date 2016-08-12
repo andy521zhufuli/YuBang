@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_modify_shoppingcar_goods_num_layout"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFEDEDED"
+    >
+
+    <!-- 修改购物车商品数量-->
+    <TextView
+        android:id="@+id/view_modify_shoppingcar_goods_num_textview"
+        android:paddingTop="20dp"
+        android:paddingBottom="15dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="修改购买数量"
+        android:textColor="@color/pd_black_45"
+        android:textSize="@dimen/pd_txt_size_middle"
+        />
+
+    <include
+        layout="@layout/shoppingcar_modify_sub_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/view_modify_shoppingcar_goods_num_textview"
+        />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+        <Button
+            android:textSize="17.0sp"
+            android:textColor="@color/pd_black_25"
+            android:id="@+id/view_modify_shoppingcar_goods_num_cancel_button"
+            android:background="@drawable/button_b_left"
+            android:padding="10.0dip"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:text="退出登录" />
+        <Button
+            android:textSize="17.0sp"
+            android:textColor="@drawable/button_b_font_color"
+            android:id="@+id/view_modify_shoppingcar_goods_num_conform_button"
+            android:background="@drawable/button_b"
+            android:padding="10.0dip"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:text="退出登录" />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

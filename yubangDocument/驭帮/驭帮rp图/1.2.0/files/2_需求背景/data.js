@@ -1,0 +1,7 @@
+﻿$axure.loadCurrentPage(
+(function() {
+    var _ = function() { var r={},a=arguments; for(var i=0; i<a.length; i+=2) r[a[i]]=a[i+1]; return r; }
+    var _creator = function() { return _(b,c,d,e,f,g,h,g,i,[j,k],l,_(m,n,o,p,q,r,s,_(t,u),v,_(w,x,y,z,A,_(B,C,D,E),F,null,G,z,H,z,I,J,K,null,L,M,N,O,P,Q,R,M),S,_(),T,_(),U,_(V,[])),W,_(),X,_());}; 
+var b="url",c="2_需求背景.html",d="generationDate",e=new Date(1465971262259.69),f="isCanvasEnabled",g=false,h="isAdaptiveEnabled",i="variables",j="OnLoadVariable",k="menuOn",l="page",m="packageId",n="c6c349202e3c40a6a96306896cd5a72e",o="type",p="Axure:Page",q="name",r="2.需求背景",s="notes",t="页面说明",u="<p><span>1、M597-优化更新版本号显示，避免版本号对比出现相同版本号的问题。</span></p><p><span>2、M592-为了解决已自动更新过应用删除安装包后再自动更新的问题进行优化。</span></p><p><span>3、M464-为了解决自动更新后已root并选择静默安装用户没有静默安装的问题，将两个流程串起来。</span></p>",v="style",w="baseStyle",x="627587b6038d43cca051c114ac41ad32",y="pageAlignment",z="near",A="fill",B="fillType",C="solid",D="color",E=0xFFFFFFFF,F="image",G="imageHorizontalAlignment",H="imageVerticalAlignment",I="imageRepeat",J="auto",K="favicon",L="sketchFactor",M="0",N="colorStyle",O="appliedColor",P="fontName",Q="Applied Font",R="borderWidth",S="adaptiveStyles",T="interactionMap",U="diagram",V="objects",W="masters",X="objectPaths";
+return _creator();
+})());

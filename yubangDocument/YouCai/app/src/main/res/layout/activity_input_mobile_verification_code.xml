@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tec.android.ui.InputMobileVerificationCodeActivity">
+
+    <!-- 输入手机验证码   只有手机验证码-->
+    <RelativeLayout
+        android:id="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="49.5dip">
+        <ImageView
+            android:id="@+id/titleBg"
+            android:background="@drawable/common_title_background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/title_back"
+            android:paddingLeft="15.0dip"
+            android:paddingRight="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/common_title_back_selector"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:ellipsize="end"
+            android:gravity="center"
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:maxWidth="180.0dip"
+            android:singleLine="true"
+            android:text="输入手机验证码"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            style="@style/common_layout_title"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/input_mobile_verify_layout"
+        android:layout_below="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip">
+            <EditText
+                android:id="@+id/input_mobile_phone_dynamic_code_edittext"
+                android:background="@color/white"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:hint="请输入短信验证码"
+                android:layout_weight="3.0"
+                style="@style/et_base_new" />
+            <Button
+                android:textColor="@color/white"
+                android:id="@+id/input_mobile_phone_get_dynamic_code_button"
+                android:background="@drawable/button_b_common_get_code"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:text="获取动态密码"
+                android:layout_weight="2.0" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:id="@+id/input_mobile_phone_dynamic_commit_layout"
+        android:padding="20.0dip"
+        android:visibility="visible"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_mobile_verify_layout"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:textSize="17.0sp"
+            android:textColor="@drawable/button_b_font_color"
+            android:id="@+id/input_mobile_phone_dynamic_commit_button"
+            android:background="@drawable/button_b_common"
+            android:padding="10.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:text="提交" />
+    </LinearLayout>
+
+
+</RelativeLayout>

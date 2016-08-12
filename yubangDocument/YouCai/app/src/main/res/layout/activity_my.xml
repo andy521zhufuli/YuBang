@@ -1,0 +1,80 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/personal_bg_color_silver"
+    tools:context="com.tec.android.ui.MyActivity">
+
+    <RelativeLayout
+        android:id="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="49.5dip">
+        <ImageView
+            android:id="@+id/titleBg"
+            android:background="@drawable/common_title_background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/setting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10.0dip"
+            android:src="@drawable/common_my_setting_selector"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:ellipsize="end"
+            android:gravity="center"
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:maxWidth="180.0dip"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            style="@style/common_layout_title"
+            android:text="个人中心" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/my_center_network_tips"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        layout="@layout/app_network_model"
+        android:layout_below="@+id/common_title"
+        />
+
+    <Button
+        android:id="@+id/my_center_reload_button"
+        android:text="重新加载"
+        android:visibility="gone"
+        android:textSize="@dimen/pd_txt_size_large_h"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/goods_list_reload_button_bg"
+        android:layout_width="140.0dip"
+        android:layout_height="50dp"
+        android:layout_below="@+id/my_center_network_tips"
+        />
+
+    <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+        android:layout_below="@+id/common_title"
+        android:id="@+id/my_center_smooth_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/white"
+        style="@style/PocketProgressBar"
+        android:indeterminate="true"/>
+
+    <WebView
+        android:id="@+id/my_webview"
+        android:layout_below="@+id/my_center_smooth_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </WebView>
+
+</RelativeLayout>

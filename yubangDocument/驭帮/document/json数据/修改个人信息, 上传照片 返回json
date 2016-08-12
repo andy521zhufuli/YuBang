@@ -1,0 +1,13 @@
+修改个人信息, 上传照片 返回json
+
+{
+    "userid": "bf8eb70b-c29f-41c8-a9bc-7e7dd56880bb",
+    "carType": "17a79773-ef65-11e5-97ba-28d244001fe5",
+    "name": "朱福利",
+    "status": "1",
+    "isJson": true,
+    "isReturnStr": false,
+    "returnCode": 0,
+    "returneMsg": "修改成功",
+    "message": "登陆成功"
+}

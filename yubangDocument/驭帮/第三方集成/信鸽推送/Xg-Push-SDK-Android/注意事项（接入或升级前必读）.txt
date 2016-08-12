@@ -1,0 +1,44 @@
+03-25 23:14:09.152 30710-30710/? D/dalvikvm: Late-enabling CheckJNI
+03-25 23:14:09.162 30710-30717/? I/jdwp: Ignoring second debugger -- accepting and dropping
+03-25 23:14:09.232 30710-30710/com.car.yubangapk D/ActivityThread: handleBindApplication:com.car.yubangapk
+03-25 23:14:09.232 30710-30710/com.car.yubangapk D/ActivityThread: setTargetHeapUtilization:0.75
+03-25 23:14:09.232 30710-30710/com.car.yubangapk D/ActivityThread: setTargetHeapMinFree:2097152
+03-25 23:14:09.232 30710-30710/com.car.yubangapk D/ActivityThread: setTargetHeapConcurrentStart:2097152
+03-25 23:14:09.242 30710-30710/com.car.yubangapk V/HwWidgetFactory: : successes to get AllImpl object and return....
+03-25 23:14:09.262 30710-30710/com.car.yubangapk D/dalvikvm: Trying to load lib /data/app-lib/com.car.yubangapk-2/libBaiduMapSDK_base_v3_7_1.so 0x423de780
+03-25 23:14:09.262 30710-30710/com.car.yubangapk D/dalvikvm: Added shared lib /data/app-lib/com.car.yubangapk-2/libBaiduMapSDK_base_v3_7_1.so 0x423de780
+03-25 23:14:09.272 30710-30710/com.car.yubangapk E/MSimTelephonyManager: NullPointerException in getPreferredSmsSubscription()
+03-25 23:14:09.302 30710-30710/com.car.yubangapk D/auth info: mcode: CF:EB:5C:25:66:EB:58:63:6A:20:AA:4D:9A:D9:39:88:66:C8:81:F1;com.car.yubangapk
+03-25 23:14:09.332 30710-30731/com.car.yubangapk D/dalvikvm: Trying to load lib /data/data/com.car.yubangapk/lib/libtpnsSecurity.so 0x423de780
+03-25 23:14:09.332 30710-30731/com.car.yubangapk E/dalvikvm: dlopen("/data/data/com.car.yubangapk/lib/libtpnsSecurity.so") failed: dlopen failed: library "/data/data/com.car.yubangapk/lib/libtpnsSecurity.so" not found
+03-25 23:14:09.332 30710-30731/com.car.yubangapk D/dalvikvm: Trying to load lib /data/data/com.car.yubangapk/lib/libtpnsSecurity.so 0x423de780
+03-25 23:14:09.332 30710-30731/com.car.yubangapk E/dalvikvm: dlopen("/data/data/com.car.yubangapk/lib/libtpnsSecurity.so") failed: dlopen failed: library "/data/data/com.car.yubangapk/lib/libtpnsSecurity.so" not found
+03-25 23:14:09.332 30710-30731/com.car.yubangapk E/XINGE: [Util] can not load library from so file
+03-25 23:14:09.332 30710-30731/com.car.yubangapk E/XINGE: [XGPushManager] XG register push failed with token : null, errCode : 10004 , msg : CODE_SO_ERROR
+03-25 23:14:09.362 30710-30710/com.car.yubangapk I/MainActivity: oncreate
+03-25 23:14:09.362 30710-30710/com.car.yubangapk I/ui.MainActivity: add to stack
+03-25 23:14:09.372 30710-30710/com.car.yubangapk I/ui.FirstPageActivity: add to stack
+03-25 23:14:09.422 30710-30710/com.car.yubangapk W/ContextImpl: Failed to ensure directory: /storage/sdcard1/Android/data/com.car.yubangapk/files
+03-25 23:14:09.432 30710-30710/com.car.yubangapk D/dalvikvm: Trying to load lib /data/app-lib/com.car.yubangapk-2/libBaiduMapSDK_map_v3_7_1.so 0x423de780
+03-25 23:14:09.432 30710-30710/com.car.yubangapk D/dalvikvm: Added shared lib /data/app-lib/com.car.yubangapk-2/libBaiduMapSDK_map_v3_7_1.so 0x423de780
+03-25 23:14:09.432 30710-30710/com.car.yubangapk D/dalvikvm: No JNI_OnLoad found in /data/app-lib/com.car.yubangapk-2/libBaiduMapSDK_map_v3_7_1.so 0x423de780, skipping init
+03-25 23:14:09.472 30710-30710/com.car.yubangapk I/Adreno-EGL: <qeglDrvAPI_eglInitialize:410>: EGL 1.4 QUALCOMM build: AU_LINUX_ANDROID_LNX.LA.3.7.2.1_RB1.04.04.04.157.009_msm8916_32_LNX.LA.3.7.2.1_RB1__release_AU ()
+                                                               OpenGL ES Shader Compiler Version: E031.24.02.07
+                                                               Build Date: 07/30/14 Wed
+                                                               Local Branch: mybranch3995205
+                                                               Remote Branch: quic/LNX.LA.3.7.2.1_rb1
+                                                               Local Patches: NONE
+                                                               Reconstruct Branch: AU_LINUX_ANDROID_LNX.LA.3.7.2.1_RB1.04.04.04.157.009 +  NOTHING
+03-25 23:14:09.532 30710-30710/com.car.yubangapk D/MSimTelephonyManager: mapDualCardSubID, input subscription = 0
+03-25 23:14:09.532 30710-30710/com.car.yubangapk D/MSimTelephonyManager: getDeviceId, subscription=0
+03-25 23:14:09.542 30710-30710/com.car.yubangapk D/DeviceId: Settings.System.getString or putString failed
+03-25 23:14:09.552 30710-30710/com.car.yubangapk D/DeviceId: Settings.System.getString or putString failed
+03-25 23:14:09.612 30710-30710/com.car.yubangapk E/baidumapsdk: Authentication Error errorcode: 230 uid: -1 appid -1 msg: APP Scode码校验失败
+03-25 23:14:09.632 30710-30717/com.car.yubangapk I/jdwp: Ignoring second debugger -- accepting and dropping
+03-25 23:14:09.692 30710-30710/com.car.yubangapk D/OpenGLRenderer: Enabling debug mode 0
+03-25 23:14:09.792 30710-30710/com.car.yubangapk E/baidumapsdk: Authentication Error errorcode: 230 uid: -1 appid -1 msg: APP Scode码校验失败
+03-25 23:14:09.802 30710-30710/com.car.yubangapk D/baidu_location_client: baidu location connected ...
+03-25 23:14:09.802 30710-30710/com.car.yubangapk E/baidumapsdk: Authentication Error errorcode: 230 uid: -1 appid -1 msg: APP Scode码校验失败
+03-25 23:14:10.622 30710-30710/com.car.yubangapk E/baidumapsdk: Authentication Error errorcode: 230 uid: -1 appid -1 msg: APP Scode码校验失败
+03-25 23:14:10.652 30710-30717/com.car.yubangapk I/jdwp: Ignoring second debugger -- accepting and dropping
+03-25 23:14:11.612 30710-30710/com.car.yubangapk E/baidumapsdk: Authentication Error errorcode: 230 uid: -1 appid -1 msg: APP Scode码校验失败

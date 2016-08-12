@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "./struts-2.3.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<package name="USER" extends="json-default">
+
+		<!-- 退出登录 -->
+		<action name="ExitLogin" class="ExitLoginAction" method="doAction">
+			<result name="0">/temp/gooddetail.html</result>
+			<result name="1">/json/error.jsp</result>
+			<result name="2">/json/sucess.jsp</result>
+			<result name="3">/json/null.jsp</result>
+			<result name="4">/json/ArgsError.jsp</result>
+			<result name="5">/json/error.jsp</result>
+		</action>
+
+
+		<!--action name="GetCashAccountList" class="GetCashAccountListAction" method="doAction"> 
+			<result name="0">/temp/gooddetail.html</result> <result name="1">/json/error.jsp</result> 
+			<result name="2">/json/sucess.jsp</result> <result name="3">/json/null.jsp</result> 
+			<result name="4">/json/ArgsError.jsp</result> <result name="5">/json/error.jsp</result> 
+			</action -->
+
+		<action name="GetCancelOrderPrompt" class="GetCancelOrderPromptAction"
+			method="doAction">
+			<result name="0">/temp/gooddetail.html</result>
+			<result name="1">/json/error.jsp</result>
+			<result name="2">/json/sucess.jsp</result>
+			<result name="3">/json/null.jsp</result>
+			<result name="4">/json/ArgsError.jsp</result>
+			<result name="5">/json/error.jsp</result>
+		</action>
+
+
+		<action name="GetContactInfo" class="GetContactInfoAction"
+			method="doAction">
+			<result name="0">/temp/gooddetail.html</result>
+			<result name="1">/json/error.jsp</result>
+			<result name="2">/json/sucess.jsp</result>
+			<result name="3">/json/null.jsp</result>
+			<result name="4">/json/ArgsError.jsp</result>
+			<result name="5">/json/error.jsp</result>
+		</action>
+
+		<action name="GetAboutInfo" class="GetAboutInfoAction" method="doAction">
+			<result name="0">/temp/gooddetail.html</result>
+			<result name="1">/json/error.jsp</result>
+			<result name="2">/json/sucess.jsp</result>
+			<result name="3">/json/null.jsp</result>
+			<result name="4">/json/ArgsError.jsp</result>
+			<result name="5">/json/error.jsp</result>
+		</action>
+
+		<action name="GetCashInfo" class="GetCashInfoAction" method="doAction">
+			<result name="0">/jsp/cashdetail.jsp</result>
+			<result name="1">/json/error.jsp</result>
+			<result name="2">/json/sucess.jsp</result>
+			<result name="3">/json/null.jsp</result>
+			<result name="4">/json/ArgsError.jsp</result>
+			<result name="5">/json/error.jsp</result>
+		</action>
+
+		<action name="GetHistOrders" class="GetHistOrdersAction"
+			method="doAction">
+			<result name="0">/jsp/myorder.jsp</result>
+			<result name="1">/json/error.jsp</result>
+			<result name="2">/json/sucess.jsp</result>
+			<result name="3">/json/null.jsp</result>
+			<result name="4">/json/ArgsError.jsp</result>
+			<result name="5">/json/error.jsp</result>
+		</action>
+
+		<action name="GetFriendList" class="GetFriendListAction"
+			method="doAction">
+			<result name="0">/jsp/myfriend.jsp</result>
+			<result name="1">/json/error.jsp</result>
+			<result name="2">/json/sucess.jsp</result>
+			<result name="3">/json/null.jsp</result>
+			<result name="4">/json/ArgsError.jsp</result>
+			<result name="5">/json/error.jsp</result>
+		</action>
+
+		<action name="GetAccountInfo" class="GetAccountInfoAction"
+			method="doAction">
+			<result name="0">/jsp/mycenter.jsp</result>
+			<result name="1">/json/error.jsp</result>
+			<result name="2">/json/sucess.jsp</result>
+			<result name="3">/json/null.jsp</result>
+			<result name="4">/json/ArgsError.jsp</result>
+			<result name="5">/json/error.jsp</result>
+		</action>
+
+		<!-- 提现 -->
+		<action name="CashOut" class="CashOutAction" method="doAction">
+		</action>
+
+		<action name="UploadImg" class="UploadAction" method="upload">
+		</action>
+
+		<action name="Share" class="ShareAction" method="doAction">
+		</action>
+		<action name="GetCashHist" class="GetCashHistAction" method="doAction">
+		</action>
+		<action name="GetCashAccountList" class="GetCashAccountListAction"
+			method="doAction">
+		</action>
+		<action name="ModifyCashAccount" class="ModifyCashAccountAction"
+			method="doAction">
+		</action>
+	</package>
+</struts>    

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical"
+    android:id="@+id/layout_new_easy_buy_address_list_item_backgroud"
+    android:background="@color/white" android:clickable="true"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBox
+        android:textSize="13sp"
+        android:textColor="@color/pd_black_68"
+        android:id="@+id/radiobutton_new_easy_buy_address_default"
+        android:layout_marginLeft="10.0dip"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:checked="false"
+        android:button="@drawable/button_i"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        />
+
+    <!-- 编辑按钮 -->
+    <RelativeLayout
+        android:gravity="center_vertical"
+        android:id="@+id/layout_edit_address_list_item"
+        android:layout_width="50.0dip" android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_marginRight="10.0dip" android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+        <View android:layout_width="1.0px" android:layout_height="50.0dip"
+            android:layout_alignParentLeft="true" android:layout_centerVertical="true"
+            style="@style/line_vertical" />
+        <ImageView
+            android:id="@+id/textview_new_easy_buy_address_edit"
+            android:layout_width="24.0dip" android:layout_height="24.0dip"
+            android:src="@mipmap/app_address_edit"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+
+    <LinearLayout android:gravity="center"
+        android:id="@+id/layout_new_easy_buy_address_list_item"
+        android:orientation="vertical"
+        android:paddingLeft="10.0dip"
+        android:paddingTop="@dimen/invoice_padding_17.5"
+        android:paddingRight="10.0dip"
+        android:paddingBottom="@dimen/invoice_padding_17.5"
+        android:clickable="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/layout_edit_address_list_item"
+        android:layout_toRightOf="@+id/radiobutton_new_easy_buy_address_default"
+        android:layout_centerVertical="true">
+        <!--姓名 电话 -->
+        <LinearLayout
+            android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="@dimen/item_receiving_address_text_size_big"
+                android:textColor="@color/pd_black_25"
+                android:id="@+id/textview_new_easy_buy_address_list_item_name"
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_marginRight="5.0dip" android:singleLine="true"
+                android:layout_weight="10.0"
+                android:text="周鹏" />
+            <TextView android:textSize="@dimen/item_receiving_address_text_size_big"
+                android:textColor="@color/pd_black_25"
+                android:id="@+id/textview_new_easy_buy_address_list_item_phone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:layout_weight="8.0"
+                android:text="13600001111" />
+        </LinearLayout>
+        <!-- 地址-->
+        <RelativeLayout
+            android:paddingLeft="10.0dip" android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10.0dip"
+            android:layout_marginRight="25.0dip">
+            <TextView
+                android:textSize="@dimen/item_receiving_address_text_size" android:textColor="#ff808080"
+                android:id="@+id/textview_new_easy_buy_address_list_item_address"
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:maxLines="3" android:lineSpacingMultiplier="1.1"
+                android:text="广州珠江新城华夏路10号" />
+            <TextView
+                android:id="@+id/item_receiving_address_id"
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/textview_new_easy_buy_address_list_item_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="@dimen/item_receiving_address_text_size_small"
+                android:textColor="@color/white" android:gravity="center"
+                android:id="@+id/textview_new_easy_buy_address_list_item_tag"
+                android:background="@drawable/app_88d8cd_corners"
+                android:paddingLeft="5.0dip" android:paddingTop="2.0dip"
+                android:paddingRight="5.0dip" android:paddingBottom="2.0dip"
+                android:visibility="gone" android:layout_width="70.0dip" android:layout_height="wrap_content"
+                android:layout_marginLeft="2.0dip" android:text="@string/new_easy_buy_address_tag"
+                android:singleLine="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:id="@+id/layout_new_easy_buy_address_list_item_default"
+        android:paddingLeft="10.0dip" android:paddingRight="10.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_marginTop="8.0dip">
+        <TextView
+            android:textSize="@dimen/item_receiving_address_text_size_small"
+            android:textColor="#ff6a77b6" android:gravity="center" android:id="@+id/textview_new_easy_buy_address_list_item_payment"
+            android:paddingTop="2.0dip" android:paddingRight="5.0dip" android:paddingBottom="2.0dip" android:visibility="gone"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="10.0dip"
+            android:singleLine="true"  />
+        <TextView
+            android:textSize="@dimen/item_receiving_address_text_size_small"
+            android:textColor="#ff6a77b6" android:gravity="center" android:id="@+id/textview_new_easy_buy_address_list_item_shipment"
+            android:paddingLeft="5.0dip" android:paddingTop="2.0dip" android:paddingRight="5.0dip" android:paddingBottom="2.0dip"
+            android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/layout_new_easy_buy_address_editor"
+        android:paddingLeft="10.0dip" android:paddingTop="10.0dip"
+        android:paddingRight="10.0dip" android:paddingBottom="10.0dip"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <CheckBox
+            android:textSize="13sp"
+            android:textColor="@color/pd_black_68"
+            android:id="@+id/radiobutton_new_easy_buy_address_default1"
+            android:paddingLeft="10dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:checked="false" android:button="@drawable/button_i"
+            android:text="设为默认地址"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:textSize="13sp"
+            android:textColor="#ff848689"
+            android:gravity="center" android:id="@+id/textview_new_easy_buy_address_delete"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="删除" android:drawableLeft="@mipmap/app_address_delete"
+            android:drawablePadding="10.0dip" android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:textSize="13sp"
+            android:textColor="#ff848689" android:gravity="center"
+            android:id="@+id/textview_new_easy_buy_address_edit1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="18.0dip"
+            android:text="编辑地址"
+            android:drawableLeft="@mipmap/app_address_edit"
+            android:drawablePadding="10.0dip"
+            android:layout_toLeftOf="@id/textview_new_easy_buy_address_delete"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+</RelativeLayout>
