@@ -18,6 +18,7 @@ import com.car.yubangapk.json.bean.Json2MyUserInfoBean;
 import com.car.yubangapk.model.Share;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.network.myHttpReq.HttpReqGetUserInfo;
+import com.car.yubangapk.network.okhttp.cookie.store.PersistentCookieStore;
 import com.car.yubangapk.ui.myordersfragment.MyOrdersActivity;
 import com.car.yubangapk.ui.myrecommendpartner.MyRecommendedPartnerActivity;
 import com.car.yubangapk.utils.SPUtils;
@@ -156,6 +157,27 @@ public class MyActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 判断用户到底有没有登录
+     * 因为后台可能会经常重启, 并非用户自己主动退出,
+     * @return
+     */
+    private boolean isUserLogined()
+    {
+        int notlogin = layout_not_logined.getVisibility();
+        if (notlogin == View.GONE)
+        {
+            //说明已经登录了
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        //layout_logined.setVisibility(View.GONE);//已经登陆
+    }
+
+
     private Json2MyUserInfoBean mUserInfo;
 
     @Override
@@ -258,6 +280,11 @@ public class MyActivity extends BaseActivity {
                     toastMgr.builder.display("您还没登陆,请先去登陆",1);
                     return;
                 }
+                if (isUserLogined() == false)
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.setClass(MyActivity.this, MyRecommendedPartnerActivity.class);
 //                intent.setClass(MyActivity.this, RegisterDetailsActivity.class);
@@ -274,6 +301,11 @@ public class MyActivity extends BaseActivity {
                     toastMgr.builder.display("您还没登陆,请先去登陆",1);
                     return;
                 }
+                if (isUserLogined() == false)
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.setClass(MyActivity.this, MyWwalletActivity.class);
                 startActivity(intent);
@@ -285,6 +317,11 @@ public class MyActivity extends BaseActivity {
             public void onClick(View view) {
                 String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
                 if (!loinged.equals(Configs.LOGINED))
+                {
+                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+                    return;
+                }
+                if (isUserLogined() == false)
                 {
                     toastMgr.builder.display("您还没登陆,请先去登陆",1);
                     return;
@@ -340,11 +377,16 @@ public class MyActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 String loinged = (String)SPUtils.getUserInfo(mContext, Configs.LoginOrNot, Configs.NOTLOGINED);
-                if (!loinged.equals(Configs.LOGINED))
-                {
-                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
-                    return;
-                }
+//                if (!loinged.equals(Configs.LOGINED))
+//                {
+//                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+//                    return;
+//                }
+//                if (isUserLogined() == false)
+//                {
+//                    toastMgr.builder.display("您还没登陆,请先去登陆",1);
+//                    return;
+//                }
                 share();
             }
         });

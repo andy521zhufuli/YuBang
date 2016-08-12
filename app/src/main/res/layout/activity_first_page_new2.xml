@@ -66,7 +66,7 @@
         android:layout_below="@+id/first_page_nav_tabs"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-
+        android:visibility="gone"
         >
     </com.baidu.mapapi.map.MapView>
 
@@ -77,12 +77,12 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:visibility="gone"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:visibility="visible"
+        >
         <ImageView android:id="@id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_marginBottom="15.0dip"
-            android:src="@drawable/nothing_image1" />
+            android:src="@drawable/nothing_image" />
         <TextView android:textSize="@dimen/text_14"
             android:textColor="@color/black3"
             android:gravity="center"

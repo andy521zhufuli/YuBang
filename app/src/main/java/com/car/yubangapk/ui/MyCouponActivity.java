@@ -35,6 +35,7 @@ public class MyCouponActivity extends FragmentActivity implements CouponScrollTa
     private Fragment        secondFragment;
     private Fragment        threeFragment;
     private Fragment        fourFragment;
+    private Fragment        fiveFragment;
 
     CouponScrollTabView coupon_page_nav_tabs;
     private CouponTabAdapter tabsAdapter;//顶部导航的适配器
@@ -51,9 +52,10 @@ public class MyCouponActivity extends FragmentActivity implements CouponScrollTa
 
         mTabNameList = new ArrayList<>();
         mTabNameList.add("全部");
-        mTabNameList.add("店铺优惠");
-        mTabNameList.add("店铺红包");
-        mTabNameList.add("已失效");
+        mTabNameList.add("总价");
+        mTabNameList.add("商铺");
+        mTabNameList.add("产品包");
+        mTabNameList.add("产品");
         initTabs(mTabNameList);
     }
 
@@ -103,7 +105,7 @@ public class MyCouponActivity extends FragmentActivity implements CouponScrollTa
             case 0:
                 if (firstFragment == null)
                 {
-                    firstFragment = new MyCouponFragmentFirst();
+                    firstFragment = new MyCouponFragmentFirst(mTabNameList.get(i));
                     transaction.add(R.id.my_coupon_fragment_layout, firstFragment);
                 } else
                 {
@@ -113,7 +115,7 @@ public class MyCouponActivity extends FragmentActivity implements CouponScrollTa
             case 1:
                 if (secondFragment == null)
                 {
-                    secondFragment = new MyCouponFragmentFirst();
+                    secondFragment = new MyCouponFragmentFirst(mTabNameList.get(i));
                     transaction.add(R.id.my_coupon_fragment_layout, secondFragment);
                 } else
                 {
@@ -123,7 +125,7 @@ public class MyCouponActivity extends FragmentActivity implements CouponScrollTa
             case 2:
                 if (threeFragment == null)
                 {
-                    threeFragment = new MyCouponFragmentFirst();
+                    threeFragment = new MyCouponFragmentFirst(mTabNameList.get(i));
                     transaction.add(R.id.my_coupon_fragment_layout, threeFragment);
                 } else
                 {
@@ -133,11 +135,21 @@ public class MyCouponActivity extends FragmentActivity implements CouponScrollTa
             case 3:
                 if (fourFragment == null)
                 {
-                    fourFragment = new MyCouponFragmentFirst();
+                    fourFragment = new MyCouponFragmentFirst(mTabNameList.get(i));
                     transaction.add(R.id.my_coupon_fragment_layout, fourFragment);
                 } else
                 {
                     transaction.show(fourFragment);
+                }
+                break;
+            case 4:
+                if (fiveFragment == null)
+                {
+                    fiveFragment = new MyCouponFragmentFirst(mTabNameList.get(i));
+                    transaction.add(R.id.my_coupon_fragment_layout, fiveFragment);
+                } else
+                {
+                    transaction.show(fiveFragment);
                 }
                 break;
         }
@@ -167,14 +179,20 @@ public class MyCouponActivity extends FragmentActivity implements CouponScrollTa
         {
             transaction.hide(fourFragment);
         }
+        if (fiveFragment != null)
+        {
+            transaction.hide(fiveFragment);
+        }
     }
 
     /**
+     * 顶部导航点击之后, 显示对应的tab
      * @param tabAdapter
      * @param pos
      */
     @Override
-    public void onTabItemClick(CouponTabAdapter tabAdapter, int pos) {
+    public void onTabItemClick(CouponTabAdapter tabAdapter, int pos)
+    {
         select(pos);
     }
 }

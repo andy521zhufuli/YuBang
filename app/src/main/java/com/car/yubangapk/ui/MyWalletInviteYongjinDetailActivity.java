@@ -16,11 +16,12 @@ import android.widget.TextView;
 import com.andy.android.yubang.R;
 import com.car.yubangapk.network.myHttpReq.HttpReqCallback;
 import com.car.yubangapk.view.CustomProgressDialog;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.List;
 
-public class MyWalletInviteYongjinDetailActivity extends BaseActivity implements View.OnClickListener,HttpReqCallback
+public class MyWalletInviteYongjinDetailActivity extends BaseActivity implements View.OnClickListener,HttpReqCallback, PullToRefreshBase.OnRefreshListener2
 {
 
 
@@ -95,6 +96,16 @@ public class MyWalletInviteYongjinDetailActivity extends BaseActivity implements
     @Override
     public void onSuccess(Object object) {
         mProgress.dismiss();
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+
     }
 
 

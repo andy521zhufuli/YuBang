@@ -64,16 +64,20 @@ public class Share implements PlatformActionListener, HttpReqShareCallback
                 HashMap<String, Object> item = (HashMap<String, Object>) arg0.getItemAtPosition(arg2);
                 if (item.get("ItemText").equals("微信好友")) {
                     toastMgr.builder.display("微信好友", 1);
-                    getWxShareBean(SHARE_WX_FRIENDS);
+                    //getWxShareBean(SHARE_WX_FRIENDS);
+                    shareWXFriend("wx friedns", "111", "http://sharesdk.cn", "http://sharesdk.cn");
                 } else if (item.get("ItemText").equals("朋友圈")) {
-                    getWxShareBean(SHARE_WX_MOMENTS);
+                    //getWxShareBean(SHARE_WX_MOMENTS);
+                    shareWXMoments("wx friedns", "111", "http://sharesdk.cn", "http://sharesdk.cn");
                     toastMgr.builder.display("微信朋友圈", 1);
                 } else if (item.get("ItemText").equals("QQ空间")) {
                     toastMgr.builder.display("QQ Zone", 1);
-                    getWxShareBean(SHARE_QQ_ZOME);
+                    shareQQZone("1111", "222", "http://sharesdk.cn", "http://sharesdk.cn");
+                    //getWxShareBean(SHARE_QQ_ZOME);
                 } else if (item.get("ItemText").equals("QQ")) {
                     toastMgr.builder.display("QQ", 1);
-                    getWxShareBean(SHARE_QQ_FRIENDS);
+                    shareQQFriends("1111", "222", "http://sharesdk.cn", "http://sharesdk.cn");
+                    //getWxShareBean(SHARE_QQ_FRIENDS);
                 }
             }
         });

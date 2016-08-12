@@ -84,11 +84,15 @@ public class Configs {
     public static String IP_ADDRESS_ACTION_LOGOUT = "/client/user/loginout";//获取省
 
     //钱包
-    public static String IP_ADDRESS_ACTION_GET_USER_WALLET= "/client/user/getCuserPurse";//获取用户钱包
+    public static String IP_ADDRESS_ACTION_GET_USER_WALLET = "/client/user/getCuserPurse";//获取用户钱包
+    public static String IP_ADDRESS_ACTION_GET_MY_COUPON = "/client/user/getMyCoupon";//获取用户优惠券
 
 
 
-
+    //当前请求的优惠券状态  未使用  已使用 已过期
+    public static int COUPON_STATE_NOT_USED = 0X01;
+    public static int COUPON_STATE_USED = 0X02;
+    public static int COUPON_STATE_OUT_DATE = 0X03;
 
 
 

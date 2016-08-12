@@ -104,7 +104,7 @@
         android:visibility="visible" android:layout_width="wrap_content"
         android:layout_height="wrap_content" android:layout_marginLeft="12.0dip"
         android:layout_marginRight="25.0dip"
-        android:src="@mipmap/coupon_item_qiangguang_max"
+        android:src="@mipmap/coupon_item_flag_not_used"
         android:layout_alignParentTop="true" android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

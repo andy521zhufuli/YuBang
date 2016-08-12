@@ -982,7 +982,7 @@ public class FirstPagenew2Activity extends BaseActivity implements View.OnClickL
         toastMgr.builder.display("onresume", 1);
 
         mMapView.onResume();
-        isLogined();
+        //isLogined();
     }
     @Override
     protected void onPause()
